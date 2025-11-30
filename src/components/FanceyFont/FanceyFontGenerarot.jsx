@@ -222,15 +222,7 @@ const FancyFontGenerator = () => {
                rows="4"
             />
             <div className="flex items-center justify-between mt-5">
-               {/* <label className="flex items-center gap-2 text-sm text-gray-400">
-                  <input
-                     type="checkbox"
-                     checked={includeEmojis}
-                     onChange={(e) => setIncludeEmojis(e.target.checked)}
-                     className="rounded"
-                  />
-                  Add emojis
-               </label> */}
+             
                {inputText && (
                   <button
                      onClick={() => setInputText('')}
