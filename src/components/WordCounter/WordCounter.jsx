@@ -258,7 +258,7 @@ const WordCounter = () => {
 
                {/* Stats Cards */}
                <div className="space-y-4">
-                  <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 shadow-xl">
+                  <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 shadow-xl h-full">
                      <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 tracking-wide">
                         <FaClock className="text-indigo-400" />
                         Statistics
