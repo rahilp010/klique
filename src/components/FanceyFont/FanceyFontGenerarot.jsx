@@ -217,7 +217,7 @@ const FancyFontGenerator = () => {
             {/* INPUT + OUTPUT (side-by-side) */}
             <div className="w-full max-w-5xl flex flex-col md:flex-row gap-6 items-center justify-center mb-10">
                {/* INPUT */}
-               <div className="glass inner-shadow bg-[#141416] border border-white/10 rounded-[2rem] shadow-2xl p-6 w-full hover:shadow-glow group-focus-within:border-primary/50 group-focus-within:shadow-glow">
+               <div className="relative glass inner-shadow bg-[#141416] border border-white/10 rounded-[2rem] shadow-2xl p-6 w-full hover:shadow-glow group-focus-within:border-primary/50 group-focus-within:shadow-glow">
                   <label className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
                      Input Text
                   </label>
@@ -248,7 +248,7 @@ const FancyFontGenerator = () => {
                </div>
 
                {/* OUTPUT */}
-               <div className="glass inner-shadow bg-[#141416] border border-white/10 rounded-[2rem] shadow-2xl p-6 w-full">
+               <div className="relative glass inner-shadow bg-[#141416] border border-white/10 rounded-[2rem] shadow-2xl p-6 w-full">
                   <label className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
                      Live Preview
                   </label>
