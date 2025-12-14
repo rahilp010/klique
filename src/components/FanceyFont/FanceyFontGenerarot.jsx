@@ -217,7 +217,7 @@ const FancyFontGenerator = () => {
             {/* INPUT + OUTPUT (side-by-side) */}
             <div className="w-full max-w-5xl flex flex-col md:flex-row gap-6 items-center justify-center mb-10">
                {/* INPUT */}
-               <div className="relative glass inner-shadow bg-[#141416] border border-white/10 rounded-[2rem] shadow-2xl p-6 w-full hover:shadow-glow group-focus-within:border-primary/50 group-focus-within:shadow-glow">
+               <div className="relative glass inner-shadow bg-[#141416] border border-white/10 rounded-[2rem] shadow-2xl p-6 w-full hover:shadow-glow focus:ring-0 group-focus-within:border-primary/50 group-focus-within:shadow-glow">
                   <label className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
                      Input Text
                   </label>
@@ -226,7 +226,8 @@ const FancyFontGenerator = () => {
                      value={inputText}
                      onChange={(e) => setInputText(e.target.value)}
                      placeholder="Type something amazing..."
-                     className="custom-scrollbar w-full h-64 bg-transparent border-none resize-none focus:ring-0 text-xl text-slate-100 placeholder:text-slate-600 leading-relaxed "
+                     className="custom-scrollbar w-full h-64 bg-transparent border-none resize-none focus:ring-0 text-xl text-slate-100 placeholder:text-slate-600 leading-relaxed focus:border-0"
+                     style={{ outline: 0 }}
                   />
 
                   <div className="px-6 py-4 bg-white/[0.02] border-t border-white/5 flex justify-between gap-3 absolute bottom-0 w-full left-0">
@@ -258,6 +259,7 @@ const FancyFontGenerator = () => {
                      readOnly
                      placeholder="Your fancy text appears here..."
                      className="custom-scrollbar w-full h-64 bg-transparent border-none resize-none focus:ring-0 text-xl text-slate-100 placeholder:text-slate-600 leading-relaxed"
+                     style={{ outline: 0 }}
                   />
 
                   <div className="px-6 py-4 bg-white/[0.02] border-t border-white/5 flex justify-end gap-3 absolute bottom-0 w-full left-0">
