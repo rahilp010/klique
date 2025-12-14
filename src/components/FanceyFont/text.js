@@ -3,343 +3,386 @@ const fontMaps = [
         "fontName": "Simple",
         "fontLower": "abcdefghijklmnopqrstuvwxyz",
         "fontUpper": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-        "fontDigits": "0123456789"
+        "fontDigits": "0123456789",
+        "category": "regular"
     },
     {
         "fontName": "Bubbles",
         "fontLower": "ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ",
         "fontUpper": "ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ",
-        "fontDigits": "⓪①②③④⑤⑥⑦⑧⑨"
+        "fontDigits": "⓪①②③④⑤⑥⑦⑧⑨",
+        "category": "decorative bubble"
     },
     {
-        fontName: "BubbleBlack",
-        fontLower: Array.from("🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩"),
-        fontUpper: Array.from("🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩"),
-        fontDigits: Array.from("⓿➊➋➌➍➎➏➐➑➒")
+        "fontName": "BubbleBlack",
+        "fontLower": Array.from("🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩"),
+        "fontUpper": Array.from("🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩"),
+        "fontDigits": Array.from("⓿➊➋➌➍➎➏➐➑➒"),
+        "category": "decorative bubble bold"
     },
     {
         "fontName": "Parenthesis",
         "fontLower": "⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵",
         "fontUpper": "⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵",
-        "fontDigits": "0⑴⑵⑶⑷⑸⑹⑺⑻⑼"
+        "fontDigits": "0⑴⑵⑶⑷⑸⑹⑺⑻⑼",
+        "category": "decorative parenthesis"
     },
     {
         "fontName": "SuperScript",
         "fontLower": "ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖqʳˢᵗᵘᵛʷˣʸᶻ",
         "fontUpper": "ᴬᴮᶜᴰᴱᶠᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾQᴿˢᵀᵁⱽᵂˣʸᶻ",
-        "fontDigits": "⁰¹²³⁴⁵⁶⁷⁸⁹"
+        "fontDigits": "⁰¹²³⁴⁵⁶⁷⁸⁹",
+        "category": "superscript"
     },
     {
         "fontName": "FullWidth",
         "fontLower": Array.from("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ"),
         "fontUpper": Array.from("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ"),
-        "fontDigits": Array.from("０１２３４５６７８９")
+        "fontDigits": Array.from("０１２３４５６７８９"),
+        "category": "fullwidth"
     },
     {
         "fontName": "MathBold",
         "fontLower": Array.from("𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳"),
         "fontUpper": Array.from("𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "mathematical bold"
     },
     {
         "fontName": "MathItalic",
         "fontLower": Array.from("𝒂𝒃𝒄𝒅𝒆𝒇𝒈𝒉𝒊𝒋𝒌𝒍𝒎𝒏𝒐𝒑𝒒𝒓𝒔𝒕𝒖𝒗𝒘𝒙𝒚𝒛"),
         "fontUpper": Array.from("𝑨𝑩𝑪𝑫𝑬𝑭𝑮𝑯𝑰𝑱𝑲𝑳𝑴𝑵𝑶𝑷𝑸𝑹𝑺𝑻𝑼𝑽𝑾𝑿𝒀𝒁"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "mathematical italic"
     },
     {
         "fontName": "Bold",
         "fontLower": Array.from("𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳"),
         "fontUpper": Array.from("𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙"),
-        "fontDigits": Array.from("𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗")
+        "fontDigits": Array.from("𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗"),
+        "category": "bold"
     },
     {
         "fontName": "SansBold",
         "fontLower": Array.from("𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇"),
-        "fontUpper": Array.from("𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭"),
-        "fontDigits": Array.from("𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟳𝟵")
+        "fontUpper": Array.from("𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗡𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭"),
+        "fontDigits": Array.from("𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟳𝟵"),
+        "category": "sans-serif bold"
     },
     {
         "fontName": "SansBoldItalic",
         "fontLower": Array.from("𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯"),
         "fontUpper": Array.from("𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕"),
-        "fontDigits": Array.from("𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟕𝟴𝟵")
+        "fontDigits": Array.from("𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟕𝟴𝟵"),
+        "category": "sans-serif bold italic"
     },
     {
         "fontName": "FrakturBold",
         "fontLower": Array.from("𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟"),
         "fontUpper": Array.from("𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅"),
-        "fontDigits": Array.from("0123456789")
+        "fontDigits": Array.from("0123456789"),
+        "category": "fraktur bold"
     },
     {
         "fontName": "ScriptBold",
         "fontLower": Array.from("𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃"),
         "fontUpper": Array.from("𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩"),
-        "fontDigits": Array.from("0123456789")
+        "fontDigits": Array.from("0123456789"),
+        "category": "script bold"
     },
     {
         "fontName": "MathSans",
         "fontLower": Array.from("𝖺𝖻𝖼𝖽𝖾𝖿𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓"),
         "fontUpper": Array.from("𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "mathematical sans-serif"
     },
     {
         "fontName": "MathSansItalic",
         "fontLower": Array.from("𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻"),
         "fontUpper": Array.from("𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "mathematical sans-serif italic"
     },
     {
         "fontName": "MathSansBold",
         "fontLower": Array.from("𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇"),
-        "fontUpper": Array.from("𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭"),
-        "fontDigits": ""
+        "fontUpper": Array.from("𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗡𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭"),
+        "fontDigits": "",
+        "category": "mathematical sans-serif bold"
     },
     {
         "fontName": "MathSansBoldItalic",
         "fontLower": Array.from("𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯"),
         "fontUpper": Array.from("𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "mathematical sans-serif bold italic"
     },
     {
         "fontName": "Fraktur",
         "fontLower": Array.from("𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷"),
         "fontUpper": Array.from("𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ"),
-        "fontDigits": ""
-    },
-    {
-        "fontName": "FrakturBold",
-        "fontLower": Array.from("𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟"),
-        "fontUpper": Array.from("𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "fraktur"
     },
     {
         "fontName": "Russian",
         "fontLower": Array.from("абcдёfgнїjкгѫпѳpфя$тцѵщжчз"),
         "fontUpper": Array.from("АБCДЄFGHЇJКГѪЙѲPФЯ$TЦѴШЖЧЗ"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "cyrillic decorative"
     },
     {
         "fontName": "Japanese",
         "fontLower": Array.from("卂乃匚ᗪ乇千Ꮆ卄丨ﾌҜㄥ爪几ㄖ卩Ɋ尺丂ㄒㄩᐯ山乂ㄚ乙"),
         "fontUpper": Array.from("卂乃匚ᗪ乇千Ꮆ卄丨ﾌҜㄥ爪几ㄖ卩Ɋ尺丂ㄒㄩᐯ山乂ㄚ乙"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "katakana decorative"
     },
     {
         "fontName": "Arabic",
         "fontLower": Array.from("ค๒ς๔єŦﻮђเןкl๓ภ๏קợгรtยשฬץאz"),
         "fontUpper": Array.from("ค๒ς๔єŦﻮђเןкl๓ภ๏קợгรtยשฬץאz"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "arabic decorative"
     },
     {
         "fontName": "Fairy",
         "fontLower": Array.from("ᏗᏰፈᎴᏋᎦᎶᏂᎥᏠᏦᏝᎷᏁᎧᎮᎤᏒᏕᏖᏬᏉᏇጀᎩፚ"),
         "fontUpper": Array.from("ᏗᏰፈᎴᏋᎦᎶᏂᎥᏠᏦᏝᎷᏁᎧᎮᎤᏒᏕᏖᏬᏉᏇጀᎩፚ"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "cherokee decorative"
     },
     {
         "fontName": "Wizard",
-        "fontLower": Array.from("ǟɮƈɖɛʄɢɦɨʝӄʟʍռօքզʀֆȶʊʋաӼʏʐ"),
-        "fontUpper": Array.from("ǟɮƈɖɛʄɢɦɨʝӄʟʍռօքզʀֆȶʊʋաӼʏʐ"),
-        "fontDigits": ""
+        "fontLower": Array.from("ǟɮƈɖɛʄɠɦɨʝӄʟʍռօքզʀֆȶʊʋաӼʏʐ"),
+        "fontUpper": Array.from("ǟɮƈɖɛʄɠɦɨʝӄʟʍռօքզʀֆȶʊʋաӼʏʐ"),
+        "fontDigits": "",
+        "category": "phonetic decorative"
     },
     {
         "fontName": "Monospace",
         "fontLower": Array.from("𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣"),
         "fontUpper": Array.from("𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "monospace"
     },
     {
         "fontName": "Script",
         "fontLower": Array.from("𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏"),
         "fontUpper": Array.from("𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵"),
-        "fontDigits": ""
-    },
-    {
-        "fontName": "ScriptBold",
-        "fontLower": Array.from("𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃"),
-        "fontUpper": Array.from("𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "script"
     },
     {
         "fontName": "DoubleStruck",
         "fontLower": Array.from("𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫"),
         "fontUpper": "𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚ'\u{1d549}'𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ",
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "double-struck"
     },
     {
         "fontName": "Squared",
         "fontLower": Array.from("🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉"),
         "fontUpper": Array.from("🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "squared"
     },
     {
         "fontName": "Funky",
         "fontLower": Array.from("αв¢∂єƒgнιנкℓмησρqяѕтυνωχуz"),
         "fontUpper": Array.from("αв¢∂єƒgнιנкℓмησρqяѕтυνωχуz"),
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "greek decorative"
     },
     {
         "fontName": "Acute",
         "fontLower": "ábćdéfǵhíjḱĺḿńőṕqŕśtúvẃxӳź",
         "fontUpper": "ÁBĆDÉFǴHíJḰĹḾŃŐṔQŔśTŰVẂXӲŹ",
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "accented acute"
     },
     {
         "fontName": "RockDots",
         "fontLower": "äḅċḋëḟġḧïjḳḷṁṅöṗqṛṡẗüṿẅẍÿż",
         "fontUpper": "ÄḄĊḊЁḞĠḦЇJḲḶṀṄÖṖQṚṠṪÜṾẄẌŸŻ",
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "diaeresis decorative"
     },
     {
         "fontName": "SmallCaps",
         "fontLower": "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘꞯʀꜱᴛᴜᴠᴡxʏᴢ",
         "fontUpper": "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘꞯʀꜱᴛᴜᴠᴡxʏᴢ",
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "small caps"
     },
     {
         "fontName": "Stroked",
         "fontLower": "Ⱥƀȼđɇfǥħɨɉꝁłmnøᵽꝗɍsŧᵾvwxɏƶ",
         "fontUpper": "ȺɃȻĐɆFǤĦƗɈꝀŁMNØⱣꝖɌSŦᵾVWXɎƵ",
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "stroked"
     },
     {
         "fontName": "Inverted",
         "fontLower": "ɐqɔpǝɟƃɥıɾʞןɯuodbɹsʇnʌʍxʎz",
         "fontUpper": "∀ᗺƆᗡƎℲ⅁HIſꓘ˥WNOԀტᴚS⊥∩ΛMX⅄Z",
-        "fontDigits": "0ƖᘔƐ߈95ㄥ86"
+        "fontDigits": "0ƖᘔƐ߈95ㄥ86",
+        "category": "inverted"
     },
     {
         "fontName": "1337 [extreme]",
         "fontLower": ["@", "8", "(", "|)", "3", "/=", "6", "#", "!", "_|", "|<", "|_", "/V\\", "/\\/", "0", "|*", "Q", "?", "5", "7", "(_)", "\\/", "vv", "><", "Y", "2"],
         "fontUpper": ["@", "8", "(", "|)", "3", "/=", "6", "#", "!", "_|", "|<", "|_", "/V\\", "/\\/", "0", "|*", "Q", "?", "5", "7", "(_)", "\\/", "vv", "><", "Y", "2"],
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "leet speak"
     },
     {
         "fontName": "Heavy",
         "fontLower": "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ",
         "fontUpper": "ΛＢＣＤΞＦＧＨＩＪＫＬＭＮ♢ＰＱＲＳＴＵＶＷＸＹＺ",
-        "fontDigits": "０１２３４５６７８９"
+        "fontDigits": "０１２３４５６７８９",
+        "category": "heavy bold"
     },
     {
         "fontName": "Little Fancy",
         "fontLower": "αႦƈԃҽϝɠԋιʝƙʅɱɳσρϙɾʂƚυʋɯxყȥ",
         "fontUpper": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-        "fontDigits": "0123456789"
+        "fontDigits": "0123456789",
+        "category": "fancy script"
     },
     {
         "fontName": "Fable",
         "fontLower": "ąცƈɖɛʄɠɧıʝƙƖɱŋơ℘զཞʂɬų۷ῳҳყʑ",
         "fontUpper": "ąცƈɖɛʄɠɧıʝƙƖɱŋơ℘զཞʂɬų۷ῳҳყʑ",
-        "fontDigits": "0123456789"
+        "fontDigits": "0123456789",
+        "category": "fancy decorative"
     },
     {
         "fontName": "Swirls",
         "fontLower": "ค๖¢໓ēfງhiวkl๓ຖ໐p๑rŞtนงຟxฯຊ",
         "fontUpper": "ค๖¢໓ēfງhiวkl๓ຖ໐p๑rŞtนงຟxฯຊ",
-        "fontDigits": "0123456789"
+        "fontDigits": "0123456789",
+        "category": "swirly decorative"
     },
     {
         "fontName": "Accent",
         "fontLower": "åß¢Ðê£ghïjklmñðþqr§†µvwx¥z",
         "fontUpper": "ÄßÇÐÈ£GHÌJKLMñÖþQR§†ÚVWX¥Z",
-        "fontDigits": "0123456789"
+        "fontDigits": "0123456789",
+        "category": "accented"
     },
     {
         "fontName": "Linear",
         "fontLower": "ΛBᄃDΣFGΉIJKᄂMПӨPQЯƧƬЦVЩXYZ",
         "fontUpper": "ΛBᄃDΣFGΉIJKᄂMПӨPQЯƧƬЦVЩXYZ",
-        "fontDigits": "0123456789"
+        "fontDigits": "0123456789",
+        "category": "linear decorative"
     },
     {
         "fontName": "Scribbles",
         "fontLower": "₳฿₵ĐɆ₣₲ⱧłJ₭Ⱡ₥₦Ø₱QⱤ₴₮ɄV₩ӾɎⱫ",
         "fontUpper": "₳฿₵ĐɆ₣₲ⱧłJ₭Ⱡ₥₦Ø₱QⱤ₴₮ɄV₩ӾɎⱫ",
-        "fontDigits": "0123456789"
+        "fontDigits": "0123456789",
+        "category": "subscript decorative"
     },
     {
         "fontName": "Japanese Script",
         "fontLower": "ﾑ乃ᄃり乇ｷムんﾉﾌズﾚﾶ刀のｱゐ尺丂ｲひ√Wﾒﾘ乙",
-        "fontUpper": "ﾑ乃ᄃり乇ｷムんﾉﾌズﾚﾶ刀のｱゐ尺丂ｲひ√Wﾒﾘ乙",
-        "fontDigits": "0123456789"
+        "fontUpper": "ﾑ乃ᄃり乇ｷムんﾉﾌ즈ﾚﾶ刀のｱゐ尺丂ｲひ√Wﾒﾘ乙",
+        "fontDigits": "0123456789",
+        "category": "katakana script decorative"
     },
     {
         "fontName": "Solitude",
         "fontLower": ["【a】", "【b】", "【c】", "【d】", "【e】", "【f】", "【g】", "【h】", "【i】", "【j】", "【k】", "【l】", "【m】", "【n】", "【o】", "【p】", "【q】", "【r】", "【s】", "【t】", "【u】", "【v】", "【w】", "【x】", "【y】", "【z】"],
         "fontUpper": ["【A】", "【B】", "【C】", "【D】", "【E】", "【F】", "【G】", "【H】", "【I】", "【J】", "【K】", "【L】", "【M】", "【N】", "【O】", "【P】", "【Q】", "【R】", "【S】", "【T】", "【U】", "【V】", "【W】", "【X】", "【Y】", "【Z】"],
-        "fontDigits": ["【0】", "【1】", "【2】", "【3】", "【4】", "【5】", "【6】", "【7】", "【8】", "【9】"]
+        "fontDigits": ["【0】", "【1】", "【2】", "【3】", "【4】", "【5】", "【6】", "【7】", "【8】", "【9】"],
+        "category": "bracketed decorative"
     },
     {
         "fontName": "Brackets",
         "fontLower": ["『a』", "『b』", "『c』", "『d』", "『e』", "『f』", "『g』", "『h』", "『i』", "『j』", "『k』", "『l』", "『m』", "『n』", "『o』", "『p』", "『q』", "『r』", "『s』", "『t』", "『u』", "『v』", "『w』", "『x』", "『y』", "『z』"],
         "fontUpper": ["『A』", "『B』", "『C』", "『D』", "『E』", "『F』", "『G』", "『H』", "『I』", "『J』", "『K』", "『L』", "『M』", "『N』", "『O』", "『P』", "『Q』", "『R』", "『S』", "『T』", "『U』", "『V』", "『W』", "『X』", "『Y』", "『Z』"],
-        "fontDigits": ["『0』','『1』", "『2』", "『3』", "『4』", "『5』", "『6』", "『7』", "『8』", "『9』"]
+        "fontDigits": ["『0』", "『1』", "『2』", "『3』", "『4』", "『5』", "『6』", "『7』", "『8』", "『9』"],
+        "category": "bracketed decorative"
     },
     {
         "fontName": "Box Lines",
         "fontLower": ["[̲̅a]", "[̲̅b]", "[̲̅c]", "[̲̅d]", "[̲̅e]", "[̲̅f]", "[̲̅g]", "[̲̅h]", "[̲̅i]", "[̲̅j]", "[̲̅k]", "[̲̅l]", "[̲̅m]", "[̲̅n]", "[̲̅o]", "[̲̅p]", "[̲̅q]", "[̲̅r]", "[̲̅s]", "[̲̅t]", "[̲̅u]", "[̲̅v]", "[̲̅w]", "[̲̅x]", "[̲̅y]", "[̲̅z]"],
         "fontUpper": ["[̲̅A]", "[̲̅B]", "[̲̅C]", "[̲̅D]", "[̲̅E]", "[̲̅F]", "[̲̅G]", "[̲̅H]", "[̲̅I]", "[̲̅J]", "[̲̅K]", "[̲̅L]", "[̲̅M]", "[̲̅N]", "[̲̅O]", "[̲̅P]", "[̲̅Q]", "[̲̅R]", "[̲̅S]", "[̲̅T]", "[̲̅U]", "[̲̅V]", "[̲̅W]", "[̲̅X]", "[̲̅Y]", "[̲̅Z]"],
-        "fontDigits": ["̲̅[0]", "[̲̅1]", "[̲̅2]", "[̲̅3]", "[̲̅4]", "[̲̅5]", "[̲̅6]", "[̲̅7]", "[̲̅8]", "[̲̅9]"]
+        "fontDigits": ["[̲̅0]", "[̲̅1]", "[̲̅2]", "[̲̅3]", "[̲̅4]", "[̲̅5]", "[̲̅6]", "[̲̅7]", "[̲̅8]", "[̲̅9]"],
+        "category": "underlined decorative"
     },
     {
         "fontName": "Symbolic",
         "fontLower": ["ą", "ҍ", "ç", "ժ", "ҽ", "ƒ", "ց", "հ", "ì", "ʝ", "ҟ", "Ӏ", "ʍ", "ղ", "օ", "ք", "զ", "ɾ", "ʂ", "է", "մ", "ѵ", "ա", "×", "վ", "Հ"],
         "fontUpper": ["Ⱥ", "β", "↻", "Ꭰ", "Ɛ", "Ƒ", "Ɠ", "Ƕ", "į", "ل", "Ҡ", "Ꝉ", "Ɱ", "ហ", "ට", "φ", "Ҩ", "འ", "Ϛ", "Ͳ", "Ա", "Ỽ", "చ", "ჯ", "Ӌ", "ɀ"],
-        "fontDigits": ["⊘", "𝟙", "ϩ", "Ӡ", "५", "Ƽ", "Ϭ", "7", "𝟠", "९"]
+        "fontDigits": ["⊘", "𝟙", "ϩ", "Ӡ", "५", "Ƽ", "Ϭ", "7", "𝟠", "९"],
+        "category": "symbolic decorative"
     },
     {
         "fontName": "Bent",
         "fontLower": ["ᗩ", "ᗷ", "ᑢ", "ᕲ", "ᘿ", "ᖴ", "ᘜ", "ᕼ", "ᓰ", "ᒚ", "ᐸ", "ᒪ", "ᘻ", "ᘉ", "ᓍ", "ᕵ", "ᕴ", "ᖇ", "S", "ᖶ", "ᑘ", "ᐺ", "ᘺ", "᙭", "ᖻ", "ᗱ"],
         "fontUpper": ["ᗩ", "ᗷ", "ᑢ", "ᕲ", "ᘿ", "ᖴ", "ᘜ", "ᕼ", "ᓰ", "ᒚ", "ᐸ", "ᒪ", "ᘻ", "ᘉ", "ᓍ", "ᕵ", "ᕴ", "ᖇ", "S", "ᖶ", "ᑘ", "ᐺ", "ᘺ", "᙭", "ᖻ", "ᗱ"],
-        "fontDigits": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        "fontDigits": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+        "category": "bent decorative"
     },
     {
         "fontName": "Dashes",
         "fontLower": ["̶a̶", "b̶", "c̶", "d̶", "e̶", "f̶", "g̶", "h̶", "i̶", "j̶", "k̶", "l̶", "m̶", "n̶", "o̶", "p̶", "q̶", "r̶", "s̶", "t̶", "u̶", "v̶", "w̶", "x̶", "y̶", "z̶"],
         "fontUpper": ["̶A̶", "B̶", "C̶", "D̶", "E̶", "F̶", "G̶", "H̶", "I̶", "J̶", "K̶", "L̶", "M̶", "N̶", "O̶", "P̶", "Q̶", "R̶", "S̶", "T̶", "U̶", "V̶", "W̶", "X̶", "Y̶", "Z̶"],
-        "fontDigits": ["̶1̶", "2̶", "3̶", "4̶", "5̶", "6̶", "7̶", "8̶", "9̶"]
+        "fontDigits": ["̶1̶", "2̶", "3̶", "4̶", "5̶", "6̶", "7̶", "8̶", "9̶"],
+        "category": "strikethrough decorative"
     },
     {
         "fontName": "SideSquiggles",
         "fontLower": ["̴a", "b̴", "c̴", "d̴", "e̴", "f̴", "g̴", "h̴", "i̴", "j̴", "k̴", "l̴", "m̴", "n̴", "o̴", "p̴", "q̴", "r̴", "s̴", "t̴", "u̴", "v̴", "w̴", "x̴", "y̴", "z̴"],
         "fontUpper": ["̴A", "B̴", "C̴", "D̴", "E̴", "F̴", "G̴", "H̴", "I̴", "J̴", "K̴", "L̴", "M̴", "N̴", "O̴", "P̴", "Q̴", "R̴", "S̴", "T̴", "U̴", "V̴", "W̴", "X̴", "Y̴", "Z̴"],
-        "fontDigits": ""
+        "fontDigits": "",
+        "category": "squiggle decorative"
     },
     {
         "fontName": "SideSlashes",
         "fontLower": ["a̷", "b̷", "c̷", "d̷", "e̷", "f̷", "g̷", "h̷", "i̷", "j̷", "k̷", "l̷", "m̷", "n̷", "o̷", "p̷", "q̷", "r̷", "s̷", "t̷", "u̷", "v̷", "w̷", "x̷", "y̷", "z̷"],
         "fontUpper": ["̷̷A̷", "B̷", "C̷", "D̷", "E̷", "F̷", "G̷", "H̷", "I̷", "J̷", "K̷", "L̷", "M̷", "N̷", "O̷", "P̷", "Q̷", "R̷", "S̷", "T̷", "U̷", "V̷", "W̷", "X̷", "Y̷", "Z̷"],
-        "fontDigits": ["0̷", "0", "1̷", "2̷", "3̷", "4̷", "5̷", "6̷", "7̷", "8̷", "9̷"]
+        "fontDigits": ["0̷", "0", "1̷", "2̷", "3̷", "4̷", "5̷", "6̷", "7̷", "8̷", "9̷"],
+        "category": "slash decorative"
     },
     {
         "fontName": "DoubleUnderline",
         "fontLower": ["̳a̳", "b̳", "c̳", "d̳", "e̳", "f̳", "g̳", "h̳", "i̳", "j̳", "k̳", "l̳", "m̳", "n̳", "o̳", "p̳", "q̳", "r̳", "s̳", "t̳", "u̳", "v̳", "w̳", "x̳", "y̳", "z̳"],
         "fontUpper": ["A̳", "B̳", "C̳", "D̳", "E̳", "F̳", "G̳", "H̳", "I̳", "J̳", "K̳", "L̳", "M̳", "N̳", "O̳", "P̳", "Q̳", "R̳", "S̳", "T̳", "U̳", "V̳", "W̳", "X̳", "Y̳", "Z̳"],
-        "fontDigits": ["0̳", "1̳", "2̳", "3̳", "4̳", "5̳", "6̳", "7̳", "8̳", "9̳"]
+        "fontDigits": ["0̳", "1̳", "2̳", "3̳", "4̳", "5̳", "6̳", "7̳", "8̳", "9̳"],
+        "category": "double underline decorative"
     },
     {
         "fontName": "TopSquiggles",
         "fontLower": ["̾a", "b̾", "c̾", "d̾", "e̾", "f̾", "g̾", "h̾", "i̾", "j̾", "k̾", "l̾", "m̾", "n̾", "o̾", "p̾", "q̾", "r̾", "s̾", "t̾", "u̾", "v̾", "w̾", "x̾", "y̾", "z̾"],
         "fontUpper": ["A̾", "B̾", "C̾", "D̾", "E̾", "F̾", "G̾", "H̾", "I̾", "J̾", "K̾", "L̾", "M̾", "N̾", "O̾", "P̾", "Q̾", "R̾", "S̾", "T̾", "U̾", "V̾", "W̾", "X̾", "Y̾", "Z̾"],
-        "fontDigits": ["0̾", "1̾", "2̾", "3̾", "4̾", "5̾", "6̾", "7̾", "8̾", "9̾"]
+        "fontDigits": ["0̾", "1̾", "2̾", "3̾", "4̾", "5̾", "6̾", "7̾", "8̾", "9̾"],
+        "category": "squiggle decorative"
     },
     {
         "fontName": "ArrowUp",
         "fontLower": ["a͎", "b͎", "c͎", "d͎", "e͎", "f͎", "g͎", "h͎", "i͎", "j͎", "k͎", "l͎", "m͎", "n͎", "o͎", "p͎", "q͎", "r͎", "s͎", "t͎", "u͎", "v͎", "w͎", "x͎", "y͎", "z͎"],
         "fontUpper": ["A͎", "B͎", "C͎", "D͎", "E͎", "F͎", "G͎", "H͎", "I͎", "J͎", "K͎", "L͎", "M͎", "N͎", "O͎", "P͎", "Q͎", "R͎", "S͎", "T͎", "U͎", "V͎", "W͎", "X͎", "Y͎", "Z͎"],
-        "fontDigits": ["0͎", "1͎", "2͎", "3͎", "4͎", "5͎", "6͎", "7͎", "8͎", "9͎"]
+        "fontDigits": ["0͎", "1͎", "2͎", "3͎", "4͎", "5͎", "6͎", "7͎", "8͎", "9͎"],
+        "category": "arrow decorative"
     },
     {
         "fontName": "Exes",
         "fontLower": ["a͓̽", "b͓̽", "c͓̽", "d͓̽", "e͓̽", "f͓̽", "g͓̽", "h͓̽", "i͓̽", "j͓̽", "k͓̽", "l͓̽", "m͓̽", "n͓̽", "o͓̽", "p͓̽", "q͓̽", "r͓̽", "s͓̽", "t͓̽", "u͓̽", "v͓̽", "w͓̽", "x͓̽", "y͓̽", "z͓̽"],
         "fontUpper": ["A͓̽", "B͓̽", "C͓̽", "D͓̽", "E͓̽", "F͓̽", "G͓̽", "H͓̽", "I͓̽", "J͓̽", "K͓̽", "L͓̽", "M͓̽", "N͓̽", "O͓̽", "P͓̽", "Q͓̽", "R͓̽", "S͓̽", "T͓̽", "U͓̽", "V͓̽", "W͓̽", "X͓̽", "Y͓̽", "Z͓̽"],
-        "fontDigits": ["0͓̽", "1͓̽", "2͓̽", "3͓̽", "4͓̽", "5͓̽", "6͓̽", "7͓̽", "8͓̽", "9͓̽"]
+        "fontDigits": ["0͓̽", "1͓̽", "2͓̽", "3͓̽", "4͓̽", "5͓̽", "6͓̽", "7͓̽", "8͓̽", "9͓̽"],
+        "category": "x decorative"
     },
     {
         "fontName": "Comic",
         "fontLower": "ᗩᗷᑕᗪᗴᖴᘜᕼIᒍKᒪᗰᑎOᑭᑫᖇՏTᑌᐯᗯ᙭Yᘔ",
         "fontUpper": "ᗩᗷᑕᗪᗴᖴᘜᕼIᒍKᒪᗰᑎOᑭᑫᖇՏTᑌᐯᗯ᙭Yᘔ",
         "fontDigits": "",
+        "category": "comic decorative",
         "experimentalFont": true
     },
     {
@@ -347,6 +390,7 @@ const fontMaps = [
         "fontLower": Array.from("ꪖ᥇ᥴᦔꫀᠻᧁꫝ𝓲𝓳𝘬ꪶꪑꪀꪮρ𝘲𝘳𝘴𝓽ꪊꪜ᭙᥊ꪗɀ"),
         "fontUpper": Array.from("ꪖ᥇ᥴᦔꫀᠻᧁꫝ𝓲𝓳𝘬ꪶꪑꪀꪮρ𝘲𝘳𝘴𝓽ꪊꪜ᭙᥊ꪗɀ"),
         "fontDigits": "",
+        "category": "fancy experimental",
         "experimentalFont": true
     },
     {
@@ -354,15 +398,17 @@ const fontMaps = [
         "fontLower": "卂乃匚ᗪ乇千ᘜ卄|ﾌҜㄥ爪几ㄖ卩Ҩ尺丂ㄒㄩᐯ山乂ㄚ乙",
         "fontUpper": "卂乃匚ᗪ乇千ᘜ卄|ﾌҜㄥ爪几ㄖ卩Ҩ尺丂ㄒㄩᐯ山乂ㄚ乙",
         "fontDigits": "",
+        "category": "manga decorative",
         "experimentalFont": true
     },
     {
         "fontName": "Rune",
         "fontLower": "ልጌርዕቿቻኗዘጎጋጕረጠክዐየዒዪነፕሁሀሠሸሃጊ",
         "fontUpper": "ልጌርዕቿቻኗዘጎጋጕረጠክዐየዒዪነፕሁሀሠሸሃጊ",
-        "fontDigits:": "",
+        "fontDigits": "",
+        "category": "rune decorative",
         "experimentalFont": true
     }
-]
+];
 
 export default fontMaps;
