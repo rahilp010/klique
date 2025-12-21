@@ -9,6 +9,7 @@ import BioGenerator from './components/BioGenerator/BioGenerator';
 import WordCounter from './components/WordCounter/WordCounter';
 import Paraphrase from './components/Paraphrase/Paraphrase';
 import UsernameGenerator from './components/UserName/UserName';
+import PDFTools from './components/Converter/PDFTools';
 
 function App() {
    return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="/wordcounter" element={<WordCounter />} />
             <Route path="/aiwriter" element={<Paraphrase />} />
             <Route path="/username" element={<UsernameGenerator />} />
+            {/* <Route path="/pdftools" element={<PDFTools />} /> */}
          </Routes>
       </>
    );

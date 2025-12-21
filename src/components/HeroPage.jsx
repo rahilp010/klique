@@ -24,6 +24,7 @@ import {
    FaX,
 } from 'react-icons/fa6';
 import { LiaLongArrowAltRightSolid } from 'react-icons/lia';
+import { File } from 'lucide-react';
 
 const tools = [
    {
@@ -82,6 +83,13 @@ const tools = [
       link: '/username',
       gradient: 'from-violet-500 via-blue-500 to-blue-500',
    },
+   // {
+   //    icon: <File size={32} />,
+   //    title: 'PDF Tools',
+   //    desc: 'Convert PDF to anything.',
+   //    link: '/pdftools',
+   //    gradient: 'from-red-500 via-green-500 to-pink-500',
+   // },
 ];
 
 export default function HeroPage() {
@@ -217,10 +225,7 @@ export default function HeroPage() {
          {/* Hero Section */}
          <section className="pt-40 pb-20 px-6 text-center relative z-10 customScrollbar">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-               Create{' '}
-               <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  Amazing Content
-               </span>
+               Create <span className="gradient-text">Amazing Content</span>
                <br />
                Effortlessly
             </h1>
@@ -250,10 +255,7 @@ export default function HeroPage() {
             ref={toolsSectionRef}>
             <div className="max-w-7xl mx-auto text-center">
                <h2 className="text-4xl md:text-5xl font-bold mb-4 ">
-                  Our{' '}
-                  <span className="bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
-                     Trending Tools
-                  </span>
+                  Our <span className="gradient-text">Trending Tools</span>
                </h2>
                <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-16">
                   Powerful, intuitive tools designed to elevate your creative
@@ -309,10 +311,7 @@ export default function HeroPage() {
          <section className="pb-20 px-18 relative z-10">
             <div className="max-w-7xl mx-auto text-center">
                <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                  Popular{' '}
-                  <span className="bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
-                     This Week
-                  </span>
+                  Popular <span className="gradient-text">This Week</span>
                </h2>
                <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-16">
                   Check out the most trending tools used by our community.
@@ -366,10 +365,7 @@ export default function HeroPage() {
          <section className="py-32 px-16 relative z-10">
             <div className="max-w-7xl mx-auto text-center mb-14">
                <h2 className="text-4xl md:text-5xl font-bold">
-                  Community{' '}
-                  <span className="bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
-                     Love
-                  </span>
+                  Community <span className="gradient-text">Love</span>
                </h2>
                <p className="text-gray-400 text-lg max-w-2xl mx-auto">
                   Real feedback from real creators using TapClick.
@@ -487,9 +483,7 @@ flex flex-col gap-3 relative overflow-hidden h-[260px]"
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-14">
                {/* Brand */}
                <div>
-                  <h3 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
-                     TapClick
-                  </h3>
+                  <h3 className="text-2xl font-bold gradient-text">TapClick</h3>
                   <p className="text-gray-400 text-sm mt-4 leading-relaxed">
                      Create stunning content, bios, hashtags, and more with our
                      powerful AI tools. Designed for creators who want speed,
