@@ -65,7 +65,7 @@ const fontMaps = [
     {
         "fontName": "SansBold",
         "fontLower": Array.from("𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇"),
-        "fontUpper": Array.from("𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗡𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭"),
+        "fontUpper": Array.from("𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭"),
         "fontDigits": Array.from("𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟳𝟵"),
         "category": "sans-serif bold"
     },
