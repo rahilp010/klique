@@ -157,7 +157,9 @@ const WordCounter = () => {
    ];
 
    return (
-      <div className="max-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white p-4 sm:p-6 lg:p-8 overflow-auto customScrollbar">
+      <div className="dark min-h-screen bg-[#050505] text-slate-200 relative overflow-hidden font-sans ">
+         <div className="pointer-events-none absolute top-[-25%] left-[-15%] w-[60%] h-[60%] bg-[#a78bfa]/10 blur-[180px] rounded-full opacity-40" />
+         <div className="pointer-events-none absolute bottom-[-25%] right-[-15%] w-[60%] h-[60%] bg-[#f472b6]/10 blur-[180px] rounded-full opacity-40" />
          <div
             onClick={() => setSidebarOpen((prev) => !prev)}
             className="fixed top-6 left-6 z-40 p-3 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-xl 
@@ -185,20 +187,21 @@ const WordCounter = () => {
          )}
          <div className="max-w-7xl mx-auto">
             {/* Header */}
-            <div className="text-center mb-8 sm:mb-12 mt-20 sm:mt-14 md:mt-10">
-               <h1 className="text-3xl sm:text-3xl md:text-5xl font-bold mb-4">
-                  Word{' '}
-                  <span className="bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
-                     Counter
-                  </span>
+            <div className="text-center mb-14 mt-14">
+               <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white">
+                  Word <span className="gradient-text">Counter</span>
                </h1>
-               <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                  Analyze your text with real-time statistics and insights
+
+               <p className="text-slate-400 mt-6 max-w-xl mx-auto leading-relaxed">
+                  Analyze your text with real-time statistics, density, and
+                  readability.
+                  <br />
+                  Dark mode optimized for focus writing.
                </p>
             </div>
 
             {/* Main Content */}
-            <div className="grid lg:grid-cols-3 gap-6 mb-8">
+            <div className="grid lg:grid-cols-3 gap-6 mb-8 px-10">
                {/* Text Editor */}
                <div className="lg:col-span-2 bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
                   <div className="flex items-center justify-between mb-4">
@@ -267,7 +270,7 @@ const WordCounter = () => {
                         {statCards.map((stat, index) => (
                            <div
                               key={index}
-                              className="bg-slate-900/50 rounded-xl p-4 border border-slate-700/30 hover:border-slate-600 transition-all">
+                              className="bg-slate-900/50 rounded-xl p-4 border border-slate-700/30 hover:border-pink-500/40 transition-all">
                               <div className="flex flex-col items-center justify-between">
                                  <div className="flex items-center gap-3">
                                     <span className="text-gray-400 text-sm text-center">
@@ -286,7 +289,7 @@ const WordCounter = () => {
             </div>
 
             {/* Quick Info */}
-            <div className="bg-gradient-to-br from-indigo-500/10 to-pink-500/10 backdrop-blur-sm rounded-2xl border border-indigo-500/20 p-6 shadow-xl my-5">
+            <div className="bg-gradient-to-br from-indigo-500/10 to-pink-500/10 backdrop-blur-sm rounded-2xl border border-indigo-500/20 p-6 shadow-xl my-5 mx-10">
                <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
                   💡 Quick Tips
                </h3>
