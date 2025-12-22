@@ -217,7 +217,7 @@ const FancyFontGenerator = () => {
             {/* INPUT + OUTPUT (side-by-side) */}
             <div className="w-full max-w-5xl flex flex-col md:flex-row gap-6 items-center justify-center mb-10">
                {/* INPUT */}
-               <div className="relative glass inner-shadow bg-[#141416] border border-white/10 rounded-[2rem] shadow-2xl p-6 w-full hover:shadow-glow focus:ring-0 group-focus-within:border-primary/50 group-focus-within:shadow-glow">
+               <div className="relative glass inner-shadow bg-[#141416] border-3 border-white/10 rounded-[2rem] shadow-2xl p-6 w-full hover:shadow-glow focus:ring-0 group-focus-within:border-primary/50 group-focus-within:shadow-glow">
                   <label className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
                      Input Text
                   </label>
@@ -243,13 +243,13 @@ const FancyFontGenerator = () => {
                {/* ARROW */}
                {/* <div className="hidden md:block text-2xl font-bold">➜</div> */}
                <div className="hidden md:flex items-center">
-                  <div className="w-12 h-12 rounded-full bg-[#0f0f11] border border-white/10 flex items-center justify-center shadow-xl">
+                  <div className="w-12 h-12 rounded-full bg-[#0f0f11] border-3 border-white/10 flex items-center justify-center shadow-xl">
                      <ArrowRight className="text-primary" />
                   </div>
                </div>
 
                {/* OUTPUT */}
-               <div className="relative glass inner-shadow bg-[#141416] border border-white/10 rounded-[2rem] shadow-2xl p-6 w-full">
+               <div className="relative glass inner-shadow bg-[#141416] border-3 border-white/10 rounded-[2rem] shadow-2xl p-6 w-full">
                   <label className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
                      Live Preview
                   </label>
@@ -338,7 +338,7 @@ const FancyFontGenerator = () => {
                         className={`
           group relative overflow-hidden
           bg-[#1a1a1a] rounded-3xl p-6
-          border border-[#2a2a2a]
+          border-2 border-[#2a2a2a]
           transition-all duration-300 cursor-pointer
           hover:border-pink-500/50
           ${isSelected ? 'border-pink-500/50 bg-[#1f1f1f] border-2' : ''}
@@ -383,7 +383,7 @@ const FancyFontGenerator = () => {
                               {item.category.split(' ').map((cat, idx) => (
                                  <span
                                     key={idx}
-                                    className="px-3 py-1 bg-[#2a2a2a] text-gray-400 text-xs font-medium rounded-lg uppercase tracking-wider">
+                                    className="px-3 py-1 bg-[#2a2a2a] text-gray-400 text-[11px] font-medium rounded-lg uppercase tracking-wider">
                                     {cat.trim()}
                                  </span>
                               ))}

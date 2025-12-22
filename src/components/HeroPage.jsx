@@ -83,6 +83,13 @@ const tools = [
       link: '/username',
       gradient: 'from-violet-500 via-blue-500 to-blue-500',
    },
+   {
+      icon: <SiNamecheap size={32} />,
+      title: 'Time Zone',
+      desc: 'Create personalized and engaging bio content.',
+      link: '/timezone',
+      gradient: 'from-violet-500 via-blue-500 to-blue-500',
+   },
    // {
    //    icon: <File size={32} />,
    //    title: 'PDF Tools',

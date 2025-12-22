@@ -80,6 +80,13 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
          gradient: 'from-violet-500 via-blue-500 to-blue-500',
          borderColor: 'border-red-400/30',
       },
+      {
+         title: 'Time Zone Converter',
+         path: '/timezone',
+         icon: Sparkle,
+         gradient: 'from-violet-500 via-blue-500 to-blue-500',
+         borderColor: 'border-red-400/30',
+      },
    ];
 
    useEffect(() => {

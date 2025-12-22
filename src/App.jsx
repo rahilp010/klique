@@ -10,6 +10,7 @@ import WordCounter from './components/WordCounter/WordCounter';
 import Paraphrase from './components/Paraphrase/Paraphrase';
 import UsernameGenerator from './components/UserName/UserName';
 import PDFTools from './components/Converter/PDFTools';
+import TimeZone from './components/TimeZone/TimeZone';
 
 function App() {
    return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/wordcounter" element={<WordCounter />} />
             <Route path="/aiwriter" element={<Paraphrase />} />
             <Route path="/username" element={<UsernameGenerator />} />
+            <Route path="/timezone" element={<TimeZone />} />
             {/* <Route path="/pdftools" element={<PDFTools />} /> */}
          </Routes>
       </>
