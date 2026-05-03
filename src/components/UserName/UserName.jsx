@@ -7,7 +7,7 @@ import { IoCopyOutline } from 'react-icons/io5';
 import { SelectPicker } from 'rsuite';
 import 'rsuite/dist/rsuite-no-reset.min.css';
 
-const GEMINI_API_KEY = 'AIzaSyDzqa2Gaeubhvn5L5ncEVXbEPDgHBjhwmQ'; // Replace with your actual key
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 const tones = [
    { label: 'Casual', value: 'casual' },

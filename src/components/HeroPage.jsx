@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import {
    FaSmile,
    FaUserAlt,
@@ -459,7 +459,7 @@ flex flex-col gap-3 relative overflow-hidden h-[260px]"
                                                 className="text-yellow-300 text-lg">
                                                 ★
                                              </span>
-                                          )
+                                          ),
                                        )}
                                     </div>
                                  </div>

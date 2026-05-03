@@ -1,4 +1,4 @@
-const GEMINI_API_KEY = 'AIzaSyDzqa2Gaeubhvn5L5ncEVXbEPDgHBjhwmQ';
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 async function callGeminiApi(promptText) {
     try {

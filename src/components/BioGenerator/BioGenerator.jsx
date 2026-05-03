@@ -20,7 +20,7 @@ export default function BioGenerator() {
    const [isMobile, setIsMobile] = useState(false);
    const [tone, setTone] = useState('');
 
-   const GEMINI_API_KEY = 'AIzaSyDzqa2Gaeubhvn5L5ncEVXbEPDgHBjhwmQ';
+   const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
    /** 🌐 Check mobile screen */
    useEffect(() => {

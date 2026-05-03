@@ -24,7 +24,7 @@ export default function HashtagGenerator() {
       return () => window.removeEventListener('resize', checkMobile);
    }, []);
 
-   const GEMINI_API_KEY = 'AIzaSyDzqa2Gaeubhvn5L5ncEVXbEPDgHBjhwmQ';
+   const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
    /** 🔔 Show notification (success/error) */
    const showNotification = (message, type = 'success', duration = 2500) => {
