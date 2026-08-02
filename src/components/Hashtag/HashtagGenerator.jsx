@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PiSparkleLight } from 'react-icons/pi';
 import Navbar from '../Navbar';
+import SEO from '../SEO';
 import { FaBars } from 'react-icons/fa';
 import { GiPerspectiveDiceSixFacesRandom } from 'react-icons/gi';
 
@@ -100,6 +101,24 @@ Return only hashtags separated by spaces, no explanations.`,
 
    return (
       <div className="min-h-[100dvh] bg-gradient-to-br from-black via-gray-900 to-black text-white">
+         <SEO
+            title="AI Hashtag Generator | Viral Social Media Tags | Klique"
+            description="Boost your social media presence with our AI Hashtag Generator. Create relevant, high-reach hashtags for Instagram, TikTok, YouTube, and Twitter instantly."
+            keywords="ai hashtag generator, hashtag creator, instagram hashtags, tiktok hashtags, viral tags, klique hashtags, trending hashtags generator"
+            canonicalUrl="https://klique.com/hashtaggenerator"
+            jsonLd={{
+               "@context": "https://schema.org",
+               "@type": "SoftwareApplication",
+               "name": "AI Hashtag Generator",
+               "operatingSystem": "All",
+               "applicationCategory": "SocialNetworkingApplication",
+               "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD"
+               }
+            }}
+         />
          {/* Toast Notification - Responsive positioning */}
          {toast.visible && (
             <div className="fixed top-4 right-4 left-4 sm:left-auto sm:top-6 sm:right-6 animate-slideIn z-50">

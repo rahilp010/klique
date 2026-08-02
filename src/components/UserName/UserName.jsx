@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { FaBars, FaWandMagicSparkles } from 'react-icons/fa6';
 import { GiPerspectiveDiceSixFacesRandom } from 'react-icons/gi';
 import Navbar from '../Navbar';
+import SEO from '../SEO';
 import { IoCopyOutline } from 'react-icons/io5';
 import { SelectPicker } from 'rsuite';
 import 'rsuite/dist/rsuite-no-reset.min.css';
@@ -184,6 +185,24 @@ Keyword (optional): ${keyword || 'none'}
 
    return (
       <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white p-6 relative overflow-x-hidden">
+         <SEO
+            title="Aesthetic Username Generator | Custom Gamertags & Handles | Klique"
+            description="Create cool, unique, and aesthetic usernames for Instagram, TikTok, YouTube, Reddit, Roblox, and gaming. Find the perfect handle instantly using AI."
+            keywords="username generator, cool usernames, gamer tag generator, aesthetic handles, instagram username generator, klique, tiktok username generator"
+            canonicalUrl="https://klique.com/username"
+            jsonLd={{
+               "@context": "https://schema.org",
+               "@type": "SoftwareApplication",
+               "name": "AI Username Generator",
+               "operatingSystem": "All",
+               "applicationCategory": "UtilitiesApplication",
+               "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD"
+               }
+            }}
+         />
          <div
             onClick={() => setSidebarOpen((prev) => !prev)}
             className="fixed top-6 left-6 z-40 p-3 rounded-2xl 

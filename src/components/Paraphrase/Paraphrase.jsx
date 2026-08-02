@@ -19,6 +19,7 @@ import { Settings } from 'lucide-react';
 import { PiSparkleLight } from 'react-icons/pi';
 import { motion } from 'framer-motion';
 import Navbar from '../Navbar';
+import SEO from '../SEO';
 import { callGeminiApi, toolPrompts } from './AI';
 import { MdOutlineArrowBackIosNew, MdSummarize } from 'react-icons/md';
 import { TbTextGrammar } from 'react-icons/tb';
@@ -348,6 +349,24 @@ export default function AIWriter() {
 
    return (
       <div className="max-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white customScrollbar">
+         <SEO
+            title="AI Writer & Paraphrasing Tool | Rephrase Text | Klique"
+            description="Rephrase sentences, improve articles, fix grammar, and write creative copy with our free AI writer and paraphrase tool powered by advanced AI."
+            keywords="ai writer, paraphrasing tool, article rewriter, rephrase sentences, content generator, ai copywriter, klique ai writer, grammar checker"
+            canonicalUrl="https://klique.com/aiwriter"
+            jsonLd={{
+               "@context": "https://schema.org",
+               "@type": "SoftwareApplication",
+               "name": "AI Writer Studio",
+               "operatingSystem": "All",
+               "applicationCategory": "UtilitiesApplication",
+               "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD"
+               }
+            }}
+         />
          <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
          {/* Toast Notification */}

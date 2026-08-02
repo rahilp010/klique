@@ -2,6 +2,7 @@
 import React, { useMemo, useState, memo, useCallback, useEffect } from 'react';
 import emojis from 'emoji-datasource';
 import Navbar from '../Navbar';
+import SEO from '../SEO';
 import { FaBars } from 'react-icons/fa';
 
 import ReactCountryFlag from 'react-country-flag';
@@ -254,6 +255,24 @@ export default function EmojiCopy() {
 
    return (
       <div className="min-h-[100dvh] bg-gradient-to-br from-black via-gray-900 to-black text-white font-sans px-4 py-20 md:px-10 relative overflow-y-auto h-[100dvh] customScrollbar indexwise">
+         <SEO
+            title="Emoji Mixer & Generator | Combine Emojis | Klique"
+            description="Browse, mix, and copy-paste emojis easily. Create unique emoji combinations, search by category or country, and access trending emojis instantly."
+            keywords="emoji mixer, emoji generator, copy paste emojis, mix emojis, emoji merger, klique emojis, emojis browser"
+            canonicalUrl="https://klique.com/emojigenerator"
+            jsonLd={{
+               "@context": "https://schema.org",
+               "@type": "SoftwareApplication",
+               "name": "Emoji Mixer & Generator",
+               "operatingSystem": "All",
+               "applicationCategory": "UtilitiesApplication",
+               "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD"
+               }
+            }}
+         />
          <div
             onClick={() => setSidebarOpen((prev) => !prev)}
             className="fixed top-6 left-6 z-50 p-3 rounded-2xl 

@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useMemo, useEffect } from 'react';
 import Navbar from '../Navbar';
+import SEO from '../SEO';
 import fontMaps from './text';
 import { FaBars } from 'react-icons/fa';
 import {
@@ -185,6 +186,24 @@ const FancyFontGenerator = () => {
 
    return (
       <div className="dark min-h-screen bg-[#050505] text-slate-200 relative overflow-hidden font-sans">
+         <SEO
+            title="Fancy Font Generator | Aesthetic Text Fonts Changer | Klique"
+            description="Convert your normal text into cool, stylish, and aesthetic fancy text formats. Copy and paste stylish fonts directly to Instagram, Twitter, and TikTok."
+            keywords="font generator, fancy text generator, cool fonts, aesthetic text changer, instagram fonts, klique font generator, custom fonts copy and paste"
+            canonicalUrl="https://klique.com/fontgenerator"
+            jsonLd={{
+               "@context": "https://schema.org",
+               "@type": "SoftwareApplication",
+               "name": "Fancy Font Generator",
+               "operatingSystem": "All",
+               "applicationCategory": "UtilitiesApplication",
+               "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD"
+               }
+            }}
+         />
          {/* ambient glow */}
          <div className="pointer-events-none absolute top-[-25%] left-[-15%] w-[60%] h-[60%] bg-[#a78bfa]/10 blur-[180px] rounded-full opacity-40" />
          <div className="pointer-events-none absolute bottom-[-25%] right-[-15%] w-[60%] h-[60%] bg-[#f472b6]/10 blur-[180px] rounded-full opacity-40" />

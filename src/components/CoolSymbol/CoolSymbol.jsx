@@ -1,5 +1,6 @@
 import React, { useState, useCallback, memo, useEffect } from 'react';
 import Navbar from '../Navbar';
+import SEO from '../SEO';
 import { FaBars } from 'react-icons/fa';
 
 const symbolCategories = [
@@ -676,6 +677,24 @@ export default function CoolSymbol() {
 
    return (
       <div className="min-h-[100dvh] bg-gradient-to-br from-black via-gray-900 to-black text-white font-sans px-4 py-20 md:px-10 relative overflow-auto h-[100dvh] customScrollbar">
+         <SEO
+            title="Cool Symbols Copy & Paste | Fancy Text Symbols | Klique"
+            description="Browse and copy-paste cool symbols, aesthetic characters, hearts, stars, arrows, and mathematical symbols for your social media bios and gaming handles."
+            keywords="symbols copy paste, cool symbols, text symbols, aesthetic symbols, star symbol, heart symbol, klique symbols, aesthetic letters"
+            canonicalUrl="https://klique.com/symbol"
+            jsonLd={{
+               "@context": "https://schema.org",
+               "@type": "SoftwareApplication",
+               "name": "Cool Symbol Browser",
+               "operatingSystem": "All",
+               "applicationCategory": "UtilitiesApplication",
+               "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD"
+               }
+            }}
+         />
          <div
             onClick={() => setSidebarOpen((prev) => !prev)}
             className="fixed top-6 left-6 z-50 p-3 rounded-2xl 

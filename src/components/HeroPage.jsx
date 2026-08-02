@@ -25,6 +25,7 @@ import {
 } from 'react-icons/fa6';
 import { LiaLongArrowAltRightSolid } from 'react-icons/lia';
 import { File } from 'lucide-react';
+import SEO from './SEO';
 
 const tools = [
    {
@@ -58,35 +59,35 @@ const tools = [
    {
       icon: <FaHashtag size={32} />,
       title: 'AI HashTag',
-      desc: 'Create personalized and engaging bio content.',
+      desc: 'Generate viral, high-reach hashtags for your social posts automatically.',
       link: '/hashtaggenerator',
       gradient: 'from-amber-200 via-orange-500 to-blue-300',
    },
    {
       icon: <BiFont size={32} />,
       title: 'Word Counter',
-      desc: 'Create personalized and engaging bio content.',
-      link: '/wordCounter',
+      desc: 'Analyze text structure, count words, characters, and estimate reading time.',
+      link: '/wordcounter',
       gradient: 'from-green-500 via-yellow-500 to-cyan-500',
    },
    {
       icon: <IoSparklesOutline size={32} />,
       title: 'AI Writer',
-      desc: 'Create personalized and engaging bio content.',
+      desc: 'Rephrase sentences, rewrite articles, and generate creative copy with AI.',
       link: '/aiwriter',
       gradient: 'from-red-500 via-indigo-500 to-pink-500',
    },
    {
       icon: <SiNamecheap size={32} />,
       title: 'Username Generator',
-      desc: 'Create personalized and engaging bio content.',
+      desc: 'Create unique, cool, and aesthetic usernames and handles instantly.',
       link: '/username',
       gradient: 'from-violet-500 via-blue-500 to-blue-500',
    },
    {
       icon: <SiNamecheap size={32} />,
       title: 'Time Zone',
-      desc: 'Create personalized and engaging bio content.',
+      desc: 'Convert times between different time zones and plan global meetings.',
       link: '/timezone',
       gradient: 'from-violet-500 via-blue-500 to-blue-500',
    },
@@ -149,10 +150,25 @@ export default function HeroPage() {
       }
    };
 
-   return (
-      <div
-         ref={sectionRef}
-         className="max-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white relative overflow-auto customScrollbar">
+    const homeJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Klique",
+      "url": "https://klique.com/",
+      "description": "All-in-One Content Creator and Social Media Toolbox"
+    };
+
+    return (
+       <div
+          ref={sectionRef}
+          className="max-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white relative overflow-auto customScrollbar">
+          <SEO
+             title="Klique - All-in-One Content Creator & Social Media Toolbox"
+             description="Enhance your digital presence with Klique. Access free tools for custom fonts, emoji mixing, cool symbols, AI bios, viral hashtags, AI writer, word counter, and timezone converter."
+             keywords="klique, content creator tools, social media toolbox, fancy font generator, emoji mixer, cool symbols, copy paste symbols, AI bio generator, viral hashtag generator, AI writer, word counter, username generator, timezone converter"
+             canonicalUrl="https://klique.com/"
+             jsonLd={homeJsonLd}
+          />
          {/* Decorative blurred gradient blobs */}
          <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-indigo-500/30 rounded-full blur-[150px]" />
          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-pink-500/30 rounded-full blur-[150px]" />
@@ -171,7 +187,7 @@ export default function HeroPage() {
             {/* Logo */}
             <div className="flex items-center space-x-2">
                <span className="text-xl font-bold bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
-                  TapClick
+                  Klique
                </span>
             </div>
 
@@ -375,7 +391,7 @@ export default function HeroPage() {
                   Community <span className="gradient-text">Love</span>
                </h2>
                <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                  Real feedback from real creators using TapClick.
+                  Real feedback from real creators using Klique.
                </p>
             </div>
 
@@ -406,7 +422,7 @@ export default function HeroPage() {
                               name: 'Sophia Patel',
                               rating: 4,
                               comment:
-                                 'Beautiful UI, smooth animations and super helpful tools. I use TapClick every day!',
+                                 'Beautiful UI, smooth animations and super helpful tools. I use Klique every day!',
                            },
                            {
                               img: 'https://i.pravatar.cc/150?img=48',
@@ -490,7 +506,7 @@ flex flex-col gap-3 relative overflow-hidden h-[260px]"
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-14">
                {/* Brand */}
                <div>
-                  <h3 className="text-2xl font-bold gradient-text">TapClick</h3>
+                  <h3 className="text-2xl font-bold gradient-text">Klique</h3>
                   <p className="text-gray-400 text-sm mt-4 leading-relaxed">
                      Create stunning content, bios, hashtags, and more with our
                      powerful AI tools. Designed for creators who want speed,
@@ -619,7 +635,7 @@ flex flex-col gap-3 relative overflow-hidden h-[260px]"
             <div className="border-t border-white/10 mt-12 pt-6">
                <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
                   <p className="text-gray-500 text-sm">
-                     © {new Date().getFullYear()} TapClick. All rights reserved.
+                     © {new Date().getFullYear()} Klique. All rights reserved.
                   </p>
 
                   <div className="flex gap-6 text-sm mt-4 md:mt-0">

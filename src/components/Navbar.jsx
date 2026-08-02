@@ -61,7 +61,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
       },
       {
          title: 'Word Counter',
-         path: '/wordCounter',
+         path: '/wordcounter',
          icon: Sparkle,
          gradient: 'from-green-500 via-yellow-500 to-cyan-500',
          borderColor: 'border-red-400/30',

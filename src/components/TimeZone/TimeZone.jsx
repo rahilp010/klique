@@ -3,6 +3,7 @@ import Select from 'react-select';
 import ReactCountryFlag from 'react-country-flag';
 import { FaClock, FaBars, FaStar } from 'react-icons/fa';
 import Navbar from '../Navbar';
+import SEO from '../SEO';
 
 const getGMTOffset = (timeZone) => {
    const now = new Date();
@@ -209,6 +210,24 @@ const TimeZone = () => {
 
    return (
       <div className="dark min-h-screen bg-[#050505] text-slate-200 relative overflow-hidden font-sans">
+         <SEO
+            title="Time Zone Converter & Meeting Planner | Klique"
+            description="Convert times between global time zones seamlessly. Plan meetings, compare time differences, and keep track of your favorite cities worldwide."
+            keywords="time zone converter, world clock, meeting planner, convert time zones, timezone calculator, klique timezone, check local time"
+            canonicalUrl="https://klique.com/timezone"
+            jsonLd={{
+               "@context": "https://schema.org",
+               "@type": "SoftwareApplication",
+               "name": "Time Zone Converter",
+               "operatingSystem": "All",
+               "applicationCategory": "UtilitiesApplication",
+               "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD"
+               }
+            }}
+         />
          {/* Sidebar Toggle */}
          <div
             onClick={() => setSidebarOpen((p) => !p)}

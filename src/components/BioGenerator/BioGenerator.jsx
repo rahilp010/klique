@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PiSparkleLight } from 'react-icons/pi';
 import Navbar from '../Navbar';
+import SEO from '../SEO';
 import { FaBars } from 'react-icons/fa';
 
 import { Copy } from 'lucide-react';
@@ -129,6 +130,24 @@ Separate bios with ---
 
    return (
       <div className="min-h-[100dvh] bg-gradient-to-br from-black via-gray-900 to-black text-white">
+         <SEO
+            title="AI Bio Generator | Creative Social Media Bios | Klique"
+            description="Create professional, funny, or creative social media bios for Instagram, TikTok, Twitter, and LinkedIn using advanced AI. Grab attention and optimize your profile."
+            keywords="ai bio generator, bio creator, social media bio writer, instagram bio generator, tiktok bio, linkedin bio, klique bio, professional bio generator"
+            canonicalUrl="https://klique.com/bio"
+            jsonLd={{
+               "@context": "https://schema.org",
+               "@type": "SoftwareApplication",
+               "name": "AI Bio Generator",
+               "operatingSystem": "All",
+               "applicationCategory": "UtilitiesApplication",
+               "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD"
+               }
+            }}
+         />
          {/* 🧁 Toast Notification */}
          {toast.visible && (
             <div className="fixed top-4 right-4 left-4 sm:left-auto sm:top-6 sm:right-6 animate-slideIn z-50">

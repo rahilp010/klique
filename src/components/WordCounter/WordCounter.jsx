@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fa';
 import { IoCloudUploadOutline } from 'react-icons/io5';
 import Navbar from '../Navbar';
+import SEO from '../SEO';
 
 const WordCounter = () => {
    const [text, setText] = useState('');
@@ -158,6 +159,24 @@ const WordCounter = () => {
 
    return (
       <div className="dark min-h-screen bg-[#050505] text-slate-200 relative overflow-hidden font-sans ">
+         <SEO
+            title="Word Counter | Character & Sentence Text Analyzer | Klique"
+            description="Analyze your text online in real-time. Count words, characters, sentences, paragraphs, and estimate average reading and speaking times instantly."
+            keywords="word counter, character counter, word count tool, text analyzer, count words online, reading time estimator, klique word counter"
+            canonicalUrl="https://klique.com/wordcounter"
+            jsonLd={{
+               "@context": "https://schema.org",
+               "@type": "SoftwareApplication",
+               "name": "Word Counter & Text Analyzer",
+               "operatingSystem": "All",
+               "applicationCategory": "UtilitiesApplication",
+               "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD"
+               }
+            }}
+         />
          <div className="pointer-events-none absolute top-[-25%] left-[-15%] w-[60%] h-[60%] bg-[#a78bfa]/10 blur-[180px] rounded-full opacity-40" />
          <div className="pointer-events-none absolute bottom-[-25%] right-[-15%] w-[60%] h-[60%] bg-[#f472b6]/10 blur-[180px] rounded-full opacity-40" />
          <div

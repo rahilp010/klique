@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <!-- Home Page -->
+   <url>
+      <loc>https://klique.com/</loc>
+      <lastmod>2026-08-02</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>1.0</priority>
+   </url>
+
+   <!-- Font Generator Page -->
+   <url>
+      <loc>https://klique.com/fontgenerator</loc>
+      <lastmod>2026-08-02</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- Emoji Generator Page -->
+   <url>
+      <loc>https://klique.com/emojigenerator</loc>
+      <lastmod>2026-08-02</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- Cool Symbol Page -->
+   <url>
+      <loc>https://klique.com/symbol</loc>
+      <lastmod>2026-08-02</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- AI Bio Creator Page -->
+   <url>
+      <loc>https://klique.com/bio</loc>
+      <lastmod>2026-08-02</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- AI Hashtag Generator Page -->
+   <url>
+      <loc>https://klique.com/hashtaggenerator</loc>
+      <lastmod>2026-08-02</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- Word Counter Page -->
+   <url>
+      <loc>https://klique.com/wordcounter</loc>
+      <lastmod>2026-08-02</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- AI Writer & Paraphrase Page -->
+   <url>
+      <loc>https://klique.com/aiwriter</loc>
+      <lastmod>2026-08-02</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- Username Generator Page -->
+   <url>
+      <loc>https://klique.com/username</loc>
+      <lastmod>2026-08-02</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- Time Zone Converter Page -->
+   <url>
+      <loc>https://klique.com/timezone</loc>
+      <lastmod>2026-08-02</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+</urlset>
