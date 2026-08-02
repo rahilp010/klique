@@ -176,7 +176,7 @@ export default function HeroPage() {
          {/* Navbar */}
          <header
             className={`fixed top-2 left-1/2 transform -translate-x-1/2 z-40 
-    transition-all duration-500 ease-in-out
+    transition-[opacity,transform] duration-500 ease-in-out
     ${showNavbar ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'}
     ${
        scrolled
@@ -193,7 +193,7 @@ export default function HeroPage() {
 
             {/* Get Started Button */}
             <button
-               className="px-5 py-2 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-full text-sm font-semibold hover:scale-105 hover:shadow-md hover:shadow-pink-500/30 transition-all duration-300"
+               className="px-5 py-2 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-full text-sm font-semibold hover:scale-105 hover:shadow-md hover:shadow-pink-500/30 transition-[transform,box-shadow] duration-300"
                onClick={handleScroll}>
                Get Started
             </button>
@@ -258,7 +258,7 @@ export default function HeroPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                <button
-                  className="px-12 py-4 pr-16 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-full text-lg text-white hover:shadow-2xl hover:shadow-pink-500/40 transition-all duration-300 hover:scale-105 active:scale-95 w-full sm:w-auto relative overflow-hidden font-bold"
+                  className="px-12 py-4 pr-16 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-full text-lg text-white hover:shadow-2xl hover:shadow-pink-500/40 transition-[transform,box-shadow] duration-300 hover:scale-105 active:scale-95 w-full sm:w-auto relative overflow-hidden font-bold"
                   onClick={handleScroll}>
                   Start Creating
                   <span className="absolute right-1 top-1/2 -translate-y-1/2 p-3 bg-white rounded-full flex items-center justify-center">

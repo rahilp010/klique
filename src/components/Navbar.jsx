@@ -110,7 +110,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
          {/* Overlay always works when sidebar open */}
          {sidebarOpen && (
             <div
-               className="fixed inset-0 z-40 transition-all duration-300 ease-out opacity-100 bg-black/60 backdrop-blur-sm"
+               className="fixed inset-0 z-40 transition-opacity duration-300 ease-out opacity-100 bg-black/60 backdrop-blur-sm"
                onClick={() => setSidebarOpen(false)}
             />
          )}
@@ -155,7 +155,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
                            className={`
                               group relative flex items-center gap-4 px-4 py-3
                               rounded-2xl font-medium text-sm
-                              transition-all duration-300 ease-out
+                              transition-[transform,background-color,border-color,color] duration-300 ease-out
                               overflow-hidden
                               ${
                                  isActive
@@ -177,7 +177,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
                               className={`
                               relative z-10 w-10 h-10 rounded-xl 
                               flex items-center justify-center
-                              transition-all duration-300
+                              transition-[background-color,box-shadow] duration-300
                               ${
                                  isActive
                                     ? 'bg-white/20 shadow-lg'

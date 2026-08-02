@@ -49,7 +49,7 @@ const EmojiButton = memo(({ emoji, onCopy }) => {
          onClick={() => onCopy(emoji)} // ✅ FIX HERE
          className="aspect-square flex items-center justify-center text-3xl sm:text-2xl lg:text-4xl 
                bg-white/10 hover:bg-white/25 active:bg-white/35 rounded-2xl 
-               transition-all duration-300 ease-out hover:scale-110 hover:rotate-3 
+               transition-[transform,background-color,box-shadow] duration-300 ease-out hover:scale-110 hover:rotate-3 
                active:scale-95 shadow-lg hover:shadow-xl hover:shadow-yellow-500/25 
                border border-white/15 min-h-[3rem] sm:min-h-[3rem] lg:min-h-[4rem] relative overflow-hidden group">
          {isFlag && countryCode ? (

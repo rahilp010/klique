@@ -358,7 +358,7 @@ const FancyFontGenerator = () => {
           group relative overflow-hidden
           bg-[#1a1a1a] rounded-3xl p-6
           border-2 border-[#2a2a2a]
-          transition-all duration-300 cursor-pointer
+          transition-[border-color,background-color] duration-300 cursor-pointer
           hover:border-pink-500/50
           ${isSelected ? 'border-pink-500/50 bg-[#1f1f1f] border-2' : ''}
         `}>

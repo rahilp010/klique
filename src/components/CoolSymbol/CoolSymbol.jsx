@@ -601,7 +601,7 @@ const SymbolButton = memo(({ symbol, onCopy }) => (
       onClick={() => onCopy(symbol)}
       className="aspect-square flex items-center justify-center text-3xl sm:text-4xl 
                bg-white/5 hover:bg-white/20 active:bg-white/30 rounded-xl 
-               transition-all duration-300 ease-out hover:scale-110 hover:rotate-3 
+               transition-[transform,background-color,box-shadow] duration-300 ease-out hover:scale-110 hover:rotate-3 
                active:scale-95 shadow-md hover:shadow-lg hover:shadow-yellow-500/20 
                border border-white/10 relative overflow-hidden group">
       <span className="transition-transform duration-300 group-hover:scale-110">
