@@ -134,7 +134,7 @@ const CITY_OPTIONS = BASE_CITIES.map((c) => ({
    search: `${c.city} ${c.tz}`,
    label: (
       <div className="flex items-center gap-2">
-         <ReactCountryFlag svg countryCode={c.country} />
+         <ReactCountryFlag svg countryCode={c.country} title={c.city} />
          <span>{c.city}</span>
          <span className="text-xs text-gray-400">({getGMTOffset(c.tz)})</span>
       </div>

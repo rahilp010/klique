@@ -57,6 +57,7 @@ const EmojiButton = memo(({ emoji, onCopy }) => {
                countryCode={countryCode}
                svg
                style={{ width: '1em', height: '1em' }}
+               title={`${countryCode} flag`}
             />
          ) : (
             <span className="transition-transform duration-300 group-hover:scale-110">

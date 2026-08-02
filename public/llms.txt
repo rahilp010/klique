@@ -1,0 +1,16 @@
+# Klique - Content Creator & Social Media Toolbox
+
+Klique is an all-in-one free digital toolkit designed for content creators, marketers, developers, and social media enthusiasts.
+
+## Core Features
+
+- [Klique Home](https://klique.com/) - Main dashboard giving access to all dynamic creator utilities.
+- [Fancy Font Generator](https://klique.com/fontgenerator) - Reformat standard text into aesthetic Unicode font representations for Instagram, Twitter, and TikTok.
+- [Emoji Mixer & Generator](https://klique.com/emojigenerator) - Mix, generate, search, and copy custom emojis.
+- [Cool Symbols](https://klique.com/symbol) - Browse, copy, and paste text symbols, math entities, stars, and shapes.
+- [AI Bio Creator](https://klique.com/bio) - Write personalized, creative profile bios with adjustable tone settings powered by Gemini AI.
+- [AI Hashtag Generator](https://klique.com/hashtaggenerator) - Input post content to generate highly relevant and trending hashtags using AI.
+- [Word Counter](https://klique.com/wordcounter) - Detailed real-time text analysis, counting words, characters, sentences, paragraphs, reading time, and speaking time.
+- [AI Writer Studio](https://klique.com/aiwriter) - Text paraphraser, rephraser, email composer, grammar checker, and summarizer.
+- [Username Generator](https://klique.com/username) - Create available aesthetic handles, gamer tags, and platform-specific usernames using AI.
+- [Time Zone Converter](https://klique.com/timezone) - Convert times between international zones, manage favorite locations, and plan global meetings.

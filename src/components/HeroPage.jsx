@@ -516,18 +516,19 @@ flex flex-col gap-3 relative overflow-hidden h-[260px]"
                   {/* Social Icons */}
                   <div className="flex gap-4 mt-6">
                      {[
-                        { name: 'facebook', icon: <FaFacebook /> },
-                        { name: 'github', icon: <FaGithub /> },
-                        { name: 'instagram', icon: <FaInstagram /> },
-                        { name: 'linkedin', icon: <FaLinkedin /> },
+                        { name: 'Facebook', icon: <FaFacebook /> },
+                        { name: 'GitHub', icon: <FaGithub /> },
+                        { name: 'Instagram', icon: <FaInstagram /> },
+                        { name: 'LinkedIn', icon: <FaLinkedin /> },
                      ].map((s, i) => (
                         <a
                            key={i}
                            href="#"
+                           aria-label={`Visit Klique on ${s.name}`}
                            className="w-10 h-10 flex items-center justify-center 
                              bg-white/10 hover:bg-white/20 text-white 
-                             rounded-full transition-all backdrop-blur-xl">
-                           <span className="text-lg">{s.icon}</span>
+                             rounded-full transition-[background-color] duration-300 backdrop-blur-xl">
+                           <span className="text-lg" aria-hidden="true">{s.icon}</span>
                         </a>
                      ))}
                   </div>
