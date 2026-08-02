@@ -154,7 +154,7 @@ export default function HeroPage() {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Klique",
-      "url": "https://klique.com/",
+      "url": "https://klique.netlify.app/",
       "description": "All-in-One Content Creator and Social Media Toolbox"
     };
 
@@ -166,7 +166,7 @@ export default function HeroPage() {
              title="Klique - All-in-One Content Creator & Social Media Toolbox"
              description="Enhance your digital presence with Klique. Access free tools for custom fonts, emoji mixing, cool symbols, AI bios, viral hashtags, AI writer, word counter, and timezone converter."
              keywords="klique, content creator tools, social media toolbox, fancy font generator, emoji mixer, cool symbols, copy paste symbols, AI bio generator, viral hashtag generator, AI writer, word counter, username generator, timezone converter"
-             canonicalUrl="https://klique.com/"
+             canonicalUrl="https://klique.netlify.app/"
              jsonLd={homeJsonLd}
           />
          {/* Decorative blurred gradient blobs */}

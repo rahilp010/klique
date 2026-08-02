@@ -43,4 +43,4 @@ User-agent: cohere-ai
 Allow: /
 
 # Link to sitemap
-Sitemap: https://klique.com/sitemap.xml
+Sitemap: https://klique.netlify.app/sitemap.xml

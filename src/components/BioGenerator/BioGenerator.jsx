@@ -134,7 +134,7 @@ Separate bios with ---
             title="AI Bio Generator | Creative Social Media Bios | Klique"
             description="Create professional, funny, or creative social media bios for Instagram, TikTok, Twitter, and LinkedIn using advanced AI. Grab attention and optimize your profile."
             keywords="ai bio generator, bio creator, social media bio writer, instagram bio generator, tiktok bio, linkedin bio, klique bio, professional bio generator"
-            canonicalUrl="https://klique.com/bio"
+            canonicalUrl="https://klique.netlify.app/bio"
             jsonLd={{
                "@context": "https://schema.org",
                "@type": "SoftwareApplication",

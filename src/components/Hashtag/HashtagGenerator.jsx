@@ -105,7 +105,7 @@ Return only hashtags separated by spaces, no explanations.`,
             title="AI Hashtag Generator | Viral Social Media Tags | Klique"
             description="Boost your social media presence with our AI Hashtag Generator. Create relevant, high-reach hashtags for Instagram, TikTok, YouTube, and Twitter instantly."
             keywords="ai hashtag generator, hashtag creator, instagram hashtags, tiktok hashtags, viral tags, klique hashtags, trending hashtags generator"
-            canonicalUrl="https://klique.com/hashtaggenerator"
+            canonicalUrl="https://klique.netlify.app/hashtaggenerator"
             jsonLd={{
                "@context": "https://schema.org",
                "@type": "SoftwareApplication",

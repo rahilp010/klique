@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <!-- Home Page -->
    <url>
-      <loc>https://klique.com/</loc>
+      <loc>https://klique.netlify.app/</loc>
       <lastmod>2026-08-02</lastmod>
       <changefreq>weekly</changefreq>
       <priority>1.0</priority>
@@ -10,7 +10,7 @@
 
    <!-- Font Generator Page -->
    <url>
-      <loc>https://klique.com/fontgenerator</loc>
+      <loc>https://klique.netlify.app/fontgenerator</loc>
       <lastmod>2026-08-02</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
@@ -18,7 +18,7 @@
 
    <!-- Emoji Generator Page -->
    <url>
-      <loc>https://klique.com/emojigenerator</loc>
+      <loc>https://klique.netlify.app/emojigenerator</loc>
       <lastmod>2026-08-02</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
@@ -26,7 +26,7 @@
 
    <!-- Cool Symbol Page -->
    <url>
-      <loc>https://klique.com/symbol</loc>
+      <loc>https://klique.netlify.app/symbol</loc>
       <lastmod>2026-08-02</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
@@ -34,7 +34,7 @@
 
    <!-- AI Bio Creator Page -->
    <url>
-      <loc>https://klique.com/bio</loc>
+      <loc>https://klique.netlify.app/bio</loc>
       <lastmod>2026-08-02</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
@@ -42,7 +42,7 @@
 
    <!-- AI Hashtag Generator Page -->
    <url>
-      <loc>https://klique.com/hashtaggenerator</loc>
+      <loc>https://klique.netlify.app/hashtaggenerator</loc>
       <lastmod>2026-08-02</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
@@ -50,7 +50,7 @@
 
    <!-- Word Counter Page -->
    <url>
-      <loc>https://klique.com/wordcounter</loc>
+      <loc>https://klique.netlify.app/wordcounter</loc>
       <lastmod>2026-08-02</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
@@ -58,7 +58,7 @@
 
    <!-- AI Writer & Paraphrase Page -->
    <url>
-      <loc>https://klique.com/aiwriter</loc>
+      <loc>https://klique.netlify.app/aiwriter</loc>
       <lastmod>2026-08-02</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
@@ -66,7 +66,7 @@
 
    <!-- Username Generator Page -->
    <url>
-      <loc>https://klique.com/username</loc>
+      <loc>https://klique.netlify.app/username</loc>
       <lastmod>2026-08-02</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
@@ -74,7 +74,7 @@
 
    <!-- Time Zone Converter Page -->
    <url>
-      <loc>https://klique.com/timezone</loc>
+      <loc>https://klique.netlify.app/timezone</loc>
       <lastmod>2026-08-02</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>

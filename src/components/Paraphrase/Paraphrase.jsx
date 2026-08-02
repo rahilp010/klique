@@ -353,7 +353,7 @@ export default function AIWriter() {
             title="AI Writer & Paraphrasing Tool | Rephrase Text | Klique"
             description="Rephrase sentences, improve articles, fix grammar, and write creative copy with our free AI writer and paraphrase tool powered by advanced AI."
             keywords="ai writer, paraphrasing tool, article rewriter, rephrase sentences, content generator, ai copywriter, klique ai writer, grammar checker"
-            canonicalUrl="https://klique.com/aiwriter"
+            canonicalUrl="https://klique.netlify.app/aiwriter"
             jsonLd={{
                "@context": "https://schema.org",
                "@type": "SoftwareApplication",

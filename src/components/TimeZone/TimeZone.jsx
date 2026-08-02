@@ -214,7 +214,7 @@ const TimeZone = () => {
             title="Time Zone Converter & Meeting Planner | Klique"
             description="Convert times between global time zones seamlessly. Plan meetings, compare time differences, and keep track of your favorite cities worldwide."
             keywords="time zone converter, world clock, meeting planner, convert time zones, timezone calculator, klique timezone, check local time"
-            canonicalUrl="https://klique.com/timezone"
+            canonicalUrl="https://klique.netlify.app/timezone"
             jsonLd={{
                "@context": "https://schema.org",
                "@type": "SoftwareApplication",

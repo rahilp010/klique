@@ -681,7 +681,7 @@ export default function CoolSymbol() {
             title="Cool Symbols Copy & Paste | Fancy Text Symbols | Klique"
             description="Browse and copy-paste cool symbols, aesthetic characters, hearts, stars, arrows, and mathematical symbols for your social media bios and gaming handles."
             keywords="symbols copy paste, cool symbols, text symbols, aesthetic symbols, star symbol, heart symbol, klique symbols, aesthetic letters"
-            canonicalUrl="https://klique.com/symbol"
+            canonicalUrl="https://klique.netlify.app/symbol"
             jsonLd={{
                "@context": "https://schema.org",
                "@type": "SoftwareApplication",

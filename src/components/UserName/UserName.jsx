@@ -189,7 +189,7 @@ Keyword (optional): ${keyword || 'none'}
             title="Aesthetic Username Generator | Custom Gamertags & Handles | Klique"
             description="Create cool, unique, and aesthetic usernames for Instagram, TikTok, YouTube, Reddit, Roblox, and gaming. Find the perfect handle instantly using AI."
             keywords="username generator, cool usernames, gamer tag generator, aesthetic handles, instagram username generator, klique, tiktok username generator"
-            canonicalUrl="https://klique.com/username"
+            canonicalUrl="https://klique.netlify.app/username"
             jsonLd={{
                "@context": "https://schema.org",
                "@type": "SoftwareApplication",

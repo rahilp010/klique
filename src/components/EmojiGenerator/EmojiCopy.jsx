@@ -260,7 +260,7 @@ export default function EmojiCopy() {
             title="Emoji Mixer & Generator | Combine Emojis | Klique"
             description="Browse, mix, and copy-paste emojis easily. Create unique emoji combinations, search by category or country, and access trending emojis instantly."
             keywords="emoji mixer, emoji generator, copy paste emojis, mix emojis, emoji merger, klique emojis, emojis browser"
-            canonicalUrl="https://klique.com/emojigenerator"
+            canonicalUrl="https://klique.netlify.app/emojigenerator"
             jsonLd={{
                "@context": "https://schema.org",
                "@type": "SoftwareApplication",

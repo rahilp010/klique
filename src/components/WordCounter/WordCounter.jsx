@@ -163,7 +163,7 @@ const WordCounter = () => {
             title="Word Counter | Character & Sentence Text Analyzer | Klique"
             description="Analyze your text online in real-time. Count words, characters, sentences, paragraphs, and estimate average reading and speaking times instantly."
             keywords="word counter, character counter, word count tool, text analyzer, count words online, reading time estimator, klique word counter"
-            canonicalUrl="https://klique.com/wordcounter"
+            canonicalUrl="https://klique.netlify.app/wordcounter"
             jsonLd={{
                "@context": "https://schema.org",
                "@type": "SoftwareApplication",

@@ -190,7 +190,7 @@ const FancyFontGenerator = () => {
             title="Fancy Font Generator | Aesthetic Text Fonts Changer | Klique"
             description="Convert your normal text into cool, stylish, and aesthetic fancy text formats. Copy and paste stylish fonts directly to Instagram, Twitter, and TikTok."
             keywords="font generator, fancy text generator, cool fonts, aesthetic text changer, instagram fonts, klique font generator, custom fonts copy and paste"
-            canonicalUrl="https://klique.com/fontgenerator"
+            canonicalUrl="https://klique.netlify.app/fontgenerator"
             jsonLd={{
                "@context": "https://schema.org",
                "@type": "SoftwareApplication",

@@ -10,7 +10,7 @@ export default function SEO({
    keywords,
    canonicalUrl,
    ogType = 'website',
-   ogImage = 'https://klique.com/assets/klique.png', // Default image
+   ogImage = 'https://klique.netlify.app/assets/klique.png', // Default image
    jsonLd,
 }) {
    useEffect(() => {
