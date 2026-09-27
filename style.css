@@ -10,7 +10,7 @@ body {
 
 .customScrollbar {
    overflow-y: auto;
-   overflow-x: auto;
+   overflow-x: hidden;
 }
 
 .customScrollbar::-webkit-scrollbar {

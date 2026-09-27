@@ -171,10 +171,10 @@ Separate bios with ---
    return (
       <ColumnLines
          columnWidth={80}
-         columnCount={14}
+         columnCount={34}
          radialFadeStart={15}
          radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto">
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto">
          <SEO
             title="AI Bio Generator | Creative Social Media Bios | Klique"
             description="Create professional, funny, or creative social media bios for Instagram, TikTok, Twitter, and LinkedIn using advanced AI. Grab attention and optimize your profile."

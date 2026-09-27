@@ -131,10 +131,10 @@ export default function HeroPage() {
    return (
       <ColumnLines
          columnWidth={80}
-         columnCount={14}
+         columnCount={34}
          radialFadeStart={15}
          radialFadeEnd={90}
-         className="relative min-h-screen w-full bg-zinc-50 dark:bg-zinc-950 customScrollbar overflow-auto">
+         className="relative min-h-screen w-full bg-zinc-50 dark:bg-zinc-950 customScrollbar overflow-x-hidden overflow-y-auto">
          <div ref={sectionRef} className="relative z-10 w-full h-full">
             <SEO
                title="Klique - All-in-One Content Creator & Social Media Toolbox"

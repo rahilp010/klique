@@ -629,10 +629,10 @@ export default function CoolSymbol() {
    return (
       <ColumnLines
          columnWidth={80}
-         columnCount={16}
+         columnCount={34}
          radialFadeStart={15}
          radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto px-4 py-20 md:px-10">
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-4 py-20 md:px-10">
          <SEO
             title="Cool Symbols Copy & Paste | Fancy Text Symbols | Klique"
             description="Browse and copy-paste cool symbols, aesthetic characters, hearts, stars, arrows, and mathematical symbols for your social media bios and gaming handles."
@@ -669,7 +669,7 @@ export default function CoolSymbol() {
             )}
          </AnimatePresence>
 
-         <div className="ml-10">
+         <div className="w-full max-w-6xl mx-auto pl-0 lg:pl-20 px-3 sm:px-6 relative z-20">
             <motion.div
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}

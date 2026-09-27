@@ -74,10 +74,10 @@ export default function WordToPdf() {
    return (
       <ColumnLines
          columnWidth={80}
-         columnCount={14}
+         columnCount={34}
          radialFadeStart={15}
          radialFadeEnd={90}
-         className="relative min-h-[100dvh] flex items-center justify-center w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto px-4 py-20 md:px-10">
+         className="relative min-h-[100dvh] flex items-center justify-center w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-4 py-20 md:px-10">
          <div
             onClick={() => setSidebarOpen((prev) => !prev)}
             className="fixed top-6 left-6 z-40 p-3 rounded-xl bg-[#18181b] border border-zinc-800 hover:bg-zinc-800 transition shadow-sm cursor-pointer">

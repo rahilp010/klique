@@ -8,6 +8,7 @@ import { ArrowRight, Copy, Download, Heart, Search } from 'lucide-react';
 import { BsHeartFill } from 'react-icons/bs';
 import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 import { Input } from '@/components/ui/CustomControl';
+import { motion, AnimatePresence } from 'motion/react';
 
 const Toast = ({ toast }) => {
    if (!toast.visible) return null;
@@ -171,10 +172,10 @@ const FancyFontGenerator = () => {
    return (
       <ColumnLines
          columnWidth={80}
-         columnCount={14}
+         columnCount={34}
          radialFadeStart={15}
          radialFadeEnd={90}
-         className="relative min-h-screen w-full bg-zinc-50 dark:bg-zinc-950 customScrollbar overflow-auto text-zinc-900 dark:text-zinc-100 font-sans">
+         className="relative min-h-screen w-full bg-zinc-50 dark:bg-zinc-950 customScrollbar overflow-x-hidden overflow-y-auto text-zinc-900 dark:text-zinc-100 font-sans">
          <SEO
             title="Fancy Font Generator | Aesthetic Text Fonts Changer | Klique"
             description="Convert your normal text into cool, stylish, and aesthetic fancy text formats. Copy and paste stylish fonts directly to Instagram, Twitter, and TikTok."
@@ -204,17 +205,20 @@ const FancyFontGenerator = () => {
             <Toast toast={toast} />
 
             {/* HEADER */}
-            <div className="text-center mb-20">
-               <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+
+            <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               className="text-center mb-10">
+               <h1 className="text-3xl sm:text-4xl font-medium text-zinc-100 tracking-tight mb-3">
                   Fancy Font Generator
                </h1>
-
-               <p className="text-zinc-500 dark:text-zinc-400 mt-6 max-w-xl mx-auto leading-relaxed">
+               <p className="text-zinc-500 text-sm sm:text-base font-medium">
                   Transform your text into stylish aesthetics for social media.
                   <br />
                   Operate swiftly with precise accuracy.
                </p>
-            </div>
+            </motion.div>
 
             {/* INPUT + OUTPUT */}
             <div className="w-full max-w-5xl flex flex-col md:flex-row gap-6 items-center justify-center mb-10">

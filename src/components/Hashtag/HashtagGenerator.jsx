@@ -145,10 +145,10 @@ Return only hashtags separated by spaces, no explanations.`,
    return (
       <ColumnLines
          columnWidth={80}
-         columnCount={14}
+         columnCount={34}
          radialFadeStart={15}
          radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto">
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto">
          <SEO
             title="AI Hashtag Generator | Viral Social Media Tags | Klique"
             description="Boost your social media presence with our AI Hashtag Generator. Create relevant, high-reach hashtags for Instagram, TikTok, YouTube, and Twitter instantly."

@@ -370,10 +370,10 @@ export default function AIWriter() {
    return (
       <ColumnLines
          columnWidth={80}
-         columnCount={16}
+         columnCount={34}
          radialFadeStart={15}
          radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto">
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto">
          <SEO
             title="AI Writer & Paraphrasing Tool | Rephrase Text | Klique"
             description="Rephrase sentences, improve articles, fix grammar, and write creative copy with our free AI writer and paraphrase tool powered by advanced AI."
@@ -417,7 +417,7 @@ export default function AIWriter() {
             )}
          </AnimatePresence>
 
-         <div className="min-h-[100dvh] ml-10">
+         <div className="min-h-[100dvh] w-full max-w-6xl mx-auto pl-0 lg:pl-20 px-3 sm:px-6 relative z-20">
             {/* Main Content Area */}
             <main className="min-h-[100dvh] overflow-y-auto customScrollbar p-4 pt-10 sm:p-8 lg:p-10 relative">
                <div className="max-w-4xl mx-auto w-full flex flex-col gap-8 pb-10">

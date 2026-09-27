@@ -183,10 +183,10 @@ Rules:
    return (
       <ColumnLines
          columnWidth={80}
-         columnCount={14}
+         columnCount={34}
          radialFadeStart={15}
          radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto px-4 py-20 md:px-10">
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-4 py-20 md:px-10">
          <SEO
             title="Aesthetic Username Generator | Custom Gamertags & Handles | Klique"
             description="Create cool, unique, and aesthetic usernames for Instagram, TikTok, YouTube, Reddit, Roblox, and gaming. Find the perfect handle instantly using AI."
@@ -223,21 +223,22 @@ Rules:
             <Navbar />
          </div>
 
-         {/* Header */}
-         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-10 relative z-20">
-            <h1 className="text-3xl sm:text-4xl font-medium text-zinc-100 tracking-tight mb-3">
-               Username Generator
-            </h1>
-            <p className="text-zinc-500 text-sm sm:text-base font-medium">
-               Create creative, cool, or AI-powered usernames instantly
-            </p>
-         </motion.div>
+         <div className="w-full max-w-6xl mx-auto pl-0 lg:pl-20 px-3 sm:px-6 relative z-20">
+            {/* Header */}
+            <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               className="text-center mb-10 relative z-20">
+               <h1 className="text-3xl sm:text-4xl font-medium text-zinc-100 tracking-tight mb-3">
+                  Username Generator
+               </h1>
+               <p className="text-zinc-500 text-sm sm:text-base font-medium">
+                  Create creative, cool, or AI-powered usernames instantly
+               </p>
+            </motion.div>
 
-         {/* Controls */}
-         <div className="max-w-4xl mx-auto bg-[#121214] border border-zinc-800/80 rounded-2xl p-6 shadow-xl relative z-20">
+            {/* Controls */}
+            <div className="max-w-4xl mx-auto bg-[#121214] border border-zinc-800/80 rounded-2xl p-6 shadow-xl relative z-20">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                <select
                   value={platform}
@@ -374,6 +375,7 @@ Rules:
                </motion.div>
             )}
          </AnimatePresence>
+         </div>
       </ColumnLines>
    );
 }

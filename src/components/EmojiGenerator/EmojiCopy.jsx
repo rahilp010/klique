@@ -204,10 +204,10 @@ export default function EmojiCopy() {
    return (
       <ColumnLines
          columnWidth={80}
-         columnCount={16}
+         columnCount={34}
          radialFadeStart={15}
          radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto px-4 py-20 md:px-10">
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-4 py-20 md:px-10">
          <SEO
             title="Emoji Mixer & Generator | Combine Emojis | Klique"
             description="Browse, mix, and copy-paste emojis easily. Create unique emoji combinations, search by category or country, and access trending emojis instantly."
@@ -219,7 +219,7 @@ export default function EmojiCopy() {
             <Navbar />
          </div>
 
-         <div className="ml-10">
+         <div className="w-full max-w-6xl mx-auto pl-0 lg:pl-20 px-3 sm:px-6 relative z-20">
             {/* Toast Notification */}
             <AnimatePresence>
                {toast.visible && (
