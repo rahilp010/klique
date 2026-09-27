@@ -8,36 +8,98 @@ import { motion } from 'motion/react';
 import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 import { SelectPicker } from '@/components/ui/CustomControl';
 
-const GMT_OFFSET_CACHE = new Map();
+// Get the real UTC offset for any IANA time zone at the supplied date.
+// This correctly handles DST as well as 30/45-minute offsets.
+const getOffsetMinutes = (timeZone, date = new Date()) => {
+   if (!timeZone) return 0;
 
-const getGMTOffset = (timeZone) => {
-   if (!timeZone) return 'GMT +00:00';
-   if (GMT_OFFSET_CACHE.has(timeZone)) {
-      return GMT_OFFSET_CACHE.get(timeZone);
-   }
    try {
-      const now = new Date();
-      const tzDate = new Date(now.toLocaleString('en-US', { timeZone }));
-      const offsetMinutes = Math.round((tzDate - now) / 60000);
+      const parts = new Intl.DateTimeFormat('en-US', {
+         timeZone,
+         timeZoneName: 'longOffset',
+         year: 'numeric',
+         month: '2-digit',
+         day: '2-digit',
+         hour: '2-digit',
+         minute: '2-digit',
+         second: '2-digit',
+         hourCycle: 'h23',
+      }).formatToParts(date);
 
-      const sign = offsetMinutes >= 0 ? '+' : '-';
-      const abs = Math.abs(offsetMinutes);
-      const hours = String(Math.floor(abs / 60)).padStart(2, '0');
-      const minutes = String(abs % 60).padStart(2, '0');
+      const offsetPart = parts.find(
+         (part) => part.type === 'timeZoneName',
+      )?.value;
 
-      const res = `GMT ${sign}${hours}:${minutes}`;
-      GMT_OFFSET_CACHE.set(timeZone, res);
-      return res;
+      if (!offsetPart || offsetPart === 'GMT' || offsetPart === 'UTC') return 0;
+
+      const match = offsetPart.match(/(?:GMT|UTC)([+-])(\d{2}):?(\d{2})?/);
+      if (!match) return 0;
+
+      const hours = Number(match[2]);
+      const minutes = Number(match[3] || 0);
+      const total = hours * 60 + minutes;
+
+      return match[1] === '-' ? -total : total;
    } catch {
-      return 'GMT +00:00';
+      return 0;
    }
 };
 
-const isBusinessOpen = (timeZone) => {
-   const hour = new Date(
-      new Date().toLocaleString('en-US', { timeZone }),
-   ).getHours();
-   return hour >= 9 && hour <= 18;
+const getGMTOffset = (timeZone, date = new Date()) => {
+   const offsetMinutes = getOffsetMinutes(timeZone, date);
+
+   if (offsetMinutes === 0) return 'UTC +00:00';
+
+   const sign = offsetMinutes >= 0 ? '+' : '-';
+   const abs = Math.abs(offsetMinutes);
+   const hours = String(Math.floor(abs / 60)).padStart(2, '0');
+   const minutes = String(abs % 60).padStart(2, '0');
+
+   return `UTC ${sign}${hours}:${minutes}`;
+};
+
+const getTimeZoneAbbreviation = (timeZone, date = new Date()) => {
+   if (!timeZone) return 'UTC';
+
+   try {
+      const value = new Intl.DateTimeFormat('en-US', {
+         timeZone,
+         timeZoneName: 'short',
+      })
+         .formatToParts(date)
+         .find((part) => part.type === 'timeZoneName')?.value;
+
+      return value || 'UTC';
+   } catch {
+      return 'UTC';
+   }
+};
+
+const getTimeZoneDisplay = (timeZone, date, mode = 'gmt') => {
+   if (mode === 'abbreviation') {
+      return getTimeZoneAbbreviation(timeZone, date);
+   }
+
+   if (mode === 'iana') {
+      return timeZone?.replace(/_/g, ' ') || 'UTC';
+   }
+
+   return getGMTOffset(timeZone, date);
+};
+
+const isBusinessOpen = (timeZone, date = new Date()) => {
+   try {
+      const hour = Number(
+         new Intl.DateTimeFormat('en-US', {
+            timeZone,
+            hour: '2-digit',
+            hourCycle: 'h23',
+         }).format(date),
+      );
+      return hour >= 9 && hour < 18;
+   } catch {
+      return false;
+   }
 };
 
 const BASE_CITIES = [
@@ -128,37 +190,46 @@ const BASE_CITIES = [
    { city: 'Fiji', tz: 'Pacific/Fiji', country: 'FJ' },
 ];
 
-const ALL_TIMEZONES = Intl.supportedValuesOf('timeZone');
+const ALL_TIMEZONES = [
+   'UTC',
+   ...(typeof Intl.supportedValuesOf === 'function'
+      ? Intl.supportedValuesOf('timeZone')
+      : [
+           'UTC',
+           'Asia/Kolkata',
+           'Asia/Dubai',
+           'Asia/Tokyo',
+           'Europe/London',
+           'Europe/Paris',
+           'America/New_York',
+           'America/Los_Angeles',
+           'America/Chicago',
+           'Australia/Sydney',
+           'Pacific/Auckland',
+        ]),
+];
 
-const CITY_OPTIONS = BASE_CITIES.map((c) => {
-   const offset = getGMTOffset(c.tz);
-   return {
-      value: `${c.city} (${c.tz})`,
-      tz: c.tz,
-      city: c.city,
-      country: c.country,
-      offset,
-      label: `${c.city} (${c.tz}) ${offset}`,
-   };
-});
+const CITY_OPTIONS = BASE_CITIES.map((c) => ({
+   value: `${c.city} (${c.tz})`,
+   tz: c.tz,
+   city: c.city,
+   country: c.country,
+   label: `${c.city} (${c.tz}) ${getGMTOffset(c.tz)}`,
+}));
 
-const GLOBAL_OPTIONS = ALL_TIMEZONES.map((tz) => {
-   const offset = getGMTOffset(tz);
-   return {
-      value: tz,
-      tz,
-      city: null,
-      country: null,
-      offset,
-      label: `${tz.replace(/_/g, ' ')} (${offset})`,
-   };
-});
+const GLOBAL_OPTIONS = ALL_TIMEZONES.map((tz) => ({
+   value: tz,
+   tz,
+   city: null,
+   country: null,
+   label: `${tz.replace(/_/g, ' ')} (${getGMTOffset(tz)})`,
+}));
 
 const OPTIONS = [...CITY_OPTIONS, ...GLOBAL_OPTIONS].filter(
    (v, i, a) => a.findIndex((t) => t.value === v.value) === i,
 );
 
-const renderTZItem = (label, item) => (
+const renderTZItem = (label, item, displayMode = 'gmt', date = new Date()) => (
    <div className="flex items-center justify-between w-full gap-3 py-1">
       <div className="flex items-center gap-2.5 min-w-0">
          {item?.country ? (
@@ -182,7 +253,7 @@ const renderTZItem = (label, item) => (
          )}
       </div>
       <span className="text-xs font-mono text-[#daf4aa] bg-[#daf4aa]/10 px-2 py-0.5 rounded shrink-0">
-         {item?.offset || getGMTOffset(item?.tz || 'UTC')}
+         {getTimeZoneDisplay(item?.tz || 'UTC', date, displayMode)}
       </span>
    </div>
 );
@@ -196,6 +267,7 @@ const TimeZone = () => {
    );
    const [date, setDate] = useState(new Date());
    const [is24h, setIs24h] = useState(true);
+   const [displayMode, setDisplayMode] = useState('gmt');
    const [favorites, setFavorites] = useState([]);
 
    useEffect(() => {
@@ -220,16 +292,31 @@ const TimeZone = () => {
       }
    };
 
-   const diffHours = useMemo(() => {
+   // Difference between the selected zones at the exact selected instant.
+   // Returns minutes so zones such as India (+05:30), Nepal (+05:45),
+   // Newfoundland (-03:30) and Australia (+09:30) are handled correctly.
+   const diffMinutes = useMemo(() => {
       if (!fromZone?.tz || !toZone?.tz) return 0;
-      const from = new Date(
-         date.toLocaleString('en-US', { timeZone: fromZone.tz }),
+      return (
+         getOffsetMinutes(toZone.tz, date) - getOffsetMinutes(fromZone.tz, date)
       );
-      const to = new Date(
-         date.toLocaleString('en-US', { timeZone: toZone.tz }),
-      );
-      return Math.round((to - from) / 36e5);
    }, [fromZone, toZone, date]);
+
+   const formatDifference = (minutes) => {
+      if (minutes === 0) return 'Same time';
+
+      const sign = minutes > 0 ? '+' : '-';
+      const abs = Math.abs(minutes);
+      const hours = Math.floor(abs / 60);
+      const mins = abs % 60;
+
+      if (mins === 0) return `${sign}${hours} hrs`;
+      if (hours === 0) return `${sign}${mins} min`;
+      return `${sign}${hours}h ${mins}m`;
+   };
+
+   const renderTimeZoneItem = (label, item) =>
+      renderTZItem(label, item, displayMode, date);
 
    const toggleFav = (tz) => {
       setFavorites((p) =>
@@ -246,7 +333,7 @@ const TimeZone = () => {
          className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto px-4 py-20 md:px-10">
          <SEO
             title="Time Zone Converter & Meeting Planner | Klique"
-            description="Convert times between global time zones seamlessly. Plan meetings, compare time differences, and keep track of your favorite cities worldwide."
+            description="Convert times between all supported global IANA time zones. Handle daylight saving time, half-hour and 45-minute offsets, compare time differences, and keep track of favorite cities worldwide."
             keywords="time zone converter, world clock, meeting planner, convert time zones, timezone calculator, klique timezone, check local time"
             canonicalUrl="https://klique.netlify.app/timezone"
          />
@@ -265,7 +352,8 @@ const TimeZone = () => {
                   Time Zone Converter
                </h1>
                <p className="text-zinc-500 text-sm sm:text-base font-medium">
-                  Convert time between any country, city, or GMT offset
+                  Convert time between cities and all supported global IANA time
+                  zones
                </p>
             </motion.div>
 
@@ -283,7 +371,7 @@ const TimeZone = () => {
                      cleanable={false}
                      searchable={true}
                      placeholder="Search time zone..."
-                     renderMenuItem={renderTZItem}
+                     renderMenuItem={renderTimeZoneItem}
                      menuMaxHeight={300}
                      className="w-full"
                   />
@@ -293,16 +381,16 @@ const TimeZone = () => {
                      </p>
                      <div className="flex items-center gap-3 text-sm font-medium">
                         <span className="text-zinc-500">
-                           {getGMTOffset(fromZone?.tz)}
+                           {getTimeZoneDisplay(fromZone?.tz, date, displayMode)}
                         </span>
                         <span className="text-zinc-700">•</span>
                         <span
                            className={
-                              isBusinessOpen(fromZone?.tz)
+                              isBusinessOpen(fromZone?.tz, date)
                                  ? 'text-green-500'
                                  : 'text-red-400'
                            }>
-                           {isBusinessOpen(fromZone?.tz)
+                           {isBusinessOpen(fromZone?.tz, date)
                               ? 'Working Hours'
                               : 'Outside Hours'}
                         </span>
@@ -339,7 +427,7 @@ const TimeZone = () => {
                      cleanable={false}
                      searchable={true}
                      placeholder="Search time zone..."
-                     renderMenuItem={renderTZItem}
+                     renderMenuItem={renderTimeZoneItem}
                      menuMaxHeight={300}
                      className="w-full"
                   />
@@ -350,16 +438,16 @@ const TimeZone = () => {
                      </p>
                      <div className="flex items-center gap-3 text-sm font-medium">
                         <span className="text-zinc-500">
-                           {getGMTOffset(toZone?.tz)}
+                           {getTimeZoneDisplay(toZone?.tz, date, displayMode)}
                         </span>
                         <span className="text-zinc-700">•</span>
                         <span
                            className={
-                              isBusinessOpen(toZone?.tz)
+                              isBusinessOpen(toZone?.tz, date)
                                  ? 'text-green-500'
                                  : 'text-red-400'
                            }>
-                           {isBusinessOpen(toZone?.tz)
+                           {isBusinessOpen(toZone?.tz, date)
                               ? 'Working Hours'
                               : 'Outside Hours'}
                         </span>
@@ -378,12 +466,35 @@ const TimeZone = () => {
                         Time Difference
                      </p>
                      <p className="text-4xl font-semibold text-zinc-100">
-                        {diffHours >= 0 ? '+' : ''}
-                        {diffHours}{' '}
-                        <span className="text-2xl text-zinc-500 font-medium">
-                           hrs
-                        </span>
+                        {formatDifference(diffMinutes)}
                      </p>
+                  </div>
+
+                  <div className="mt-6">
+                     <label className="block text-xs font-medium text-zinc-500 mb-2">
+                        Time Zone Display
+                     </label>
+                     <SelectPicker
+                        data={[
+                           {
+                              value: 'gmt',
+                              label: 'GMT / UTC Offset — UTC +05:30',
+                           },
+                           {
+                              value: 'abbreviation',
+                              label: 'Abbreviation — EST / EDT / PST / PDT / HST',
+                           },
+                           {
+                              value: 'iana',
+                              label: 'IANA / Region — America/New_York',
+                           },
+                        ]}
+                        value={displayMode}
+                        onChange={(val) => val && setDisplayMode(val)}
+                        cleanable={false}
+                        searchable={false}
+                        className="w-full"
+                     />
                   </div>
 
                   <button
@@ -416,7 +527,7 @@ const TimeZone = () => {
                               {formatTime(tz)}
                            </p>
                            <p className="text-xs font-medium text-zinc-500">
-                              {getGMTOffset(tz)}
+                              {getTimeZoneDisplay(tz, date, displayMode)}
                            </p>
                         </div>
                      ))}

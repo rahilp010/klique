@@ -14,7 +14,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, CalendarDays, ChevronDown, X, Plus } from 'lucide-react';
 
 const panelClass =
-   'border border-white/[0.09] bg-[#16161b]/95 text-white shadow-2xl shadow-black/40 backdrop-blur-2xl';
+   'border border-white/[0.09] bg-[#16161b] text-white shadow-2xl shadow-black/60';
 
 const filterDomProps = (props = {}) => {
    const {
@@ -86,7 +86,7 @@ const useDropdownPosition = (open, triggerRef, menuWidthOverride = null) => {
       }
    }, [open, updatePosition]);
 
-   return coords;
+   return { coords, updatePosition };
 };
 
 export const Input = ({
@@ -155,7 +155,11 @@ export const SelectPicker = forwardRef(
       const menuRef = useRef(null);
       const listRef = useRef(null);
       const resolvedMenuWidth = menuStyle?.width ?? menuWidth ?? null;
-      const coords = useDropdownPosition(open, triggerRef, resolvedMenuWidth);
+      const { coords, updatePosition } = useDropdownPosition(
+         open,
+         triggerRef,
+         resolvedMenuWidth,
+      );
 
       const handleClose = useCallback(() => {
          setOpen(false);
@@ -165,7 +169,10 @@ export const SelectPicker = forwardRef(
 
       useImperativeHandle(outerRef, () => ({
          close: handleClose,
-         open: () => setOpen(true),
+         open: () => {
+            updatePosition();
+            setOpen(true);
+         },
       }));
 
       useEffect(() => {
@@ -225,6 +232,7 @@ export const SelectPicker = forwardRef(
                e.key === 'Enter'
             ) {
                e.preventDefault();
+               updatePosition();
                setOpen(true);
             }
             return;
@@ -269,15 +277,14 @@ export const SelectPicker = forwardRef(
                   ref={menuRef}
                   initial={{
                      opacity: 0,
-                     y: coords.placement === 'top' ? 5 : -5,
-                     scale: 0.98,
+                     y: coords.placement === 'top' ? 4 : -4,
                   }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  animate={{ opacity: 1, y: 0 }}
                   exit={{
                      opacity: 0,
-                     y: coords.placement === 'top' ? 5 : -5,
-                     scale: 0.98,
+                     y: coords.placement === 'top' ? 4 : -4,
                   }}
+                  transition={{ duration: 0.1, ease: 'easeOut' }}
                   style={{
                      ...menuStyle,
                      position: 'fixed',
@@ -398,7 +405,13 @@ export const SelectPicker = forwardRef(
                type="button"
                disabled={disabled}
                onKeyDown={handleKeyDown}
-               onClick={() => !disabled && setOpen((v) => !v)}
+               onClick={() => {
+                  if (disabled) return;
+                  if (!open) {
+                     updatePosition();
+                  }
+                  setOpen((v) => !v);
+               }}
                className={`flex h-12 w-full items-center justify-between gap-2 rounded-2xl border px-4 text-left text-sm transition-all ${
                   open
                      ? 'border-[#daf4aa]/40 bg-[#16161b] ring-4 ring-[#daf4aa]/[0.06]'
@@ -440,9 +453,7 @@ export const SelectPicker = forwardRef(
          </div>
       );
    },
-);
-
-export const DateRangePicker = ({
+);export const DateRangePicker = ({
    value = [],
    onChange,
    placeholder = 'Select Date Range',
@@ -455,7 +466,7 @@ export const DateRangePicker = ({
    const [end, setEnd] = useState('');
    const triggerRef = useRef(null);
    const menuRef = useRef(null);
-   const coords = useDropdownPosition(open, triggerRef, 330);
+   const { coords, updatePosition } = useDropdownPosition(open, triggerRef, 330);
 
    useEffect(() => {
       if (Array.isArray(value) && value.length === 2) {
@@ -496,15 +507,14 @@ export const DateRangePicker = ({
                ref={menuRef}
                initial={{
                   opacity: 0,
-                  y: coords.placement === 'top' ? 5 : -5,
-                  scale: 0.98,
+                  y: coords.placement === 'top' ? 4 : -4,
                }}
-               animate={{ opacity: 1, y: 0, scale: 1 }}
+               animate={{ opacity: 1, y: 0 }}
                exit={{
                   opacity: 0,
-                  y: coords.placement === 'top' ? 5 : -5,
-                  scale: 0.98,
+                  y: coords.placement === 'top' ? 4 : -4,
                }}
+               transition={{ duration: 0.1, ease: 'easeOut' }}
                style={{
                   position: 'fixed',
                   top: coords.placement === 'top' ? undefined : coords.top,
@@ -582,7 +592,10 @@ export const DateRangePicker = ({
          {...filterDomProps(props)}>
          <button
             type="button"
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => {
+               if (!open) updatePosition();
+               setOpen((v) => !v);
+            }}
             className="flex h-12 w-full min-w-[220px] items-center justify-between gap-3 rounded-2xl border border-white/[0.08] bg-[#16161b]/90 px-4 text-sm transition-all hover:border-white/[0.14] focus:border-[#daf4aa]/40">
             <span className="flex min-w-0 items-center gap-3">
                <CalendarDays
@@ -625,7 +638,7 @@ export const DatePicker = ({
    );
    const triggerRef = useRef(null);
    const menuRef = useRef(null);
-   const coords = useDropdownPosition(open, triggerRef, 280);
+   const { coords, updatePosition } = useDropdownPosition(open, triggerRef, 280);
 
    useEffect(() => {
       setDate(value ? new Date(value).toISOString().slice(0, 10) : '');
@@ -659,9 +672,10 @@ export const DatePicker = ({
          {open && (
             <motion.div
                ref={menuRef}
-               initial={{ opacity: 0, y: coords.placement === 'top' ? 5 : -5 }}
+               initial={{ opacity: 0, y: coords.placement === 'top' ? 4 : -4 }}
                animate={{ opacity: 1, y: 0 }}
-               exit={{ opacity: 0, y: coords.placement === 'top' ? 5 : -5 }}
+               exit={{ opacity: 0, y: coords.placement === 'top' ? 4 : -4 }}
+               transition={{ duration: 0.1, ease: 'easeOut' }}
                style={{
                   position: 'fixed',
                   top: coords.placement === 'top' ? undefined : coords.top,
@@ -700,7 +714,10 @@ export const DatePicker = ({
          {...filterDomProps(props)}>
          <button
             type="button"
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => {
+               if (!open) updatePosition();
+               setOpen((v) => !v);
+            }}
             className="flex h-10 w-full items-center justify-between gap-2 rounded-full px-3 text-sm font-semibold text-white">
             <span className="flex items-center gap-2 truncate">
                <CalendarDays
