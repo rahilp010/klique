@@ -1,215 +1,193 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
-
+import { motion, AnimatePresence } from 'motion/react';
 import {
    Home,
-   Menu,
-   X,
-   Hash,
    Type,
    Smile,
    Sparkles,
+   Hash,
    Sparkle,
+   FileText,
+   PenTool,
+   AtSign,
+   Clock,
 } from 'lucide-react';
+
+const NAV_ITEMS = [
+   { title: 'Home', path: '/', icon: Home },
+   { title: 'Font Generator', path: '/fontgenerator', icon: Type },
+   { title: 'Emoji Generator', path: '/emojigenerator', icon: Smile },
+   { title: 'Cool Symbol', path: '/symbol', icon: Sparkles },
+   { title: 'Hashtag', path: '/hashtaggenerator', icon: Hash },
+   { title: 'Bio Generator', path: '/bio', icon: Sparkle },
+   { title: 'Word Counter', path: '/wordcounter', icon: FileText },
+   { title: 'AI Writer', path: '/aiwriter', icon: PenTool },
+   { title: 'Username Generator', path: '/username', icon: AtSign },
+   { title: 'Time Zone Converter', path: '/timezone', icon: Clock },
+];
 
 const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
    const location = useLocation();
    const sidebarRef = useRef(null);
+   const [activeTooltip, setActiveTooltip] = useState(null);
 
-   const NAV_ITEMS = [
-      {
-         title: 'Home',
-         path: '/',
-         icon: Home,
-         gradient: 'from-red-900 to-yellow-400',
-         borderColor: 'border-blue-400/30',
-      },
-      {
-         title: 'Font Generator',
-         path: '/fontgenerator',
-         icon: Type,
-         gradient: 'from-blue-500 via-cyan-400 to-teal-400',
-         borderColor: 'border-purple-400/30',
-      },
-      {
-         title: 'Emoji Generator',
-         path: '/emojigenerator',
-         icon: Smile,
-         gradient: 'from-purple-500 via-pink-500 to-rose-400',
-         borderColor: 'border-yellow-400/30',
-      },
-      {
-         title: 'Cool Symbol',
-         path: '/symbol',
-         icon: Sparkles,
-         gradient: 'from-emerald-500 via-teal-400 to-cyan-400',
-         borderColor: 'border-green-400/30',
-      },
-      {
-         title: 'Hashtag',
-         path: '/hashtaggenerator',
-         icon: Hash,
-         gradient: 'from-amber-200 via-orange-500 to-blue-300',
-         borderColor: 'border-red-400/30',
-      },
-      {
-         title: 'Bio Generator',
-         path: '/bio',
-         icon: Sparkle,
-         gradient: 'from-indigo-500 via-purple-500 to-pink-500',
-         borderColor: 'border-red-400/30',
-      },
-      {
-         title: 'Word Counter',
-         path: '/wordcounter',
-         icon: Sparkle,
-         gradient: 'from-green-500 via-yellow-500 to-cyan-500',
-         borderColor: 'border-red-400/30',
-      },
-      {
-         title: 'AI Writer',
-         path: '/aiwriter',
-         icon: Sparkle,
-         gradient: 'from-red-500 via-yellow-500 to-blue-500',
-         borderColor: 'border-red-400/30',
-      },
-      {
-         title: 'Username Generator',
-         path: '/username',
-         icon: Sparkle,
-         gradient: 'from-violet-500 via-blue-500 to-blue-500',
-         borderColor: 'border-red-400/30',
-      },
-      {
-         title: 'Time Zone Converter',
-         path: '/timezone',
-         icon: Sparkle,
-         gradient: 'from-violet-500 via-blue-500 to-blue-500',
-         borderColor: 'border-red-400/30',
-      },
-   ];
+   const homeItem = NAV_ITEMS[0];
+   const toolItems = NAV_ITEMS.slice(1);
+
+   const activeToolIndex = toolItems.findIndex(
+      (item) => item.path === location.pathname,
+   );
+
+   const TOTAL_TOOLS_SHOWN = 6;
+   let start = activeToolIndex >= 0 ? activeToolIndex - 2 : 0;
+   if (start < 0) start = 0;
+   if (start + TOTAL_TOOLS_SHOWN > toolItems.length) {
+      start = Math.max(0, toolItems.length - TOTAL_TOOLS_SHOWN);
+   }
+
+   const visibleTools = toolItems.slice(start, start + TOTAL_TOOLS_SHOWN);
+   const currentNavItems = [homeItem, ...visibleTools];
 
    useEffect(() => {
       const handleClickOutside = (e) => {
          if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
-            setSidebarOpen(false);
+            setSidebarOpen?.(false);
          }
       };
-      if (sidebarOpen)
+      if (sidebarOpen && isMobile) {
          document.addEventListener('mousedown', handleClickOutside);
+      }
       return () =>
          document.removeEventListener('mousedown', handleClickOutside);
-   }, [sidebarOpen]);
+   }, [sidebarOpen, isMobile, setSidebarOpen]);
 
    useEffect(() => {
-      if (isMobile) setSidebarOpen(false);
-   }, [location.pathname]);
+      if (isMobile) setSidebarOpen?.(false);
+      setActiveTooltip(null);
+   }, [location.pathname, isMobile, setSidebarOpen]);
+
+   const handleMouseEnter = (item, e) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      setActiveTooltip({
+         title: item.title,
+         top: rect.top + rect.height / 2,
+      });
+   };
+
+   const handleMouseLeave = () => {
+      setActiveTooltip(null);
+   };
 
    return (
       <>
-         {/* Overlay always works when sidebar open */}
-         {sidebarOpen && (
+         {/* Overlay for Mobile */}
+         {sidebarOpen && isMobile && (
             <div
-               className="fixed inset-0 z-40 transition-opacity duration-300 ease-out opacity-100 bg-black/60 backdrop-blur-sm"
-               onClick={() => setSidebarOpen(false)}
+               className="fixed inset-0 z-40 transition-opacity duration-300 ease-out opacity-100 bg-black/60 backdrop-blur-sm lg:hidden"
+               onClick={() => setSidebarOpen?.(false)}
             />
          )}
 
+         {/* Fixed Thin Sidebar */}
          <aside
             ref={sidebarRef}
-            className={`fixed top-0 left-0 h-full z-50 w-72 sm:w-80
-               bg-gradient-to-br from-white/10 via-white/5 to-transparent
-               backdrop-blur-2xl border-r border-white/20 shadow-2xl shadow-black/30
-               transition-transform duration-500 ease-out
-               ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+            className={`fixed top-0 left-0 h-full z-50 w-20 flex flex-col items-center py-6
+               bg-transparent transition-transform duration-300 ease-out
+               ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
             `}>
-            {/* Sidebar content same as before */}
-            {/* Animated gradient background */}
-            <div className="absolute inset-0 opacity-30 pointer-events-none overflow-hidden">
-               <div className="absolute -top-20 -left-20 w-60 h-60 bg-purple-500 rounded-full blur-3xl animate-pulse" />
-               <div className="absolute top-1/2 -left-10 w-40 h-40 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000" />
-               <div className="absolute bottom-20 left-10 w-50 h-50 bg-pink-500 rounded-full blur-3xl animate-pulse delay-2000" />
-            </div>
-
-            {/* Sidebar Content */}
-            <div className="relative h-full flex flex-col p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 customScrollbar">
-               {/* Logo/Brand */}
-               <div className="mb-8 mt-4">
-                  <div className="flex items-center gap-3 px-4 py-3 ">
-                     <div>
-                        <p className="text-4xl font-bold text-white">Menu</p>
-                     </div>
-                  </div>
+            {/* Navigation Container - No horizontal or vertical scrollbars */}
+            <nav className="flex flex-col gap-3 w-full h-full items-center overflow-hidden px-2">
+               {/* Brand / Logo */}
+               <div className="flex items-center space-x-2">
+                  <span
+                     className="
+                     absolute
+                     top-4 left-6
+                     text-2xl font-bold
+                     bg-[linear-gradient(110deg,#ffffff_25%,#a1a1aa_40%,#ffffff_50%,#a1a1aa_60%,#ffffff_75%)]
+                     bg-[length:300%_100%]
+                     bg-clip-text
+                     text-transparent
+                     animate-klique-shine
+                  ">
+                     Klique
+                  </span>
                </div>
 
                {/* Navigation Links */}
-               <nav className="flex-1 space-y-2">
-                  {NAV_ITEMS.map((item) => {
-                     const isActive = location.pathname === item.path;
-                     const Icon = item.icon;
+               <div className="flex flex-col gap-4 w-full items-center py-2 flex-1 justify-center">
+                  <AnimatePresence mode="popLayout" initial={false}>
+                     {currentNavItems.map((item) => {
+                        const isActive = location.pathname === item.path;
+                        const Icon = item.icon;
 
-                     return (
-                        <Link
-                           key={item.path}
-                           to={item.path}
-                           className={`
-                              group relative flex items-center gap-4 px-4 py-3
-                              rounded-2xl font-medium text-sm
-                              transition-[transform,background-color,border-color,color] duration-300 ease-out
-                              overflow-hidden
-                              ${
-                                 isActive
-                                    ? `bg-gradient-to-r ${item.gradient} border ${item.borderColor} text-white shadow-lg scale-105`
-                                    : 'text-white/70 hover:text-white hover:bg-white/10 hover:scale-105 border border-transparent'
-                              }
-                           `}>
-                           {/* Animated background on hover */}
-                           <div
-                              className={`
-                              absolute inset-0 bg-gradient-to-r ${item.gradient}
-                              opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                              ${isActive ? 'opacity-100' : ''}
-                           `}
-                           />
+                        return (
+                           <motion.div
+                              key={item.path}
+                              layout
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 0.8 }}
+                              transition={{ duration: 0.2 }}
+                              className="relative flex items-center justify-center">
+                              <Link
+                                 to={item.path}
+                                 aria-label={item.title}
+                                 onMouseEnter={(e) => handleMouseEnter(item, e)}
+                                 onMouseLeave={handleMouseLeave}
+                                 className="group relative flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 outline-none">
+                                 {/* Inactive background hover effect */}
+                                 <div
+                                    className={`pointer-events-none absolute inset-0 rounded-full border border-transparent transition-all duration-300 ${
+                                       isActive
+                                          ? 'bg-[#daf4aa] shadow-[0_0_20px_rgba(218,244,170,0.3)]'
+                                          : 'bg-zinc-800/40 shadow-sm group-hover:bg-zinc-700/80'
+                                    }`}
+                                 />
 
-                           {/* Icon */}
-                           <div
-                              className={`
-                              relative z-10 w-10 h-10 rounded-xl 
-                              flex items-center justify-center
-                              transition-[background-color,box-shadow] duration-300
-                              ${
-                                 isActive
-                                    ? 'bg-white/20 shadow-lg'
-                                    : 'bg-white/5 group-hover:bg-white/15'
-                              }
-                           `}>
-                              <Icon size={20} />
-                           </div>
+                                 {/* Animated active background */}
+                                 {isActive && (
+                                    <motion.div
+                                       layoutId="activeSidebarTab"
+                                       className="pointer-events-none absolute inset-0 rounded-full bg-[#daf4aa] shadow-[0_0_20px_rgba(218,244,170,0.3)]"
+                                       transition={{
+                                          type: 'spring',
+                                          stiffness: 400,
+                                          damping: 30,
+                                       }}
+                                    />
+                                 )}
 
-                           {/* Text */}
-                           <span className="relative z-10 flex-1">
-                              {item.title}
-                           </span>
-
-                           {/* Active indicator */}
-                           {isActive && (
-                              <div className="relative z-10 w-2 h-2 rounded-full bg-white animate-pulse" />
-                           )}
-                        </Link>
-                     );
-                  })}
-               </nav>
-
-               {/* Footer */}
-               <div className="mt-8 pt-6 border-t border-white/20">
-                  <div className="px-4 py-3 rounded-2xl bg-white/5 border border-white/10">
-                     <p className="text-xs text-gray-400 mb-1">Made with ❤️</p>
-                     <p className="text-xs text-white/70">Version 1.0.0</p>
-                  </div>
+                                 {/* Icon Element */}
+                                 <span
+                                    className={`pointer-events-none relative z-10 flex items-center justify-center transition-all duration-300 ${
+                                       isActive
+                                          ? 'text-[#16161b]'
+                                          : 'text-zinc-400 group-hover:text-zinc-100'
+                                    }`}>
+                                    <Icon size={22} />
+                                 </span>
+                              </Link>
+                           </motion.div>
+                        );
+                     })}
+                  </AnimatePresence>
                </div>
-            </div>
+            </nav>
          </aside>
+
+         {/* Floating Portal Tooltip to prevent any overflow/scroll clipping */}
+         {activeTooltip &&
+            createPortal(
+               <div
+                  style={{ top: activeTooltip.top }}
+                  className="fixed left-[88px] -translate-y-1/2 z-[999999] pointer-events-none whitespace-nowrap rounded-lg border border-zinc-800 bg-[#18181b] px-3.5 py-2 text-xs font-semibold text-zinc-100 shadow-2xl animate-fadeIn">
+                  {activeTooltip.title}
+               </div>,
+               document.body,
+            )}
       </>
    );
 };

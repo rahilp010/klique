@@ -13,6 +13,7 @@ const WordCounter = lazy(() => import('./components/WordCounter/WordCounter'));
 const Paraphrase = lazy(() => import('./components/Paraphrase/Paraphrase'));
 const UsernameGenerator = lazy(() => import('./components/UserName/UserName'));
 const TimeZone = lazy(() => import('./components/TimeZone/TimeZone'));
+const DownloadDemo = lazy(() => import('@/components/ui/demo'));
 
 // Simple loading indicator during chunk fetches
 const LoadingFallback = () => (
@@ -54,6 +55,7 @@ function App() {
                <Route path="/aiwriter" element={<Paraphrase />} />
                <Route path="/username" element={<UsernameGenerator />} />
                <Route path="/timezone" element={<TimeZone />} />
+               <Route path="/download" element={<DownloadDemo />} />
             </Routes>
          </Suspense>
       </>

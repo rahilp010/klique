@@ -180,3 +180,80 @@ select option:hover {
    background: rgba(255, 255, 255, 0.15);
    border-radius: 10px;
 }
+
+@keyframes klique-shine {
+   0% {
+      background-position: 200% center;
+   }
+
+   100% {
+      background-position: -100% center;
+   }
+}
+
+.animate-klique-shine {
+   animation: klique-shine 2s linear infinite;
+}
+
+/* =========================================
+   Column Line Glow
+   ========================================= */
+
+.column-line-glow {
+   position: absolute;
+   top: -120px;
+   left: -2px;
+
+   width: 0px;
+   height: 120px;
+
+   pointer-events: none;
+
+   background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 255, 255, 0.15) 15%,
+      rgba(255, 255, 255, 0.95) 50%,
+      rgba(255, 255, 255, 0.15) 85%,
+      transparent 100%
+   );
+
+   filter: blur(0.5px);
+
+   box-shadow:
+      0 0 6px rgba(255, 255, 255, 0.8),
+      0 0 14px rgba(255, 255, 255, 0.45),
+      0 0 25px rgba(255, 255, 255, 0.2);
+
+   animation-name: column-glow-down;
+   animation-timing-function: linear;
+   animation-iteration-count: infinite;
+}
+
+/* @keyframes column-glow-down {
+   0% {
+      transform: translateY(-120px);
+      opacity: 0;
+   }
+
+   8% {
+      opacity: 1;
+   }
+
+   45% {
+      opacity: 1;
+   }
+
+   65% {
+      opacity: 0.8;
+   }
+
+   85% {
+      opacity: 0.2;
+   }
+
+   100% {
+      transform: translateY(100vh);
+      opacity: 0;
+   }
+} */

@@ -1,11 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { PiSparkleLight } from 'react-icons/pi';
+import {
+   FiSend,
+   FiCopy,
+   FiCheck,
+   FiCode,
+   FiCamera,
+   FiBriefcase,
+   FiUser,
+} from 'react-icons/fi';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { FaBars } from 'react-icons/fa';
-
-import { Copy } from 'lucide-react';
-import { GiPerspectiveDiceSixFacesRandom } from 'react-icons/gi';
+import { motion, AnimatePresence } from 'motion/react';
+import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 
 export default function BioGenerator() {
    const [description, setDescription] = useState('');
@@ -19,11 +27,11 @@ export default function BioGenerator() {
    });
    const [sidebarOpen, setSidebarOpen] = useState(false);
    const [isMobile, setIsMobile] = useState(false);
-   const [tone, setTone] = useState('');
+   const [tone, setTone] = useState('creative');
+   const textareaRef = useRef(null);
 
    const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-   /** 🌐 Check mobile screen */
    useEffect(() => {
       const checkMobile = () => setIsMobile(window.innerWidth < 768);
       checkMobile();
@@ -31,14 +39,15 @@ export default function BioGenerator() {
       return () => window.removeEventListener('resize', checkMobile);
    }, []);
 
-   /** 🔔 Show notification */
    const showNotification = (message, type = 'success', duration = 2500) => {
       setToast({ message, type, visible: true });
-      setTimeout(() => setToast((p) => ({ ...p, visible: false })), duration);
+      setTimeout(
+         () => setToast((prev) => ({ ...prev, visible: false })),
+         duration,
+      );
    };
 
-   /** 🤖 Generate bio using Gemini API */
-   const generateBio = async (desc, tone) => {
+   const generateBio = async (desc, selectedTone) => {
       try {
          const res = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
@@ -54,7 +63,7 @@ export default function BioGenerator() {
 You are a professional Instagram bio writer.
 Generate 6 unique, catchy Instagram bios for:
 Description: "${desc}"
-Tone: "${tone}"
+Tone: "${selectedTone}"
 
 Each bio should:
 - Match the tone
@@ -68,7 +77,7 @@ Separate bios with ---
                      },
                   ],
                }),
-            }
+            },
          );
 
          if (!res.ok) throw new Error('Failed to fetch bio');
@@ -82,7 +91,7 @@ Separate bios with ---
             .map((b) => b.trim())
             .filter((b) => b.length > 0);
 
-         showNotification('✅ 3 Instagram bios generated!');
+         showNotification('✅ Bios generated successfully!');
          return bios.length ? bios : [text];
       } catch (err) {
          console.error('Gemini API error:', err);
@@ -91,7 +100,6 @@ Separate bios with ---
       }
    };
 
-   /** 🚀 Handle generation */
    const handleSubmit = async () => {
       if (description.length < 10)
          return showNotification('Enter at least 10 characters', 'error');
@@ -106,7 +114,6 @@ Separate bios with ---
       setIsLoading(false);
    };
 
-   /** 📋 Handle copy per bio */
    const handleCopy = (text, index) => {
       navigator.clipboard.writeText(text);
       setCopiedIndex(index);
@@ -114,7 +121,13 @@ Separate bios with ---
       setTimeout(() => setCopiedIndex(null), 1500);
    };
 
-   /** 🎨 Tone options */
+   const handleSuggestionClick = (text) => {
+      setDescription(text);
+      if (textareaRef.current) {
+         textareaRef.current.focus();
+      }
+   };
+
    const toneOptions = [
       { label: '😂 Funny', value: 'funny' },
       { label: '😐 Serious', value: 'serious' },
@@ -128,233 +141,264 @@ Separate bios with ---
       { label: '😢 Sad', value: 'sad' },
    ];
 
+   const suggestions = [
+      {
+         icon: <FiCode />,
+         label: 'Tech & Code',
+         prompt:
+            'Software engineer building cool SaaS products. Coffee addict and open source contributor.',
+      },
+      {
+         icon: <FiCamera />,
+         label: 'Photography',
+         prompt:
+            'Capturing moments around the world. Landscape and portrait photographer based in NYC.',
+      },
+      {
+         icon: <FiBriefcase />,
+         label: 'Entrepreneur',
+         prompt:
+            'Founder & CEO. Helping businesses scale with AI. Always learning and building.',
+      },
+      {
+         icon: <FiUser />,
+         label: 'Fitness',
+         prompt:
+            'Personal trainer and nutrition coach. Helping you build your best self every day.',
+      },
+   ];
+
    return (
-      <div className="min-h-[100dvh] bg-gradient-to-br from-black via-gray-900 to-black text-white">
+      <ColumnLines
+         columnWidth={80}
+         columnCount={14}
+         radialFadeStart={15}
+         radialFadeEnd={90}
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto">
          <SEO
             title="AI Bio Generator | Creative Social Media Bios | Klique"
             description="Create professional, funny, or creative social media bios for Instagram, TikTok, Twitter, and LinkedIn using advanced AI. Grab attention and optimize your profile."
             keywords="ai bio generator, bio creator, social media bio writer, instagram bio generator, tiktok bio, linkedin bio, klique bio, professional bio generator"
             canonicalUrl="https://klique.netlify.app/bio"
-            jsonLd={{
-               "@context": "https://schema.org",
-               "@type": "SoftwareApplication",
-               "name": "AI Bio Generator",
-               "operatingSystem": "All",
-               "applicationCategory": "UtilitiesApplication",
-               "offers": {
-                  "@type": "Offer",
-                  "price": "0",
-                  "priceCurrency": "USD"
-               }
-            }}
          />
-         {/* 🧁 Toast Notification */}
-         {toast.visible && (
-            <div className="fixed top-4 right-4 left-4 sm:left-auto sm:top-6 sm:right-6 animate-slideIn z-50">
-               <div
-                  className={`px-4 py-3 sm:px-6 rounded-xl shadow-lg flex items-center gap-2 border backdrop-blur-md ${
-                     toast.type === 'error'
-                        ? 'bg-red-500/20 border-red-400 text-red-100'
-                        : 'bg-green-500/20 border-green-400 text-green-100'
-                  }`}>
-                  <p className="text-sm">{toast.message}</p>
-               </div>
-            </div>
-         )}
 
-         {/* 🌈 Main Content */}
-         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-h-[100dvh] overflow-auto customScrollbar">
-            <div
-               onClick={() => setSidebarOpen((prev) => !prev)}
-               className="fixed top-6 left-6 z-40 p-3 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-xl 
-               hover:bg-white/20 hover:scale-105 transition-all duration-300 cursor-pointer">
-               <FaBars size={20} className="text-white" />
-            </div>
-
-            <Navbar
-               sidebarOpen={sidebarOpen}
-               setSidebarOpen={setSidebarOpen}
-               isMobile={isMobile}
-            />
-
-            <div className="max-w-4xl mx-auto mt-16">
-               <div className="bg-white/5 border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl space-y-8">
-                  {/* 🧠 Header */}
-                  <div className="text-center space-y-3">
-                     <h1
-                        className="text-4xl text-center  sm:text-3xl md:text-5xl  font-extrabold mb-5 tracking-tight  animate-fade-in-down relative
-         ">
-                        Bio{' '}
-                        <span className="bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
-                           Generator
-                        </span>
-                     </h1>
-                     <p className="text-gray-300 text-sm sm:text-base">
-                        Generate creative, catchy Instagram bios with AI ✨
-                     </p>
-                  </div>
-                  {/* 📝 Description */}
-                  <div>
-                     <label className="block mb-2 font-semibold text-gray-200 text-sm sm:text-base">
-                        Describe yourself
-                     </label>
-                     <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        onKeyDown={(e) =>
-                           e.ctrlKey && e.key === 'Enter' && handleSubmit()
-                        }
-                        placeholder="e.g. Travel addict 🌍 | Coffee lover ☕ | Dream chaser ✨"
-                        className="w-full p-4 bg-black/50 border border-gray-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm sm:text-base resize-none"
-                        rows="4"
-                     />
-                     <div className="mt-2 text-xs text-gray-400 text-right">
-                        {description.length}/300 characters
-                     </div>
-                  </div>
-                  {/* 🎭 Tone Selection (Grid Layout) */}
-                  <div className="space-y-3">
-                     <label className="block font-semibold text-gray-200 text-sm sm:text-base">
-                        Select Tone
-                     </label>
-                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
-                        {toneOptions.map((option) => (
-                           <button
-                              key={option.value}
-                              onClick={() => setTone(option.value)}
-                              className={`px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
-                                 option.value === tone
-                                    ? 'bg-white/20 border-2 border-white/40 text-white shadow-lg scale-105'
-                                    : 'bg-white/10 border border-white/10 text-gray-300 hover:bg-white/20 hover:border-white/20'
-                              }`}>
-                              <span>{option.label}</span>
-                           </button>
-                        ))}
-                     </div>
-                  </div>
-                  {/* ⚡ Generate Button */}
-                  <button
-                     onClick={handleSubmit}
-                     disabled={isLoading}
-                     className="w-full py-4 rounded-2xl font-semibold text-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10
-                     border-2 border-white/50 hover:from-gray-900/70 hover:to-black/70 hover:border-white/50 
-                     transition-all hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed">
-                     {isLoading ? (
-                        <div className="flex items-center justify-center gap-2">
-                           <svg
-                              className="w-5 h-5 animate-spin"
-                              viewBox="0 0 24 24">
-                              <circle
-                                 cx="12"
-                                 cy="12"
-                                 r="10"
-                                 stroke="currentColor"
-                                 strokeWidth="4"
-                                 fill="none"
-                                 opacity="0.25"
-                              />
-                              <path
-                                 d="M12 2a10 10 0 0 1 10 10"
-                                 stroke="currentColor"
-                                 strokeWidth="4"
-                                 fill="none"
-                              />
-                           </svg>
-                           <span>Generating...</span>
-                        </div>
+         {/* Toast Notification */}
+         <AnimatePresence>
+            {toast.visible && (
+               <motion.div
+                  initial={{ opacity: 0, y: -20, x: '-50%' }}
+                  animate={{ opacity: 1, y: 0, x: '-50%' }}
+                  exit={{ opacity: 0, y: -20, x: '-50%' }}
+                  className="fixed top-6 left-1/2 z-50">
+                  <div
+                     className={`px-4 py-3 rounded-full shadow-lg flex items-center gap-3 border bg-[#18181b] backdrop-blur-md ${
+                        toast.type === 'error'
+                           ? 'border-red-500/50 text-red-400'
+                           : 'border-green-500/50 text-green-400'
+                     }`}>
+                     {toast.type === 'error' ? (
+                        <FiCheck className="w-4 h-4 hidden" />
                      ) : (
-                        <div className="flex items-center justify-center gap-3">
-                           <PiSparkleLight size={22} />
-                           <span>Generate Bio</span>
-                        </div>
+                        <FiCheck className="w-4 h-4" />
                      )}
-                  </button>
-                  {/* 🧾 Result Section */}
-                  <div className="flex flex-col gap-3">
-                     {isLoading ? (
-                        [...Array(3)].map((_, i) => (
-                           <div
-                              key={i}
-                              className="w-full h-7 bg-white/10 rounded-full animate-shimmer"
-                           />
-                        ))
-                     ) : bio.length ? (
-                        bio.map((text, i) => (
-                           <div
-                              key={i}
-                              className={`w-full relative bg-gradient-to-r from-purple-500/10 to-pink-500/10 
-            border border-white/20 rounded-xl p-4 sm:p-5 text-sm sm:text-base 
-            text-gray-100 leading-relaxed whitespace-pre-line transition-all duration-200 
-            shadow-lg shadow-black/20 flex items-center justify-between group ${
-               copiedIndex === i
-                  ? 'ring-2 ring-white/30 scale-[1.02]'
-                  : 'hover:scale-[1.01]'
-            }`}>
-                              <span className="pr-10">{text}</span>
+                     <p className="text-sm font-medium pr-2">{toast.message}</p>
+                  </div>
+               </motion.div>
+            )}
+         </AnimatePresence>
 
-                              {/* Copy Button */}
-                              <button
-                                 onClick={handleCopy}
-                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white 
-               bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all">
-                                 <Copy size={18} />
-                              </button>
-                           </div>
-                        ))
-                     ) : (
-                        <div className="col-span-full flex flex-col items-center justify-center py-16 text-center text-white/70 animate-fade-in">
-                           <div className="w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-indigo-400 to-pink-400 opacity-80 flex items-center justify-center shadow-lg shadow-indigo-500/30 animate-pulse">
-                              <GiPerspectiveDiceSixFacesRandom className="text-3xl" />
-                           </div>
-                           <h3 className="text-2xl font-semibold bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent mb-2">
-                              No Bio yet
-                           </h3>
-                           <p className="text-gray-400 max-w-sm">
-                              Tap{' '}
-                              <span className="text-pink-400 font-medium">
-                                 Generate Bio
-                              </span>{' '}
-                              to create bio instantly ✨
-                           </p>
-                        </div>
-                     )}
-                  </div>
-                  {/* Keyboard Shortcut Hint - Hidden on very small screens */}{' '}
-                  <div className="hidden sm:block text-center text-xs text-gray-500">
-                     {' '}
-                     Press{' '}
-                     <kbd className="px-2 py-1 bg-white/10 rounded border border-white/20">
-                        {' '}
-                        Ctrl{' '}
-                     </kbd>{' '}
-                     +{' '}
-                     <kbd className="px-2 py-1 bg-white/10 rounded border border-white/20">
-                        {' '}
-                        Enter{' '}
-                     </kbd>{' '}
-                     to generate{' '}
-                  </div>
-               </div>
-            </div>
+         <div className="w-full sticky top-0 z-30 bg-[#16161b] border-b border-white/10 transition-all duration-300">
+            <Navbar />
          </div>
 
-         {/* ✨ Animations */}
+         {/* Main Centered Chat-like Interface */}
+         <div className="relative z-10 flex flex-col items-center justify-center min-h-[100dvh] w-full px-4 py-20">
+            <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               className="text-center mb-10">
+               <h1 className="text-3xl sm:text-4xl font-medium text-zinc-100 tracking-tight mb-3">
+                  Generate creative bios
+               </h1>
+               <p className="text-zinc-500 text-sm sm:text-base font-medium">
+                  Describe yourself and pick a tone to get started
+               </p>
+            </motion.div>
+
+            {/* Glowing Animated Input Container */}
+            <motion.div
+               layout
+               className="relative w-full max-w-2xl mx-auto z-20">
+               {/* Special Generating Animation Border */}
+               <AnimatePresence>
+                  {isLoading && (
+                     <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-gradient-spin opacity-80 blur-[2px] -z-10"
+                     />
+                  )}
+               </AnimatePresence>
+
+               <div
+                  className={`flex flex-col bg-[#0f0f11] rounded-2xl transition-all duration-300 ${isLoading ? 'border-transparent shadow-[0_0_40px_rgba(168,85,247,0.15)]' : 'border border-zinc-800/80 shadow-2xl'}`}>
+                  <textarea
+                     ref={textareaRef}
+                     value={description}
+                     onChange={(e) => setDescription(e.target.value)}
+                     onKeyDown={(e) =>
+                        e.ctrlKey && e.key === 'Enter' && handleSubmit()
+                     }
+                     disabled={isLoading}
+                     placeholder="e.g. Travel addict 🌍 | Coffee lover ☕ | Dream chaser ✨..."
+                     className="w-full min-h-[140px] p-5 bg-transparent resize-none focus:outline-none text-zinc-200 placeholder:text-zinc-600 text-base sm:text-lg leading-relaxed disabled:opacity-50"
+                  />
+
+                  {/* Input Bottom Toolbar */}
+                  <div className="flex items-center justify-between p-3 border-t border-zinc-800/50 bg-[#0f0f11] rounded-b-2xl">
+                     <div className="flex items-center gap-3 pl-2 text-zinc-500">
+                        {/* Tone Selector */}
+                        <div className="relative flex items-center">
+                           <select
+                              value={tone}
+                              onChange={(e) => setTone(e.target.value)}
+                              className="appearance-none bg-[#18181b] border border-zinc-800 text-zinc-300 text-sm font-medium rounded-lg pl-3 pr-8 py-1.5 focus:outline-none focus:border-zinc-600 hover:bg-zinc-800 transition-colors cursor-pointer">
+                              {toneOptions.map((t) => (
+                                 <option key={t.value} value={t.value}>
+                                    {t.label}
+                                 </option>
+                              ))}
+                           </select>
+                           <svg
+                              className="absolute right-2.5 w-4 h-4 text-zinc-500 pointer-events-none"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24">
+                              <path
+                                 strokeLinecap="round"
+                                 strokeLinejoin="round"
+                                 strokeWidth="2"
+                                 d="M19 9l-7 7-7-7"
+                              />
+                           </svg>
+                        </div>
+                        <span className="text-xs font-medium opacity-50 hidden sm:inline-block">
+                           {description.length}/300
+                        </span>
+                     </div>
+
+                     <button
+                        onClick={handleSubmit}
+                        disabled={isLoading || !description.trim()}
+                        className="flex items-center gap-2 px-4 py-2 bg-[#27272a] hover:bg-[#3f3f46] disabled:bg-zinc-900 disabled:text-zinc-600 disabled:cursor-not-allowed text-zinc-200 rounded-lg text-sm font-medium transition-all group">
+                        {isLoading ? (
+                           <div className="flex items-center gap-2">
+                              <PiSparkleLight
+                                 className="animate-spin text-purple-400"
+                                 size={16}
+                              />
+                              <span>Generating...</span>
+                           </div>
+                        ) : (
+                           <>
+                              <FiSend
+                                 size={16}
+                                 className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                              />
+                              <span>Generate</span>
+                           </>
+                        )}
+                     </button>
+                  </div>
+               </div>
+            </motion.div>
+
+            {/* Suggestions / Prompt Chips */}
+            <AnimatePresence mode="wait">
+               {!bio.length && !isLoading && (
+                  <motion.div
+                     initial={{ opacity: 0, y: 10 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     exit={{ opacity: 0, y: -10 }}
+                     className="flex flex-wrap justify-center gap-3 mt-8 max-w-2xl">
+                     {suggestions.map((suggestion, idx) => (
+                        <button
+                           key={idx}
+                           onClick={() =>
+                              handleSuggestionClick(suggestion.prompt)
+                           }
+                           className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-800/80 bg-[#121214] hover:bg-[#1f1f22] text-zinc-400 hover:text-zinc-200 text-sm font-medium transition-all hover:border-zinc-700">
+                           {suggestion.icon}
+                           {suggestion.label}
+                        </button>
+                     ))}
+                  </motion.div>
+               )}
+            </AnimatePresence>
+
+            {/* Generated Results Area */}
+            <AnimatePresence>
+               {bio.length > 0 && !isLoading && (
+                  <motion.div
+                     initial={{ opacity: 0, height: 0, y: 20 }}
+                     animate={{ opacity: 1, height: 'auto', y: 0 }}
+                     className="w-full max-w-2xl mt-8 relative">
+                     <div className="bg-[#121214] border border-zinc-800/80 rounded-2xl p-6 sm:p-8 shadow-xl">
+                        <div className="flex items-center justify-between mb-6">
+                           <h3 className="text-lg font-medium text-zinc-100 flex items-center gap-2">
+                              <PiSparkleLight
+                                 className="text-purple-400"
+                                 size={20}
+                              />
+                              Your Bios
+                           </h3>
+                        </div>
+
+                        <div className="grid gap-3">
+                           {bio.map((text, i) => (
+                              <motion.div
+                                 initial={{ opacity: 0, y: 10 }}
+                                 animate={{ opacity: 1, y: 0 }}
+                                 transition={{ delay: i * 0.1 }}
+                                 key={i}
+                                 className="relative p-5 bg-[#18181b] border border-zinc-800 rounded-xl group hover:border-zinc-700 transition-colors flex items-start justify-between gap-4">
+                                 <p className="text-zinc-300 text-sm whitespace-pre-line leading-relaxed">
+                                    {text}
+                                 </p>
+                                 <button
+                                    onClick={() => handleCopy(text, i)}
+                                    className="shrink-0 p-2 rounded-lg bg-zinc-800/50 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 transition-colors">
+                                    {copiedIndex === i ? (
+                                       <FiCheck
+                                          className="text-green-400"
+                                          size={16}
+                                       />
+                                    ) : (
+                                       <FiCopy size={16} />
+                                    )}
+                                 </button>
+                              </motion.div>
+                           ))}
+                        </div>
+                     </div>
+                  </motion.div>
+               )}
+            </AnimatePresence>
+         </div>
+
+         {/* Internal Styles for Special Animations */}
          <style>{`
-            @keyframes shimmer {
-               0% { background-position: 200% 0; }
-               100% { background-position: -200% 0; }
+            @keyframes gradient-spin {
+               0% { background-position: 0% 50%; }
+               50% { background-position: 100% 50%; }
+               100% { background-position: 0% 50%; }
             }
-            .animate-shimmer {
-               background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
-               background-size: 200% 100%;
-               animation: shimmer 1.5s infinite;
+            .animate-gradient-spin {
+               background-size: 200% 200%;
+               animation: gradient-spin 2.5s ease-in-out infinite;
             }
-            @keyframes slideIn {
-               from { transform: translateX(100%); opacity: 0; }
-               to { transform: translateX(0); opacity: 1; }
-            }
-            .animate-slideIn { animation: slideIn 0.3s ease-out; }
          `}</style>
-      </div>
+      </ColumnLines>
    );
 }

@@ -1,9 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { PiSparkleLight } from 'react-icons/pi';
+import {
+   FiSend,
+   FiPaperclip,
+   FiCommand,
+   FiCopy,
+   FiCheck,
+   FiImage,
+   FiLayout,
+   FiEdit2,
+} from 'react-icons/fi';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { FaBars } from 'react-icons/fa';
-import { GiPerspectiveDiceSixFacesRandom } from 'react-icons/gi';
+import { motion, AnimatePresence } from 'motion/react';
+import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 
 export default function HashtagGenerator() {
    const [description, setDescription] = useState('');
@@ -17,6 +28,7 @@ export default function HashtagGenerator() {
    });
    const [sidebarOpen, setSidebarOpen] = useState(false);
    const [isMobile, setIsMobile] = useState(false);
+   const textareaRef = useRef(null);
 
    useEffect(() => {
       const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -27,12 +39,11 @@ export default function HashtagGenerator() {
 
    const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-   /** 🔔 Show notification (success/error) */
    const showNotification = (message, type = 'success', duration = 2500) => {
       setToast({ message, type, visible: true });
       setTimeout(
          () => setToast((prev) => ({ ...prev, visible: false })),
-         duration
+         duration,
       );
    };
 
@@ -57,7 +68,7 @@ Return only hashtags separated by spaces, no explanations.`,
                      },
                   ],
                }),
-            }
+            },
          );
 
          if (!res.ok) throw new Error('Failed to fetch hashtags');
@@ -66,7 +77,7 @@ Return only hashtags separated by spaces, no explanations.`,
          const tags = text.match(/#[\w]+/g)?.slice(0, 15) || [];
 
          if (!tags.length) throw new Error('No hashtags generated');
-         showNotification('✅ Hashtags generated successfully!');
+         showNotification('Hashtags generated successfully!');
          return tags;
       } catch (err) {
          console.error('Gemini API error:', err);
@@ -75,7 +86,6 @@ Return only hashtags separated by spaces, no explanations.`,
       }
    };
 
-   /** 🚀 Handle generation */
    const handleSubmit = async () => {
       if (description.length < 10)
          return showNotification('Enter at least 10 characters', 'error');
@@ -90,7 +100,6 @@ Return only hashtags separated by spaces, no explanations.`,
       setIsLoading(false);
    };
 
-   /** 📋 Copy hashtags */
    const handleCopy = () => {
       if (!hashtags.length) return;
       navigator.clipboard.writeText(hashtags.join(' '));
@@ -99,264 +108,252 @@ Return only hashtags separated by spaces, no explanations.`,
       setTimeout(() => setIsCopied(false), 2000);
    };
 
+   const handleSuggestionClick = (text) => {
+      setDescription(text);
+      if (textareaRef.current) {
+         textareaRef.current.focus();
+      }
+   };
+
+   const suggestions = [
+      {
+         icon: <FiImage />,
+         label: 'Travel & Nature',
+         prompt:
+            'A beautiful sunset over the mountains during my weekend hiking trip 🏔️🌅',
+      },
+      {
+         icon: <FiLayout />,
+         label: 'Tech Setup',
+         prompt:
+            'My new minimal coding workspace with mechanical keyboard and ultrawide monitor 💻⌨️',
+      },
+      {
+         icon: <FiEdit2 />,
+         label: 'Fitness Journey',
+         prompt:
+            'Hit a new personal record at the gym today! Consistency is key 💪🏋️‍♂️',
+      },
+      {
+         icon: <PiSparkleLight />,
+         label: 'Food & Dining',
+         prompt:
+            'Trying out the best aesthetic cafe in town. The matcha latte was amazing 🍵✨',
+      },
+   ];
+
    return (
-      <div className="min-h-[100dvh] bg-gradient-to-br from-black via-gray-900 to-black text-white">
+      <ColumnLines
+         columnWidth={80}
+         columnCount={14}
+         radialFadeStart={15}
+         radialFadeEnd={90}
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto">
          <SEO
             title="AI Hashtag Generator | Viral Social Media Tags | Klique"
             description="Boost your social media presence with our AI Hashtag Generator. Create relevant, high-reach hashtags for Instagram, TikTok, YouTube, and Twitter instantly."
             keywords="ai hashtag generator, hashtag creator, instagram hashtags, tiktok hashtags, viral tags, klique hashtags, trending hashtags generator"
             canonicalUrl="https://klique.netlify.app/hashtaggenerator"
-            jsonLd={{
-               "@context": "https://schema.org",
-               "@type": "SoftwareApplication",
-               "name": "AI Hashtag Generator",
-               "operatingSystem": "All",
-               "applicationCategory": "SocialNetworkingApplication",
-               "offers": {
-                  "@type": "Offer",
-                  "price": "0",
-                  "priceCurrency": "USD"
-               }
-            }}
          />
-         {/* Toast Notification - Responsive positioning */}
-         {toast.visible && (
-            <div className="fixed top-4 right-4 left-4 sm:left-auto sm:top-6 sm:right-6 animate-slideIn z-50">
-               <div
-                  className={`px-4 py-3 sm:px-6 rounded-xl shadow-lg flex items-center gap-2 border backdrop-blur-md ${
-                     toast.type === 'error'
-                        ? 'bg-red-500/20 border-red-400 text-red-100'
-                        : 'bg-green-500/20 border-green-400 text-green-100'
-                  }`}>
-                  <svg
-                     className="w-5 h-5 flex-shrink-0"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     strokeWidth="2">
+
+         {/* Toast Notification */}
+         <AnimatePresence>
+            {toast.visible && (
+               <motion.div
+                  initial={{ opacity: 0, y: -20, x: '-50%' }}
+                  animate={{ opacity: 1, y: 0, x: '-50%' }}
+                  exit={{ opacity: 0, y: -20, x: '-50%' }}
+                  className="fixed top-6 left-1/2 z-50">
+                  <div
+                     className={`px-4 py-3 rounded-full shadow-lg flex items-center gap-3 border bg-[#18181b] backdrop-blur-md ${
+                        toast.type === 'error'
+                           ? 'border-red-500/50 text-red-400'
+                           : 'border-green-500/50 text-green-400'
+                     }`}>
                      {toast.type === 'error' ? (
-                        <>
-                           <line x1="18" y1="6" x2="6" y2="18" />
-                           <line x1="6" y1="6" x2="18" y2="18" />
-                        </>
+                        <FiCheck className="w-4 h-4 hidden" /> // Placeholder for spacing
                      ) : (
-                        <polyline points="20 6 9 17 4 12" />
+                        <FiCheck className="w-4 h-4" />
                      )}
-                  </svg>
-                  <p className="text-sm">{toast.message}</p>
-               </div>
-            </div>
-         )}
-
-         {/* Main Content - Responsive padding and layout */}
-         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-6 max-h-[100dvh] overflow-auto customScrollbar">
-            <div
-               onClick={() => setSidebarOpen((prev) => !prev)}
-               className="fixed top-6 left-6 z-40 p-3 rounded-2xl 
-                              bg-white/10 backdrop-blur-xl border border-white/20
-                              hover:bg-white/20 hover:scale-105
-                              active:scale-95
-                              transition-all duration-300 
-                              shadow-lg shadow-black/20 cursor-pointer">
-               <FaBars size={20} className="text-white" />
-            </div>
-
-            <Navbar
-               sidebarOpen={sidebarOpen}
-               setSidebarOpen={setSidebarOpen}
-               isMobile={isMobile}
-            />
-            <div className="max-w-4xl mx-auto">
-               {/* Card Container - Responsive padding */}
-               <div className="bg-white/5 border border-white/10 rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 shadow-2xl backdrop-blur-xl space-y-6 sm:space-y-8 mt-16 ">
-                  {/* Header - Responsive text sizes */}
-                  <div className="text-center space-y-2 sm:space-y-3">
-                     <h1 className="text-3xl sm:text-3xl md:text-5xl font-bold mb-4">
-                        Insta
-                        <span className="bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
-                           Hash
-                        </span>
-                     </h1>
-                     <p className="text-sm sm:text-base text-gray-300 px-4">
-                        Generate unique and trending hashtags powered by AI ✨
-                     </p>
+                     <p className="text-sm font-medium pr-2">{toast.message}</p>
                   </div>
+               </motion.div>
+            )}
+         </AnimatePresence>
 
-                  {/* Input Section - Responsive */}
-                  <div>
-                     <label className="block mb-2 font-semibold text-gray-200 text-sm sm:text-base">
-                        Post Description
-                     </label>
-                     <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        onKeyDown={(e) =>
-                           e.ctrlKey && e.key === 'Enter' && handleSubmit()
-                        }
-                        placeholder="e.g. A cozy café morning with latte art ☕🌿..."
-                        className="w-full p-3 sm:p-4 bg-black/50 border border-gray-700 rounded-xl sm:rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-500 transition text-sm sm:text-base resize-none"
-                        rows="4"
-                     />
-                     <div className="mt-2 text-xs sm:text-sm text-gray-400 text-right">
-                        {description.length}/300 characters
-                     </div>
-                  </div>
-
-                  {/* Generate Button - Responsive sizing */}
-                  <button
-                     onClick={handleSubmit}
-                     disabled={isLoading}
-                     className="w-full py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold text-base sm:text-lg 
-                     bg-gradient-to-r from-purple-500/10 to-pink-500/10  
-                     border border-white/10 backdrop-blur-md 
-                     hover:from-gray-900/70 hover:to-black/70 
-                     hover:border-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]
-                     transition-all transform hover:scale-[1.02] active:scale-100 
-                     shadow-lg disabled:opacity-60 disabled:cursor-not-allowed">
-                     {isLoading ? (
-                        <div className="flex items-center justify-center gap-2">
-                           <svg
-                              className="w-5 h-5 animate-spin text-white"
-                              viewBox="0 0 24 24">
-                              <circle
-                                 cx="12"
-                                 cy="12"
-                                 r="10"
-                                 stroke="currentColor"
-                                 strokeWidth="4"
-                                 fill="none"
-                                 opacity="0.25"
-                              />
-                              <path
-                                 d="M12 2a10 10 0 0 1 10 10"
-                                 stroke="currentColor"
-                                 strokeWidth="4"
-                                 fill="none"
-                              />
-                           </svg>
-                           <span className="text-sm sm:text-base">
-                              Generating...
-                           </span>
-                        </div>
-                     ) : (
-                        <div className="flex items-center justify-center gap-2 sm:gap-3">
-                           <PiSparkleLight size={20} />
-                           <span>Generate Hashtags</span>
-                        </div>
-                     )}
-                  </button>
-
-                  {/* Results Section - Responsive height and padding */}
-                  <div className="relative max-h-[300px] sm:max-h-[350px] lg:max-h-[400px] overflow-y-auto rounded-xl sm:rounded-2xl p-4 sm:p-6 backdrop-blur-m">
-                     {hashtags.length > 0 && (
-                        <button
-                           onClick={handleCopy}
-                           className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 transition z-10"
-                           aria-label="Copy hashtags">
-                           {isCopied ? (
-                              <svg
-                                 className="w-4 h-4 text-green-400"
-                                 viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 strokeWidth="2">
-                                 <polyline points="20 6 9 17 4 12" />
-                              </svg>
-                           ) : (
-                              <svg
-                                 className="w-4 h-4 text-white"
-                                 viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 strokeWidth="2">
-                                 <rect
-                                    x="9"
-                                    y="9"
-                                    width="13"
-                                    height="13"
-                                    rx="2"
-                                    ry="2"
-                                 />
-                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                              </svg>
-                           )}
-                        </button>
-                     )}
-
-                     {/* Hashtags Grid - Responsive gap and sizing */}
-                     <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
-                        {isLoading ? (
-                           [...Array(12)].map((_, i) => (
-                              <div
-                                 key={i}
-                                 className="w-20 h-6 sm:w-24 sm:h-7 bg-white/10 rounded-full animate-shimmer"
-                              />
-                           ))
-                        ) : hashtags.length ? (
-                           hashtags.map((tag, i) => (
-                              <span
-                                 key={i}
-                                 className="px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 
-                                 border border-purple-400/30 rounded-full text-xs sm:text-sm font-medium 
-                                 hover:scale-105 transition-transform cursor-default break-all">
-                                 {tag}
-                              </span>
-                           ))
-                        ) : (
-                           <div className="col-span-full flex flex-col items-center justify-center py-16 text-center text-white/70 animate-fade-in">
-                              <div className="w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-indigo-400 to-pink-400 opacity-80 flex items-center justify-center shadow-lg shadow-indigo-500/30 animate-pulse">
-                                 <GiPerspectiveDiceSixFacesRandom className="text-3xl" />
-                              </div>
-                              <h3 className="text-2xl font-semibold bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent mb-2">
-                                 No Hashtags yet
-                              </h3>
-                              <p className="text-gray-400 max-w-sm">
-                                 Tap{' '}
-                                 <span className="text-pink-400 font-medium">
-                                    Generate Hashtags
-                                 </span>{' '}
-                                 to create hashtags instantly ✨
-                              </p>
-                           </div>
-                        )}
-                     </div>
-                  </div>
-
-                  {/* Keyboard Shortcut Hint - Hidden on very small screens */}
-                  <div className="hidden sm:block text-center text-xs text-gray-500">
-                     Press{' '}
-                     <kbd className="px-2 py-1 bg-white/10 rounded border border-white/20">
-                        Ctrl
-                     </kbd>{' '}
-                     +{' '}
-                     <kbd className="px-2 py-1 bg-white/10 rounded border border-white/20">
-                        Enter
-                     </kbd>{' '}
-                     to generate
-                  </div>
-               </div>
-            </div>
+         <div className="w-full sticky top-0 z-30 bg-[#16161b] border-b border-white/10 transition-all duration-300">
+            <Navbar />
          </div>
 
-         {/* Animations */}
+         {/* Main Centered Chat-like Interface */}
+         <div className="relative z-10 flex flex-col items-center justify-center min-h-[100dvh] w-full px-4 py-20">
+            <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               className="text-center mb-10">
+               <h1 className="text-3xl sm:text-4xl font-medium text-zinc-100 tracking-tight mb-3">
+                  Generate Trending Hashtags
+               </h1>
+               <p className="text-zinc-500 text-sm sm:text-base font-medium">
+                  Type a description of your post to get started
+               </p>
+            </motion.div>
+
+            {/* Glowing Animated Input Container */}
+            <motion.div
+               layout
+               className="relative w-full max-w-2xl mx-auto z-20">
+               {/* Special Generating Animation Border */}
+               <AnimatePresence>
+                  {isLoading && (
+                     <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-gradient-spin opacity-80 blur-[2px] -z-10"
+                     />
+                  )}
+               </AnimatePresence>
+
+               <div
+                  className={`flex flex-col bg-[#0f0f11] rounded-2xl transition-all duration-300 ${isLoading ? 'border-transparent shadow-[0_0_40px_rgba(168,85,247,0.15)]' : 'border border-zinc-800/80 shadow-2xl'}`}>
+                  <textarea
+                     ref={textareaRef}
+                     value={description}
+                     onChange={(e) => setDescription(e.target.value)}
+                     onKeyDown={(e) =>
+                        e.ctrlKey && e.key === 'Enter' && handleSubmit()
+                     }
+                     disabled={isLoading}
+                     placeholder="Describe your post or paste your caption here..."
+                     className="w-full min-h-[140px] p-5 bg-transparent resize-none focus:outline-none text-zinc-200 placeholder:text-zinc-600 text-base sm:text-lg leading-relaxed disabled:opacity-50"
+                  />
+
+                  {/* Input Bottom Toolbar */}
+                  <div className="flex items-center justify-between p-3 border-t border-zinc-800/50 bg-[#0f0f11] rounded-b-2xl">
+                     <div className="flex items-center gap-2 pl-2 text-zinc-500">
+                        <button
+                           className="p-2 rounded-lg hover:bg-zinc-800 hover:text-zinc-300 transition-colors tooltip-trigger"
+                           title="Attach media">
+                           <FiPaperclip size={18} />
+                        </button>
+                        <button
+                           className="p-2 rounded-lg hover:bg-zinc-800 hover:text-zinc-300 transition-colors tooltip-trigger"
+                           title="Commands">
+                           <FiCommand size={18} />
+                        </button>
+                        <span className="text-xs font-medium ml-2 opacity-50 hidden sm:inline-block">
+                           {description.length}/300
+                        </span>
+                     </div>
+
+                     <button
+                        onClick={handleSubmit}
+                        disabled={isLoading || !description.trim()}
+                        className="flex items-center gap-2 px-4 py-2 bg-[#27272a] hover:bg-[#3f3f46] disabled:bg-zinc-900 disabled:text-zinc-600 disabled:cursor-not-allowed text-zinc-200 rounded-lg text-sm font-medium transition-all group">
+                        {isLoading ? (
+                           <div className="flex items-center gap-2">
+                              <PiSparkleLight
+                                 className="animate-spin text-purple-400"
+                                 size={16}
+                              />
+                              <span>Generating...</span>
+                           </div>
+                        ) : (
+                           <>
+                              <FiSend
+                                 size={16}
+                                 className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                              />
+                              <span>Generate</span>
+                           </>
+                        )}
+                     </button>
+                  </div>
+               </div>
+            </motion.div>
+
+            {/* Suggestions / Prompt Chips */}
+            <AnimatePresence mode="wait">
+               {!hashtags.length && !isLoading && (
+                  <motion.div
+                     initial={{ opacity: 0, y: 10 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     exit={{ opacity: 0, y: -10 }}
+                     className="flex flex-wrap justify-center gap-3 mt-8 max-w-2xl">
+                     {suggestions.map((suggestion, idx) => (
+                        <button
+                           key={idx}
+                           onClick={() =>
+                              handleSuggestionClick(suggestion.prompt)
+                           }
+                           className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-800/80 bg-[#121214] hover:bg-[#1f1f22] text-zinc-400 hover:text-zinc-200 text-sm font-medium transition-all hover:border-zinc-700">
+                           {suggestion.icon}
+                           {suggestion.label}
+                        </button>
+                     ))}
+                  </motion.div>
+               )}
+            </AnimatePresence>
+
+            {/* Generated Results Area */}
+            <AnimatePresence>
+               {hashtags.length > 0 && !isLoading && (
+                  <motion.div
+                     initial={{ opacity: 0, height: 0, y: 20 }}
+                     animate={{ opacity: 1, height: 'auto', y: 0 }}
+                     className="w-full max-w-2xl mt-8 relative">
+                     <div className="bg-[#121214] border border-zinc-800/80 rounded-2xl p-6 sm:p-8 shadow-xl">
+                        <div className="flex items-center justify-between mb-6">
+                           <h3 className="text-lg font-medium text-zinc-100 flex items-center gap-2">
+                              <PiSparkleLight
+                                 className="text-purple-400"
+                                 size={20}
+                              />
+                              Your Hashtags
+                           </h3>
+                           <button
+                              onClick={handleCopy}
+                              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800/50 hover:bg-zinc-700 text-zinc-300 text-sm font-medium transition-colors">
+                              {isCopied ? (
+                                 <FiCheck className="text-green-400" />
+                              ) : (
+                                 <FiCopy />
+                              )}
+                              {isCopied ? 'Copied' : 'Copy All'}
+                           </button>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2.5">
+                           {hashtags.map((tag, i) => (
+                              <motion.span
+                                 initial={{ opacity: 0, scale: 0.9 }}
+                                 animate={{ opacity: 1, scale: 1 }}
+                                 transition={{ delay: i * 0.05 }}
+                                 key={i}
+                                 className="px-3.5 py-1.5 bg-[#18181b] border border-zinc-800 rounded-lg text-sm font-medium text-zinc-300 hover:border-purple-500/50 hover:text-purple-300 transition-colors cursor-default select-all">
+                                 {tag}
+                              </motion.span>
+                           ))}
+                        </div>
+                     </div>
+                  </motion.div>
+               )}
+            </AnimatePresence>
+         </div>
+
+         {/* Internal Styles for Special Animations */}
          <style>{`
-            @keyframes shimmer {
-               0% { background-position: 200% 0; }
-               100% { background-position: -200% 0; }
+            @keyframes gradient-spin {
+               0% { background-position: 0% 50%; }
+               50% { background-position: 100% 50%; }
+               100% { background-position: 0% 50%; }
             }
-            .animate-shimmer {
-               background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
-               background-size: 200% 100%;
-               animation: shimmer 1.5s infinite;
-            }
-            @keyframes slideIn {
-               from { transform: translateX(100%); opacity: 0; }
-               to { transform: translateX(0); opacity: 1; }
-            }
-            .animate-slideIn {
-               animation: slideIn 0.3s ease-out;
+            .animate-gradient-spin {
+               background-size: 200% 200%;
+               animation: gradient-spin 2.5s ease-in-out infinite;
             }
          `}</style>
-      </div>
+      </ColumnLines>
    );
 }

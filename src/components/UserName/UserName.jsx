@@ -5,8 +5,9 @@ import { GiPerspectiveDiceSixFacesRandom } from 'react-icons/gi';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { IoCopyOutline } from 'react-icons/io5';
-import { SelectPicker } from 'rsuite';
-import 'rsuite/dist/rsuite-no-reset.min.css';
+import { Input, InputGroup, SelectPicker } from '@/components/ui/CustomControl';
+import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
+import { Search } from 'lucide-react';
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
@@ -156,7 +157,7 @@ Keyword (optional): ${keyword || 'none'}
                      },
                   ],
                }),
-            }
+            },
          );
 
          if (!res.ok) throw new Error('Gemini API request failed');
@@ -191,16 +192,16 @@ Keyword (optional): ${keyword || 'none'}
             keywords="username generator, cool usernames, gamer tag generator, aesthetic handles, instagram username generator, klique, tiktok username generator"
             canonicalUrl="https://klique.netlify.app/username"
             jsonLd={{
-               "@context": "https://schema.org",
-               "@type": "SoftwareApplication",
-               "name": "AI Username Generator",
-               "operatingSystem": "All",
-               "applicationCategory": "UtilitiesApplication",
-               "offers": {
-                  "@type": "Offer",
-                  "price": "0",
-                  "priceCurrency": "USD"
-               }
+               '@context': 'https://schema.org',
+               '@type': 'SoftwareApplication',
+               name: 'AI Username Generator',
+               operatingSystem: 'All',
+               applicationCategory: 'UtilitiesApplication',
+               offers: {
+                  '@type': 'Offer',
+                  price: '0',
+                  priceCurrency: 'USD',
+               },
             }}
          />
          <div
@@ -246,110 +247,38 @@ Keyword (optional): ${keyword || 'none'}
          {/* Controls */}
          <div className="max-w-4xl mx-auto bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 shadow-lg">
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-               <div className="relative w-full">
-                  <select
+               <div className="w-full">
+                  <SelectPicker
+                     data={platforms}
                      value={platform}
-                     onChange={(e) => setPlatform(e.target.value)}
-                     className="
-         w-full px-4 py-3 
-         bg-black/40 border border-white/10 text-white rounded-xl
-         focus:ring-2 focus:ring-indigo-400 focus:outline-none 
-         appearance-none cursor-pointer
-         transition-all duration-300
-      ">
-                     <option value="">Select Platform</option>
-                     {platforms.map((p) => (
-                        <option
-                           key={p.value}
-                           value={p.value}
-                           className="bg-gray-900 text-white">
-                           {p.label}
-                        </option>
-                     ))}
-                  </select>
-
-                  {/* Custom dropdown icon */}
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 20 20"
-                     fill="currentColor"
-                     className="w-5 h-5 text-white/60 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-200 group-hover:rotate-180">
-                     <path
-                        fillRule="evenodd"
-                        d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.25 8.29a.75.75 0 01-.02-1.08z"
-                        clipRule="evenodd"
-                     />
-                  </svg>
-
-                  <style>
-                     {`
-         select option {
-            background-color: rgba(10, 10, 15, 0.95);
-            color: white;
-            padding: 10px;
-         }
-         select option:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-         }
-      `}
-                  </style>
+                     onChange={(val) => setPlatform(val)}
+                     placeholder="Select Platform"
+                     className="w-full"
+                  />
                </div>
 
-               <div className="relative w-full">
-                  <select
+               <div className="w-full">
+                  <SelectPicker
+                     data={categories}
                      value={category}
-                     onChange={(e) => setCategory(e.target.value)}
-                     className="
-         w-full px-4 py-3 
-         bg-black/40 border border-white/10 text-white rounded-xl
-         focus:ring-2 focus:ring-indigo-400 focus:outline-none 
-         appearance-none cursor-pointer
-         transition-all duration-300
-      ">
-                     <option value="">Select Category</option>
-                     {categories.map((c) => (
-                        <option
-                           key={c.value}
-                           value={c.value}
-                           className="bg-gray-900 text-white">
-                           {c.label}
-                        </option>
-                     ))}
-                  </select>
-
-                  {/* Custom dropdown icon */}
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 20 20"
-                     fill="currentColor"
-                     className="w-5 h-5 text-white/60 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-200 group-hover:rotate-180">
-                     <path
-                        fillRule="evenodd"
-                        d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.25 8.29a.75.75 0 01-.02-1.08z"
-                        clipRule="evenodd"
-                     />
-                  </svg>
-
-                  <style>
-                     {`
-         select option {
-            background-color: rgba(10, 10, 15, 0.95);
-            color: white;
-            padding: 10px;
-         }
-         select option:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-         }
-      `}
-                  </style>
+                     onChange={(val) => setCategory(val)}
+                     placeholder="Select Category"
+                     className="w-full"
+                  />
                </div>
 
-               <input
-                  value={keyword}
-                  onChange={(e) => setKeyword(e.target.value)}
-                  placeholder="Enter keyword (optional)"
-                  className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white focus:ring-2 focus:ring-indigo-400 focus:outline-none"
-               />
+               <div className="w-full">
+                  <InputGroup
+                     size="lg"
+                     className="rounded-2xl border border-white/10 shadow-sm bg-[#24242d] overflow-hidden transition-all focus-within:border-[#daf4aa]/40 focus-within:ring-2 focus-within:ring-[#daf4aa]/20">
+                     <Input
+                        placeholder="Enter Keywords"
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
+                        className="text-sm text-white placeholder-gray-400"
+                     />
+                  </InputGroup>
+               </div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 my-7">
