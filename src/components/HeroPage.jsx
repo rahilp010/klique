@@ -166,9 +166,9 @@ export default function HeroPage() {
                   </span>
                </div>
                <button
-                  className="px-5 py-2 rounded-xl border-2 border-zinc-900 bg-transparent text-sm font-semibold text-zinc-900 transition-all hover:bg-zinc-900 hover:text-white dark:border-zinc-100 dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900 hidden md:block"
+                  className="px-5 py-2 rounded-xl border-2 border-zinc-900 bg-zinc-900 text-sm font-semibold text-white transition-all hover:bg-transparent hover:text-zinc-900 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-transparent dark:hover:text-zinc-100 hidden md:block cursor-pointer"
                   onClick={handleScroll}>
-                  Get Started
+                  Start Free
                </button>
                <button
                   onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -205,7 +205,7 @@ export default function HeroPage() {
                   transition={{ duration: 0.5, delay: 0.3 }}
                   className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                   <button
-                     className="flex items-center gap-2.5 rounded-xl border-2 border-zinc-900 px-8 py-3 text-base font-semibold text-zinc-900 transition-all hover:bg-zinc-900 hover:text-white dark:border-zinc-100 dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900 w-full sm:w-auto"
+                     className="flex items-center gap-2.5 rounded-xl border-2 border-zinc-900 bg-zinc-900 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-transparent hover:text-zinc-900 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-transparent dark:hover:text-zinc-100 w-full sm:w-auto"
                      onClick={handleScroll}>
                      Start Creating
                      <LiaLongArrowAltRightSolid size={20} />
@@ -452,20 +452,6 @@ export default function HeroPage() {
                               Pricing
                            </a>
                         </li>
-                        <li>
-                           <a
-                              href="#"
-                              className="hover:text-zinc-900 dark:hover:text-zinc-100">
-                              Blog
-                           </a>
-                        </li>
-                        <li>
-                           <a
-                              href="#"
-                              className="hover:text-zinc-900 dark:hover:text-zinc-100">
-                              Careers
-                           </a>
-                        </li>
                      </ul>
                   </div>
 
@@ -486,13 +472,6 @@ export default function HeroPage() {
                               href="#"
                               className="hover:text-zinc-900 dark:hover:text-zinc-100">
                               FAQs
-                           </a>
-                        </li>
-                        <li>
-                           <a
-                              href="#"
-                              className="hover:text-zinc-900 dark:hover:text-zinc-100">
-                              Contact
                            </a>
                         </li>
                         <li>

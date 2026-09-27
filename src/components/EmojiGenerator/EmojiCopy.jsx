@@ -4,9 +4,11 @@ import emojis from 'emoji-datasource';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { FaBars } from 'react-icons/fa';
-
+import { FiCheck } from 'react-icons/fi';
+import { Search } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import ReactCountryFlag from 'react-country-flag';
-import { Input } from '@/components/ui/CustomControl';
+import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 
 // Utility: Convert unified code to emoji char
 const unifiedToEmoji = (unified) =>
@@ -47,12 +49,11 @@ const EmojiButton = memo(({ emoji, onCopy }) => {
    return (
       <button
          title={emoji.name}
-         onClick={() => onCopy(emoji)} // ✅ FIX HERE
+         onClick={() => onCopy(emoji)}
          className="aspect-square flex items-center justify-center text-3xl sm:text-2xl lg:text-4xl 
-               bg-white/10 hover:bg-white/25 active:bg-white/35 rounded-2xl 
-               transition-[transform,background-color,box-shadow] duration-300 ease-out hover:scale-110 hover:rotate-3 
-               active:scale-95 shadow-lg hover:shadow-xl hover:shadow-yellow-500/25 
-               border border-white/15 min-h-[3rem] sm:min-h-[3rem] lg:min-h-[4rem] relative overflow-hidden group">
+               bg-[#18181b] hover:bg-zinc-800 active:bg-zinc-700 rounded-2xl 
+               transition-all duration-200 border border-zinc-800/80 hover:border-zinc-700
+               min-h-[3rem] sm:min-h-[3rem] lg:min-h-[4rem] group shadow-sm">
          {isFlag && countryCode ? (
             <ReactCountryFlag
                countryCode={countryCode}
@@ -61,57 +62,13 @@ const EmojiButton = memo(({ emoji, onCopy }) => {
                title={`${countryCode} flag`}
             />
          ) : (
-            <span className="transition-transform duration-300 group-hover:scale-110">
+            <span className="transition-transform duration-200 group-hover:scale-110">
                {emoji.char}
             </span>
          )}
-         <div
-            className="absolute inset-0 bg-gradient-to-br from-yellow-400/25 to-transparent 
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
-         />
       </button>
    );
 });
-
-// Toast notification component
-const Toast = ({ toast }) => {
-   if (!toast.visible) return null;
-   const isSuccess = toast.type === 'success';
-
-   return (
-      <div className="fixed top-6 right-6 z-50 animate-slideIn">
-         <div
-            className={`px-6 py-3 rounded-xl shadow-lg flex items-center gap-2 border backdrop-blur-md
-          ${
-             isSuccess
-                ? 'bg-green-500/20 border-green-400 text-green-100'
-                : 'bg-red-500/20 border-red-400 text-red-100'
-          }`}>
-            {isSuccess ? (
-               <svg
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2">
-                  <polyline points="20 6 9 17 4 12" />
-               </svg>
-            ) : (
-               <svg
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2">
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                  <line x1="18" y1="6" x2="6" y2="18" />
-               </svg>
-            )}
-            <p className="text-sm font-medium">{toast.message}</p>
-         </div>
-      </div>
-   );
-};
 
 export default function EmojiCopy() {
    const [selectedTab, setSelectedTab] = useState('All');
@@ -139,7 +96,6 @@ export default function EmojiCopy() {
       setRecentEmojis(stored);
    }, []);
 
-   // Preprocess emojis once
    const processedEmojis = useMemo(
       () =>
          emojis.reduce((acc, e) => {
@@ -152,10 +108,9 @@ export default function EmojiCopy() {
             });
             return acc;
          }, []),
-      []
+      [],
    );
 
-   // Group by category
    const groupedEmojis = useMemo(() => {
       const groups = {};
       processedEmojis.forEach((emoji) => {
@@ -167,10 +122,9 @@ export default function EmojiCopy() {
 
    const categories = useMemo(
       () => ['All', ...Object.keys(groupedEmojis)],
-      [groupedEmojis]
+      [groupedEmojis],
    );
 
-   // Updated: Filter by tab AND search term
    const displayedEmojis = useMemo(() => {
       let filtered =
          selectedTab === 'All'
@@ -180,14 +134,13 @@ export default function EmojiCopy() {
       if (searchTerm.trim()) {
          const lowerSearch = searchTerm.toLowerCase();
          filtered = filtered.filter((emoji) =>
-            emoji.name.toLowerCase().includes(lowerSearch)
+            emoji.name.toLowerCase().includes(lowerSearch),
          );
       }
 
       return filtered;
    }, [selectedTab, groupedEmojis, processedEmojis, searchTerm]);
 
-   // Determine current section title
    const currentSectionTitle = useMemo(() => {
       if (searchTerm.trim()) return `Search Results for "${searchTerm}"`;
       if (selectedTab === 'All') return 'All Emojis';
@@ -195,14 +148,14 @@ export default function EmojiCopy() {
    }, [searchTerm, selectedTab]);
 
    const showNotification = useCallback(
-      (message, type = 'success', duration = 3000) => {
+      (message, type = 'success', duration = 2500) => {
          setToast({ message, type, visible: true });
          setTimeout(
             () => setToast((prev) => ({ ...prev, visible: false })),
-            duration
+            duration,
          );
       },
-      []
+      [],
    );
 
    const handleCopy = useCallback(
@@ -211,32 +164,25 @@ export default function EmojiCopy() {
             await navigator.clipboard.writeText(emojiObj.char);
             showNotification(
                `Copied ${emojiObj.char} to clipboard!`,
-               'success'
+               'success',
             );
 
             setRecentEmojis((prev) => {
-               // Remove duplicates and move the current emoji to the top
                const updated = [
                   emojiObj,
                   ...prev.filter((e) => e.unified !== emojiObj.unified),
                ];
-
-               // Limit the list to only 10 recent emojis
                const limited = updated.slice(0, 10);
-
-               // Save to localStorage
                localStorage.setItem('recentEmojis', JSON.stringify(limited));
-
                return limited;
             });
          } catch {
             showNotification('Failed to copy 😞', 'error');
          }
       },
-      [showNotification]
+      [showNotification],
    );
 
-   // New: Handle search input
    const handleSearchChange = useCallback((e) => {
       setSearchTerm(e.target.value);
       setSelectedTab('All');
@@ -256,236 +202,178 @@ export default function EmojiCopy() {
    }, []);
 
    return (
-      <div className="min-h-[100dvh] bg-gradient-to-br from-black via-gray-900 to-black text-white font-sans px-4 py-20 md:px-10 relative overflow-y-auto h-[100dvh] customScrollbar indexwise">
+      <ColumnLines
+         columnWidth={80}
+         columnCount={16}
+         radialFadeStart={15}
+         radialFadeEnd={90}
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto px-4 py-20 md:px-10">
          <SEO
             title="Emoji Mixer & Generator | Combine Emojis | Klique"
             description="Browse, mix, and copy-paste emojis easily. Create unique emoji combinations, search by category or country, and access trending emojis instantly."
             keywords="emoji mixer, emoji generator, copy paste emojis, mix emojis, emoji merger, klique emojis, emojis browser"
             canonicalUrl="https://klique.netlify.app/emojigenerator"
-            jsonLd={{
-               "@context": "https://schema.org",
-               "@type": "SoftwareApplication",
-               "name": "Emoji Mixer & Generator",
-               "operatingSystem": "All",
-               "applicationCategory": "UtilitiesApplication",
-               "offers": {
-                  "@type": "Offer",
-                  "price": "0",
-                  "priceCurrency": "USD"
-               }
-            }}
-         />
-         <div
-            onClick={() => setSidebarOpen((prev) => !prev)}
-            className="fixed top-6 left-6 z-50 p-3 rounded-2xl 
-                              bg-white/10 backdrop-blur-xl border border-white/20
-                              hover:bg-white/20 hover:scale-105
-                              active:scale-95
-                              transition-all duration-300 
-                              shadow-lg shadow-black/20 cursor-pointer">
-            <FaBars size={20} className="text-white" />
-         </div>
-
-         <Navbar
-            sidebarOpen={sidebarOpen}
-            setSidebarOpen={setSidebarOpen}
-            isMobile={isMobile}
          />
 
-         <Toast toast={toast} />
-
-         <div className="absolute inset-0 opacity-20 pointer-events-none">
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(251,191,36,0.1)_0%,transparent_50%)] animate-pulse"></div>
+         <div className="w-full sticky top-0 z-30 bg-[#16161b] transition-all duration-300">
+            <Navbar />
          </div>
 
-         <h1
-            className="text-4xl text-center  sm:text-3xl md:text-5xl  lg:text-6xl  font-bold mb-8 tracking-tight  animate-fade-in-down relative
-         ">
-            Emoji{' '}
-            <span className="bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
-               Browser
-            </span>
-         </h1>
-
-         {/* Search Input */}
-         <div className="max-w-2xl mx-auto mb-8 relative">
-            <div className="relative">
-               <svg
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50 pointer-events-none"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <circle cx="11" cy="11" r="8" strokeWidth="2" />
-                  <path
-                     d="M21 21l-4.35-4.35"
-                     strokeWidth="2"
-                     strokeLinecap="round"
-                  />
-               </svg>
-               <input
-                  type="text"
-                  placeholder={placeholder[placeholderIndex]}
-                  value={searchTerm}
-                  onChange={handleSearchChange}
-                  className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/10 border border-white/20 
-                             backdrop-blur-lg text-white placeholder-white/60 
-                             focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500/50
-                             transition-all duration-300 text-base font-medium
-                             hover:bg-white/15"
-               />
-               {searchTerm && (
-                  <button
-                     onClick={() => setSearchTerm('')}
-                     className="absolute right-4 top-1/2 transform -translate-y-1/2 
-                                w-6 h-6 flex items-center justify-center
-                                text-white/60 hover:text-white hover:bg-white/10 
-                                rounded-full transition-all duration-200">
-                     <svg
-                        className="w-4 h-4"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2">
-                        <line x1="18" y1="6" x2="6" y2="18" />
-                        <line x1="6" y1="6" x2="18" y2="18" />
-                     </svg>
-                  </button>
+         <div className="ml-10">
+            {/* Toast Notification */}
+            <AnimatePresence>
+               {toast.visible && (
+                  <motion.div
+                     initial={{ opacity: 0, y: -20, x: '-50%' }}
+                     animate={{ opacity: 1, y: 0, x: '-50%' }}
+                     exit={{ opacity: 0, y: -20, x: '-50%' }}
+                     className="fixed top-6 left-1/2 z-50">
+                     <div
+                        className={`px-4 py-3 rounded-full shadow-lg flex items-center gap-3 border bg-[#18181b] backdrop-blur-md ${
+                           toast.type === 'error'
+                              ? 'border-red-500/50 text-red-400'
+                              : 'border-green-500/50 text-green-400'
+                        }`}>
+                        {toast.type === 'error' ? (
+                           <FiCheck className="w-4 h-4 hidden" />
+                        ) : (
+                           <FiCheck className="w-4 h-4" />
+                        )}
+                        <p className="text-sm font-medium pr-2">
+                           {toast.message}
+                        </p>
+                     </div>
+                  </motion.div>
                )}
-            </div>
-            {searchTerm && displayedEmojis.length > 0 && (
-               <p className="text-sm text-white/70 mt-3 text-center font-semibold">
-                  Found{' '}
-                  <span className="font-bold text-yellow-400">
-                     {displayedEmojis.length}
-                  </span>{' '}
-                  emoji{displayedEmojis.length !== 1 ? 's' : ''}
+            </AnimatePresence>
+
+            <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               className="text-center mb-10">
+               <h1 className="text-3xl sm:text-4xl font-medium text-zinc-100 tracking-tight mb-3">
+                  Emoji Browser
+               </h1>
+               <p className="text-zinc-500 text-sm sm:text-base font-medium">
+                  Search, copy, and paste your favorite emojis instantly
                </p>
-            )}
-         </div>
+            </motion.div>
 
-         {recentEmojis.length > 0 && (
-            <div
-               className="max-w-4xl mx-auto mb-10 bg-white/5 border border-white/10 rounded-2xl 
-                   backdrop-blur-lg shadow-lg shadow-black/20 p-6 animate-fade-in">
-               <h2 className="text-xl font-semibold mb-4 text-white/90">
-                  Recently Used
-               </h2>
-               <div className="flex flex-wrap justify-center gap-3">
-                  {recentEmojis.map((emoji, i) => (
-                     <EmojiButton key={i} emoji={emoji} onCopy={handleCopy} />
-                  ))}
+            {/* Search Input */}
+            <div className="max-w-2xl mx-auto mb-8 relative z-20">
+               <div className="relative">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-zinc-500 pointer-events-none" />
+                  <input
+                     type="text"
+                     placeholder={placeholder[placeholderIndex]}
+                     value={searchTerm}
+                     onChange={handleSearchChange}
+                     className="w-full pl-12 pr-12 py-4 rounded-2xl bg-[#0f0f11] border border-zinc-800/80 text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600 transition-all text-base shadow-xl"
+                  />
+                  {searchTerm && (
+                     <button
+                        onClick={() => setSearchTerm('')}
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 flex items-center justify-center text-zinc-500 hover:text-zinc-300 transition-colors">
+                        <svg
+                           className="w-4 h-4"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           strokeWidth="2">
+                           <line x1="18" y1="6" x2="6" y2="18" />
+                           <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                     </button>
+                  )}
                </div>
-            </div>
-         )}
-
-         {/* Category Tabs */}
-         {!searchTerm && (
-            <div className="max-w-4xl mx-auto mb-8">
-               <div className="flex flex-wrap justify-center gap-3">
-                  {categories
-                     .filter((cat) => cat !== 'Flag' && cat !== 'Component')
-                     .map((cat) => (
-                        <button
-                           key={cat}
-                           onClick={() => setSelectedTab(cat)}
-                           className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ease-out relative overflow-hidden group cursor-pointer min-w-[80px]
-                     ${
-                        selectedTab === cat
-                           ? 'bg-gradient-to-r from-yellow-500 to-amber-600 text-black shadow-lg shadow-yellow-500/25'
-                           : 'bg-white/5 hover:bg-white/10 border border-white/15 hover:shadow-md'
-                     }`}>
-                           <span className="relative z-10">{cat}</span>
-                           {selectedTab === cat && (
-                              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-amber-500/20 -skew-x-12 transform translate-x-[-50%] opacity-0 group-hover:opacity-100 transition-opacity" />
-                           )}
-                        </button>
-                     ))}
-               </div>
-            </div>
-         )}
-
-         <div
-            key={`${selectedTab}-${searchTerm}`} // Key includes search for re-render on search
-            className="max-w-4xl mx-auto p-6 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-lg 
-                      shadow-2xl shadow-black/20 animate-fade-in overflow-y-auto customScrollbar h-[70vh] md:h-[80vh]">
-            {/* Section Header */}
-            <div className="mb-6 text-center">
-               <h2 className="text-2xl md:text-3xl font-bold text-white/90 mb-1">
-                  {currentSectionTitle}
-               </h2>
-               {!searchTerm && selectedTab !== 'All' && (
-                  <p className="text-sm text-white/60">
-                     {groupedEmojis[selectedTab]?.length || 0} emojis in this
-                     category
+               {searchTerm && displayedEmojis.length > 0 && (
+                  <p className="text-sm text-zinc-500 mt-3 text-center font-medium">
+                     Found{' '}
+                     <span className="text-zinc-300 font-semibold">
+                        {displayedEmojis.length}
+                     </span>{' '}
+                     emoji{displayedEmojis.length !== 1 ? 's' : ''}
                   </p>
                )}
             </div>
-            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
-               {displayedEmojis.length > 0 ? (
-                  displayedEmojis.map((emoji, i) => (
-                     <EmojiButton key={i} emoji={emoji} onCopy={handleCopy} />
-                  ))
-               ) : (
-                  <div className="col-span-full flex flex-col items-center justify-center py-12 text-center text-gray-400">
-                     <span className="text-8xl mb-6">🔍</span>
-                     <p className="text-xl md:text-2xl font-semibold mb-2">
-                        No emojis found
-                     </p>
-                     {searchTerm ? (
-                        <p className="text-base">
-                           No matches for "{searchTerm}". Try a different term.
-                        </p>
-                     ) : (
-                        <p className="text-base">
-                           Switch to another category or search.
-                        </p>
-                     )}
+
+            {recentEmojis.length > 0 && (
+               <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="max-w-4xl mx-auto mb-10 bg-[#121214] border border-zinc-800/80 rounded-2xl p-6 shadow-xl relative z-20">
+                  <h2 className="text-sm font-medium mb-4 text-zinc-400 uppercase tracking-wider">
+                     Recently Used
+                  </h2>
+                  <div className="flex flex-wrap gap-3">
+                     {recentEmojis.map((emoji, i) => (
+                        <EmojiButton
+                           key={i}
+                           emoji={emoji}
+                           onCopy={handleCopy}
+                        />
+                     ))}
                   </div>
-               )}
+               </motion.div>
+            )}
+
+            {/* Category Tabs */}
+            {!searchTerm && (
+               <div className="max-w-4xl mx-auto mb-8 relative z-20">
+                  <div className="flex flex-wrap justify-center gap-3">
+                     {categories
+                        .filter((cat) => cat !== 'Flag' && cat !== 'Component')
+                        .map((cat) => (
+                           <button
+                              key={cat}
+                              onClick={() => setSelectedTab(cat)}
+                              className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                                 selectedTab === cat
+                                    ? 'bg-zinc-800 text-zinc-100 border border-zinc-700 shadow-sm'
+                                    : 'bg-[#18181b] border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/80'
+                              }`}>
+                              {cat}
+                           </button>
+                        ))}
+                  </div>
+               </div>
+            )}
+
+            <div className="max-w-4xl mx-auto p-6 lg:p-8 bg-[#121214] border border-zinc-800/80 rounded-2xl shadow-xl overflow-y-auto customScrollbar h-[65vh] md:h-[75vh] relative z-20">
+               <div className="mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-zinc-800/50 pb-4">
+                  <h2 className="text-xl font-medium text-zinc-200">
+                     {currentSectionTitle}
+                  </h2>
+                  {!searchTerm && selectedTab !== 'All' && (
+                     <p className="text-sm text-zinc-500 font-medium">
+                        {groupedEmojis[selectedTab]?.length || 0} items
+                     </p>
+                  )}
+               </div>
+
+               <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2.5">
+                  {displayedEmojis.length > 0 ? (
+                     displayedEmojis.map((emoji, i) => (
+                        <EmojiButton
+                           key={`${selectedTab}-${i}`}
+                           emoji={emoji}
+                           onCopy={handleCopy}
+                        />
+                     ))
+                  ) : (
+                     <div className="col-span-full flex flex-col items-center justify-center py-16 text-center text-zinc-500">
+                        <Search className="w-12 h-12 mb-4 text-zinc-700" />
+                        <p className="text-lg font-medium text-zinc-400 mb-2">
+                           No emojis found
+                        </p>
+                        <p className="text-sm">
+                           Try a different search term or category.
+                        </p>
+                     </div>
+                  )}
+               </div>
             </div>
          </div>
-
-         <style>{`
-            @keyframes fade-in-down {
-               from {
-                  opacity: 0;
-                  transform: translateY(-20px);
-               }
-               to {
-                  opacity: 1;
-                  transform: translateY(0);
-               }
-            }
-            @keyframes slideIn {
-               from {
-                  transform: translateX(100%);
-                  opacity: 0;
-               }
-               to {
-                  transform: translateX(0);
-                  opacity: 1;
-               }
-            }
-            @keyframes fade-in {
-               from {
-                  opacity: 0;
-                  transform: scale(0.95);
-               }
-               to {
-                  opacity: 1;
-                  transform: scale(1);
-               }
-            }
-            .animate-slideIn {
-               animation: slideIn 0.3s ease-out;
-            }
-            .animate-fade-in-down {
-               animation: fade-in-down 0.6s ease-out;
-            }
-            .animate-fade-in {
-               animation: fade-in 0.5s ease-out;
-            }
-         `}</style>
-      </div>
+      </ColumnLines>
    );
 }

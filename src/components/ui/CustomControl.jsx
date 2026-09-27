@@ -3,6 +3,7 @@ import React, {
    forwardRef,
    useCallback,
    useEffect,
+   useLayoutEffect,
    useImperativeHandle,
    useMemo,
    useRef,
@@ -43,6 +44,9 @@ const filterDomProps = (props = {}) => {
    return validProps;
 };
 
+const useIsomorphicLayoutEffect =
+   typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
 const useDropdownPosition = (open, triggerRef, menuWidthOverride = null) => {
    const [coords, setCoords] = useState({
       top: 0,
@@ -70,7 +74,7 @@ const useDropdownPosition = (open, triggerRef, menuWidthOverride = null) => {
       });
    }, [triggerRef, menuWidthOverride]);
 
-   useEffect(() => {
+   useIsomorphicLayoutEffect(() => {
       if (open) {
          updatePosition();
          window.addEventListener('resize', updatePosition);
@@ -184,18 +188,24 @@ export const SelectPicker = forwardRef(
       );
       const filtered = useMemo(() => {
          if (!searchable || !query) return data;
+         const q = query.toLowerCase();
          return data.filter((item) =>
             String(item?.label ?? item?.value ?? '')
                .toLowerCase()
-               .includes(query.toLowerCase()),
+               .includes(q),
          );
       }, [data, query, searchable]);
 
+      const displayed = useMemo(() => {
+         if (filtered.length > 80) return filtered.slice(0, 80);
+         return filtered;
+      }, [filtered]);
+
       useEffect(() => {
          if (open) {
-            setFocusedIndex(filtered.length > 0 ? 0 : -1);
+            setFocusedIndex(displayed.length > 0 ? 0 : -1);
          }
-      }, [open, query, filtered.length]);
+      }, [open, query, displayed.length]);
 
       useEffect(() => {
          if (open && focusedIndex >= 0 && listRef.current) {
@@ -221,7 +231,7 @@ export const SelectPicker = forwardRef(
          }
 
          const extraCount = renderExtraFooter || onCreateNew ? 1 : 0;
-         const totalCount = filtered.length + extraCount;
+         const totalCount = displayed.length + extraCount;
 
          if (e.key === 'ArrowDown') {
             e.preventDefault();
@@ -231,12 +241,12 @@ export const SelectPicker = forwardRef(
             setFocusedIndex((prev) => (prev > 0 ? prev - 1 : totalCount - 1));
          } else if (e.key === 'Enter') {
             e.preventDefault();
-            if (focusedIndex >= 0 && focusedIndex < filtered.length) {
-               const item = filtered[focusedIndex];
+            if (focusedIndex >= 0 && focusedIndex < displayed.length) {
+               const item = displayed[focusedIndex];
                onChange?.(item?.value, item);
                handleClose();
             } else if (
-               focusedIndex === filtered.length &&
+               focusedIndex === displayed.length &&
                (renderExtraFooter || onCreateNew)
             ) {
                handleClose();
@@ -305,12 +315,12 @@ export const SelectPicker = forwardRef(
                      ref={listRef}
                      className="overflow-y-auto p-1.5 customScrollbar"
                      style={{ maxHeight: menuMaxHeight }}>
-                     {filtered.length === 0 ? (
+                     {displayed.length === 0 ? (
                         <div className="px-4 py-6 text-center text-sm text-gray-500">
                            No results found
                         </div>
                      ) : (
-                        filtered.map((item, idx) => {
+                        displayed.map((item, idx) => {
                            const isSelected =
                               String(item?.value) === String(value);
                            const isFocused = idx === focusedIndex;
@@ -349,9 +359,9 @@ export const SelectPicker = forwardRef(
                   {(renderExtraFooter || onCreateNew) && (
                      <div
                         className={`border-t border-white/[0.08] p-1.5 bg-[#16161b] ${
-                           focusedIndex === filtered.length ? 'bg-white/10' : ''
+                           focusedIndex === displayed.length ? 'bg-white/10' : ''
                         }`}
-                        onMouseEnter={() => setFocusedIndex(filtered.length)}>
+                        onMouseEnter={() => setFocusedIndex(displayed.length)}>
                         {renderExtraFooter ? (
                            typeof renderExtraFooter === 'function' ? (
                               renderExtraFooter(handleClose)

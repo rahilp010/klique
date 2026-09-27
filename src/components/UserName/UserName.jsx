@@ -1,13 +1,15 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
-import { FaBars, FaWandMagicSparkles } from 'react-icons/fa6';
+import React, { useState, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa6';
 import { GiPerspectiveDiceSixFacesRandom } from 'react-icons/gi';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { IoCopyOutline } from 'react-icons/io5';
-import { Input, InputGroup, SelectPicker } from '@/components/ui/CustomControl';
 import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 import { Search } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { FiCheck, FiSend } from 'react-icons/fi';
+import { PiSparkleLight } from 'react-icons/pi';
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
@@ -74,7 +76,7 @@ const nouns = [
 
 export default function UsernameGenerator() {
    const [keyword, setKeyword] = useState('');
-   const [tone, setTone] = useState('cool');
+   const [tone, setTone] = useState('creative');
    const [platform, setPlatform] = useState('');
    const [category, setCategory] = useState('');
    const [usernames, setUsernames] = useState([]);
@@ -86,6 +88,15 @@ export default function UsernameGenerator() {
    });
 
    const [sidebarOpen, setSidebarOpen] = useState(false);
+   const [isMobile, setIsMobile] = useState(false);
+   const [copiedIndex, setCopiedIndex] = useState(null);
+
+   useEffect(() => {
+      const checkMobile = () => setIsMobile(window.innerWidth < 768);
+      checkMobile();
+      window.addEventListener('resize', checkMobile);
+      return () => window.removeEventListener('resize', checkMobile);
+   }, []);
 
    const showNotification = (msg, type = 'success', duration = 2500) => {
       setToast({ visible: true, message: msg, type });
@@ -100,7 +111,7 @@ export default function UsernameGenerator() {
          return `${adj}${keyword || noun}${num}`.toLowerCase();
       });
       setUsernames(results);
-      showNotification('✨ Random usernames generated!');
+      showNotification('Random usernames generated!');
    };
 
    const generateAI = async () => {
@@ -124,33 +135,16 @@ export default function UsernameGenerator() {
                            {
                               text: `
 You are a social media branding expert who creates short, catchy, and platform-optimized usernames.
-
-Generate **15 unique usernames** suitable for the following context:
-
+Generate 15 unique usernames suitable for the following context:
 Platform: ${platform || 'Any'}
 Tone/Style: ${tone}
 Category/Theme: ${category || 'general'}
 Keyword (optional): ${keyword || 'none'}
 
-🎯 Rules:
-- Each username should be platform-ready and follow ${
-                                 platform
-                                    ? `${platform}'s`
-                                    : 'popular social media'
-                              } username trends.
-- Adapt tone dynamically:
-   • cool → trendy, stylish, modern  
-   • funny → playful, humorous, witty  
-   • aesthetic → elegant, soft, minimalist  
-   • professional → clean, brandable, subtle  
-   • gaming → bold, aggressive, high-energy  
-- Incorporate the keyword naturally if provided.
-- Keep each name **under 15 characters**, easy to remember.
-- Avoid spaces, emojis, and special symbols.
-- Use underscores or short numbers only if it enhances style.
-- Must add numbers in 3 or 4 response out of 15.
-- Ensure all usernames look authentic and could realistically exist on social media.
-- Return **usernames separated by new lines only** — no explanations, bullets, or markdown.
+Rules:
+- Adapt tone dynamically (e.g. funny -> playful, professional -> clean)
+- Keep under 15 characters, no spaces/emojis.
+- Return usernames separated by new lines only — no markdown.
 `,
                            },
                         ],
@@ -170,7 +164,7 @@ Keyword (optional): ${keyword || 'none'}
             .filter(Boolean);
 
          setUsernames(parsed.length ? parsed : ['No usernames generated 😢']);
-         showNotification('🤖 AI usernames generated!');
+         showNotification('AI usernames generated!');
       } catch (err) {
          console.error(err);
          showNotification('Failed to generate via AI', 'error');
@@ -179,212 +173,207 @@ Keyword (optional): ${keyword || 'none'}
       }
    };
 
-   const handleCopy = (name) => {
+   const handleCopy = (name, index) => {
       navigator.clipboard.writeText(name);
+      setCopiedIndex(index);
       showNotification(`Copied "${name}"`);
+      setTimeout(() => setCopiedIndex(null), 1500);
    };
 
    return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white p-6 relative overflow-x-hidden">
+      <ColumnLines
+         columnWidth={80}
+         columnCount={14}
+         radialFadeStart={15}
+         radialFadeEnd={90}
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto px-4 py-20 md:px-10">
          <SEO
             title="Aesthetic Username Generator | Custom Gamertags & Handles | Klique"
             description="Create cool, unique, and aesthetic usernames for Instagram, TikTok, YouTube, Reddit, Roblox, and gaming. Find the perfect handle instantly using AI."
             keywords="username generator, cool usernames, gamer tag generator, aesthetic handles, instagram username generator, klique, tiktok username generator"
             canonicalUrl="https://klique.netlify.app/username"
-            jsonLd={{
-               '@context': 'https://schema.org',
-               '@type': 'SoftwareApplication',
-               name: 'AI Username Generator',
-               operatingSystem: 'All',
-               applicationCategory: 'UtilitiesApplication',
-               offers: {
-                  '@type': 'Offer',
-                  price: '0',
-                  priceCurrency: 'USD',
-               },
-            }}
          />
-         <div
-            onClick={() => setSidebarOpen((prev) => !prev)}
-            className="fixed top-6 left-6 z-40 p-3 rounded-2xl 
-                              bg-white/10 backdrop-blur-xl border border-white/20
-                              hover:bg-white/20 hover:scale-105
-                              active:scale-95
-                              transition-all duration-300 
-                              shadow-lg shadow-black/20 cursor-pointer">
-            <FaBars size={20} className="text-white" />
+
+         {/* Toast Notification */}
+         <AnimatePresence>
+            {toast.visible && (
+               <motion.div
+                  initial={{ opacity: 0, y: -20, x: '-50%' }}
+                  animate={{ opacity: 1, y: 0, x: '-50%' }}
+                  exit={{ opacity: 0, y: -20, x: '-50%' }}
+                  className="fixed top-6 left-1/2 z-50">
+                  <div
+                     className={`px-4 py-3 rounded-full shadow-lg flex items-center gap-3 border bg-[#18181b] backdrop-blur-md ${
+                        toast.type === 'error'
+                           ? 'border-red-500/50 text-red-400'
+                           : 'border-green-500/50 text-green-400'
+                     }`}>
+                     {toast.type === 'error' ? (
+                        <FiCheck className="w-4 h-4 hidden" />
+                     ) : (
+                        <FiCheck className="w-4 h-4" />
+                     )}
+                     <p className="text-sm font-medium pr-2">{toast.message}</p>
+                  </div>
+               </motion.div>
+            )}
+         </AnimatePresence>
+
+         <div className="w-full sticky top-0 z-30 bg-[#16161b] transition-all duration-300">
+            <Navbar />
          </div>
-
-         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-         {/* Toast */}
-         {toast.visible && (
-            <div className="fixed top-6 right-6 z-50 animate-slideIn">
-               <div
-                  className={`px-4 py-3 rounded-xl shadow-lg backdrop-blur-lg border ${
-                     toast.type === 'error'
-                        ? 'bg-red-500/20 border-red-400 text-red-100'
-                        : 'bg-green-500/20 border-green-400 text-green-100'
-                  }`}>
-                  {toast.message}
-               </div>
-            </div>
-         )}
 
          {/* Header */}
-         <div className="text-center mb-10 mt-20">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-3">
-               Username{' '}
-               <span className="bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
-                  Generator
-               </span>
+         <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-10 relative z-20">
+            <h1 className="text-3xl sm:text-4xl font-medium text-zinc-100 tracking-tight mb-3">
+               Username Generator
             </h1>
-            <p className="text-gray-400">
-               Create creative, cool, or AI-powered usernames instantly.
+            <p className="text-zinc-500 text-sm sm:text-base font-medium">
+               Create creative, cool, or AI-powered usernames instantly
             </p>
-         </div>
+         </motion.div>
 
          {/* Controls */}
-         <div className="max-w-4xl mx-auto bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 shadow-lg">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-               <div className="w-full">
-                  <SelectPicker
-                     data={platforms}
-                     value={platform}
-                     onChange={(val) => setPlatform(val)}
-                     placeholder="Select Platform"
-                     className="w-full"
-                  />
-               </div>
+         <div className="max-w-4xl mx-auto bg-[#121214] border border-zinc-800/80 rounded-2xl p-6 shadow-xl relative z-20">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+               <select
+                  value={platform}
+                  onChange={(e) => setPlatform(e.target.value)}
+                  className="w-full px-4 py-3 bg-[#18181b] border border-zinc-800 text-zinc-300 text-sm font-medium rounded-xl focus:outline-none focus:border-zinc-600 appearance-none cursor-pointer">
+                  <option value="">Select Platform</option>
+                  {platforms.map((p) => (
+                     <option key={p.value} value={p.value}>
+                        {p.label}
+                     </option>
+                  ))}
+               </select>
 
-               <div className="w-full">
-                  <SelectPicker
-                     data={categories}
-                     value={category}
-                     onChange={(val) => setCategory(val)}
-                     placeholder="Select Category"
-                     className="w-full"
-                  />
-               </div>
+               <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full px-4 py-3 bg-[#18181b] border border-zinc-800 text-zinc-300 text-sm font-medium rounded-xl focus:outline-none focus:border-zinc-600 appearance-none cursor-pointer">
+                  <option value="">Select Category</option>
+                  {categories.map((c) => (
+                     <option key={c.value} value={c.value}>
+                        {c.label}
+                     </option>
+                  ))}
+               </select>
 
-               <div className="w-full">
-                  <InputGroup
-                     size="lg"
-                     className="rounded-2xl border border-white/10 shadow-sm bg-[#24242d] overflow-hidden transition-all focus-within:border-[#daf4aa]/40 focus-within:ring-2 focus-within:ring-[#daf4aa]/20">
-                     <Input
-                        placeholder="Enter Keywords"
-                        value={keyword}
-                        onChange={(e) => setKeyword(e.target.value)}
-                        className="text-sm text-white placeholder-gray-400"
-                     />
-                  </InputGroup>
+               <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                  <input
+                     type="text"
+                     placeholder="Enter Keywords"
+                     value={keyword}
+                     onChange={(e) => setKeyword(e.target.value)}
+                     className="w-full pl-10 pr-4 py-3 bg-[#18181b] border border-zinc-800 text-zinc-200 text-sm font-medium rounded-xl focus:outline-none focus:border-zinc-600 placeholder-zinc-500"
+                  />
                </div>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 my-7">
-               {tones.map((option) => (
-                  <button
-                     key={option.value}
-                     onClick={() => setTone(option.value)}
-                     className={`px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
-                        option.value === tone
-                           ? 'bg-indigo-500 border-2 border-white/40 text-white shadow-lg scale-105'
-                           : 'bg-white/10 border border-white/10 text-gray-300 hover:bg-white/20 hover:border-white/20'
-                     }`}>
-                     <span>{option.label}</span>
-                  </button>
-               ))}
+            <div className="mb-6">
+               <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider mb-3">
+                  Select Tone
+               </h3>
+               <div className="flex flex-wrap gap-2.5">
+                  {tones.map((option) => (
+                     <button
+                        key={option.value}
+                        onClick={() => setTone(option.value)}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                           option.value === tone
+                              ? 'bg-zinc-800 text-zinc-100 border border-zinc-700 shadow-sm'
+                              : 'bg-[#18181b] border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/80'
+                        }`}>
+                        {option.label}
+                     </button>
+                  ))}
+               </div>
             </div>
 
-            <div className="flex justify-center gap-3">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-zinc-800/50">
                <button
                   onClick={generateLocal}
-                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-xl hover:scale-105 transition-all">
-                  <GiPerspectiveDiceSixFacesRandom /> Random
+                  disabled={loading}
+                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#18181b] border border-zinc-800 hover:bg-zinc-800 hover:text-zinc-200 text-zinc-400 rounded-xl text-sm font-medium transition-all">
+                  <GiPerspectiveDiceSixFacesRandom size={16} /> Random Idea
                </button>
                <button
                   onClick={generateAI}
                   disabled={loading}
-                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-xl hover:scale-105 transition-all disabled:opacity-50">
-                  <FaWandMagicSparkles />
-                  {loading ? 'Generating...' : 'AI Generate'}
+                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#27272a] hover:bg-[#3f3f46] disabled:bg-zinc-900 disabled:text-zinc-600 disabled:cursor-not-allowed text-zinc-200 rounded-xl text-sm font-medium transition-all group">
+                  {loading ? (
+                     <>
+                        <PiSparkleLight
+                           className="animate-spin text-purple-400"
+                           size={16}
+                        />{' '}
+                        Generating...
+                     </>
+                  ) : (
+                     <>
+                        <FiSend
+                           size={16}
+                           className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                        />{' '}
+                        Generate AI
+                     </>
+                  )}
                </button>
             </div>
          </div>
 
-         {/* Results or Loader */}
-         <div
-            className="max-w-4xl mx-auto mt-10 p-6 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-lg shadow-xl animate-fade-in"
-            id="results">
-            <h2 className="text-xl font-semibold mb-4 text-white/90 text-center">
-               {loading ? 'Generating Usernames...' : 'Generated Usernames'}
-            </h2>
+         {/* Results */}
+         <AnimatePresence>
+            {(usernames.length > 0 || loading) && (
+               <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="max-w-4xl mx-auto mt-8 relative z-20">
+                  <div className="bg-[#121214] border border-zinc-800/80 rounded-2xl p-6 lg:p-8 shadow-xl">
+                     <div className="flex items-center justify-between mb-6 border-b border-zinc-800/50 pb-4">
+                        <h3 className="text-lg font-medium text-zinc-100 flex items-center gap-2">
+                           <PiSparkleLight
+                              className="text-purple-400"
+                              size={20}
+                           />
+                           Generated Handles
+                        </h3>
+                     </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 overflow-y-auto max-h-[60vh] p-2">
-               {loading ? (
-                  [...Array(12)].map((_, i) => (
-                     <div
-                        key={i}
-                        className="w-full h-10 rounded-lg bg-white/10 animate-shimmer"></div>
-                  ))
-               ) : usernames.length > 0 ? (
-                  usernames.map((name, i) => (
-                     <div
-                        key={i}
-                        className="px-4 py-3 rounded-lg bg-white/10 border border-white/10 text-center hover:bg-white/20 cursor-pointer transition-all flex items-center justify-center gap-2 group relative hover:scale-105 "
-                        onClick={() => handleCopy(name)}>
-                        <IoCopyOutline className="absolute right-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-300" />
-                        <span className="truncate">{name}</span>
+                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        {loading
+                           ? [...Array(12)].map((_, i) => (
+                                <div
+                                   key={i}
+                                   className="w-full h-12 rounded-xl bg-zinc-800/50 animate-pulse border border-zinc-800"></div>
+                             ))
+                           : usernames.map((name, i) => (
+                                <div
+                                   key={i}
+                                   className="group relative flex items-center justify-between px-4 py-3 rounded-xl bg-[#18181b] border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer"
+                                   onClick={() => handleCopy(name, i)}>
+                                   <span className="text-sm font-medium text-zinc-300 truncate pr-6">
+                                      {name}
+                                   </span>
+                                   <div className="absolute right-3 text-zinc-500 group-hover:text-zinc-300 transition-colors">
+                                      {copiedIndex === i ? (
+                                         <FiCheck className="text-green-400" />
+                                      ) : (
+                                         <IoCopyOutline />
+                                      )}
+                                   </div>
+                                </div>
+                             ))}
                      </div>
-                  ))
-               ) : (
-                  <div className="col-span-full flex flex-col items-center justify-center py-10 text-center text-white/70 animate-fade-in">
-                     <div className="w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-indigo-400 to-pink-400 opacity-80 flex items-center justify-center shadow-lg shadow-indigo-500/30 animate-pulse">
-                        <GiPerspectiveDiceSixFacesRandom className="text-3xl" />
-                     </div>
-                     <h3 className="text-2xl font-semibold bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent mb-2">
-                        No usernames yet
-                     </h3>
-                     <p className="text-gray-400 max-w-sm">
-                        Tap{' '}
-                        <span className="text-pink-400 font-medium">
-                           Random
-                        </span>{' '}
-                        or{' '}
-                        <span className="text-indigo-400 font-medium">
-                           AI Generate
-                        </span>{' '}
-                        to create cool names instantly ✨
-                     </p>
                   </div>
-               )}
-            </div>
-         </div>
-
-         {/* ✨ Animations */}
-         <style>{`
-            @keyframes shimmer {
-               0% { background-position: 200% 0; }
-               100% { background-position: -200% 0; }
-            }
-            .animate-shimmer {
-               background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
-               background-size: 200% 100%;
-               animation: shimmer 1.5s infinite;
-            }
-            @keyframes slideIn {
-               from { transform: translateX(100%); opacity: 0; }
-               to { transform: translateX(0); opacity: 1; }
-            }
-            .animate-slideIn { animation: slideIn 0.3s ease-out; }
-            @keyframes fadeIn {
-               from { opacity: 0; transform: translateY(10px); }
-               to { opacity: 1; transform: translateY(0); }
-            }
-            .animate-fade-in {
-               animation: fadeIn 0.4s ease-out;
-            }
-         `}</style>
-      </div>
+               </motion.div>
+            )}
+         </AnimatePresence>
+      </ColumnLines>
    );
 }

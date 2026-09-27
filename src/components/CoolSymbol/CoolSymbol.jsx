@@ -2,6 +2,9 @@ import React, { useState, useCallback, memo, useEffect } from 'react';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { FaBars } from 'react-icons/fa';
+import { FiCheck } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'motion/react';
+import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 
 const symbolCategories = [
    {
@@ -555,59 +558,16 @@ const symbolCategories = [
    },
 ];
 
-// 🔸 Toast Component
-const Toast = ({ toast }) => {
-   if (!toast.visible) return null;
-   const isSuccess = toast.type === 'success';
-
-   return (
-      <div className="fixed top-6 right-6 z-50 animate-slideIn">
-         <div
-            className={`px-6 py-3 rounded-xl shadow-lg flex items-center gap-2 border backdrop-blur-md
-          ${
-             isSuccess
-                ? 'bg-green-500/20 border-green-400 text-green-100'
-                : 'bg-red-500/20 border-red-400 text-red-100'
-          }`}>
-            {isSuccess ? (
-               <svg
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2">
-                  <polyline points="20 6 9 17 4 12" />
-               </svg>
-            ) : (
-               <svg
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2">
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                  <line x1="18" y1="6" x2="6" y2="18" />
-               </svg>
-            )}
-            <p className="text-sm">{toast.message}</p>
-         </div>
-      </div>
-   );
-};
-
-// 🔸 Symbol Button (memoized to avoid unnecessary re-renders)
 const SymbolButton = memo(({ symbol, onCopy }) => (
    <button
       onClick={() => onCopy(symbol)}
       className="aspect-square flex items-center justify-center text-3xl sm:text-4xl 
-               bg-white/5 hover:bg-white/20 active:bg-white/30 rounded-xl 
-               transition-[transform,background-color,box-shadow] duration-300 ease-out hover:scale-110 hover:rotate-3 
-               active:scale-95 shadow-md hover:shadow-lg hover:shadow-yellow-500/20 
-               border border-white/10 relative overflow-hidden group">
-      <span className="transition-transform duration-300 group-hover:scale-110">
+               bg-[#18181b] hover:bg-zinc-800 active:bg-zinc-700 rounded-xl 
+               transition-all duration-200 border border-zinc-800/80 hover:border-zinc-700
+               group shadow-sm">
+      <span className="transition-transform duration-200 group-hover:scale-110 text-zinc-300 group-hover:text-zinc-100">
          {symbol}
       </span>
-      <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
    </button>
 ));
 
@@ -635,14 +595,14 @@ export default function CoolSymbol() {
    }, []);
 
    const showNotification = useCallback(
-      (message, type = 'success', duration = 3000) => {
+      (message, type = 'success', duration = 2500) => {
          setToast({ message, type, visible: true });
          setTimeout(
             () => setToast((prev) => ({ ...prev, visible: false })),
-            duration
+            duration,
          );
       },
-      []
+      [],
    );
 
    const handleCopy = useCallback(
@@ -652,173 +612,130 @@ export default function CoolSymbol() {
             showNotification(`Copied "${symbol}" to clipboard!`, 'success');
 
             setRecentEmojis((prev) => {
-               // Remove duplicates and move the current emoji to the top
-               const updated = [
-                  symbol,
-                  ...prev.filter((e) => e.unified !== symbol),
-               ];
-
-               // Limit the list to only 10 recent emojis
+               const updated = [symbol, ...prev.filter((e) => e !== symbol)];
                const limited = updated.slice(0, 10);
-
-               // Save to localStorage
                localStorage.setItem('recentSymbol', JSON.stringify(limited));
-
                return limited;
             });
          } catch {
             showNotification('Failed to copy 😞', 'error');
          }
       },
-      [showNotification]
+      [showNotification],
    );
 
    const activeSymbols = symbolCategories[activeCategory];
 
    return (
-      <div className="min-h-[100dvh] bg-gradient-to-br from-black via-gray-900 to-black text-white font-sans px-4 py-20 md:px-10 relative overflow-auto h-[100dvh] customScrollbar">
+      <ColumnLines
+         columnWidth={80}
+         columnCount={16}
+         radialFadeStart={15}
+         radialFadeEnd={90}
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-auto px-4 py-20 md:px-10">
          <SEO
             title="Cool Symbols Copy & Paste | Fancy Text Symbols | Klique"
             description="Browse and copy-paste cool symbols, aesthetic characters, hearts, stars, arrows, and mathematical symbols for your social media bios and gaming handles."
             keywords="symbols copy paste, cool symbols, text symbols, aesthetic symbols, star symbol, heart symbol, klique symbols, aesthetic letters"
             canonicalUrl="https://klique.netlify.app/symbol"
-            jsonLd={{
-               "@context": "https://schema.org",
-               "@type": "SoftwareApplication",
-               "name": "Cool Symbol Browser",
-               "operatingSystem": "All",
-               "applicationCategory": "UtilitiesApplication",
-               "offers": {
-                  "@type": "Offer",
-                  "price": "0",
-                  "priceCurrency": "USD"
-               }
-            }}
-         />
-         <div
-            onClick={() => setSidebarOpen((prev) => !prev)}
-            className="fixed top-6 left-6 z-50 p-3 rounded-2xl 
-                                      bg-white/10 backdrop-blur-xl border border-white/20
-                                      hover:bg-white/20 hover:scale-105
-                                      active:scale-95
-                                      transition-all duration-300 
-                                      shadow-lg shadow-black/20 cursor-pointer">
-            <FaBars size={20} className="text-white" />
-         </div>
-
-         <Navbar
-            sidebarOpen={sidebarOpen}
-            setSidebarOpen={setSidebarOpen}
-            isMobile={isMobile}
          />
 
-         {/* Toast */}
-         <Toast toast={toast} />
-
-         {/* Background animation */}
-         <div className="absolute inset-0 opacity-20 pointer-events-none">
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(251,191,36,0.1)_0%,transparent_50%)] animate-pulse" />
+         <div className="w-full sticky top-0 z-30 bg-[#16161b] transition-all duration-300">
+            <Navbar />
          </div>
 
-         {/* Header */}
-         <h1
-            className="text-4xl text-center  sm:text-3xl md:text-5xl  lg:text-6xl  font-bold mb-8 tracking-tight  animate-fade-in-down relative
-         ">
-            Symbol{' '}
-            <span className="bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
-               Browser
-            </span>
-         </h1>
+         {/* Toast Notification */}
+         <AnimatePresence>
+            {toast.visible && (
+               <motion.div
+                  initial={{ opacity: 0, y: -20, x: '-50%' }}
+                  animate={{ opacity: 1, y: 0, x: '-50%' }}
+                  exit={{ opacity: 0, y: -20, x: '-50%' }}
+                  className="fixed top-6 left-1/2 z-50">
+                  <div
+                     className={`px-4 py-3 rounded-full shadow-lg flex items-center gap-3 border bg-[#18181b] backdrop-blur-md ${
+                        toast.type === 'error'
+                           ? 'border-red-500/50 text-red-400'
+                           : 'border-green-500/50 text-green-400'
+                     }`}>
+                     {toast.type === 'error' ? (
+                        <FiCheck className="w-4 h-4 hidden" />
+                     ) : (
+                        <FiCheck className="w-4 h-4" />
+                     )}
+                     <p className="text-sm font-medium pr-2">{toast.message}</p>
+                  </div>
+               </motion.div>
+            )}
+         </AnimatePresence>
 
-         {/* Category Tabs */}
-         <div className="flex flex-wrap justify-center gap-3 mb-8 relative z-10">
-            {symbolCategories.map((cat, idx) => (
-               <button
-                  key={cat.title}
-                  onClick={() => setActiveCategory(idx)}
-                  className={`px-6 py-3 rounded-2xl font-medium transition-all duration-300 ease-out 
-              relative overflow-hidden group cursor-pointer
-              ${
-                 activeCategory === idx
-                    ? 'bg-gradient-to-r from-yellow-500 to-amber-600 text-black'
-                    : 'bg-white/5 hover:bg-white/10 border border-white/10'
-              }`}>
-                  <span className="relative z-10 text-sm">{cat.title}</span>
-               </button>
-            ))}
-         </div>
+         <div className="ml-10">
+            <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               className="text-center mb-10">
+               <h1 className="text-3xl sm:text-4xl font-medium text-zinc-100 tracking-tight mb-3">
+                  Symbol Browser
+               </h1>
+               <p className="text-zinc-500 text-sm sm:text-base font-medium">
+                  Browse and copy-paste cool aesthetic symbols
+               </p>
+            </motion.div>
 
-         {recentEmojis.length > 0 && (
-            <div
-               className="max-w-4xl mx-auto mb-10 bg-white/5 border border-white/10 rounded-2xl 
-                   backdrop-blur-lg shadow-lg shadow-black/20 p-6 animate-fade-in">
-               <h2 className="text-xl font-semibold mb-4 text-white/90">
-                  Recently Used
-               </h2>
-               <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-10 gap-1.5">
-                  {recentEmojis.map((emoji, i) => (
-                     <SymbolButton key={i} symbol={emoji} onCopy={handleCopy} />
+            {/* Category Tabs */}
+            <div className="flex flex-wrap justify-center gap-3 mb-10 relative z-20 max-w-4xl mx-auto">
+               {symbolCategories.map((cat, idx) => (
+                  <button
+                     key={cat.title}
+                     onClick={() => setActiveCategory(idx)}
+                     className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                        activeCategory === idx
+                           ? 'bg-zinc-800 text-zinc-100 border border-zinc-700 shadow-sm'
+                           : 'bg-[#18181b] border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/80'
+                     }`}>
+                     {cat.title}
+                  </button>
+               ))}
+            </div>
+
+            {recentEmojis.length > 0 && (
+               <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="max-w-4xl mx-auto mb-10 bg-[#121214] border border-zinc-800/80 rounded-2xl p-6 shadow-xl relative z-20">
+                  <h2 className="text-sm font-medium mb-4 text-zinc-400 uppercase tracking-wider">
+                     Recently Used
+                  </h2>
+                  <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-10 gap-2">
+                     {recentEmojis.map((emoji, i) => (
+                        <SymbolButton
+                           key={i}
+                           symbol={emoji}
+                           onCopy={handleCopy}
+                        />
+                     ))}
+                  </div>
+               </motion.div>
+            )}
+
+            {/* Symbol Grid */}
+            <div className="max-w-4xl mx-auto p-6 lg:p-8 bg-[#121214] border border-zinc-800/80 rounded-2xl shadow-xl overflow-y-auto customScrollbar h-[70vh] relative z-20">
+               <div className="mb-6 border-b border-zinc-800/50 pb-4">
+                  <h2 className="text-xl font-medium text-zinc-200">
+                     {activeSymbols.title}
+                  </h2>
+               </div>
+               <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-10 gap-2">
+                  {activeSymbols.symbols.map((symbol, i) => (
+                     <SymbolButton
+                        key={`${activeCategory}-${i}`}
+                        symbol={symbol}
+                        onCopy={handleCopy}
+                     />
                   ))}
                </div>
             </div>
-         )}
-
-         {/* Symbol Grid */}
-         <div
-            className="max-w-4xl mx-auto p-6 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-lg 
-                      shadow-2xl shadow-black/20 animate-fade-in overflow-y-auto customScrollbar h-[75vh]">
-            <h2 className="text-2xl font-semibold mb-6 text-yellow-400">
-               {activeSymbols.title}
-            </h2>
-            <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-10 gap-1.5">
-               {activeSymbols.symbols.map((symbol, i) => (
-                  <SymbolButton key={i} symbol={symbol} onCopy={handleCopy} />
-               ))}
-            </div>
          </div>
-
-         {/* Animations & Scrollbar */}
-         <style>{`
-            @keyframes fade-in-down {
-               from {
-                  opacity: 0;
-                  transform: translateY(-20px);
-               }
-               to {
-                  opacity: 1;
-                  transform: translateY(0);
-               }
-            }
-            @keyframes fade-in {
-               from {
-                  opacity: 0;
-                  transform: scale(0.95);
-               }
-               to {
-                  opacity: 1;
-                  transform: scale(1);
-               }
-            }
-            @keyframes slideIn {
-               from {
-                  transform: translateX(100%);
-                  opacity: 0;
-               }
-               to {
-                  transform: translateX(0);
-                  opacity: 1;
-               }
-            }
-            .animate-fade-in-down {
-               animation: fade-in-down 0.6s ease-out;
-            }
-            .animate-fade-in {
-               animation: fade-in 0.5s ease-out;
-            }
-            .animate-slideIn {
-               animation: slideIn 0.3s ease-out;
-            }
-         `}</style>
-      </div>
+      </ColumnLines>
    );
 }
