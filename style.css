@@ -148,6 +148,7 @@ select option:hover {
 
 .gradient-text {
    background: linear-gradient(135deg, #a78bfa, #f472b6, #fb7185);
+   background-clip: text;
    -webkit-background-clip: text;
    -webkit-text-fill-color: transparent;
    background-size: 200% auto;
@@ -230,7 +231,7 @@ select option:hover {
    animation-iteration-count: infinite;
 }
 
-/* @keyframes column-glow-down {
+@keyframes column-glow-down {
    0% {
       transform: translateY(-120px);
       opacity: 0;
@@ -256,4 +257,4 @@ select option:hover {
       transform: translateY(100vh);
       opacity: 0;
    }
-} */
+}

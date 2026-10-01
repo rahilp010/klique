@@ -10,6 +10,7 @@ import { Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { FiCheck, FiSend } from 'react-icons/fi';
 import { PiSparkleLight } from 'react-icons/pi';
+import Loader from '../ui/loader';
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
@@ -186,7 +187,7 @@ Rules:
          columnCount={34}
          radialFadeStart={15}
          radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-4 py-20 md:px-10">
+         className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10">
          <SEO
             title="Aesthetic Username Generator | Custom Gamertags & Handles | Klique"
             description="Create cool, unique, and aesthetic usernames for Instagram, TikTok, YouTube, Reddit, Roblox, and gaming. Find the perfect handle instantly using AI."
@@ -201,9 +202,9 @@ Rules:
                   initial={{ opacity: 0, y: -20, x: '-50%' }}
                   animate={{ opacity: 1, y: 0, x: '-50%' }}
                   exit={{ opacity: 0, y: -20, x: '-50%' }}
-                  className="fixed top-6 left-1/2 z-50">
+                  className="fixed left-1/2 top-4 z-[10000] w-[calc(100%-24px)] max-w-md">
                   <div
-                     className={`px-4 py-3 rounded-full shadow-lg flex items-center gap-3 border bg-[#18181b] backdrop-blur-md ${
+                     className={`flex items-center gap-3 rounded-full border bg-[#18181b] px-4 py-3 shadow-lg backdrop-blur-md ${
                         toast.type === 'error'
                            ? 'border-red-500/50 text-red-400'
                            : 'border-green-500/50 text-green-400'
@@ -213,168 +214,173 @@ Rules:
                      ) : (
                         <FiCheck className="w-4 h-4" />
                      )}
-                     <p className="text-sm font-medium pr-2">{toast.message}</p>
+                     <p className="min-w-0 break-words pr-2 text-xs font-medium sm:text-sm">
+                        {toast.message}
+                     </p>
                   </div>
                </motion.div>
             )}
          </AnimatePresence>
 
-         <div className="w-full sticky top-0 z-30 bg-[#16161b] transition-all duration-300">
+         <div className="relative z-[100] w-full">
             <Navbar />
          </div>
 
-         <div className="w-full max-w-6xl mx-auto pl-0 lg:pl-20 px-3 sm:px-6 relative z-20">
+         {/* API Loading Overlay */}
+         {loading && <Loader text="Generating username ideas..." />}
+
+         <div className="relative z-10 mx-auto flex min-h-[100dvh] w-full max-w-6xl flex-col px-0 pb-32 pt-24 sm:px-2 sm:pb-24 sm:pt-28 lg:pl-20">
             {/* Header */}
             <motion.div
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
-               className="text-center mb-10 relative z-20">
-               <h1 className="text-3xl sm:text-4xl font-medium text-zinc-100 tracking-tight mb-3">
+               className="relative z-20 mb-7 min-w-0 text-center sm:mb-10">
+               <h1 className="mb-2 text-2xl font-medium tracking-tight text-zinc-100 sm:mb-3 sm:text-4xl">
                   Username Generator
                </h1>
-               <p className="text-zinc-500 text-sm sm:text-base font-medium">
+               <p className="px-2 text-xs font-medium leading-5 text-zinc-500 sm:text-base">
                   Create creative, cool, or AI-powered usernames instantly
                </p>
             </motion.div>
 
             {/* Controls */}
-            <div className="max-w-4xl mx-auto bg-[#121214] border border-zinc-800/80 rounded-2xl p-6 shadow-xl relative z-20">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-               <select
-                  value={platform}
-                  onChange={(e) => setPlatform(e.target.value)}
-                  className="w-full px-4 py-3 bg-[#18181b] border border-zinc-800 text-zinc-300 text-sm font-medium rounded-xl focus:outline-none focus:border-zinc-600 appearance-none cursor-pointer">
-                  <option value="">Select Platform</option>
-                  {platforms.map((p) => (
-                     <option key={p.value} value={p.value}>
-                        {p.label}
-                     </option>
-                  ))}
-               </select>
+            <div className="relative z-20 mx-auto w-full max-w-4xl min-w-0 overflow-hidden rounded-2xl border border-zinc-800/80 bg-[#121214] p-4 shadow-xl sm:p-6">
+               <div className="mb-5 grid grid-cols-1 gap-3 sm:mb-6 sm:grid-cols-3 sm:gap-4">
+                  <select
+                     value={platform}
+                     onChange={(e) => setPlatform(e.target.value)}
+                     className="min-w-0 w-full appearance-none rounded-xl border border-zinc-800 bg-[#18181b] px-3.5 py-3 text-sm font-medium text-zinc-300 focus:border-zinc-600 focus:outline-none cursor-pointer">
+                     <option value="">Select Platform</option>
+                     {platforms.map((p) => (
+                        <option key={p.value} value={p.value}>
+                           {p.label}
+                        </option>
+                     ))}
+                  </select>
 
-               <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-4 py-3 bg-[#18181b] border border-zinc-800 text-zinc-300 text-sm font-medium rounded-xl focus:outline-none focus:border-zinc-600 appearance-none cursor-pointer">
-                  <option value="">Select Category</option>
-                  {categories.map((c) => (
-                     <option key={c.value} value={c.value}>
-                        {c.label}
-                     </option>
-                  ))}
-               </select>
+                  <select
+                     value={category}
+                     onChange={(e) => setCategory(e.target.value)}
+                     className="min-w-0 w-full appearance-none rounded-xl border border-zinc-800 bg-[#18181b] px-3.5 py-3 text-sm font-medium text-zinc-300 focus:border-zinc-600 focus:outline-none cursor-pointer">
+                     <option value="">Select Category</option>
+                     {categories.map((c) => (
+                        <option key={c.value} value={c.value}>
+                           {c.label}
+                        </option>
+                     ))}
+                  </select>
 
-               <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-                  <input
-                     type="text"
-                     placeholder="Enter Keywords"
-                     value={keyword}
-                     onChange={(e) => setKeyword(e.target.value)}
-                     className="w-full pl-10 pr-4 py-3 bg-[#18181b] border border-zinc-800 text-zinc-200 text-sm font-medium rounded-xl focus:outline-none focus:border-zinc-600 placeholder-zinc-500"
-                  />
-               </div>
-            </div>
-
-            <div className="mb-6">
-               <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider mb-3">
-                  Select Tone
-               </h3>
-               <div className="flex flex-wrap gap-2.5">
-                  {tones.map((option) => (
-                     <button
-                        key={option.value}
-                        onClick={() => setTone(option.value)}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                           option.value === tone
-                              ? 'bg-zinc-800 text-zinc-100 border border-zinc-700 shadow-sm'
-                              : 'bg-[#18181b] border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/80'
-                        }`}>
-                        {option.label}
-                     </button>
-                  ))}
-               </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-zinc-800/50">
-               <button
-                  onClick={generateLocal}
-                  disabled={loading}
-                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#18181b] border border-zinc-800 hover:bg-zinc-800 hover:text-zinc-200 text-zinc-400 rounded-xl text-sm font-medium transition-all">
-                  <GiPerspectiveDiceSixFacesRandom size={16} /> Random Idea
-               </button>
-               <button
-                  onClick={generateAI}
-                  disabled={loading}
-                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#27272a] hover:bg-[#3f3f46] disabled:bg-zinc-900 disabled:text-zinc-600 disabled:cursor-not-allowed text-zinc-200 rounded-xl text-sm font-medium transition-all group">
-                  {loading ? (
-                     <>
-                        <PiSparkleLight
-                           className="animate-spin text-purple-400"
-                           size={16}
-                        />{' '}
-                        Generating...
-                     </>
-                  ) : (
-                     <>
-                        <FiSend
-                           size={16}
-                           className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-                        />{' '}
-                        Generate AI
-                     </>
-                  )}
-               </button>
-            </div>
-         </div>
-
-         {/* Results */}
-         <AnimatePresence>
-            {(usernames.length > 0 || loading) && (
-               <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="max-w-4xl mx-auto mt-8 relative z-20">
-                  <div className="bg-[#121214] border border-zinc-800/80 rounded-2xl p-6 lg:p-8 shadow-xl">
-                     <div className="flex items-center justify-between mb-6 border-b border-zinc-800/50 pb-4">
-                        <h3 className="text-lg font-medium text-zinc-100 flex items-center gap-2">
-                           <PiSparkleLight
-                              className="text-purple-400"
-                              size={20}
-                           />
-                           Generated Handles
-                        </h3>
-                     </div>
-
-                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                        {loading
-                           ? [...Array(12)].map((_, i) => (
-                                <div
-                                   key={i}
-                                   className="w-full h-12 rounded-xl bg-zinc-800/50 animate-pulse border border-zinc-800"></div>
-                             ))
-                           : usernames.map((name, i) => (
-                                <div
-                                   key={i}
-                                   className="group relative flex items-center justify-between px-4 py-3 rounded-xl bg-[#18181b] border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer"
-                                   onClick={() => handleCopy(name, i)}>
-                                   <span className="text-sm font-medium text-zinc-300 truncate pr-6">
-                                      {name}
-                                   </span>
-                                   <div className="absolute right-3 text-zinc-500 group-hover:text-zinc-300 transition-colors">
-                                      {copiedIndex === i ? (
-                                         <FiCheck className="text-green-400" />
-                                      ) : (
-                                         <IoCopyOutline />
-                                      )}
-                                   </div>
-                                </div>
-                             ))}
-                     </div>
+                  <div className="relative">
+                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                     <input
+                        type="text"
+                        placeholder="Enter Keywords"
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
+                        className="min-w-0 w-full rounded-xl border border-zinc-800 bg-[#18181b] py-3 pl-10 pr-3.5 text-sm font-medium text-zinc-200 placeholder-zinc-500 focus:border-zinc-600 focus:outline-none"
+                     />
                   </div>
-               </motion.div>
-            )}
-         </AnimatePresence>
+               </div>
+
+               <div className="mb-5 sm:mb-6">
+                  <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider mb-3">
+                     Select Tone
+                  </h3>
+                  <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2.5">
+                     {tones.map((option) => (
+                        <button
+                           key={option.value}
+                           onClick={() => setTone(option.value)}
+                           className={`min-w-0 w-full rounded-lg px-3 py-2 text-xs font-medium transition-all sm:w-auto sm:px-4 sm:text-sm ${
+                              option.value === tone
+                                 ? 'bg-zinc-800 text-zinc-100 border border-zinc-700 shadow-sm'
+                                 : 'bg-[#18181b] border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/80'
+                           }`}>
+                           {option.label}
+                        </button>
+                     ))}
+                  </div>
+               </div>
+
+               <div className="flex flex-col gap-2.5 border-t border-zinc-800/50 pt-4 sm:flex-row sm:justify-end sm:gap-3">
+                  <button
+                     onClick={generateLocal}
+                     disabled={loading}
+                     className="flex w-full items-center justify-center gap-2 rounded-xl border border-zinc-800 bg-[#18181b] px-4 py-3 text-sm font-medium text-zinc-400 transition-all hover:bg-zinc-800 hover:text-zinc-200 sm:w-auto sm:px-5 sm:py-2.5">
+                     <GiPerspectiveDiceSixFacesRandom size={16} /> Random Idea
+                  </button>
+                  <button
+                     onClick={generateAI}
+                     disabled={loading}
+                     className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#27272a] px-4 py-3 text-sm font-medium text-zinc-200 transition-all hover:bg-[#3f3f46] disabled:cursor-not-allowed disabled:bg-zinc-900 disabled:text-zinc-600 sm:w-auto sm:px-5 sm:py-2.5">
+                     {loading ? (
+                        <>
+                           <PiSparkleLight
+                              className="animate-spin text-purple-400"
+                              size={16}
+                           />{' '}
+                           Generating...
+                        </>
+                     ) : (
+                        <>
+                           <FiSend
+                              size={16}
+                              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                           />{' '}
+                           Generate AI
+                        </>
+                     )}
+                  </button>
+               </div>
+            </div>
+
+            {/* Results */}
+            <AnimatePresence>
+               {(usernames.length > 0 || loading) && (
+                  <motion.div
+                     initial={{ opacity: 0, y: 20 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     className="relative z-20 mx-auto mt-6 w-full max-w-4xl min-w-0 sm:mt-8">
+                     <div className="w-full min-w-0 overflow-hidden rounded-2xl border border-zinc-800/80 bg-[#121214] p-4 shadow-xl sm:p-6 lg:p-8">
+                        <div className="mb-5 flex min-w-0 items-center justify-between gap-3 border-b border-zinc-800/50 pb-4 sm:mb-6">
+                           <h3 className="flex min-w-0 items-center gap-2 text-base font-medium text-zinc-100 sm:text-lg">
+                              <PiSparkleLight
+                                 className="text-purple-400"
+                                 size={20}
+                              />
+                              Generated Handles
+                           </h3>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-3 md:grid-cols-3">
+                           {loading
+                              ? [...Array(12)].map((_, i) => (
+                                   <div
+                                      key={i}
+                                      className="h-11 w-full min-w-0 rounded-xl border border-zinc-800 bg-zinc-800/50 animate-pulse sm:h-12"></div>
+                                ))
+                              : usernames.map((name, i) => (
+                                   <div
+                                      key={i}
+                                      className="group relative flex min-w-0 w-full cursor-pointer items-center justify-between overflow-hidden rounded-xl border border-zinc-800 bg-[#18181b] px-3 py-3 transition-colors hover:border-zinc-700 sm:px-4"
+                                      onClick={() => handleCopy(name, i)}>
+                                      <span className="min-w-0 max-w-full truncate pr-6 text-xs font-medium text-zinc-300 sm:text-sm">
+                                         {name}
+                                      </span>
+                                      <div className="absolute right-2.5 shrink-0 text-zinc-500 transition-colors group-hover:text-zinc-300 sm:right-3">
+                                         {copiedIndex === i ? (
+                                            <FiCheck className="text-green-400" />
+                                         ) : (
+                                            <IoCopyOutline />
+                                         )}
+                                      </div>
+                                   </div>
+                                ))}
+                        </div>
+                     </div>
+                  </motion.div>
+               )}
+            </AnimatePresence>
          </div>
       </ColumnLines>
    );

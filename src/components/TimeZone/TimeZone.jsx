@@ -76,6 +76,83 @@ const getTimeZoneDisplay = (timeZone, date, mode = 'gmt') => {
    return getGMTOffset(timeZone, date);
 };
 
+// Convert a wall-clock date/time entered for a specific IANA timezone
+// into the correct UTC Date object.
+// This does NOT depend on the browser's local timezone.
+const zonedDateTimeToUtc = (dateString, timeString, timeZone) => {
+   if (!dateString || !timeString || !timeZone) {
+      return null;
+   }
+
+   try {
+      const [year, month, day] = dateString.split('-').map(Number);
+      const [hour, minute] = timeString.split(':').map(Number);
+
+      // Desired wall-clock time represented as UTC milliseconds.
+      // We will then correct it using the timezone's actual offset.
+      const desiredWallTime = Date.UTC(year, month - 1, day, hour, minute, 0);
+
+      let guess = new Date(desiredWallTime);
+
+      for (let i = 0; i < 3; i++) {
+         const parts = new Intl.DateTimeFormat('en-US', {
+            timeZone,
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hourCycle: 'h23',
+         }).formatToParts(guess);
+
+         const values = {};
+
+         parts.forEach((part) => {
+            if (part.type !== 'literal') {
+               values[part.type] = Number(part.value);
+            }
+         });
+
+         const actualWallTime = Date.UTC(
+            values.year,
+            values.month - 1,
+            values.day,
+            values.hour,
+            values.minute,
+            values.second,
+         );
+
+         const offset = actualWallTime - guess.getTime();
+
+         guess = new Date(desiredWallTime - offset);
+      }
+
+      return guess;
+   } catch (error) {
+      console.error('Failed to convert zoned date/time:', error);
+      return null;
+   }
+};
+
+// Date value suitable for <input type="date">
+// Uses the user's actual local calendar date instead of UTC date.
+const getLocalDateInputValue = (date = new Date()) => {
+   const year = date.getFullYear();
+   const month = String(date.getMonth() + 1).padStart(2, '0');
+   const day = String(date.getDate()).padStart(2, '0');
+
+   return `${year}-${month}-${day}`;
+};
+
+// Time value suitable for <input type="time">
+const getLocalTimeInputValue = (date = new Date()) => {
+   const hours = String(date.getHours()).padStart(2, '0');
+   const minutes = String(date.getMinutes()).padStart(2, '0');
+
+   return `${hours}:${minutes}`;
+};
+
 const isBusinessOpen = (timeZone, date = new Date()) => {
    try {
       const hour = Number(
@@ -322,13 +399,14 @@ const SelectedZoneSummary = ({
    isOpen,
    onFavorite,
    isFavorite,
+   is12h,
 }) => {
    const city = getZoneCity(zone);
    const country = getZoneCountry(zone);
    const countryName = getZoneCountryName(zone) || getCountryName(country);
    return (
-      <div className="mt-5 rounded-2xl border border-zinc-800/80 bg-[#0b0b0e] p-4 sm:p-5">
-         <div className="flex items-center gap-3">
+      <div className="mt-4 min-w-0 overflow-hidden rounded-2xl border border-zinc-800/80 bg-[#0b0b0e] p-3.5 sm:mt-5 sm:p-5">
+         <div className="flex min-w-0 items-center gap-3">
             <div className="h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-xl border border-zinc-700/80 bg-zinc-800">
                {country ? (
                   <ReactCountryFlag
@@ -348,7 +426,7 @@ const SelectedZoneSummary = ({
                )}
             </div>
             <div className="min-w-0 flex-1">
-               <div className="flex items-center gap-2">
+               <div className="flex min-w-0 items-center gap-2">
                   <h4 className="truncate text-lg font-semibold text-zinc-100">
                      {city}
                   </h4>
@@ -387,7 +465,7 @@ const SelectedZoneSummary = ({
                      hour: '2-digit',
                      minute: '2-digit',
                      second: '2-digit',
-                     hour12: false,
+                     hour12: is12h,
                   }).format(date)}
                </p>
             </div>
@@ -425,18 +503,18 @@ const TimeZone = () => {
    const [favorites, setFavorites] = useState([]);
 
    // Meeting Planner State
+   const [plannerSource, setPlannerSource] = useState(
+      () => OPTIONS.find((o) => o.tz === 'Asia/Kolkata') || OPTIONS[0],
+   );
    const [plannerTarget, setPlannerTarget] = useState(null);
-   const [plannerDate, setPlannerDate] = useState(
-      new Date().toISOString().split('T')[0],
-   );
-   const [plannerTime, setPlannerTime] = useState(
-      new Date().toLocaleTimeString('en-US', {
-         hour12: false,
-         hour: '2-digit',
-         minute: '2-digit',
-      }),
-   );
    const [plannerResult, setPlannerResult] = useState(null);
+   const [plannerDate, setPlannerDate] = useState(() =>
+      getLocalDateInputValue(),
+   );
+
+   const [plannerTime, setPlannerTime] = useState(() =>
+      getLocalTimeInputValue(),
+   );
 
    useEffect(() => {
       const timer = setInterval(() => setDate(new Date()), 1000);
@@ -485,10 +563,37 @@ const TimeZone = () => {
    };
 
    const handleShowTime = () => {
-      if (!plannerTarget || !plannerDate || !plannerTime) return;
+      if (!plannerSource || !plannerTarget || !plannerDate || !plannerTime) {
+         return;
+      }
+
       try {
-         // Create local date object
-         const localDate = new Date(`${plannerDate}T${plannerTime}:00`);
+         /*
+          * IMPORTANT:
+          * plannerTime is entered in the SOURCE timezone.
+          *
+          * Example:
+          * Source  = Asia/Kolkata
+          * Date    = 2026-09-30
+          * Time    = 10:00
+          * Target  = America/New_York
+          *
+          * We first convert:
+          * 10:00 Asia/Kolkata -> UTC
+          *
+          * Then:
+          * UTC -> America/New_York
+          */
+
+         const utcDate = zonedDateTimeToUtc(
+            plannerDate,
+            plannerTime,
+            plannerSource.tz,
+         );
+
+         if (!utcDate || Number.isNaN(utcDate.getTime())) {
+            throw new Error('Invalid date/time');
+         }
 
          const formatterTime = new Intl.DateTimeFormat('en-US', {
             timeZone: plannerTarget.tz,
@@ -505,13 +610,29 @@ const TimeZone = () => {
             day: 'numeric',
          });
 
+         const sourceFormatter = new Intl.DateTimeFormat('en-US', {
+            timeZone: plannerSource.tz,
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: is12h,
+         });
+
          setPlannerResult({
-            time: formatterTime.format(localDate),
-            date: formatterDate.format(localDate),
+            time: formatterTime.format(utcDate),
+            date: formatterDate.format(utcDate),
             location: plannerTarget.city || plannerTarget.tz.replace(/_/g, ' '),
+
+            sourceTime: sourceFormatter.format(utcDate),
+
+            sourceLocation:
+               plannerSource.city || plannerSource.tz.replace(/_/g, ' '),
+
+            sourceTimezone: plannerSource.tz,
+            targetTimezone: plannerTarget.tz,
          });
       } catch (err) {
-         console.error('Invalid date or timezone', err);
+         console.error('Invalid date or timezone:', err);
+         setPlannerResult(null);
       }
    };
 
@@ -521,7 +642,7 @@ const TimeZone = () => {
          columnCount={34}
          radialFadeStart={15}
          radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden px-3 sm:px-6 md:px-10 py-16 sm:py-20">
+         className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10">
          <SEO
             title="Time Zone Converter & Meeting Planner | Klique"
             description="Convert times between global IANA time zones. Compare time differences, plan meetings, and keep track of favorite cities worldwide."
@@ -529,7 +650,7 @@ const TimeZone = () => {
             canonicalUrl="https://klique.netlify.app/timezone"
          />
 
-         <div className="w-full sticky top-0 z-30 transition-all duration-300">
+         <div className="relative z-[100] w-full">
             <Navbar
                sidebarOpen={false}
                setSidebarOpen={() => {}}
@@ -537,26 +658,26 @@ const TimeZone = () => {
             />
          </div>
 
-         <div className="max-w-6xl mx-auto relative z-20 w-full pl-0 lg:pl-20 px-3 sm:px-6 mt-4">
+         <div className="relative z-10 mx-auto flex min-h-[100dvh] w-full max-w-6xl flex-col px-0 pb-32 pt-24 sm:px-2 sm:pb-24 sm:pt-16 lg:pl-20">
             {/* Header */}
             <motion.div
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
-               className="mb-8">
-               <h1 className="text-2xl sm:text-3xl md:text-4xl font-medium text-zinc-100 tracking-tight mb-3 flex items-center gap-3">
+               className="mb-7 min-w-0 sm:mb-10">
+               <h1 className="mb-2 flex min-w-0 items-center gap-2 text-2xl font-medium tracking-tight text-zinc-100 sm:mb-3 sm:gap-3 sm:text-3xl md:text-4xl">
                   Time Zone Converter
                </h1>
-               <p className="text-zinc-500 text-sm font-medium">
+               <p className="max-w-2xl text-xs font-medium leading-5 text-zinc-500 sm:text-sm">
                   Convert time between different time zones and plan your
                   meetings with ease.
                </p>
             </motion.div>
 
             {/* Converter Layout (From -> Diff -> To) */}
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_200px_minmax(0,1fr)] gap-4 sm:gap-6 mb-10 items-stretch w-full">
+            <div className="grid w-full min-w-0 grid-cols-1 items-stretch gap-4 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_200px_minmax(0,1fr)] lg:gap-6 lg:items-stretch mb-8 sm:mb-10">
                {/* FROM */}
-               <div className="group rounded-3xl border border-zinc-800/80 bg-gradient-to-b from-[#151518] to-[#0f0f11] p-5 sm:p-6 shadow-2xl shadow-black/20 transition-all hover:border-cyan-400/20">
-                  <div className="flex items-center justify-between">
+               <div className="group min-w-0 w-full overflow-hidden rounded-3xl border border-zinc-800/80 bg-gradient-to-b from-[#151518] to-[#0f0f11] p-4 shadow-2xl shadow-black/20 transition-all hover:border-cyan-400/20 sm:p-6">
+                  <div className="flex min-w-0 items-center justify-between gap-3">
                      <div>
                         <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-300/80">
                            Source
@@ -569,7 +690,7 @@ const TimeZone = () => {
                         Current
                      </span>
                   </div>
-                  <div className="mt-4">
+                  <div className="mt-3 min-w-0 sm:mt-4">
                      <SelectPicker
                         data={OPTIONS}
                         value={fromZone?.value}
@@ -581,18 +702,19 @@ const TimeZone = () => {
                            renderTZItem(label, item, 'gmt', date)
                         }
                         menuMaxHeight={360}
-                        className="w-full !bg-[#18181b] !border-zinc-800 !text-zinc-200"
+                        className="w-full min-w-0 !bg-[#18181b] !border-zinc-800 !text-zinc-200"
                      />
                   </div>
                   <SelectedZoneSummary
                      zone={fromZone}
                      date={date}
                      isOpen={isBusinessOpen(fromZone?.tz, date)}
+                     is12h={is12h}
                   />
                </div>
 
                {/* DIFFERENCE INFO (Middle Panel) */}
-               <div className="relative overflow-hidden bg-[#0f0f11] border border-zinc-800/60 rounded-2xl p-3 sm:p-4 shadow-xl flex flex-col items-center justify-between text-center lg:min-w-[120px]">
+               <div className="relative min-w-0 w-full overflow-hidden rounded-2xl border border-zinc-800/60 bg-[#0f0f11] p-3 shadow-xl flex flex-col items-center justify-between text-center sm:p-4 lg:min-w-[120px]">
                   {/* Decorative glow */}
                   <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full bg-[#daf4aa]/5 blur-3xl" />
 
@@ -606,7 +728,7 @@ const TimeZone = () => {
                   </div>
 
                   {/* Main Difference */}
-                  <div className="relative z-10 flex flex-col items-center my-5">
+                  <div className="relative z-10 my-4 flex flex-col items-center sm:my-5">
                      <div className="relative">
                         <p className="text-3xl font-bold text-[#daf4aa] tracking-tight leading-none">
                            {formatDifference(diffMinutes)}
@@ -626,7 +748,7 @@ const TimeZone = () => {
                   </div>
 
                   {/* Timezone Connection */}
-                  <div className="relative z-10 w-full mb-5">
+                  <div className="relative z-10 mb-4 w-full sm:mb-5">
                      <div className="flex items-center justify-center gap-2">
                         {/* From */}
                         <div className="flex-1 min-w-0 rounded-xl py-6">
@@ -683,7 +805,7 @@ const TimeZone = () => {
                      <button
                         onClick={() => setIs12h(!is12h)}
                         aria-label="Switch time format"
-                        className="relative flex h-10 w-[138px] items-center rounded-full border border-zinc-700 bg-[#18181b] p-1 focus:outline-none">
+                        className="relative flex h-10 w-full max-w-[138px] items-center rounded-full border border-zinc-700 bg-[#18181b] p-1 focus:outline-none">
                         {/* Active background */}
                         <span
                            className={`absolute top-1 bottom-1 w-[65px] rounded-full bg-[#daf4aa] shadow-lg shadow-[#daf4aa]/10 transition-all duration-300 ease-out ${
@@ -711,8 +833,8 @@ const TimeZone = () => {
                </div>
 
                {/* TO */}
-               <div className="group rounded-3xl border border-zinc-800/80 bg-gradient-to-b from-[#151518] to-[#0f0f11] p-5 sm:p-6 shadow-2xl shadow-black/20 transition-all hover:border-[#daf4aa]/20">
-                  <div className="flex items-center justify-between">
+               <div className="group min-w-0 w-full overflow-hidden rounded-3xl border border-zinc-800/80 bg-gradient-to-b from-[#151518] to-[#0f0f11] p-4 shadow-2xl shadow-black/20 transition-all hover:border-[#daf4aa]/20 sm:p-6">
+                  <div className="flex min-w-0 items-center justify-between gap-3">
                      <div>
                         <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#daf4aa]/80">
                            Destination
@@ -739,7 +861,7 @@ const TimeZone = () => {
                         />
                      </button>
                   </div>
-                  <div className="mt-4">
+                  <div className="mt-3 min-w-0 sm:mt-4">
                      <SelectPicker
                         data={OPTIONS}
                         value={toZone?.value}
@@ -751,7 +873,7 @@ const TimeZone = () => {
                            renderTZItem(label, item, 'gmt', date)
                         }
                         menuMaxHeight={360}
-                        className="w-full !bg-[#18181b] !border-zinc-800 !text-zinc-200"
+                        className="w-full min-w-0 !bg-[#18181b] !border-zinc-800 !text-zinc-200"
                      />
                   </div>
                   <SelectedZoneSummary
@@ -760,21 +882,22 @@ const TimeZone = () => {
                      isOpen={isBusinessOpen(toZone?.tz, date)}
                      onFavorite={() => toggleFav(toZone?.tz)}
                      isFavorite={favorites.includes(toZone?.tz)}
+                     is12h={is12h}
                   />
                </div>
             </div>
 
             {/* Meeting Planner Section */}
-            <div className="bg-[#121214] border border-zinc-800/80 rounded-2xl shadow-xl overflow-hidden mb-10">
-               <div className="p-5 sm:p-6 border-b border-zinc-800/50 flex items-center gap-3">
+            <div className="mb-8 w-full min-w-0 overflow-hidden rounded-2xl border border-zinc-800/80 bg-[#121214] shadow-xl sm:mb-10">
+               <div className="flex items-center gap-3 border-b border-zinc-800/50 p-4 sm:p-6">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-purple-400/15 bg-purple-400/10">
                      <Calendar className="text-purple-300" size={20} />
                   </div>
                   <div>
-                     <h2 className="text-xl font-medium text-zinc-100 tracking-tight">
+                     <h2 className="text-lg font-medium tracking-tight text-zinc-100 sm:text-xl">
                         Meeting Planner
                      </h2>
-                     <p className="text-zinc-500 text-sm font-medium">
+                     <p className="max-w-2xl text-xs font-medium leading-5 text-zinc-500 sm:text-sm">
                         Enter your local time to get the exact time in any
                         country or city.
                      </p>
@@ -783,15 +906,32 @@ const TimeZone = () => {
 
                <div className="grid lg:grid-cols-[1.5fr_1fr] divide-y lg:divide-y-0 lg:divide-x divide-zinc-800/50">
                   {/* Left side - Inputs */}
-                  <div className="p-6 sm:p-8 space-y-6">
-                     <h3 className="text-sm font-semibold text-zinc-100">
-                        Your Details
-                     </h3>
-
+                  <div className="min-w-0 space-y-5 p-4 sm:space-y-6 sm:p-8">
+                     Your Details
                      <div className="space-y-5">
                         <div>
+                           <label className="mb-2 block text-xs font-medium text-zinc-500">
+                              Source Location
+                           </label>
+                           <SelectPicker
+                              data={OPTIONS}
+                              value={plannerSource?.value}
+                              onChange={(val, item) =>
+                                 item && setPlannerSource(item)
+                              }
+                              cleanable={false}
+                              searchable={true}
+                              placeholder="Select source country or city"
+                              renderMenuItem={(label, item) =>
+                                 renderTZItem(label, item, 'gmt', date)
+                              }
+                              className="w-full min-w-0 !bg-[#18181b] !border-zinc-800 !text-zinc-200"
+                           />
+                        </div>
+
+                        <div>
                            <label className="block text-xs font-medium text-zinc-500 mb-2">
-                              Country or City (Target)
+                              Target Location
                            </label>
                            <SelectPicker
                               data={OPTIONS}
@@ -801,11 +941,11 @@ const TimeZone = () => {
                               }
                               cleanable={true}
                               searchable={true}
-                              placeholder="Select country or city"
+                              placeholder="Select target country or city"
                               renderMenuItem={(label, item) =>
                                  renderTZItem(label, item, 'gmt', date)
                               }
-                              className="w-full !bg-[#18181b] !border-zinc-800 !text-zinc-200"
+                              className="w-full min-w-0 !bg-[#18181b] !border-zinc-800 !text-zinc-200"
                            />
                         </div>
 
@@ -820,7 +960,7 @@ const TimeZone = () => {
                                  onChange={(e) =>
                                     setPlannerDate(e.target.value)
                                  }
-                                 className="w-full px-4 py-2 bg-[#18181b] border border-zinc-800 text-zinc-200 text-sm rounded-lg focus:outline-none focus:border-zinc-600 transition-colors"
+                                 className="min-w-0 w-full rounded-lg border border-zinc-800 bg-[#18181b] px-3 py-2.5 text-sm text-zinc-200 transition-colors focus:border-zinc-600 focus:outline-none sm:px-4"
                               />
                            </div>
                            <div>
@@ -834,9 +974,9 @@ const TimeZone = () => {
                                     onChange={(e) =>
                                        setPlannerTime(e.target.value)
                                     }
-                                    className="flex-1 px-4 py-2 bg-[#18181b] border border-zinc-800 text-zinc-200 text-sm rounded-lg focus:outline-none focus:border-zinc-600 transition-colors"
+                                    className="min-w-0 flex-1 rounded-lg border border-zinc-800 bg-[#18181b] px-3 py-2.5 text-sm text-zinc-200 transition-colors focus:border-zinc-600 focus:outline-none sm:px-4"
                                  />
-                                 <span className="text-xs font-semibold text-zinc-500 bg-[#0f0f11] px-3 py-2 rounded-lg border border-zinc-800/50">
+                                 <span className="shrink-0 rounded-lg border border-zinc-800/50 bg-[#0f0f11] px-2.5 py-2 text-[11px] font-semibold text-zinc-500 sm:px-3 sm:text-xs">
                                     {is12h ? '12h' : '24h'}
                                  </span>
                               </div>
@@ -845,40 +985,90 @@ const TimeZone = () => {
 
                         <button
                            onClick={handleShowTime}
-                           className="w-full sm:w-auto px-6 py-2.5 mt-2 bg-[#daf4aa] hover:bg-[#c9e99a] text-zinc-950 font-semibold rounded-xl shadow-lg shadow-[#daf4aa]/10 transition-colors flex items-center justify-center gap-2">
+                           className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#daf4aa] px-5 py-3 font-semibold text-zinc-950 shadow-lg shadow-[#daf4aa]/10 transition-colors hover:bg-[#c9e99a] sm:w-auto sm:px-6 sm:py-2.5">
                            Show Time →
                         </button>
                      </div>
                   </div>
 
                   {/* Right side - Result */}
-                  <div className="p-6 sm:p-4 m-6 bg-[#0a0a0c] rounded-4xl flex flex-col">
+                  <div className="m-3 flex min-w-0 flex-col rounded-3xl bg-[#0a0a0c] p-4 sm:m-6 sm:p-4">
                      <h3 className="text-sm font-semibold text-zinc-100 flex items-center gap-2 ml-4">
                         <MapPin size={16} className="text-red-500" /> Selected
                         Time
                      </h3>
 
-                     <div className="flex-1 flex flex-col items-center justify-center text-center p-4">
+                     <div className="flex min-h-[260px] flex-1 flex-col items-center justify-center p-2 text-center sm:min-h-[320px] sm:p-4">
                         <AnimatePresence mode="wait">
                            {plannerResult ? (
                               <motion.div
                                  key="result"
                                  initial={{ opacity: 0, scale: 0.95 }}
                                  animate={{ opacity: 1, scale: 1 }}
-                                 className="space-y-3 bg-[#121214] border border-zinc-800/80 p-8 rounded-2xl shadow-xl w-full">
+                                 className="w-full min-w-0 space-y-4 rounded-2xl border border-zinc-800/80 bg-[#121214] p-4 shadow-xl sm:space-y-5 sm:p-8">
                                  <Globe
                                     size={28}
-                                    className="mx-auto text-zinc-600 mb-2"
+                                    className="mx-auto text-zinc-600"
                                  />
-                                 <p className="text-cyan-300 text-sm font-semibold uppercase tracking-wider">
-                                    {plannerResult.location}
-                                 </p>
-                                 <p className="text-4xl font-bold text-[#daf4aa] tracking-tight">
-                                    {plannerResult.time}
-                                 </p>
-                                 <p className="text-zinc-500 text-sm font-medium">
-                                    {plannerResult.date}
-                                 </p>
+
+                                 {/* Source */}
+                                 <div className="rounded-xl border border-zinc-800 bg-[#0f0f11] p-4">
+                                    <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-600">
+                                       Source Time
+                                    </p>
+
+                                    <p className="mt-1 text-sm font-semibold text-cyan-300">
+                                       {plannerResult.sourceLocation}
+                                    </p>
+
+                                    <p className="mt-1 text-xs text-zinc-500">
+                                       {plannerResult.sourceTimezone?.replace(
+                                          /_/g,
+                                          ' ',
+                                       )}
+                                    </p>
+
+                                    <p className="mt-3 break-words text-xl font-bold text-zinc-100 sm:text-2xl">
+                                       {plannerResult.sourceTime}
+                                    </p>
+                                 </div>
+
+                                 {/* Arrow */}
+                                 <div className="flex items-center justify-center">
+                                    <div className="h-px flex-1 bg-zinc-800" />
+
+                                    <span className="mx-3 rounded-full border border-zinc-800 bg-[#0f0f11] px-3 py-1 text-xs font-bold text-[#daf4aa]">
+                                       →
+                                    </span>
+
+                                    <div className="h-px flex-1 bg-zinc-800" />
+                                 </div>
+
+                                 {/* Target */}
+                                 <div className="rounded-xl border border-[#daf4aa]/15 bg-[#daf4aa]/5 p-4">
+                                    <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-600">
+                                       Converted Time
+                                    </p>
+
+                                    <p className="mt-1 text-sm font-semibold text-[#daf4aa]">
+                                       {plannerResult.location}
+                                    </p>
+
+                                    <p className="mt-1 text-xs text-zinc-500">
+                                       {plannerResult.targetTimezone?.replace(
+                                          /_/g,
+                                          ' ',
+                                       )}
+                                    </p>
+
+                                    <p className="mt-3 break-words text-2xl font-bold tracking-tight text-[#daf4aa] sm:text-3xl">
+                                       {plannerResult.time}
+                                    </p>
+
+                                    <p className="mt-1 text-zinc-500 text-sm font-medium">
+                                       {plannerResult.date}
+                                    </p>
+                                 </div>
                               </motion.div>
                            ) : (
                               <motion.div
@@ -910,7 +1100,7 @@ const TimeZone = () => {
                <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="bg-[#121214] border border-zinc-800/80 rounded-2xl p-6 mb-10 shadow-xl">
+                  className="mb-8 w-full min-w-0 overflow-hidden rounded-2xl border border-zinc-800/80 bg-[#121214] p-4 shadow-xl sm:mb-10 sm:p-6">
                   <h3 className="mb-6 text-sm font-semibold text-zinc-100 uppercase tracking-wider flex items-center gap-2">
                      <FaStar className="text-yellow-400" /> Saved Time Zones
                   </h3>
@@ -918,7 +1108,7 @@ const TimeZone = () => {
                      {favorites.map((tz) => (
                         <div
                            key={tz}
-                           className="bg-[#0f0f11] border border-zinc-800/60 rounded-xl p-5 hover:border-zinc-700 transition-colors">
+                           className="min-w-0 overflow-hidden rounded-xl border border-zinc-800/60 bg-[#0f0f11] p-4 transition-colors hover:border-zinc-700 sm:p-5">
                            <p className="text-sm font-semibold text-cyan-300 mb-2 truncate">
                               {tz.replace(/_/g, ' ')}
                            </p>

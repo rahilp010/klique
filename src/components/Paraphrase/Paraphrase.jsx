@@ -25,6 +25,7 @@ import { FiSend, FiCopy, FiCheck, FiSettings, FiUpload } from 'react-icons/fi';
 import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 import { Input, InputNumber } from '@/components/ui/CustomControl';
 import Navbar from '../Navbar';
+import Loader from '../ui/loader';
 
 export default function AIWriter() {
    const [activeTool, setActiveTool] = useState('GrammerChecker');
@@ -162,8 +163,6 @@ export default function AIWriter() {
    useEffect(() => {
       const saved = JSON.parse(localStorage.getItem('ai_history') || '[]');
       setHistory(saved);
-      // Auto-collapse sidebar on smaller screens
-      if (window.innerWidth < 1024) setSidebarExpanded(false);
    }, []);
 
    useEffect(() => {
@@ -373,7 +372,7 @@ export default function AIWriter() {
          columnCount={34}
          radialFadeStart={15}
          radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto">
+         className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10">
          <SEO
             title="AI Writer & Paraphrasing Tool | Rephrase Text | Klique"
             description="Rephrase sentences, improve articles, fix grammar, and write creative copy with our free AI writer and paraphrase tool powered by advanced AI."
@@ -388,9 +387,12 @@ export default function AIWriter() {
             }}
          />
 
-         <div className="w-full sticky top-0 z-30 bg-[#16161b]  transition-all duration-300">
+         <div className="relative z-[100] w-full">
             <Navbar />
          </div>
+
+         {/* API Loading Overlay */}
+         {isGenerating && <Loader text="Processing with AI..." />}
 
          {/* Toast Notification */}
          <AnimatePresence>
@@ -417,12 +419,12 @@ export default function AIWriter() {
             )}
          </AnimatePresence>
 
-         <div className="min-h-[100dvh] w-full max-w-6xl mx-auto pl-0 lg:pl-20 px-3 sm:px-6 relative z-20">
+         <div className="relative z-10 mx-auto flex min-h-[100dvh] w-full max-w-6xl flex-col px-0 pb-32 pt-24 sm:px-2 sm:pb-24 sm:pt-28 lg:pl-20">
             {/* Main Content Area */}
-            <main className="min-h-[100dvh] overflow-y-auto customScrollbar p-4 pt-10 sm:p-8 lg:p-10 relative">
-               <div className="max-w-4xl mx-auto w-full flex flex-col gap-8 pb-10">
+            <main className="relative w-full">
+               <div className="mx-auto flex w-full max-w-4xl min-w-0 flex-col gap-6 pb-10 sm:gap-8">
                   {/* Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                  <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                      <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -430,7 +432,7 @@ export default function AIWriter() {
                         <h1 className="text-zinc-500 text-sm sm:text-base font-light text-mono tracking-wider">
                            AI Writing Studio
                         </h1>
-                        <h1 className="text-3xl sm:text-4xl font-medium text-zinc-100 tracking-tight">
+                        <h1 className="text-2xl font-medium tracking-tight text-zinc-100 sm:text-3xl md:text-4xl">
                            {activeTool}
                         </h1>
                         {/* <p className="text-zinc-500 text-sm sm:text-base font-medium">
@@ -461,7 +463,7 @@ export default function AIWriter() {
                   </div>
 
                   {/* Tool command hint */}
-                  <div className="flex items-center justify-between gap-3 -mt-3">
+                  <div className="flex min-w-0 flex-wrap items-center justify-between gap-2 -mt-2 sm:-mt-3">
                      <button
                         type="button"
                         onClick={() => {
@@ -490,11 +492,11 @@ export default function AIWriter() {
                            animate={{ opacity: 1, height: 'auto', y: 0 }}
                            exit={{ opacity: 0, height: 0, y: -10 }}
                            className="overflow-hidden">
-                           <div className="bg-[#121214] border border-zinc-800/80 rounded-2xl p-5 mb-2">
+                           <div className="rounded-2xl border border-zinc-800/80 bg-[#121214] p-3.5 shadow-xl sm:p-5">
                               <h3 className="text-sm font-medium text-zinc-400 mb-4">
                                  Configuration
                               </h3>
-                              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                              <div className="grid min-w-0 grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-4 lg:gap-4">
                                  {activeTool !== 'Prompt' &&
                                     activeTool !== 'Translation' &&
                                     activeTool !== 'Name' &&
@@ -673,7 +675,7 @@ export default function AIWriter() {
                   </AnimatePresence>
 
                   {/* Input / Editor Box */}
-                  <motion.div layout className="relative w-full z-20">
+                  <motion.div layout className="relative z-20 w-full min-w-0">
                      <AnimatePresence>
                         {isGenerating && (
                            <motion.div
@@ -691,12 +693,12 @@ export default function AIWriter() {
                            value={prompt}
                            onChange={handlePromptChange}
                            placeholder={`What do you want to write or edit?\n\nExample: ${placeholder[activeTool]}`}
-                           className="w-full min-h-[160px] sm:min-h-[200px] p-5 bg-transparent resize-y focus:outline-none text-zinc-200 placeholder:text-zinc-600 text-base leading-relaxed disabled:opacity-50 customScrollbar"
+                           className="min-h-[140px] w-full resize-none bg-transparent p-4 text-sm leading-relaxed text-zinc-200 placeholder:text-zinc-600 outline-none disabled:opacity-50 customScrollbar sm:min-h-[200px] sm:p-5 sm:text-base"
                            disabled={isGenerating}
                         />
 
-                        <div className="flex flex-wrap items-center justify-between p-3 gap-3 border-t border-zinc-800/50 bg-[#0f0f11] rounded-b-2xl">
-                           <div className="flex items-center gap-4 text-xs font-medium text-zinc-500 pl-2">
+                        <div className="flex flex-col gap-2.5 border-t border-zinc-800/50 bg-[#0f0f11] p-2.5 sm:flex-row sm:items-center sm:justify-between sm:p-3">
+                           <div className="flex min-w-0 flex-1 items-center gap-2 text-[11px] font-medium text-zinc-500 sm:gap-4 sm:pl-2 sm:text-xs">
                               <span>{prompt.length} chars</span>
                               <span className="hidden sm:inline-block w-1 h-1 rounded-full bg-zinc-700"></span>
                               <span className="hidden sm:inline-block">
@@ -720,7 +722,7 @@ export default function AIWriter() {
                               ref={generateButtonRef}
                               onClick={generate}
                               disabled={!canGenerate}
-                              className="flex items-center gap-2 px-5 py-2.5 bg-[#27272a] hover:bg-[#3f3f46] disabled:bg-zinc-900 disabled:text-zinc-600 disabled:cursor-not-allowed text-zinc-200 rounded-xl text-sm font-medium transition-all group ml-auto">
+                              className="flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-[#27272a] px-4 text-xs font-medium text-zinc-200 transition-all group hover:bg-[#3f3f46] disabled:cursor-not-allowed disabled:bg-zinc-900 disabled:text-zinc-600 sm:w-auto sm:min-w-[120px] sm:text-sm">
                               {isGenerating ? (
                                  <div className="flex items-center gap-2">
                                     <PiSparkleLight
@@ -749,9 +751,9 @@ export default function AIWriter() {
                         <motion.div
                            initial={{ opacity: 0, y: 20 }}
                            animate={{ opacity: 1, y: 0 }}
-                           className="w-full relative mt-4">
+                           className="relative mt-6 w-full min-w-0 sm:mt-4">
                            <div className="bg-[#121214] border border-zinc-800/80 rounded-2xl p-1 pb-4 shadow-xl flex flex-col">
-                              <div className="flex items-center justify-between p-4 mb-1 border-b border-zinc-800/50">
+                              <div className="flex min-w-0 items-center justify-between gap-2 border-b border-zinc-800/50 p-3.5 mb-1 sm:p-4">
                                  <h3 className="text-sm font-medium text-zinc-300 flex items-center gap-2">
                                     <PiSparkleLight
                                        className="text-purple-400"
@@ -763,7 +765,7 @@ export default function AIWriter() {
                                     <button
                                        onClick={handleCopy}
                                        disabled={!result || isGenerating}
-                                       className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800/50 hover:bg-zinc-700 disabled:opacity-50 disabled:hover:bg-zinc-800/50 text-zinc-300 text-sm font-medium transition-colors">
+                                       className="flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-lg bg-zinc-800/50 px-2.5 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-700 disabled:opacity-50 disabled:hover:bg-zinc-800/50 sm:px-3 sm:py-1.5 sm:text-sm">
                                        {copied ? (
                                           <FiCheck className="text-green-400" />
                                        ) : (
@@ -776,7 +778,7 @@ export default function AIWriter() {
                                     <button
                                        onClick={handleDownload}
                                        disabled={!result || isGenerating}
-                                       className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800/50 hover:bg-zinc-700 disabled:opacity-50 disabled:hover:bg-zinc-800/50 text-zinc-300 text-sm font-medium transition-colors">
+                                       className="flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-lg bg-zinc-800/50 px-2.5 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-700 disabled:opacity-50 disabled:hover:bg-zinc-800/50 sm:px-3 sm:py-1.5 sm:text-sm">
                                        <FaDownload size={13} />
                                        <span className="hidden sm:inline-block">
                                           Save
@@ -804,7 +806,7 @@ export default function AIWriter() {
                                        onChange={(e) =>
                                           setResult(e.target.value)
                                        }
-                                       className="w-full min-h-[250px] p-4 rounded-xl bg-[#0f0f11] border border-zinc-800/60 text-zinc-200 text-base leading-relaxed focus:outline-none focus:border-zinc-600 resize-y customScrollbar"
+                                       className="min-h-[220px] w-full resize-y rounded-xl border border-zinc-800/60 bg-[#0f0f11] p-4 text-sm leading-relaxed text-zinc-200 outline-none focus:border-zinc-600 customScrollbar sm:min-h-[250px] sm:text-base"
                                     />
                                  )}
                               </div>
