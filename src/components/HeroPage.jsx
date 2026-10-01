@@ -163,17 +163,6 @@ export default function HeroPage() {
                      Klique
                   </span>
                </div>
-               <button
-                  className="hidden cursor-pointer rounded-xl border-2 border-zinc-900 bg-zinc-900 px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-transparent hover:text-zinc-900 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-transparent dark:hover:text-zinc-100 md:block"
-                  onClick={handleScroll}>
-                  Start Free
-               </button>
-               <button
-                  onClick={() => setSidebarOpen(!sidebarOpen)}
-                  className="rounded-lg p-2 text-zinc-900 transition-colors hover:bg-zinc-200 dark:text-zinc-100 dark:hover:bg-zinc-800 md:hidden"
-                  aria-label="Toggle menu">
-                  {sidebarOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
-               </button>
             </header>
 
             {/* Hero Section */}
