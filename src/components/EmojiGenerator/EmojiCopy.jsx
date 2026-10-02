@@ -16,6 +16,7 @@ import { Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import ReactCountryFlag from 'react-country-flag';
 import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
+import { Input } from '../ui/CustomControl';
 
 // Utility: Convert unified code to emoji char
 const unifiedToEmoji = (unified) =>
@@ -344,6 +345,7 @@ export default function EmojiCopy() {
                         onChange={handleSearchChange}
                         className="w-full min-w-0 pl-11 sm:pl-12 pr-11 sm:pr-12 py-3 sm:py-4 rounded-2xl bg-[#0f0f11] border border-zinc-800/80 text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600 transition-all text-base shadow-xl"
                      />
+
                      {searchTerm && (
                         <button
                            onClick={() => setSearchTerm('')}

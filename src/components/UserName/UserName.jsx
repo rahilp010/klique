@@ -10,7 +10,7 @@ import { Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { FiCheck, FiSend } from 'react-icons/fi';
 import { PiSparkleLight } from 'react-icons/pi';
-import Loader from '../ui/loader';
+import { SelectPicker } from '../ui/CustomControl';
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
@@ -226,9 +226,6 @@ Rules:
             <Navbar />
          </div>
 
-         {/* API Loading Overlay */}
-         {loading && <Loader text="Generating username ideas..." />}
-
          <div className="relative z-10 mx-auto flex min-h-[100dvh] w-full max-w-6xl flex-col px-0 pb-32 pt-24 sm:px-2 sm:pb-24 sm:pt-28 lg:pl-20">
             {/* Header */}
             <motion.div
@@ -246,29 +243,27 @@ Rules:
             {/* Controls */}
             <div className="relative z-20 mx-auto w-full max-w-4xl min-w-0 overflow-hidden rounded-2xl border border-zinc-800/80 bg-[#121214] p-4 shadow-xl sm:p-6">
                <div className="mb-5 grid grid-cols-1 gap-3 sm:mb-6 sm:grid-cols-3 sm:gap-4">
-                  <select
-                     value={platform}
-                     onChange={(e) => setPlatform(e.target.value)}
-                     className="min-w-0 w-full appearance-none rounded-xl border border-zinc-800 bg-[#18181b] px-3.5 py-3 text-sm font-medium text-zinc-300 focus:border-zinc-600 focus:outline-none cursor-pointer">
-                     <option value="">Select Platform</option>
-                     {platforms.map((p) => (
-                        <option key={p.value} value={p.value}>
-                           {p.label}
-                        </option>
-                     ))}
-                  </select>
+                  <SelectPicker
+                     data={platforms}
+                     value={platform?.value}
+                     onChange={(val, item) => item && setPlatform(item)}
+                     cleanable={false}
+                     searchable={true}
+                     placeholder="Select Platform"
+                     menuMaxHeight={360}
+                     className="w-full min-w-0  !text-zinc-200"
+                  />
 
-                  <select
-                     value={category}
-                     onChange={(e) => setCategory(e.target.value)}
-                     className="min-w-0 w-full appearance-none rounded-xl border border-zinc-800 bg-[#18181b] px-3.5 py-3 text-sm font-medium text-zinc-300 focus:border-zinc-600 focus:outline-none cursor-pointer">
-                     <option value="">Select Category</option>
-                     {categories.map((c) => (
-                        <option key={c.value} value={c.value}>
-                           {c.label}
-                        </option>
-                     ))}
-                  </select>
+                  <SelectPicker
+                     data={categories}
+                     value={category?.value}
+                     onChange={(val, item) => item && setCategory(item)}
+                     cleanable={false}
+                     searchable={true}
+                     placeholder="Select Category"
+                     menuMaxHeight={360}
+                     className="w-full min-w-0  !text-zinc-200"
+                  />
 
                   <div className="relative">
                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
@@ -279,6 +274,8 @@ Rules:
                         onChange={(e) => setKeyword(e.target.value)}
                         className="min-w-0 w-full rounded-xl border border-zinc-800 bg-[#18181b] py-3 pl-10 pr-3.5 text-sm font-medium text-zinc-200 placeholder-zinc-500 focus:border-zinc-600 focus:outline-none"
                      />
+
+                     
                   </div>
                </div>
 
@@ -306,13 +303,13 @@ Rules:
                   <button
                      onClick={generateLocal}
                      disabled={loading}
-                     className="flex w-full items-center justify-center gap-2 rounded-xl border border-zinc-800 bg-[#18181b] px-4 py-3 text-sm font-medium text-zinc-400 transition-all hover:bg-zinc-800 hover:text-zinc-200 sm:w-auto sm:px-5 sm:py-2.5">
+                     className="flex w-full items-center justify-center gap-2 rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-4 py-3 text-sm font-medium text-cyan-300 transition-all hover:border-cyan-400/50 hover:bg-cyan-500/20 hover:text-cyan-200 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:px-5 sm:py-2.5">
                      <GiPerspectiveDiceSixFacesRandom size={16} /> Random Idea
                   </button>
                   <button
                      onClick={generateAI}
                      disabled={loading}
-                     className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#27272a] px-4 py-3 text-sm font-medium text-zinc-200 transition-all hover:bg-[#3f3f46] disabled:cursor-not-allowed disabled:bg-zinc-900 disabled:text-zinc-600 sm:w-auto sm:px-5 sm:py-2.5">
+                     className="group flex w-full items-center justify-center gap-2 rounded-xl border border-purple-500/30 bg-purple-500/15 px-4 py-3 text-sm font-medium text-purple-300 transition-all hover:border-purple-400/50 hover:bg-purple-500/25 hover:text-purple-200 disabled:cursor-not-allowed disabled:bg-zinc-900 disabled:text-zinc-600 sm:w-auto sm:px-5 sm:py-2.5">
                      {loading ? (
                         <>
                            <PiSparkleLight
@@ -341,47 +338,94 @@ Rules:
                      initial={{ opacity: 0, y: 20 }}
                      animate={{ opacity: 1, y: 0 }}
                      className="relative z-20 mx-auto mt-6 w-full max-w-4xl min-w-0 sm:mt-8">
-                     <div className="w-full min-w-0 overflow-hidden rounded-2xl border border-zinc-800/80 bg-[#121214] p-4 shadow-xl sm:p-6 lg:p-8">
-                        <div className="mb-5 flex min-w-0 items-center justify-between gap-3 border-b border-zinc-800/50 pb-4 sm:mb-6">
-                           <h3 className="flex min-w-0 items-center gap-2 text-base font-medium text-zinc-100 sm:text-lg">
-                              <PiSparkleLight
-                                 className="text-purple-400"
-                                 size={20}
+                     <div className="relative w-full min-w-0">
+                        <AnimatePresence>
+                           {loading && (
+                              <motion.div
+                                 initial={{ opacity: 0 }}
+                                 animate={{ opacity: 1 }}
+                                 exit={{ opacity: 0 }}
+                                 className="absolute -inset-[1px] -z-10 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-80 blur-[2px] animate-gradient-spin"
                               />
-                              Generated Handles
-                           </h3>
-                        </div>
+                           )}
+                        </AnimatePresence>
 
-                        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-3 md:grid-cols-3">
-                           {loading
-                              ? [...Array(12)].map((_, i) => (
-                                   <div
-                                      key={i}
-                                      className="h-11 w-full min-w-0 rounded-xl border border-zinc-800 bg-zinc-800/50 animate-pulse sm:h-12"></div>
-                                ))
-                              : usernames.map((name, i) => (
-                                   <div
-                                      key={i}
-                                      className="group relative flex min-w-0 w-full cursor-pointer items-center justify-between overflow-hidden rounded-xl border border-zinc-800 bg-[#18181b] px-3 py-3 transition-colors hover:border-zinc-700 sm:px-4"
-                                      onClick={() => handleCopy(name, i)}>
-                                      <span className="min-w-0 max-w-full truncate pr-6 text-xs font-medium text-zinc-300 sm:text-sm">
-                                         {name}
-                                      </span>
-                                      <div className="absolute right-2.5 shrink-0 text-zinc-500 transition-colors group-hover:text-zinc-300 sm:right-3">
-                                         {copiedIndex === i ? (
-                                            <FiCheck className="text-green-400" />
-                                         ) : (
-                                            <IoCopyOutline />
-                                         )}
+                        <div
+                           className={`w-full min-w-0 overflow-hidden rounded-2xl bg-[#121214] p-4 transition-all duration-300 sm:p-6 lg:p-8 ${
+                              loading
+                                 ? 'border border-transparent shadow-[0_0_40px_rgba(168,85,247,0.15)]'
+                                 : 'border border-zinc-800/80 shadow-xl'
+                           }`}>
+                           <div className="mb-5 flex min-w-0 items-center justify-between gap-3 border-b border-zinc-800/50 pb-4 sm:mb-6">
+                              <h3 className="flex min-w-0 items-center gap-2 text-base font-medium text-zinc-100 sm:text-lg">
+                                 <PiSparkleLight
+                                    className="text-purple-400"
+                                    size={20}
+                                 />
+                                 Generated Handles
+                              </h3>
+                           </div>
+
+                           <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-3 md:grid-cols-3">
+                              {loading
+                                 ? [...Array(12)].map((_, i) => (
+                                      <div
+                                         key={i}
+                                         className="h-11 w-full min-w-0 rounded-xl border border-zinc-800 bg-zinc-800/50 animate-pulse sm:h-12"></div>
+                                   ))
+                                 : usernames.map((name, i) => (
+                                      <div
+                                         key={i}
+                                         className="group relative flex min-w-0 w-full cursor-pointer items-center justify-between overflow-hidden rounded-xl border border-zinc-800 bg-[#18181b] px-3 py-3 transition-colors hover:border-zinc-700 sm:px-4"
+                                         onClick={() => handleCopy(name, i)}>
+                                         <span className="min-w-0 max-w-full truncate pr-6 text-xs font-medium text-zinc-300 sm:text-sm">
+                                            {name}
+                                         </span>
+                                         <div className="absolute right-2.5 shrink-0 text-zinc-500 transition-colors group-hover:text-zinc-300 sm:right-3">
+                                            {copiedIndex === i ? (
+                                               <FiCheck className="text-green-400" />
+                                            ) : (
+                                               <IoCopyOutline />
+                                            )}
+                                         </div>
                                       </div>
-                                   </div>
-                                ))}
+                                   ))}
+                           </div>
                         </div>
                      </div>
                   </motion.div>
                )}
             </AnimatePresence>
          </div>
+         <style>{`
+         @keyframes gradient-spin {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+         }
+
+         .animate-gradient-spin {
+            background-size: 200% 200%;
+            animation: gradient-spin 2.5s ease-in-out infinite;
+         }
+
+         html,
+         body {
+            max-width: 100%;
+            overflow-x: hidden;
+         }
+
+         button,
+         input,
+         select,
+         textarea {
+            touch-action: manipulation;
+         }
+
+         * {
+            min-width: 0;
+         }
+      `}</style>
       </ColumnLines>
    );
 }

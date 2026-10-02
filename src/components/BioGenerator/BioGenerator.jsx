@@ -14,6 +14,7 @@ import SEO from '../SEO';
 import { motion, AnimatePresence } from 'motion/react';
 import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 import Loader from '../ui/loader';
+import { SelectPicker } from '../ui/CustomControl';
 
 export default function BioGenerator() {
    const [description, setDescription] = useState('');
@@ -429,29 +430,16 @@ Each bio should:
                         {/* Tone */}
 
                         <div className="relative min-w-0 flex-1 sm:flex-none">
-                           <select
+                           <SelectPicker
+                              data={toneOptions}
                               value={tone}
-                              onChange={(e) => setTone(e.target.value)}
-                              className="h-10 w-full appearance-none rounded-lg border border-zinc-800 bg-[#18181b] pl-3 pr-9 text-xs font-medium text-zinc-300 outline-none transition-colors hover:bg-zinc-800 focus:border-zinc-600 sm:w-auto sm:min-w-[145px] sm:text-sm">
-                              {toneOptions.map((t) => (
-                                 <option key={t.value} value={t.value}>
-                                    {t.label}
-                                 </option>
-                              ))}
-                           </select>
-
-                           <svg
-                              className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24">
-                              <path
-                                 strokeLinecap="round"
-                                 strokeLinejoin="round"
-                                 strokeWidth="2"
-                                 d="M19 9l-7 7-7-7"
-                              />
-                           </svg>
+                              onChange={(val, item) => item && setTone(item)}
+                              cleanable={false}
+                              searchable={true}
+                              placeholder="Search city, country or timezone..."
+                              menuMaxHeight={360}
+                              className="w-full min-w-0  !text-zinc-200"
+                           />
                         </div>
 
                         {/* Character Count */}

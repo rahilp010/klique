@@ -11,7 +11,16 @@ import React, {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, CalendarDays, ChevronDown, X, Plus } from 'lucide-react';
+import {
+   Search,
+   CalendarDays,
+   ChevronDown,
+   X,
+   Plus,
+   Clock,
+   ChevronLeft,
+   ChevronRight,
+} from 'lucide-react';
 
 const panelClass =
    'border border-white/[0.09] bg-[#16161b] text-white shadow-2xl shadow-black/60';
@@ -366,7 +375,9 @@ export const SelectPicker = forwardRef(
                   {(renderExtraFooter || onCreateNew) && (
                      <div
                         className={`border-t border-white/[0.08] p-1.5 bg-[#16161b] ${
-                           focusedIndex === displayed.length ? 'bg-white/10' : ''
+                           focusedIndex === displayed.length
+                              ? 'bg-white/10'
+                              : ''
                         }`}
                         onMouseEnter={() => setFocusedIndex(displayed.length)}>
                         {renderExtraFooter ? (
@@ -453,7 +464,8 @@ export const SelectPicker = forwardRef(
          </div>
       );
    },
-);export const DateRangePicker = ({
+);
+export const DateRangePicker = ({
    value = [],
    onChange,
    placeholder = 'Select Date Range',
@@ -466,7 +478,11 @@ export const SelectPicker = forwardRef(
    const [end, setEnd] = useState('');
    const triggerRef = useRef(null);
    const menuRef = useRef(null);
-   const { coords, updatePosition } = useDropdownPosition(open, triggerRef, 330);
+   const { coords, updatePosition } = useDropdownPosition(
+      open,
+      triggerRef,
+      330,
+   );
 
    useEffect(() => {
       if (Array.isArray(value) && value.length === 2) {
@@ -623,120 +639,760 @@ export const SelectPicker = forwardRef(
    );
 };
 
-export const DatePicker = ({
-   value,
-   onChange,
-   placeholder = 'Select Date',
-   className = '',
-   style,
-   cleanable = true,
-   ...props
-}) => {
-   const [open, setOpen] = useState(false);
-   const [date, setDate] = useState(
-      value ? new Date(value).toISOString().slice(0, 10) : '',
-   );
-   const triggerRef = useRef(null);
-   const menuRef = useRef(null);
-   const { coords, updatePosition } = useDropdownPosition(open, triggerRef, 280);
+export const DatePicker = forwardRef(
+   (
+      {
+         value,
+         onChange,
+         placeholder = 'Select Date',
+         className = '',
+         style,
+         cleanable = true,
+         disabled = false,
+         format = 'yyyy-MM-dd',
+         menuStyle,
+         ...props
+      },
+      outerRef,
+   ) => {
+      const [open, setOpen] = useState(false);
+      const triggerRef = useRef(null);
+      const menuRef = useRef(null);
 
-   useEffect(() => {
-      setDate(value ? new Date(value).toISOString().slice(0, 10) : '');
-   }, [value]);
-
-   useEffect(() => {
-      const handler = (e) => {
-         if (
-            triggerRef.current &&
-            !triggerRef.current.contains(e.target) &&
-            menuRef.current &&
-            !menuRef.current.contains(e.target)
-         ) {
-            setOpen(false);
+      const parsedSelectedDate = useMemo(() => {
+         if (!value) return null;
+         if (value instanceof Date && !isNaN(value)) return value;
+         if (typeof value === 'string') {
+            const dateOnly = value.split('T')[0];
+            const parts = dateOnly.split('-');
+            if (parts.length === 3) {
+               const y = parseInt(parts[0], 10);
+               const m = parseInt(parts[1], 10) - 1;
+               const d = parseInt(parts[2], 10);
+               const parsed = new Date(y, m, d);
+               if (!isNaN(parsed)) return parsed;
+            }
+            const d = new Date(value);
+            if (!isNaN(d)) return d;
          }
+         return null;
+      }, [value]);
+
+      const [viewDate, setViewDate] = useState(() => {
+         return parsedSelectedDate || new Date();
+      });
+
+      useEffect(() => {
+         if (parsedSelectedDate) {
+            setViewDate(parsedSelectedDate);
+         }
+      }, [parsedSelectedDate]);
+
+      const handleClose = useCallback(() => {
+         setOpen(false);
+      }, []);
+
+      useImperativeHandle(outerRef, () => ({
+         close: handleClose,
+         open: () => setOpen(true),
+      }));
+
+      const { coords, updatePosition } = useDropdownPosition(
+         open,
+         triggerRef,
+         290,
+      );
+
+      useEffect(() => {
+         const handler = (e) => {
+            if (
+               triggerRef.current &&
+               !triggerRef.current.contains(e.target) &&
+               menuRef.current &&
+               !menuRef.current.contains(e.target)
+            ) {
+               handleClose();
+            }
+         };
+         document.addEventListener('mousedown', handler);
+         return () => document.removeEventListener('mousedown', handler);
+      }, [handleClose]);
+
+      const formatDisplayDate = (d) => {
+         if (!d || isNaN(d)) return placeholder;
+         return d.toLocaleDateString('en-US', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+         });
       };
-      document.addEventListener('mousedown', handler);
-      return () => document.removeEventListener('mousedown', handler);
-   }, []);
 
-   const label = date
-      ? new Date(`${date}T00:00:00`).toLocaleDateString('en-IN', {
-           day: '2-digit',
-           month: 'short',
-           year: 'numeric',
-        })
-      : placeholder;
+      const formatValueStr = (d) => {
+         if (!d || isNaN(d)) return '';
+         const year = d.getFullYear();
+         const month = String(d.getMonth() + 1).padStart(2, '0');
+         const day = String(d.getDate()).padStart(2, '0');
+         return `${year}-${month}-${day}`;
+      };
 
-   const menuContent = (
-      <AnimatePresence>
-         {open && (
-            <motion.div
-               ref={menuRef}
-               initial={{ opacity: 0, y: coords.placement === 'top' ? 4 : -4 }}
-               animate={{ opacity: 1, y: 0 }}
-               exit={{ opacity: 0, y: coords.placement === 'top' ? 4 : -4 }}
-               transition={{ duration: 0.1, ease: 'easeOut' }}
-               style={{
-                  position: 'fixed',
-                  top: coords.placement === 'top' ? undefined : coords.top,
-                  bottom:
-                     coords.placement === 'top'
-                        ? window.innerHeight - coords.top
-                        : undefined,
-                  left: coords.left,
-                  width: 280,
-                  zIndex: 999999,
-               }}
-               className={`rounded-2xl p-4 ${panelClass}`}>
-               <input
-                  autoFocus
-                  type="date"
-                  value={date}
-                  onChange={(e) => {
-                     const next = e.target.value;
-                     setDate(next);
-                     if (next) onChange?.(new Date(`${next}T00:00:00`));
-                     else if (cleanable) onChange?.(null);
-                     setOpen(false);
+      const handleSelectDay = (dayDate) => {
+         const formatted = formatValueStr(dayDate);
+         onChange?.(formatted, dayDate);
+         handleClose();
+      };
+
+      const prevMonth = () => {
+         setViewDate(
+            (prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1),
+         );
+      };
+
+      const nextMonth = () => {
+         setViewDate(
+            (prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1),
+         );
+      };
+
+      const year = viewDate.getFullYear();
+      const month = viewDate.getMonth();
+
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const firstDayOfWeek = new Date(year, month, 1).getDay();
+      const startOffset = (firstDayOfWeek + 6) % 7;
+      const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+      const calendarCells = [];
+
+      for (let i = startOffset - 1; i >= 0; i--) {
+         const dayNum = daysInPrevMonth - i;
+         calendarCells.push({
+            date: new Date(year, month - 1, dayNum),
+            dayNum,
+            isCurrentMonth: false,
+         });
+      }
+
+      for (let d = 1; d <= daysInMonth; d++) {
+         calendarCells.push({
+            date: new Date(year, month, d),
+            dayNum: d,
+            isCurrentMonth: true,
+         });
+      }
+
+      const remaining = 42 - calendarCells.length;
+      for (let d = 1; d <= remaining; d++) {
+         calendarCells.push({
+            date: new Date(year, month + 1, d),
+            dayNum: d,
+            isCurrentMonth: false,
+         });
+      }
+
+      const todayStr = formatValueStr(new Date());
+      const selectedStr = formatValueStr(parsedSelectedDate);
+
+      const monthName = viewDate.toLocaleDateString('en-US', {
+         month: 'long',
+         year: 'numeric',
+      });
+
+      const menuContent = (
+         <AnimatePresence>
+            {open && (
+               <motion.div
+                  ref={menuRef}
+                  initial={{
+                     opacity: 0,
+                     y: coords.placement === 'top' ? 4 : -4,
                   }}
-                  className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 text-sm text-gray-200 outline-none"
-               />
-            </motion.div>
-         )}
-      </AnimatePresence>
-   );
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{
+                     opacity: 0,
+                     y: coords.placement === 'top' ? 4 : -4,
+                  }}
+                  transition={{ duration: 0.1, ease: 'easeOut' }}
+                  style={{
+                     ...menuStyle,
+                     position: 'fixed',
+                     top: coords.placement === 'top' ? undefined : coords.top,
+                     bottom:
+                        coords.placement === 'top'
+                           ? window.innerHeight - coords.top
+                           : undefined,
+                     left: coords.left,
+                     width: 290,
+                     zIndex: menuStyle?.zIndex ?? 999999,
+                  }}
+                  className={`rounded-2xl p-3.5 ${panelClass}`}>
+                  <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+                     <button
+                        type="button"
+                        onClick={prevMonth}
+                        className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-white/10 hover:text-white transition-colors">
+                        <ChevronLeft size={18} />
+                     </button>
+                     <span className="text-sm font-semibold text-white">
+                        {monthName}
+                     </span>
+                     <button
+                        type="button"
+                        onClick={nextMonth}
+                        className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-white/10 hover:text-white transition-colors">
+                        <ChevronRight size={18} />
+                     </button>
+                  </div>
 
-   return (
-      <div
-         ref={triggerRef}
-         className={`relative ${className}`}
-         style={style}
-         {...filterDomProps(props)}>
-         <button
-            type="button"
-            onClick={() => {
-               if (!open) updatePosition();
-               setOpen((v) => !v);
-            }}
-            className="flex h-10 w-full items-center justify-between gap-2 rounded-full px-3 text-sm font-semibold text-white">
-            <span className="flex items-center gap-2 truncate">
-               <CalendarDays
-                  size={16}
-                  strokeWidth={2}
-                  className="text-gray-400"
-               />
-               {label}
-            </span>
-            <ChevronDown
-               size={18}
-               strokeWidth={2}
-               className={`text-gray-500 transition-transform ${open ? 'rotate-180' : ''}`}
-            />
-         </button>
-         {createPortal(menuContent, document.body)}
-      </div>
-   );
-};
+                  <div className="grid grid-cols-7 gap-1 pt-3 pb-1 text-center text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                     <span>Mo</span>
+                     <span>Tu</span>
+                     <span>We</span>
+                     <span>Th</span>
+                     <span>Fr</span>
+                     <span>Sa</span>
+                     <span>Su</span>
+                  </div>
+
+                  <div className="grid grid-cols-7 gap-1">
+                     {calendarCells.map((cell, idx) => {
+                        const cellStr = formatValueStr(cell.date);
+                        const isSelected =
+                           selectedStr && cellStr === selectedStr;
+                        const isToday = cellStr === todayStr;
+
+                        return (
+                           <button
+                              key={idx}
+                              type="button"
+                              onClick={() => handleSelectDay(cell.date)}
+                              className={`flex h-8 w-8 items-center justify-center rounded-xl text-xs transition-all font-medium ${
+                                 isSelected
+                                    ? 'bg-[#daf4aa] text-[#16161b] font-bold shadow-md shadow-[#daf4aa]/20'
+                                    : cell.isCurrentMonth
+                                      ? isToday
+                                         ? 'border border-[#daf4aa]/50 text-[#daf4aa] font-semibold bg-[#daf4aa]/10'
+                                         : 'text-gray-200 hover:bg-white/10 hover:text-white'
+                                      : 'text-gray-600 hover:bg-white/[0.04]'
+                              }`}>
+                              {cell.dayNum}
+                           </button>
+                        );
+                     })}
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-between border-t border-white/[0.08] pt-2.5">
+                     <button
+                        type="button"
+                        onClick={() => {
+                           const today = new Date();
+                           setViewDate(today);
+                           handleSelectDay(today);
+                        }}
+                        className="rounded-lg px-2.5 py-1 text-xs font-semibold text-[#daf4aa] hover:bg-[#daf4aa]/10 transition-colors">
+                        Today
+                     </button>
+                     {cleanable && parsedSelectedDate && (
+                        <button
+                           type="button"
+                           onClick={() => {
+                              onChange?.('', null);
+                              handleClose();
+                           }}
+                           className="rounded-lg px-2.5 py-1 text-xs text-gray-500 hover:bg-white/10 hover:text-white transition-colors">
+                           Clear
+                        </button>
+                     )}
+                  </div>
+               </motion.div>
+            )}
+         </AnimatePresence>
+      );
+
+      return (
+         <div
+            ref={triggerRef}
+            className={`relative ${className}`}
+            style={style}
+            {...filterDomProps(props)}>
+            <button
+               type="button"
+               disabled={disabled}
+               onClick={() => {
+                  if (disabled) return;
+                  if (!open) updatePosition();
+                  setOpen((v) => !v);
+               }}
+               className={`flex h-12 w-full items-center justify-between gap-2 rounded-2xl border px-4 text-left text-sm transition-all ${
+                  open
+                     ? 'border-[#daf4aa]/40 bg-[#16161b] ring-4 ring-[#daf4aa]/[0.06]'
+                     : 'border-white/[0.08] bg-[#16161b]/90 hover:border-white/[0.14]'
+               } ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}>
+               <span className="flex items-center gap-2.5 min-w-0">
+                  <CalendarDays
+                     size={18}
+                     strokeWidth={2}
+                     className={open ? 'text-[#daf4aa]' : 'text-gray-400'}
+                  />
+                  <span
+                     className={
+                        parsedSelectedDate
+                           ? 'truncate text-gray-200'
+                           : 'truncate text-gray-500'
+                     }>
+                     {formatDisplayDate(parsedSelectedDate)}
+                  </span>
+               </span>
+               <div className="flex items-center gap-1 shrink-0">
+                  {cleanable && parsedSelectedDate && (
+                     <span
+                        role="button"
+                        onClick={(e) => {
+                           e.stopPropagation();
+                           onChange?.('', null);
+                        }}
+                        className="flex h-6 w-6 items-center justify-center rounded-md text-gray-500 hover:bg-white/10 hover:text-white">
+                        <X className="w-4 h-4" />
+                     </span>
+                  )}
+                  <ChevronDown
+                     size={20}
+                     strokeWidth={2}
+                     className={`text-gray-500 transition-transform duration-200 ${
+                        open ? 'rotate-180 text-[#daf4aa]' : ''
+                     }`}
+                  />
+               </div>
+            </button>
+            {createPortal(menuContent, document.body)}
+         </div>
+      );
+   },
+);
+
+export const TimePicker = forwardRef(
+   (
+      {
+         value = '',
+         onChange,
+         placeholder = 'Select Time',
+         className = '',
+         style,
+         cleanable = true,
+         disabled = false,
+         is12h = true,
+         menuStyle,
+         ...props
+      },
+      outerRef,
+   ) => {
+      const [open, setOpen] = useState(false);
+      const triggerRef = useRef(null);
+      const menuRef = useRef(null);
+
+      const parsed = useMemo(() => {
+         if (!value)
+            return {
+               hours12: 12,
+               hours24: 12,
+               minutes: 0,
+               period: 'PM',
+               isValid: false,
+            };
+
+         let h24 = 12;
+         let m = 0;
+         let p = 'PM';
+
+         if (typeof value === 'string') {
+            const match = value.match(
+               /^(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?$/i,
+            );
+            if (match) {
+               let rawH = parseInt(match[1], 10);
+               m = parseInt(match[2], 10);
+               const rawP = match[3] ? match[3].toUpperCase() : null;
+
+               if (rawP) {
+                  p = rawP;
+                  if (p === 'PM' && rawH < 12) h24 = rawH + 12;
+                  else if (p === 'AM' && rawH === 12) h24 = 0;
+                  else h24 = rawH;
+               } else {
+                  h24 = rawH;
+                  p = h24 >= 12 ? 'PM' : 'AM';
+               }
+            }
+         } else if (value instanceof Date && !isNaN(value)) {
+            h24 = value.getHours();
+            m = value.getMinutes();
+            p = h24 >= 12 ? 'PM' : 'AM';
+         }
+
+         let h12 = h24 % 12;
+         if (h12 === 0) h12 = 12;
+
+         return {
+            hours12: h12,
+            hours24: h24,
+            minutes: m,
+            period: p,
+            isValid: true,
+         };
+      }, [value]);
+
+      const [selectedH12, setSelectedH12] = useState(parsed.hours12);
+      const [selectedH24, setSelectedH24] = useState(parsed.hours24);
+      const [selectedM, setSelectedM] = useState(parsed.minutes);
+      const [selectedP, setSelectedP] = useState(parsed.period);
+
+      useEffect(() => {
+         if (parsed.isValid) {
+            setSelectedH12(parsed.hours12);
+            setSelectedH24(parsed.hours24);
+            setSelectedM(parsed.minutes);
+            setSelectedP(parsed.period);
+         }
+      }, [parsed]);
+
+      const handleClose = useCallback(() => {
+         setOpen(false);
+      }, []);
+
+      useImperativeHandle(outerRef, () => ({
+         close: handleClose,
+         open: () => setOpen(true),
+      }));
+
+      const { coords, updatePosition } = useDropdownPosition(
+         open,
+         triggerRef,
+         270,
+      );
+
+      useEffect(() => {
+         const handler = (e) => {
+            if (
+               triggerRef.current &&
+               !triggerRef.current.contains(e.target) &&
+               menuRef.current &&
+               !menuRef.current.contains(e.target)
+            ) {
+               handleClose();
+            }
+         };
+         document.addEventListener('mousedown', handler);
+         return () => document.removeEventListener('mousedown', handler);
+      }, [handleClose]);
+
+      const emitTime = (h12Val, h24Val, mVal, pVal) => {
+         let finalH24 = h24Val;
+         if (is12h) {
+            if (pVal === 'PM' && h12Val < 12) finalH24 = h12Val + 12;
+            else if (pVal === 'AM' && h12Val === 12) finalH24 = 0;
+            else finalH24 = h12Val;
+         }
+
+         const time24Str = `${String(finalH24).padStart(2, '0')}:${String(mVal).padStart(2, '0')}`;
+         const time12Str = `${String(h12Val).padStart(2, '0')}:${String(mVal).padStart(2, '0')} ${pVal}`;
+
+         onChange?.(time24Str, {
+            time24: time24Str,
+            time12: time12Str,
+            hours24: finalH24,
+            hours12: h12Val,
+            minutes: mVal,
+            period: pVal,
+         });
+      };
+
+      const displayFormatted = useMemo(() => {
+         if (!parsed.isValid) return placeholder;
+         if (is12h) {
+            return `${String(parsed.hours12).padStart(2, '0')}:${String(parsed.minutes).padStart(2, '0')} ${parsed.period}`;
+         }
+         return `${String(parsed.hours24).padStart(2, '0')}:${String(parsed.minutes).padStart(2, '0')}`;
+      }, [parsed, is12h, placeholder]);
+
+      const presets = [
+         { label: '09:00 AM', h12: 9, h24: 9, m: 0, p: 'AM' },
+         { label: '12:00 PM', h12: 12, h24: 12, m: 0, p: 'PM' },
+         { label: '03:00 PM', h12: 3, h24: 15, m: 0, p: 'PM' },
+         { label: '06:00 PM', h12: 6, h24: 18, m: 0, p: 'PM' },
+         { label: '09:00 PM', h12: 9, h24: 21, m: 0, p: 'PM' },
+      ];
+
+      const hourOptions = useMemo(() => {
+         if (is12h) {
+            return Array.from({ length: 12 }, (_, i) => i + 1);
+         }
+         return Array.from({ length: 24 }, (_, i) => i);
+      }, [is12h]);
+
+      const minuteOptions = useMemo(() => {
+         return [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+      }, []);
+
+      const menuContent = (
+         <AnimatePresence>
+            {open && (
+               <motion.div
+                  ref={menuRef}
+                  initial={{
+                     opacity: 0,
+                     y: coords.placement === 'top' ? 4 : -4,
+                  }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{
+                     opacity: 0,
+                     y: coords.placement === 'top' ? 4 : -4,
+                  }}
+                  transition={{ duration: 0.1, ease: 'easeOut' }}
+                  style={{
+                     ...menuStyle,
+                     position: 'fixed',
+                     top: coords.placement === 'top' ? undefined : coords.top,
+                     bottom:
+                        coords.placement === 'top'
+                           ? window.innerHeight - coords.top
+                           : undefined,
+                     left: coords.left,
+                     width: 270,
+                     zIndex: menuStyle?.zIndex ?? 999999,
+                  }}
+                  className={`rounded-2xl p-3 ${panelClass}`}>
+                  <div className="flex items-center gap-1 overflow-x-auto pb-2 border-b border-white/[0.08] customScrollbar">
+                     {presets.map((pr) => (
+                        <button
+                           key={pr.label}
+                           type="button"
+                           onClick={() => {
+                              setSelectedH12(pr.h12);
+                              setSelectedH24(pr.h24);
+                              setSelectedM(pr.m);
+                              setSelectedP(pr.p);
+                              emitTime(pr.h12, pr.h24, pr.m, pr.p);
+                           }}
+                           className="shrink-0 rounded-lg bg-white/[0.05] px-2 py-1 text-[11px] font-medium text-gray-300 hover:bg-[#daf4aa]/15 hover:text-[#daf4aa] transition-colors">
+                           {pr.label}
+                        </button>
+                     ))}
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-1 pt-2 pb-1 text-center">
+                     <div>
+                        <p className="text-[10px] font-bold uppercase text-gray-500 mb-1.5">
+                           Hours
+                        </p>
+                        <div className="h-44 overflow-y-auto customScrollbar space-y-1 pr-1">
+                           {hourOptions.map((h) => {
+                              const isSelected = is12h
+                                 ? selectedH12 === h
+                                 : selectedH24 === h;
+
+                              return (
+                                 <button
+                                    key={h}
+                                    type="button"
+                                    onClick={() => {
+                                       if (is12h) {
+                                          setSelectedH12(h);
+                                          emitTime(
+                                             h,
+                                             selectedH24,
+                                             selectedM,
+                                             selectedP,
+                                          );
+                                       } else {
+                                          setSelectedH24(h);
+                                          let h12 = h % 12;
+                                          if (h12 === 0) h12 = 12;
+                                          const p = h >= 12 ? 'PM' : 'AM';
+                                          setSelectedH12(h12);
+                                          setSelectedP(p);
+                                          emitTime(h12, h, selectedM, p);
+                                       }
+                                    }}
+                                    className={`w-full rounded-lg py-1.5 text-xs font-semibold transition-all ${
+                                       isSelected
+                                          ? 'bg-[#daf4aa] text-[#16161b] font-bold'
+                                          : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                                    }`}>
+                                    {String(h).padStart(2, '0')}
+                                 </button>
+                              );
+                           })}
+                        </div>
+                     </div>
+
+                     <div>
+                        <p className="text-[10px] font-bold uppercase text-gray-500 mb-1.5">
+                           Mins
+                        </p>
+                        <div className="h-44 overflow-y-auto customScrollbar space-y-1 pr-1">
+                           {minuteOptions.map((m) => {
+                              const isSelected = selectedM === m;
+                              return (
+                                 <button
+                                    key={m}
+                                    type="button"
+                                    onClick={() => {
+                                       setSelectedM(m);
+                                       emitTime(
+                                          selectedH12,
+                                          selectedH24,
+                                          m,
+                                          selectedP,
+                                       );
+                                    }}
+                                    className={`w-full rounded-lg py-1.5 text-xs font-semibold transition-all ${
+                                       isSelected
+                                          ? 'bg-[#daf4aa] text-[#16161b] font-bold'
+                                          : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                                    }`}>
+                                    {String(m).padStart(2, '0')}
+                                 </button>
+                              );
+                           })}
+                        </div>
+                     </div>
+
+                     <div>
+                        <p className="text-[10px] font-bold uppercase text-gray-500 mb-1.5">
+                           {is12h ? 'Period' : 'Actions'}
+                        </p>
+                        {is12h ? (
+                           <div className="space-y-2 pt-2">
+                              {['AM', 'PM'].map((period) => (
+                                 <button
+                                    key={period}
+                                    type="button"
+                                    onClick={() => {
+                                       setSelectedP(period);
+                                       emitTime(
+                                          selectedH12,
+                                          selectedH24,
+                                          selectedM,
+                                          period,
+                                       );
+                                    }}
+                                    className={`w-full rounded-xl py-3 text-xs font-bold transition-all ${
+                                       selectedP === period
+                                          ? 'bg-[#daf4aa] text-[#16161b] shadow-md shadow-[#daf4aa]/20'
+                                          : 'bg-white/[0.05] text-gray-400 hover:bg-white/10 hover:text-white'
+                                    }`}>
+                                    {period}
+                                 </button>
+                              ))}
+                           </div>
+                        ) : null}
+
+                        <button
+                           type="button"
+                           onClick={() => {
+                              const now = new Date();
+                              const nowH24 = now.getHours();
+                              const nowM = Math.floor(now.getMinutes() / 5) * 5;
+                              const nowP = nowH24 >= 12 ? 'PM' : 'AM';
+                              let nowH12 = nowH24 % 12;
+                              if (nowH12 === 0) nowH12 = 12;
+
+                              setSelectedH12(nowH12);
+                              setSelectedH24(nowH24);
+                              setSelectedM(nowM);
+                              setSelectedP(nowP);
+                              emitTime(nowH12, nowH24, nowM, nowP);
+                              handleClose();
+                           }}
+                           className="w-full mt-3 rounded-xl bg-white/[0.06] border border-white/[0.08] py-2 text-[11px] font-semibold text-[#daf4aa] hover:bg-[#daf4aa]/15 transition-colors">
+                           Now
+                        </button>
+                     </div>
+                  </div>
+
+                  <div className="mt-2 flex items-center justify-between border-t border-white/[0.08] pt-2">
+                     {cleanable && parsed.isValid && (
+                        <button
+                           type="button"
+                           onClick={() => {
+                              onChange?.('');
+                              handleClose();
+                           }}
+                           className="rounded-lg px-2.5 py-1 text-xs text-gray-500 hover:bg-white/10 hover:text-white transition-colors">
+                           Clear
+                        </button>
+                     )}
+                     <button
+                        type="button"
+                        onClick={handleClose}
+                        className="ml-auto rounded-lg bg-[#daf4aa] px-4 py-1 text-xs font-bold text-[#16161b] hover:bg-[#cbe699] transition-colors">
+                        Done
+                     </button>
+                  </div>
+               </motion.div>
+            )}
+         </AnimatePresence>
+      );
+
+      return (
+         <div
+            ref={triggerRef}
+            className={`relative ${className}`}
+            style={style}
+            {...filterDomProps(props)}>
+            <button
+               type="button"
+               disabled={disabled}
+               onClick={() => {
+                  if (disabled) return;
+                  if (!open) updatePosition();
+                  setOpen((v) => !v);
+               }}
+               className={`flex h-12 w-full items-center justify-between gap-2 rounded-2xl border px-4 text-left text-sm transition-all ${
+                  open
+                     ? 'border-[#daf4aa]/40 bg-[#16161b] ring-4 ring-[#daf4aa]/[0.06]'
+                     : 'border-white/[0.08] bg-[#16161b]/90 hover:border-white/[0.14]'
+               } ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}>
+               <span className="flex items-center gap-2.5 min-w-0">
+                  <Clock
+                     size={18}
+                     strokeWidth={2}
+                     className={open ? 'text-[#daf4aa]' : 'text-gray-400'}
+                  />
+                  <span
+                     className={
+                        parsed.isValid
+                           ? 'truncate text-gray-200 font-medium'
+                           : 'truncate text-gray-500'
+                     }>
+                     {displayFormatted}
+                  </span>
+               </span>
+               <div className="flex items-center gap-1 shrink-0">
+                  {cleanable && parsed.isValid && (
+                     <span
+                        role="button"
+                        onClick={(e) => {
+                           e.stopPropagation();
+                           onChange?.('');
+                        }}
+                        className="flex h-6 w-6 items-center justify-center rounded-md text-gray-500 hover:bg-white/10 hover:text-white">
+                        <X className="w-4 h-4" />
+                     </span>
+                  )}
+                  <ChevronDown
+                     size={20}
+                     strokeWidth={2}
+                     className={`text-gray-500 transition-transform duration-200 ${
+                        open ? 'rotate-180 text-[#daf4aa]' : ''
+                     }`}
+                  />
+               </div>
+            </button>
+            {createPortal(menuContent, document.body)}
+         </div>
+      );
+   },
+);
 
 export const Tooltip = ({ children, ...props }) => children;
 
@@ -1396,6 +2052,7 @@ export default {
    CheckPicker,
    DateRangePicker,
    DatePicker,
+   TimePicker,
    Tooltip,
    Whisper,
    Modal,

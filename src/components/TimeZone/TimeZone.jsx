@@ -2,12 +2,16 @@ import React, { useEffect, useMemo, useState } from 'react';
 import ReactCountryFlag from 'react-country-flag';
 import { FaStar } from 'react-icons/fa';
 import { FiGlobe } from 'react-icons/fi';
-import { Calendar, MapPin, Globe } from 'lucide-react';
+import { Calendar, MapPin, Globe, RefreshCw, Earth } from 'lucide-react';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { motion, AnimatePresence } from 'motion/react';
 import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
-import { SelectPicker } from '@/components/ui/CustomControl';
+import {
+   DatePicker,
+   TimePicker,
+   SelectPicker,
+} from '@/components/ui/CustomControl';
 import cityTimezones from 'city-timezones';
 import * as countryTimezonesModule from 'countries-and-timezones';
 
@@ -702,7 +706,7 @@ const TimeZone = () => {
                            renderTZItem(label, item, 'gmt', date)
                         }
                         menuMaxHeight={360}
-                        className="w-full min-w-0 !bg-[#18181b] !border-zinc-800 !text-zinc-200"
+                        className="w-full min-w-0  !text-zinc-200"
                      />
                   </div>
                   <SelectedZoneSummary
@@ -873,7 +877,7 @@ const TimeZone = () => {
                            renderTZItem(label, item, 'gmt', date)
                         }
                         menuMaxHeight={360}
-                        className="w-full min-w-0 !bg-[#18181b] !border-zinc-800 !text-zinc-200"
+                        className="w-full min-w-0  !text-zinc-200"
                      />
                   </div>
                   <SelectedZoneSummary
@@ -925,7 +929,7 @@ const TimeZone = () => {
                               renderMenuItem={(label, item) =>
                                  renderTZItem(label, item, 'gmt', date)
                               }
-                              className="w-full min-w-0 !bg-[#18181b] !border-zinc-800 !text-zinc-200"
+                              className="w-full min-w-0 !text-zinc-200"
                            />
                         </div>
 
@@ -945,7 +949,7 @@ const TimeZone = () => {
                               renderMenuItem={(label, item) =>
                                  renderTZItem(label, item, 'gmt', date)
                               }
-                              className="w-full min-w-0 !bg-[#18181b] !border-zinc-800 !text-zinc-200"
+                              className="w-full min-w-0  !text-zinc-200"
                            />
                         </div>
 
@@ -954,33 +958,59 @@ const TimeZone = () => {
                               <label className="block text-xs font-medium text-zinc-500 mb-2">
                                  Date (Local)
                               </label>
-                              <input
-                                 type="date"
+                              <DatePicker
                                  value={plannerDate}
-                                 onChange={(e) =>
-                                    setPlannerDate(e.target.value)
-                                 }
-                                 className="min-w-0 w-full rounded-lg border border-zinc-800 bg-[#18181b] px-3 py-2.5 text-sm text-zinc-200 transition-colors focus:border-zinc-600 focus:outline-none sm:px-4"
+                                 onChange={(date) => setPlannerDate(date)}
+                                 placeholder="Select Date"
+                                 className="min-w-0 w-full rounded-lg text-sm text-zinc-200 transition-colors focus:border-zinc-600 focus:outline-none"
                               />
                            </div>
                            <div>
                               <label className="block text-xs font-medium text-zinc-500 mb-2">
                                  Time (Local)
                               </label>
-                              <div className="flex gap-2 items-center">
-                                 <input
-                                    type="time"
-                                    value={plannerTime}
-                                    onChange={(e) =>
-                                       setPlannerTime(e.target.value)
-                                    }
-                                    className="min-w-0 flex-1 rounded-lg border border-zinc-800 bg-[#18181b] px-3 py-2.5 text-sm text-zinc-200 transition-colors focus:border-zinc-600 focus:outline-none sm:px-4"
-                                 />
-                                 <span className="shrink-0 rounded-lg border border-zinc-800/50 bg-[#0f0f11] px-2.5 py-2 text-[11px] font-semibold text-zinc-500 sm:px-3 sm:text-xs">
-                                    {is12h ? '12h' : '24h'}
-                                 </span>
+                              <div className="space-y-2">
+                                 <div className="flex gap-2 items-center">
+                                    <TimePicker
+                                       value={plannerTime}
+                                       onChange={(time) => setPlannerTime(time)}
+                                       is12h={is12h}
+                                       placeholder="Select Time"
+                                       className="min-w-0 flex-1"
+                                    />
+                                 </div>
                               </div>
                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                           <button
+                              onClick={() => setIs12h(!is12h)}
+                              aria-label="Switch time format"
+                              className="relative flex h-10 w-full max-w-[138px] items-center rounded-full border border-zinc-700 bg-[#18181b] p-1 focus:outline-none">
+                              {/* Active background */}
+                              <span
+                                 className={`absolute top-1 bottom-1 w-[65px] rounded-full bg-[#daf4aa] shadow-lg shadow-[#daf4aa]/10 transition-all duration-300 ease-out ${
+                                    is12h ? 'left-1' : 'left-[68px]'
+                                 }`}
+                              />
+
+                              {/* 12 Hour */}
+                              <span
+                                 className={`relative z-10 flex h-full w-1/2 items-center justify-center text-[11px] font-semibold transition-colors duration-200 ${
+                                    is12h ? 'text-zinc-950' : 'text-zinc-500'
+                                 }`}>
+                                 12-hour
+                              </span>
+
+                              {/* 24 Hour */}
+                              <span
+                                 className={`relative z-10 flex h-full w-1/2 items-center justify-center text-[11px] font-semibold transition-colors duration-200 ${
+                                    !is12h ? 'text-zinc-950' : 'text-zinc-500'
+                                 }`}>
+                                 24-hour
+                              </span>
+                           </button>
                         </div>
 
                         <button
@@ -1006,7 +1036,7 @@ const TimeZone = () => {
                                  initial={{ opacity: 0, scale: 0.95 }}
                                  animate={{ opacity: 1, scale: 1 }}
                                  className="w-full min-w-0 space-y-4 rounded-2xl border border-zinc-800/80 bg-[#121214] p-4 shadow-xl sm:space-y-5 sm:p-8">
-                                 <Globe
+                                 <Earth
                                     size={28}
                                     className="mx-auto text-zinc-600"
                                  />
@@ -1038,7 +1068,7 @@ const TimeZone = () => {
                                     <div className="h-px flex-1 bg-zinc-800" />
 
                                     <span className="mx-3 rounded-full border border-zinc-800 bg-[#0f0f11] px-3 py-1 text-xs font-bold text-[#daf4aa]">
-                                       →
+                                       <RefreshCw className="w-4 h-4" />
                                     </span>
 
                                     <div className="h-px flex-1 bg-zinc-800" />
