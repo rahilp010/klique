@@ -1,19 +1,18 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { ToastContainer, Zoom } from 'react-toastify';
 import HeroPage from './components/HeroPage'; // Loaded synchronously for instant LCP
-// Lazy-load sub-routes to split the bundles and optimize initial rendering
 
-import EmojiCopy from './components/EmojiGenerator/EmojiCopy';
-import FancyFontGenerator from './components/FanceyFont/FanceyFontGenerarot';
-import CoolSymbol from './components/CoolSymbol/CoolSymbol';
-import HashtagGenerator from './components/Hashtag/HashtagGenerator';
-import BioGenerator from './components/BioGenerator/BioGenerator';
-import WordCounter from './components/WordCounter/WordCounter';
-import Paraphrase from './components/Paraphrase/Paraphrase';
-import UsernameGenerator from './components/UserName/UserName';
-import TimeZone from './components/TimeZone/TimeZone';
-import PDFTools from './components/Converter/PDFTools';
+// Keep heavy tool dependencies out of the initial homepage bundle.
+const EmojiCopy = lazy(() => import('./components/EmojiGenerator/EmojiCopy'));
+const FancyFontGenerator = lazy(() => import('./components/FanceyFont/FanceyFontGenerarot'));
+const CoolSymbol = lazy(() => import('./components/CoolSymbol/CoolSymbol'));
+const HashtagGenerator = lazy(() => import('./components/Hashtag/HashtagGenerator'));
+const BioGenerator = lazy(() => import('./components/BioGenerator/BioGenerator'));
+const WordCounter = lazy(() => import('./components/WordCounter/WordCounter'));
+const Paraphrase = lazy(() => import('./components/Paraphrase/Paraphrase'));
+const UsernameGenerator = lazy(() => import('./components/UserName/UserName'));
+const TimeZone = lazy(() => import('./components/TimeZone/TimeZone'));
+const PDFTools = lazy(() => import('./components/Converter/PDFTools'));
 
 // Simple loading indicator during chunk fetches
 const LoadingFallback = () => (
@@ -30,19 +29,6 @@ const LoadingFallback = () => (
 function App() {
    return (
       <>
-         <ToastContainer
-            position="top-right"
-            autoClose={1000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-            transition={Zoom}
-         />
          <Suspense fallback={<LoadingFallback />}>
             <Routes>
                <Route path="/" element={<HeroPage />} />

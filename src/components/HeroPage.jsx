@@ -1,81 +1,79 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-   FaSmile,
-   FaUserAlt,
-   FaHashtag,
-   FaPalette,
-   FaBars,
-   FaTimes,
-   FaFileWord,
-} from 'react-icons/fa';
-import { motion } from 'motion/react';
+   ArrowRight,
+   AtSign,
+   Facebook,
+   FileText,
+   Github,
+   Hash,
+   Instagram,
+   Linkedin,
+   Palette,
+   Sparkles,
+   Smile,
+   Type,
+   UserRound,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { BiFont } from 'react-icons/bi';
-import { SiNamecheap } from 'react-icons/si';
-import { HiAtSymbol } from 'react-icons/hi2';
-import { IoSparklesOutline } from 'react-icons/io5';
-import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from 'react-icons/fa6';
-import { LiaLongArrowAltRightSolid } from 'react-icons/lia';
 import SEO from './SEO';
-import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 
 const tools = [
    {
-      icon: <FaFileWord size={32} />,
+      icon: <FileText size={32} />,
       title: 'PDF Converter',
       desc: 'Convert Word documents to PDF with high quality.',
       link: '/convert',
    },
    {
-      icon: <FaSmile size={32} />,
+      icon: <Smile size={32} />,
       title: 'Font Creator',
       desc: 'Mix and match emojis to create unique combinations.',
       link: '/fontgenerator',
    },
    {
-      icon: <FaUserAlt size={32} />,
+      icon: <UserRound size={32} />,
       title: 'Emojis',
       desc: 'Generate creative bios for your social media profiles.',
       link: '/emojigenerator',
    },
    {
-      icon: <HiAtSymbol size={32} />,
+      icon: <AtSign size={32} />,
       title: 'Symbols',
       desc: 'Generate relevant hashtags and captions for your posts.',
       link: '/symbol',
    },
    {
-      icon: <FaPalette size={32} />,
+      icon: <Palette size={32} />,
       title: 'AI Bio Creator',
       desc: 'Create personalized and engaging bio content.',
       link: '/bio',
    },
    {
-      icon: <FaHashtag size={32} />,
+      icon: <Hash size={32} />,
       title: 'AI HashTag',
       desc: 'Generate viral, high-reach hashtags for your social posts automatically.',
       link: '/hashtaggenerator',
    },
    {
-      icon: <BiFont size={32} />,
+      icon: <Type size={32} />,
       title: 'Word Counter',
       desc: 'Analyze text structure, count words, characters, and estimate reading time.',
       link: '/wordcounter',
    },
    {
-      icon: <IoSparklesOutline size={32} />,
+      icon: <Sparkles size={32} />,
       title: 'AI Writer',
       desc: 'Rephrase sentences, rewrite articles, and generate creative copy with AI.',
       link: '/aiwriter',
    },
    {
-      icon: <SiNamecheap size={32} />,
+      icon: <AtSign size={32} />,
       title: 'Username Generator',
       desc: 'Create unique, cool, and aesthetic usernames and handles instantly.',
       link: '/username',
    },
    {
-      icon: <SiNamecheap size={32} />,
+      icon: <AtSign size={32} />,
       title: 'Time Zone',
       desc: 'Convert times between different time zones and plan global meetings.',
       link: '/timezone',
@@ -83,17 +81,9 @@ const tools = [
 ];
 
 export default function HeroPage() {
-   const [sidebarOpen, setSidebarOpen] = useState(false);
-   const [scrolled, setScrolled] = useState(false);
    const [showNavbar, setShowNavbar] = useState(true);
    const sectionRef = useRef(null);
    const toolsSectionRef = useRef(null);
-
-   useEffect(() => {
-      const handleScroll = () => setScrolled(window.scrollY > 20);
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
-   }, []);
 
    useEffect(() => {
       const scrollContainer = sectionRef.current;
@@ -217,38 +207,26 @@ export default function HeroPage() {
 
                {/* Hero Section */}
                <section className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-center px-4 pb-16 pt-32 text-center sm:px-6 sm:pb-24 sm:pt-40">
-                  <motion.h1
-                     initial={{ opacity: 0, y: 16 }}
-                     animate={{ opacity: 1, y: 0 }}
-                     transition={{ duration: 0.5, delay: 0.1 }}
-                     className="mb-4 max-w-4xl text-4xl font-bold leading-[1.08] text-zinc-900 dark:text-zinc-100 sm:mb-6 sm:text-5xl md:text-6xl lg:text-7xl">
+                  <h1 className="mb-4 max-w-4xl text-4xl font-bold leading-[1.08] text-zinc-900 dark:text-zinc-100 sm:mb-6 sm:text-5xl md:text-6xl lg:text-7xl">
                      Create{' '}
                      <span className="gradient-text">Amazing Content</span>{' '}
                      <br /> Effortlessly
-                  </motion.h1>
+                  </h1>
 
-                  <motion.p
-                     initial={{ opacity: 0, y: 16 }}
-                     animate={{ opacity: 1, y: 0 }}
-                     transition={{ duration: 0.5, delay: 0.2 }}
-                     className="mx-auto mb-7 max-w-2xl px-2 text-sm leading-6 font-light text-zinc-500 dark:text-zinc-400 sm:mb-10 sm:text-lg md:text-xl">
+                  <p className="mx-auto mb-7 max-w-2xl px-2 text-sm leading-6 font-light text-zinc-500 dark:text-zinc-400 sm:mb-10 sm:text-lg md:text-xl">
                      Explore tools designed to help you create engaging content
                      for your social media and digital presence. Operate swiftly
                      with precise accuracy.
-                  </motion.p>
+                  </p>
 
-                  <motion.div
-                     initial={{ opacity: 0, y: 16 }}
-                     animate={{ opacity: 1, y: 0 }}
-                     transition={{ duration: 0.5, delay: 0.3 }}
-                     className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                      <button
                         className="flex w-full items-center justify-center gap-2.5 rounded-xl border-2 border-zinc-900 bg-zinc-900 px-7 py-3 text-sm font-semibold text-white transition-all hover:bg-transparent hover:text-zinc-900 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-transparent dark:hover:text-zinc-100 sm:w-auto sm:px-8 sm:text-base"
                         onClick={handleScroll}>
                         Start Creating
-                        <LiaLongArrowAltRightSolid size={20} />
+                        <ArrowRight size={20} />
                      </button>
-                  </motion.div>
+                  </div>
                </section>
 
                {/* Tools Section */}
@@ -265,25 +243,11 @@ export default function HeroPage() {
                         creative workflow.
                      </p>
 
-                     <motion.div
-                        className="grid grid-cols-1 gap-4 px-0 pb-16 sm:grid-cols-2 sm:gap-6 sm:px-4 sm:pb-20 lg:grid-cols-3"
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={{
-                           visible: { transition: { staggerChildren: 0.1 } },
-                        }}>
+                     <div className="grid grid-cols-1 gap-4 px-0 pb-16 sm:grid-cols-2 sm:gap-6 sm:px-4 sm:pb-20 lg:grid-cols-3">
                         {tools.map((tool, i) => (
-                           <motion.div
+                           <div
                               key={i}
-                              variants={{
-                                 hidden: { opacity: 0, y: 40 },
-                                 visible: { opacity: 1, y: 0 },
-                              }}
-                              whileHover={{ y: -4, scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              transition={{ type: 'spring', stiffness: 300 }}
-                              className="min-w-0 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/50">
+                              className="min-w-0 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-transform transition-shadow hover:-translate-y-1 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/50">
                               <Link to={tool.link} className="block h-full">
                                  <div className="flex h-full min-w-0 flex-col p-5 text-left sm:p-8">
                                     <div className="mb-5 flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 sm:mb-6 sm:h-12 sm:w-12">
@@ -297,9 +261,9 @@ export default function HeroPage() {
                                     </p>
                                  </div>
                               </Link>
-                           </motion.div>
+                           </div>
                         ))}
-                     </motion.div>
+                     </div>
                   </div>
                </section>
 
@@ -410,10 +374,10 @@ export default function HeroPage() {
                         </p>
                         <div className="mt-5 flex flex-wrap gap-3 sm:mt-6 sm:gap-4">
                            {[
-                              { name: 'Facebook', icon: <FaFacebook /> },
-                              { name: 'GitHub', icon: <FaGithub /> },
-                              { name: 'Instagram', icon: <FaInstagram /> },
-                              { name: 'LinkedIn', icon: <FaLinkedin /> },
+                              { name: 'Facebook', icon: <Facebook /> },
+                              { name: 'GitHub', icon: <Github /> },
+                              { name: 'Instagram', icon: <Instagram /> },
+                              { name: 'LinkedIn', icon: <Linkedin /> },
                            ].map((s, i) => (
                               <a
                                  key={i}
