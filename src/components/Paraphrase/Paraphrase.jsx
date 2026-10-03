@@ -25,7 +25,6 @@ import { FiSend, FiCopy, FiCheck, FiSettings, FiUpload } from 'react-icons/fi';
 import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 import { Input, InputNumber } from '@/components/ui/CustomControl';
 import Navbar from '../Navbar';
-import Loader from '../ui/loader';
 
 export default function AIWriter() {
    const [activeTool, setActiveTool] = useState('GrammerChecker');
@@ -390,9 +389,6 @@ export default function AIWriter() {
          <div className="relative z-[100] w-full">
             <Navbar />
          </div>
-
-         {/* API Loading Overlay */}
-         {isGenerating && <Loader text="Processing with AI..." />}
 
          {/* Toast Notification */}
          <AnimatePresence>

@@ -11,8 +11,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { FiCheck, FiSend } from 'react-icons/fi';
 import { PiSparkleLight } from 'react-icons/pi';
 import { SelectPicker } from '../ui/CustomControl';
-
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+import { callAiApi } from '../../services/aiService';
 
 const tones = [
    { label: 'Casual', value: 'casual' },
@@ -116,25 +115,10 @@ export default function UsernameGenerator() {
    };
 
    const generateAI = async () => {
-      if (!GEMINI_API_KEY) {
-         showNotification('Missing Gemini API key!', 'error');
-         return;
-      }
-
       try {
          setLoading(true);
          setUsernames([]);
-         const res = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-            {
-               method: 'POST',
-               headers: { 'Content-Type': 'application/json' },
-               body: JSON.stringify({
-                  contents: [
-                     {
-                        parts: [
-                           {
-                              text: `
+         const prompt = `
 You are a social media branding expert who creates short, catchy, and platform-optimized usernames.
 Generate 15 unique usernames suitable for the following context:
 Platform: ${platform || 'Any'}
@@ -146,19 +130,8 @@ Rules:
 - Adapt tone dynamically (e.g. funny -> playful, professional -> clean)
 - Keep under 15 characters, no spaces/emojis.
 - Return usernames separated by new lines only — no markdown.
-`,
-                           },
-                        ],
-                     },
-                  ],
-               }),
-            },
-         );
-
-         if (!res.ok) throw new Error('Gemini API request failed');
-         const data = await res.json();
-         const text =
-            data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
+`;
+         const text = await callAiApi(prompt);
          const parsed = text
             .split('\n')
             .map((u) => u.replace(/[-*•]/g, '').trim())

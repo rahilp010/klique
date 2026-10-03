@@ -17,6 +17,16 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src')
     }
+  },
+  server: {
+    proxy: {
+      '/api/nara': {
+        target: 'https://router.bynara.id',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api\/nara/, '')
+      }
+    }
   }
 })
 

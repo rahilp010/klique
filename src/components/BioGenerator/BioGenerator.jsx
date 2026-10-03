@@ -13,8 +13,8 @@ import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { motion, AnimatePresence } from 'motion/react';
 import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
-import Loader from '../ui/loader';
 import { SelectPicker } from '../ui/CustomControl';
+import { callAiApi } from '../../services/aiService';
 
 export default function BioGenerator() {
    const [description, setDescription] = useState('');
@@ -77,19 +77,7 @@ export default function BioGenerator() {
 
    const generateBio = async (desc, selectedTone) => {
       try {
-         const res = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-            {
-               method: 'POST',
-               headers: {
-                  'Content-Type': 'application/json',
-               },
-               body: JSON.stringify({
-                  contents: [
-                     {
-                        parts: [
-                           {
-                              text: `
+         const prompt = `
 You are a professional Instagram bio writer.
 
 Generate 6 unique, catchy Instagram bios for:
@@ -104,23 +92,8 @@ Each bio should:
 - Be distinct
 - Be ready to copy and use
 - Separate bios with ---
-`,
-                           },
-                        ],
-                     },
-                  ],
-               }),
-            },
-         );
-
-         if (!res.ok) {
-            throw new Error('Failed to fetch bio');
-         }
-
-         const data = await res.json();
-
-         const text =
-            data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
+`;
+         const text = await callAiApi(prompt);
 
          if (!text) {
             throw new Error('No bio generated');
@@ -334,12 +307,6 @@ Each bio should:
          <div className="relative z-[100] w-full">
             <Navbar />
          </div>
-
-         {/* ========================================================
-          LOADING
-      ======================================================== */}
-
-         {isLoading && <Loader text="Generating creative bios with AI..." />}
 
          {/* ========================================================
           MAIN CONTENT

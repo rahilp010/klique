@@ -1020,421 +1020,478 @@ export default function PDFTools() {
             </div>
 
             {/* Active Tool Main Card Workspace */}
-            <div className="w-full rounded-3xl border border-zinc-800/90 bg-[#121214] p-5 sm:p-8 shadow-2xl relative overflow-hidden">
-               <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#daf4aa]/5 blur-3xl" />
-
-               {/* Active Tool Header */}
-               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/60 pb-5 mb-6">
-                  <div className="flex items-center gap-3">
-                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#daf4aa]/15 border border-[#daf4aa]/20 text-[#daf4aa]">
-                        {React.createElement(activeTool.icon, { size: 24 })}
-                     </div>
-                     <div>
-                        <h2 className="text-lg font-bold text-white sm:text-xl">
-                           {activeTool.name}
-                        </h2>
-                        <p className="text-xs text-zinc-400">
-                           {activeTool.description}
-                        </p>
-                     </div>
-                  </div>
-
-                  {files.length > 0 && (
-                     <button
-                        type="button"
-                        onClick={() => setFiles([])}
-                        className="self-start sm:self-auto text-xs font-semibold text-zinc-400 hover:text-red-400 flex items-center gap-1.5 transition-colors">
-                        <Trash2 size={14} /> Clear All
-                     </button>
+            <div className="relative w-full">
+               <AnimatePresence>
+                  {loading && (
+                     <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="pointer-events-none absolute -inset-[1px] -z-10 rounded-3xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-80 blur-[2px] animate-gradient-spin"
+                     />
                   )}
-               </div>
+               </AnimatePresence>
 
-               {/* Step 1: Input / File Upload Zone */}
-               {!result && (
-                  <div className="space-y-6">
-                     {activeTool.id === 'text-to-pdf' && (
+               <div
+                  className={`relative w-full overflow-hidden rounded-3xl bg-[#121214] p-5 sm:p-8 transition-all duration-300 ${
+                     loading
+                        ? 'border border-transparent shadow-[0_0_40px_rgba(168,85,247,0.15)]'
+                        : 'border border-zinc-800/90 shadow-2xl'
+                  }`}>
+                  <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#daf4aa]/5 blur-3xl" />
+
+                  {/* Active Tool Header */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/60 pb-5 mb-6">
+                     <div className="flex items-center gap-3">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#daf4aa]/15 border border-[#daf4aa]/20 text-[#daf4aa]">
+                           {React.createElement(activeTool.icon, { size: 24 })}
+                        </div>
                         <div>
-                           <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">
-                              Type or Paste Text Content
-                           </label>
-                           <textarea
-                              rows={6}
-                              value={textInput}
-                              onChange={(e) => setTextInput(e.target.value)}
-                              placeholder="Type or paste your text / Markdown content here..."
-                              className="w-full rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4 text-sm text-zinc-200 outline-none focus:border-[#daf4aa]/50 customScrollbar"
-                           />
-                        </div>
-                     )}
-
-                     {(!activeTool.allowTextInput || !textInput) && (
-                        <div
-                           onDragOver={(e) => e.preventDefault()}
-                           onDrop={handleDrop}
-                           onClick={() => fileInputRef.current?.click()}
-                           className="group border-2 border-dashed border-zinc-700/60 hover:border-[#daf4aa]/60 bg-[#0f0f11] rounded-2xl p-8 text-center cursor-pointer transition-all hover:bg-[#141417]">
-                           <input
-                              ref={fileInputRef}
-                              type="file"
-                              accept={activeTool.accept}
-                              multiple={activeTool.multiple}
-                              onChange={handleFileChange}
-                              className="hidden"
-                           />
-                           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-zinc-800 bg-[#18181b] text-zinc-400 group-hover:border-[#daf4aa]/30 group-hover:text-[#daf4aa] transition-all mb-4">
-                              <Upload size={24} />
-                           </div>
-                           <p className="text-base font-semibold text-zinc-200">
-                              Drag & drop your file
-                              {activeTool.multiple ? 's' : ''} here or{' '}
-                              <span className="text-[#daf4aa] underline underline-offset-4">
-                                 browse
-                              </span>
-                           </p>
-                           <p className="text-xs text-zinc-500 mt-1.5">
-                              Supported formats: {activeTool.accept}
+                           <h2 className="text-lg font-bold text-white sm:text-xl">
+                              {activeTool.name}
+                           </h2>
+                           <p className="text-xs text-zinc-400">
+                              {activeTool.description}
                            </p>
                         </div>
-                     )}
+                     </div>
 
                      {files.length > 0 && (
-                        <div className="space-y-3">
-                           <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
-                              Selected Files ({files.length})
-                           </p>
-                           <div className="space-y-2 max-h-60 overflow-y-auto customScrollbar">
-                              {files.map((f, idx) => (
-                                 <div
-                                    key={idx}
-                                    className="flex items-center justify-between rounded-xl border border-zinc-800 bg-[#16161b] p-3 transition-colors">
-                                    <div className="flex items-center gap-3 min-w-0">
-                                       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-zinc-800 text-zinc-300">
-                                          <FileText size={18} />
+                        <button
+                           type="button"
+                           onClick={() => setFiles([])}
+                           className="self-start sm:self-auto text-xs font-semibold text-zinc-400 hover:text-red-400 flex items-center gap-1.5 transition-colors">
+                           <Trash2 size={14} /> Clear All
+                        </button>
+                     )}
+                  </div>
+
+                  {/* Step 1: Input / File Upload Zone */}
+                  {!result && (
+                     <div className="space-y-6">
+                        {activeTool.id === 'text-to-pdf' && (
+                           <div>
+                              <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">
+                                 Type or Paste Text Content
+                              </label>
+                              <textarea
+                                 rows={6}
+                                 value={textInput}
+                                 onChange={(e) => setTextInput(e.target.value)}
+                                 placeholder="Type or paste your text / Markdown content here..."
+                                 className="w-full rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4 text-sm text-zinc-200 outline-none focus:border-[#daf4aa]/50 customScrollbar"
+                              />
+                           </div>
+                        )}
+
+                        {(!activeTool.allowTextInput || !textInput) && (
+                           <div
+                              onDragOver={(e) => e.preventDefault()}
+                              onDrop={handleDrop}
+                              onClick={() => fileInputRef.current?.click()}
+                              className="group border-2 border-dashed border-zinc-700/60 hover:border-[#daf4aa]/60 bg-[#0f0f11] rounded-2xl p-8 text-center cursor-pointer transition-all hover:bg-[#141417]">
+                              <input
+                                 ref={fileInputRef}
+                                 type="file"
+                                 accept={activeTool.accept}
+                                 multiple={activeTool.multiple}
+                                 onChange={handleFileChange}
+                                 className="hidden"
+                              />
+                              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-zinc-800 bg-[#18181b] text-zinc-400 group-hover:border-[#daf4aa]/30 group-hover:text-[#daf4aa] transition-all mb-4">
+                                 <Upload size={24} />
+                              </div>
+                              <p className="text-base font-semibold text-zinc-200">
+                                 Drag & drop your file
+                                 {activeTool.multiple ? 's' : ''} here or{' '}
+                                 <span className="text-[#daf4aa] underline underline-offset-4">
+                                    browse
+                                 </span>
+                              </p>
+                              <p className="text-xs text-zinc-500 mt-1.5">
+                                 Supported formats: {activeTool.accept}
+                              </p>
+                           </div>
+                        )}
+
+                        {files.length > 0 && (
+                           <div className="space-y-3">
+                              <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                                 Selected Files ({files.length})
+                              </p>
+                              <div className="space-y-2 max-h-60 overflow-y-auto customScrollbar">
+                                 {files.map((f, idx) => (
+                                    <div
+                                       key={idx}
+                                       className="flex items-center justify-between rounded-xl border border-zinc-800 bg-[#16161b] p-3 transition-colors">
+                                       <div className="flex items-center gap-3 min-w-0">
+                                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-zinc-800 text-zinc-300">
+                                             <FileText size={18} />
+                                          </div>
+                                          <div className="min-w-0">
+                                             <p className="text-sm font-semibold text-zinc-200 truncate max-w-[220px] sm:max-w-xs">
+                                                {f.name}
+                                             </p>
+                                             <p className="text-[11px] text-zinc-500 font-medium">
+                                                {(f.size / 1024 / 1024).toFixed(
+                                                   2,
+                                                )}{' '}
+                                                MB
+                                             </p>
+                                          </div>
                                        </div>
-                                       <div className="min-w-0">
-                                          <p className="text-sm font-semibold text-zinc-200 truncate max-w-[220px] sm:max-w-xs">
-                                             {f.name}
-                                          </p>
-                                          <p className="text-[11px] text-zinc-500 font-medium">
-                                             {(f.size / 1024 / 1024).toFixed(2)}{' '}
-                                             MB
-                                          </p>
+
+                                       <div className="flex items-center gap-1.5 shrink-0">
+                                          {activeTool.multiple &&
+                                             files.length > 1 && (
+                                                <>
+                                                   <button
+                                                      type="button"
+                                                      disabled={idx === 0}
+                                                      onClick={() =>
+                                                         handleMoveFile(idx, -1)
+                                                      }
+                                                      className="p-1.5 text-zinc-400 hover:text-white disabled:opacity-30">
+                                                      <ArrowUp size={15} />
+                                                   </button>
+                                                   <button
+                                                      type="button"
+                                                      disabled={
+                                                         idx ===
+                                                         files.length - 1
+                                                      }
+                                                      onClick={() =>
+                                                         handleMoveFile(idx, 1)
+                                                      }
+                                                      className="p-1.5 text-zinc-400 hover:text-white disabled:opacity-30">
+                                                      <ArrowDown size={15} />
+                                                   </button>
+                                                </>
+                                             )}
+                                          <button
+                                             type="button"
+                                             onClick={() =>
+                                                handleRemoveFile(idx)
+                                             }
+                                             className="p-1.5 text-zinc-500 hover:text-red-400 transition-colors">
+                                             <X size={16} />
+                                          </button>
                                        </div>
                                     </div>
-
-                                    <div className="flex items-center gap-1.5 shrink-0">
-                                       {activeTool.multiple &&
-                                          files.length > 1 && (
-                                             <>
-                                                <button
-                                                   type="button"
-                                                   disabled={idx === 0}
-                                                   onClick={() =>
-                                                      handleMoveFile(idx, -1)
-                                                   }
-                                                   className="p-1.5 text-zinc-400 hover:text-white disabled:opacity-30">
-                                                   <ArrowUp size={15} />
-                                                </button>
-                                                <button
-                                                   type="button"
-                                                   disabled={
-                                                      idx === files.length - 1
-                                                   }
-                                                   onClick={() =>
-                                                      handleMoveFile(idx, 1)
-                                                   }
-                                                   className="p-1.5 text-zinc-400 hover:text-white disabled:opacity-30">
-                                                   <ArrowDown size={15} />
-                                                </button>
-                                             </>
-                                          )}
-                                       <button
-                                          type="button"
-                                          onClick={() => handleRemoveFile(idx)}
-                                          className="p-1.5 text-zinc-500 hover:text-red-400 transition-colors">
-                                          <X size={16} />
-                                       </button>
-                                    </div>
-                                 </div>
-                              ))}
+                                 ))}
+                              </div>
                            </div>
-                        </div>
-                     )}
+                        )}
 
-                     {activeTool.id === 'split-pdf' && files.length > 0 && (
-                        <div className="rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
-                           <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider">
-                              Page Ranges to Extract
-                           </label>
-                           <input
-                              type="text"
-                              value={splitRange}
-                              onChange={(e) => setSplitRange(e.target.value)}
-                              placeholder="e.g. 1-3, 5, 8-10"
-                              className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3.5 py-2.5 text-sm text-zinc-200 outline-none focus:border-[#daf4aa]/40"
-                           />
-                           <p className="text-[11px] text-zinc-500 mt-1">
-                              Specify page range numbers separated by commas.
-                           </p>
-                        </div>
-                     )}
-
-                     {activeTool.id === 'jpg-to-pdf' && files.length > 0 && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
-                           <div>
-                              <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
-                                 Page Orientation
-                              </label>
-                              <select
-                                 value={pageOrientation}
-                                 onChange={(e) =>
-                                    setPageOrientation(e.target.value)
-                                 }
-                                 className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3 py-2 text-sm text-zinc-200 outline-none">
-                                 <option value="portrait">Portrait</option>
-                                 <option value="landscape">Landscape</option>
-                              </select>
-                           </div>
-                           <div>
-                              <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
-                                 Page Margin
-                              </label>
-                              <select
-                                 value={pageMargin}
-                                 onChange={(e) => setPageMargin(e.target.value)}
-                                 className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3 py-2 text-sm text-zinc-200 outline-none">
-                                 <option value="none">No Margin</option>
-                                 <option value="small">Small Margin</option>
-                                 <option value="large">Large Margin</option>
-                              </select>
-                           </div>
-                        </div>
-                     )}
-
-                     {activeTool.id === 'rotate-pdf' && files.length > 0 && (
-                        <div className="rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
-                           <label className="block text-xs font-semibold text-zinc-400 mb-2 uppercase">
-                              Rotation Angle
-                           </label>
-                           <div className="flex gap-3">
-                              {[90, 180, 270].map((deg) => (
-                                 <button
-                                    key={deg}
-                                    type="button"
-                                    onClick={() => setRotateAngle(deg)}
-                                    className={`flex-1 rounded-xl border py-2.5 text-xs font-semibold transition-all ${
-                                       rotateAngle === deg
-                                          ? 'border-[#daf4aa] bg-[#daf4aa]/15 text-[#daf4aa]'
-                                          : 'border-zinc-800 bg-[#16161b] text-zinc-400 hover:text-white'
-                                    }`}>
-                                    {deg}° Clockwise
-                                 </button>
-                              ))}
-                           </div>
-                        </div>
-                     )}
-
-                     {activeTool.id === 'watermark-pdf' && files.length > 0 && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
-                           <div>
-                              <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
-                                 Watermark Text
+                        {activeTool.id === 'split-pdf' && files.length > 0 && (
+                           <div className="rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
+                              <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider">
+                                 Page Ranges to Extract
                               </label>
                               <input
                                  type="text"
-                                 value={watermarkText}
-                                 onChange={(e) =>
-                                    setWatermarkText(e.target.value)
-                                 }
-                                 className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3.5 py-2 text-sm text-zinc-200 outline-none"
+                                 value={splitRange}
+                                 onChange={(e) => setSplitRange(e.target.value)}
+                                 placeholder="e.g. 1-3, 5, 8-10"
+                                 className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3.5 py-2.5 text-sm text-zinc-200 outline-none focus:border-[#daf4aa]/40"
                               />
-                           </div>
-                           <div>
-                              <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
-                                 Opacity: {Math.round(watermarkOpacity * 100)}%
-                              </label>
-                              <input
-                                 type="range"
-                                 min={0.1}
-                                 max={0.9}
-                                 step={0.1}
-                                 value={watermarkOpacity}
-                                 onChange={(e) =>
-                                    setWatermarkOpacity(
-                                       parseFloat(e.target.value),
-                                    )
-                                 }
-                                 className="w-full accent-[#daf4aa] mt-2"
-                              />
-                           </div>
-                        </div>
-                     )}
-
-                     {activeTool.id === 'protect-pdf' && files.length > 0 && (
-                        <div className="rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
-                           <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
-                              Set Password
-                           </label>
-                           <input
-                              type="password"
-                              value={userPassword}
-                              onChange={(e) => setUserPassword(e.target.value)}
-                              placeholder="Enter secret password..."
-                              className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3.5 py-2.5 text-sm text-zinc-200 outline-none focus:border-[#daf4aa]/40"
-                           />
-                        </div>
-                     )}
-
-                     <button
-                        type="button"
-                        disabled={loading || (!files.length && !textInput)}
-                        onClick={handleProcess}
-                        className="w-full py-4 rounded-2xl bg-[#daf4aa] hover:bg-[#cbe699] text-zinc-950 font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#daf4aa]/10 disabled:opacity-50 disabled:cursor-not-allowed">
-                        {loading ? (
-                           <>
-                              <RefreshCw size={18} className="animate-spin" />
-                              Processing Document...
-                           </>
-                        ) : (
-                           <>Process & Convert →</>
-                        )}
-                     </button>
-                  </div>
-               )}
-
-               {loading && (
-                  <div className="my-6 space-y-4 rounded-2xl border border-zinc-800 bg-[#0f0f11] p-6 text-center">
-                     <p className="text-sm font-semibold text-zinc-200">
-                        {statusText}
-                     </p>
-                     <div className="h-2.5 w-full rounded-full bg-zinc-800 overflow-hidden">
-                        <div
-                           className="h-full bg-[#daf4aa] transition-all duration-300 ease-out"
-                           style={{ width: `${progress}%` }}
-                        />
-                     </div>
-                     <p className="text-xs text-zinc-500 font-mono">
-                        {progress}%
-                     </p>
-                  </div>
-               )}
-
-               {result && (
-                  <motion.div
-                     initial={{ opacity: 0, scale: 0.98 }}
-                     animate={{ opacity: 1, scale: 1 }}
-                     className="space-y-6">
-                     <div className="flex gap-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-5 items-start">
-                        <CheckCircle
-                           className="text-emerald-400 shrink-0 mt-0.5"
-                           size={22}
-                        />
-                        <div>
-                           <h4 className="font-bold text-emerald-300">
-                              Conversion Complete!
-                           </h4>
-                           <p className="text-xs text-emerald-400/80 mt-1">
-                              Your file was successfully processed client-side.
-                           </p>
-                        </div>
-                     </div>
-
-                     {result.type === 'pdf' && (
-                        <div className="rounded-2xl border border-zinc-800 bg-[#0f0f11] p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-                           <div className="flex items-center gap-4 min-w-0">
-                              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#daf4aa]/10 text-[#daf4aa] border border-[#daf4aa]/20">
-                                 <FileText size={24} />
-                              </div>
-                              <div className="min-w-0">
-                                 <p className="text-sm font-bold text-white truncate max-w-xs sm:max-w-sm">
-                                    {result.fileName}
-                                 </p>
-                                 <p className="text-xs text-zinc-500 font-medium">
-                                    Size: {result.size}
-                                 </p>
-                              </div>
-                           </div>
-
-                           <div className="flex gap-2 w-full sm:w-auto">
-                              <button
-                                 type="button"
-                                 onClick={() => setPreviewOpen(true)}
-                                 className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-[#18181b] px-4 py-2.5 text-xs font-bold text-zinc-200 hover:bg-zinc-800 transition-colors">
-                                 <Eye size={15} /> Preview
-                              </button>
-                              <button
-                                 type="button"
-                                 onClick={() =>
-                                    downloadResult(result.url, result.fileName)
-                                 }
-                                 className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-xl bg-[#daf4aa] px-5 py-2.5 text-xs font-bold text-zinc-950 hover:bg-[#cbe699] transition-colors shadow-lg shadow-[#daf4aa]/10">
-                                 <Download size={15} /> Download PDF
-                              </button>
-                           </div>
-                        </div>
-                     )}
-
-                     {result.type === 'images' && (
-                        <div className="space-y-4">
-                           <div className="flex items-center justify-between">
-                              <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
-                                 Extracted Pages ({result.count})
+                              <p className="text-[11px] text-zinc-500 mt-1">
+                                 Specify page range numbers separated by commas.
                               </p>
                            </div>
+                        )}
 
-                           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                              {result.images.map((img) => (
-                                 <div
-                                    key={img.pageNumber}
-                                    className="group relative rounded-xl border border-zinc-800 bg-[#0f0f11] overflow-hidden p-2">
-                                    <img
-                                       src={img.url}
-                                       alt={`Page ${img.pageNumber}`}
-                                       className="h-36 w-full object-contain rounded-lg"
+                        {activeTool.id === 'jpg-to-pdf' && files.length > 0 && (
+                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
+                              <div>
+                                 <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
+                                    Page Orientation
+                                 </label>
+                                 <select
+                                    value={pageOrientation}
+                                    onChange={(e) =>
+                                       setPageOrientation(e.target.value)
+                                    }
+                                    className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3 py-2 text-sm text-zinc-200 outline-none">
+                                    <option value="portrait">Portrait</option>
+                                    <option value="landscape">Landscape</option>
+                                 </select>
+                              </div>
+                              <div>
+                                 <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
+                                    Page Margin
+                                 </label>
+                                 <select
+                                    value={pageMargin}
+                                    onChange={(e) =>
+                                       setPageMargin(e.target.value)
+                                    }
+                                    className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3 py-2 text-sm text-zinc-200 outline-none">
+                                    <option value="none">No Margin</option>
+                                    <option value="small">Small Margin</option>
+                                    <option value="large">Large Margin</option>
+                                 </select>
+                              </div>
+                           </div>
+                        )}
+
+                        {activeTool.id === 'rotate-pdf' && files.length > 0 && (
+                           <div className="rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
+                              <label className="block text-xs font-semibold text-zinc-400 mb-2 uppercase">
+                                 Rotation Angle
+                              </label>
+                              <div className="flex gap-3">
+                                 {[90, 180, 270].map((deg) => (
+                                    <button
+                                       key={deg}
+                                       type="button"
+                                       onClick={() => setRotateAngle(deg)}
+                                       className={`flex-1 rounded-xl border py-2.5 text-xs font-semibold transition-all ${
+                                          rotateAngle === deg
+                                             ? 'border-[#daf4aa] bg-[#daf4aa]/15 text-[#daf4aa]'
+                                             : 'border-zinc-800 bg-[#16161b] text-zinc-400 hover:text-white'
+                                       }`}>
+                                       {deg}° Clockwise
+                                    </button>
+                                 ))}
+                              </div>
+                           </div>
+                        )}
+
+                        {activeTool.id === 'watermark-pdf' &&
+                           files.length > 0 && (
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
+                                 <div>
+                                    <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
+                                       Watermark Text
+                                    </label>
+                                    <input
+                                       type="text"
+                                       value={watermarkText}
+                                       onChange={(e) =>
+                                          setWatermarkText(e.target.value)
+                                       }
+                                       className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3.5 py-2 text-sm text-zinc-200 outline-none"
                                     />
-                                    <div className="mt-2 flex items-center justify-between">
-                                       <span className="text-[11px] font-semibold text-zinc-400">
-                                          Page {img.pageNumber}
-                                       </span>
-                                       <button
-                                          type="button"
-                                          onClick={() =>
-                                             downloadResult(
-                                                img.url,
-                                                img.fileName,
-                                             )
-                                          }
-                                          className="p-1.5 rounded-lg bg-zinc-800 text-zinc-200 hover:bg-[#daf4aa] hover:text-zinc-950 transition-colors">
-                                          <Download size={13} />
-                                       </button>
-                                    </div>
                                  </div>
-                              ))}
+                                 <div>
+                                    <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
+                                       Opacity:{' '}
+                                       {Math.round(watermarkOpacity * 100)}%
+                                    </label>
+                                    <input
+                                       type="range"
+                                       min={0.1}
+                                       max={0.9}
+                                       step={0.1}
+                                       value={watermarkOpacity}
+                                       onChange={(e) =>
+                                          setWatermarkOpacity(
+                                             parseFloat(e.target.value),
+                                          )
+                                       }
+                                       className="w-full accent-[#daf4aa] mt-2"
+                                    />
+                                 </div>
+                              </div>
+                           )}
+
+                        {activeTool.id === 'protect-pdf' &&
+                           files.length > 0 && (
+                              <div className="rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
+                                 <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
+                                    Set Password
+                                 </label>
+                                 <input
+                                    type="password"
+                                    value={userPassword}
+                                    onChange={(e) =>
+                                       setUserPassword(e.target.value)
+                                    }
+                                    placeholder="Enter secret password..."
+                                    className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3.5 py-2.5 text-sm text-zinc-200 outline-none focus:border-[#daf4aa]/40"
+                                 />
+                              </div>
+                           )}
+
+                        <button
+                           type="button"
+                           disabled={loading || (!files.length && !textInput)}
+                           onClick={handleProcess}
+                           className="w-full py-4 rounded-2xl bg-[#daf4aa] hover:bg-[#cbe699] text-zinc-950 font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#daf4aa]/10 disabled:opacity-50 disabled:cursor-not-allowed">
+                           {loading ? (
+                              <>
+                                 <RefreshCw
+                                    size={18}
+                                    className="animate-spin"
+                                 />
+                                 Processing Document...
+                              </>
+                           ) : (
+                              <>Process & Convert →</>
+                           )}
+                        </button>
+                     </div>
+                  )}
+
+                  {loading && (
+                     <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        className="my-6 flex flex-col items-center justify-center rounded-2xl border border-zinc-800/70 bg-[#0f0f11]/80 px-5 py-7 text-center backdrop-blur-sm">
+                        <div className="relative mb-4 flex h-12 w-12 items-center justify-center">
+                           <div className="absolute inset-0 rounded-full border-2 border-zinc-800" />
+                           <div className="absolute inset-0 animate-spin rounded-full border-2 border-transparent border-t-purple-400 border-r-blue-400" />
+                           <RefreshCw
+                              size={17}
+                              className="animate-spin text-[#daf4aa]"
+                           />
+                        </div>
+                        <p className="text-sm font-semibold text-zinc-200">
+                           {statusText || 'Processing your document...'}
+                        </p>
+                        <p className="mt-1.5 text-xs text-zinc-500">
+                           Please wait while your PDF is being prepared.
+                        </p>
+                     </motion.div>
+                  )}
+
+                  {result && (
+                     <motion.div
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="space-y-6">
+                        <div className="flex gap-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-5 items-start">
+                           <CheckCircle
+                              className="text-emerald-400 shrink-0 mt-0.5"
+                              size={22}
+                           />
+                           <div>
+                              <h4 className="font-bold text-emerald-300">
+                                 Conversion Complete!
+                              </h4>
+                              <p className="text-xs text-emerald-400/80 mt-1">
+                                 Your file was successfully processed
+                                 client-side.
+                              </p>
                            </div>
                         </div>
-                     )}
 
-                     <button
-                        type="button"
-                        onClick={() => {
-                           setResult(null);
-                           setFiles([]);
-                           setTextInput('');
-                        }}
-                        className="w-full py-3 rounded-xl border border-zinc-800 bg-[#16161b] hover:bg-zinc-800 text-xs font-bold text-zinc-300 transition-colors">
-                        Convert Another File
-                     </button>
-                  </motion.div>
-               )}
+                        {result.type === 'pdf' && (
+                           <div className="rounded-2xl border border-zinc-800 bg-[#0f0f11] p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                              <div className="flex items-center gap-4 min-w-0">
+                                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#daf4aa]/10 text-[#daf4aa] border border-[#daf4aa]/20">
+                                    <FileText size={24} />
+                                 </div>
+                                 <div className="min-w-0">
+                                    <p className="text-sm font-bold text-white truncate max-w-xs sm:max-w-sm">
+                                       {result.fileName}
+                                    </p>
+                                    <p className="text-xs text-zinc-500 font-medium">
+                                       Size: {result.size}
+                                    </p>
+                                 </div>
+                              </div>
 
-               {error && (
-                  <div className="mt-6 flex items-center gap-3 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-red-400 text-xs font-semibold">
-                     <AlertCircle size={18} className="shrink-0" />
-                     <span>{error}</span>
-                  </div>
-               )}
+                              <div className="flex gap-2 w-full sm:w-auto">
+                                 <button
+                                    type="button"
+                                    onClick={() => setPreviewOpen(true)}
+                                    className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-[#18181b] px-4 py-2.5 text-xs font-bold text-zinc-200 hover:bg-zinc-800 transition-colors">
+                                    <Eye size={15} /> Preview
+                                 </button>
+                                 <button
+                                    type="button"
+                                    onClick={() =>
+                                       downloadResult(
+                                          result.url,
+                                          result.fileName,
+                                       )
+                                    }
+                                    className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-xl bg-[#daf4aa] px-5 py-2.5 text-xs font-bold text-zinc-950 hover:bg-[#cbe699] transition-colors shadow-lg shadow-[#daf4aa]/10">
+                                    <Download size={15} /> Download PDF
+                                 </button>
+                              </div>
+                           </div>
+                        )}
+
+                        {result.type === 'images' && (
+                           <div className="space-y-4">
+                              <div className="flex items-center justify-between">
+                                 <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                                    Extracted Pages ({result.count})
+                                 </p>
+                              </div>
+
+                              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                                 {result.images.map((img) => (
+                                    <div
+                                       key={img.pageNumber}
+                                       className="group relative rounded-xl border border-zinc-800 bg-[#0f0f11] overflow-hidden p-2">
+                                       <img
+                                          src={img.url}
+                                          alt={`Page ${img.pageNumber}`}
+                                          className="h-36 w-full object-contain rounded-lg"
+                                       />
+                                       <div className="mt-2 flex items-center justify-between">
+                                          <span className="text-[11px] font-semibold text-zinc-400">
+                                             Page {img.pageNumber}
+                                          </span>
+                                          <button
+                                             type="button"
+                                             onClick={() =>
+                                                downloadResult(
+                                                   img.url,
+                                                   img.fileName,
+                                                )
+                                             }
+                                             className="p-1.5 rounded-lg bg-zinc-800 text-zinc-200 hover:bg-[#daf4aa] hover:text-zinc-950 transition-colors">
+                                             <Download size={13} />
+                                          </button>
+                                       </div>
+                                    </div>
+                                 ))}
+                              </div>
+                           </div>
+                        )}
+
+                        <button
+                           type="button"
+                           onClick={() => {
+                              setResult(null);
+                              setFiles([]);
+                              setTextInput('');
+                           }}
+                           className="w-full py-3 rounded-xl border border-zinc-800 bg-[#16161b] hover:bg-zinc-800 text-xs font-bold text-zinc-300 transition-colors">
+                           Convert Another File
+                        </button>
+                     </motion.div>
+                  )}
+
+                  {error && (
+                     <div className="mt-6 flex items-center gap-3 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-red-400 text-xs font-semibold">
+                        <AlertCircle size={18} className="shrink-0" />
+                        <span>{error}</span>
+                     </div>
+                  )}
+               </div>
             </div>
          </div>
+
+         {/* Animated loading border */}
+         <style>{`
+               @keyframes gradient-spin {
+                  0% { background-position: 0% 50%; }
+                  50% { background-position: 100% 50%; }
+                  100% { background-position: 0% 50%; }
+               }
+
+               .animate-gradient-spin {
+                  background-size: 200% 200%;
+                  animation: gradient-spin 2.5s ease-in-out infinite;
+               }
+            `}</style>
 
          {/* PDF Preview Modal */}
          <AnimatePresence>

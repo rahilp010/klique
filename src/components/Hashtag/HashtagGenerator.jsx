@@ -14,7 +14,7 @@ import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { motion, AnimatePresence } from 'motion/react';
 import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
-import Loader from '../ui/loader';
+import { callAiApi } from '../../services/aiService';
 
 export default function HashtagGenerator() {
    const [description, setDescription] = useState('');
@@ -78,40 +78,15 @@ export default function HashtagGenerator() {
 
    const generateHashtags = async (desc) => {
       try {
-         const res = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-            {
-               method: 'POST',
-               headers: {
-                  'Content-Type': 'application/json',
-               },
-               body: JSON.stringify({
-                  contents: [
-                     {
-                        parts: [
-                           {
-                              text: `You are a social media expert.
+         const prompt = `You are a social media expert.
 
 Generate 15 short, relevant, trending hashtags based on the following description:
 
 "${desc}"
 
-Return only hashtags separated by spaces, no explanations.`,
-                           },
-                        ],
-                     },
-                  ],
-               }),
-            },
-         );
+Return only hashtags separated by spaces, no explanations.`;
 
-         if (!res.ok) {
-            throw new Error('Failed to fetch hashtags');
-         }
-
-         const data = await res.json();
-
-         const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+         const text = await callAiApi(prompt);
 
          const tags = text.match(/#[\w]+/g)?.slice(0, 15) || [];
 
@@ -275,11 +250,6 @@ Return only hashtags separated by spaces, no explanations.`,
             <Navbar />
          </div>
 
-         {/* ========================================================
-          LOADING
-      ======================================================== */}
-
-         {isLoading && <Loader text="Generating hashtags with AI..." />}
 
          {/* ========================================================
           MAIN CONTENT
