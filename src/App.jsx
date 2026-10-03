@@ -13,13 +13,13 @@ import WordCounter from './components/WordCounter/WordCounter';
 import Paraphrase from './components/Paraphrase/Paraphrase';
 import UsernameGenerator from './components/UserName/UserName';
 import TimeZone from './components/TimeZone/TimeZone';
-import DownloadDemo from '@/components/ui/demo';
+import PDFTools from './components/Converter/PDFTools';
 
 // Simple loading indicator during chunk fetches
 const LoadingFallback = () => (
    <div className="min-h-screen bg-black flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
-       <div className="w-10 h-10 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div>
+         <div className="w-10 h-10 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div>
          <p className="text-gray-400 text-xs font-semibold tracking-wider uppercase animate-pulse">
             Loading tool...
          </p>
@@ -55,7 +55,7 @@ function App() {
                <Route path="/aiwriter" element={<Paraphrase />} />
                <Route path="/username" element={<UsernameGenerator />} />
                <Route path="/timezone" element={<TimeZone />} />
-               <Route path="/download" element={<DownloadDemo />} />
+               <Route path="/convert" element={<PDFTools />} />
             </Routes>
          </Suspense>
       </>

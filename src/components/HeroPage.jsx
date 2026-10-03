@@ -6,6 +6,7 @@ import {
    FaPalette,
    FaBars,
    FaTimes,
+   FaFileWord,
 } from 'react-icons/fa';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
@@ -19,6 +20,12 @@ import SEO from './SEO';
 import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 
 const tools = [
+   {
+      icon: <FaFileWord size={32} />,
+      title: 'PDF Converter',
+      desc: 'Convert Word documents to PDF with high quality.',
+      link: '/convert',
+   },
    {
       icon: <FaSmile size={32} />,
       title: 'Font Creator',
@@ -382,6 +389,13 @@ export default function HeroPage() {
                         Tools
                      </h4>
                      <ul className="space-y-3 text-zinc-500 dark:text-zinc-400 text-sm">
+                        <li>
+                           <a
+                              href="/convert"
+                              className="hover:text-zinc-900 dark:hover:text-zinc-100">
+                              PDF Tools
+                           </a>
+                        </li>
                         <li>
                            <a
                               href="/fontgenerator"
