@@ -1,17 +1,45 @@
-# Robots.txt for Klique - Dynamic Content Creator Toolbox
+# ==============================================================================
+# Robots.txt for Klique - All-in-One Content Creator & Social Media Toolbox
+# Domain: https://klique.netlify.app
+# ==============================================================================
 
-# Allow all standard search engines to index everything
+# Default rule for all search engine crawlers
 User-agent: *
 Allow: /
+Allow: /fontgenerator
+Allow: /emojigenerator
+Allow: /symbol
+Allow: /bio
+Allow: /hashtaggenerator
+Allow: /wordcounter
+Allow: /aiwriter
+Allow: /username
+Allow: /timezone
+Allow: /convert
 
-# Specific search engine crawlers
+# Major Search Engine Bots
 User-agent: Googlebot
 Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/
 
 User-agent: Bingbot
 Allow: /
 
-# Explicitly allow AI scrapers and search agents to index Klique utilities for conversational queries and references
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# AI Crawlers, Search Agents & LLM Scrapers
 User-agent: GPTBot
 Allow: /
 
@@ -33,14 +61,14 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
-User-agent: Applebot
-Allow: /
-
 User-agent: Applebot-Extended
 Allow: /
 
 User-agent: cohere-ai
 Allow: /
 
-# Link to sitemap
+User-agent: Bytespider
+Allow: /
+
+# Sitemap Location
 Sitemap: https://klique.netlify.app/sitemap.xml

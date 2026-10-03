@@ -198,12 +198,21 @@ const FancyFontGenerator = () => {
    return (
       <>
          <style>{responsiveSafetyStyles}</style>
-         <ColumnLines
-            columnWidth={80}
-            columnCount={34}
-            radialFadeStart={15}
-            radialFadeEnd={90}
-            className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10">
+         <div
+            className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10 
+     overflow-hidden
+    before:absolute
+    before:inset-0
+    before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+    after:absolute
+    after:inset-0
+    after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+            <div
+               className="
+    pointer-events-none absolute inset-0
+    bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_12%)]
+  "
+            />
             <SEO
                title="Fancy Font Generator | Aesthetic Text Fonts Changer | Klique"
                description="Convert your normal text into cool, stylish, and aesthetic fancy text formats. Copy and paste stylish fonts directly to Instagram, Twitter, and TikTok."
@@ -279,7 +288,7 @@ const FancyFontGenerator = () => {
 
                   {/* ARROW */}
                   <div className="hidden md:flex items-center">
-                     <div className="w-10 h-10 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center shadow-sm text-zinc-900 dark:text-zinc-100">
+                     <div className="w-20 h-10 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center shadow-sm text-zinc-900 dark:text-zinc-100">
                         <ArrowRight size={17} />
                      </div>
                   </div>
@@ -456,7 +465,7 @@ const FancyFontGenerator = () => {
                   })}
                </div>
             </div>
-         </ColumnLines>
+         </div>
       </>
    );
 };

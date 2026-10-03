@@ -1,82 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
    <!-- Home Page -->
    <url>
       <loc>https://klique.netlify.app/</loc>
-      <lastmod>2026-08-02</lastmod>
-      <changefreq>weekly</changefreq>
+      <lastmod>2026-10-03</lastmod>
+      <changefreq>daily</changefreq>
       <priority>1.0</priority>
    </url>
 
-   <!-- Font Generator Page -->
+   <!-- Fancy Font Generator -->
    <url>
       <loc>https://klique.netlify.app/fontgenerator</loc>
-      <lastmod>2026-08-02</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.8</priority>
+      <lastmod>2026-10-03</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
    </url>
 
-   <!-- Emoji Generator Page -->
+   <!-- Emoji Generator & Mixer -->
    <url>
       <loc>https://klique.netlify.app/emojigenerator</loc>
-      <lastmod>2026-08-02</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.8</priority>
+      <lastmod>2026-10-03</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
    </url>
 
-   <!-- Cool Symbol Page -->
+   <!-- Cool Symbols -->
    <url>
       <loc>https://klique.netlify.app/symbol</loc>
-      <lastmod>2026-08-02</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.8</priority>
+      <lastmod>2026-10-03</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
    </url>
 
-   <!-- AI Bio Creator Page -->
+   <!-- AI Bio Creator -->
    <url>
       <loc>https://klique.netlify.app/bio</loc>
-      <lastmod>2026-08-02</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.8</priority>
+      <lastmod>2026-10-03</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
    </url>
 
-   <!-- AI Hashtag Generator Page -->
+   <!-- AI Hashtag Generator -->
    <url>
       <loc>https://klique.netlify.app/hashtaggenerator</loc>
-      <lastmod>2026-08-02</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.8</priority>
+      <lastmod>2026-10-03</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
    </url>
 
-   <!-- Word Counter Page -->
+   <!-- Word Counter -->
    <url>
       <loc>https://klique.netlify.app/wordcounter</loc>
-      <lastmod>2026-08-02</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.8</priority>
+      <lastmod>2026-10-03</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
    </url>
 
-   <!-- AI Writer & Paraphrase Page -->
+   <!-- AI Writer & Paraphraser -->
    <url>
       <loc>https://klique.netlify.app/aiwriter</loc>
-      <lastmod>2026-08-02</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.8</priority>
+      <lastmod>2026-10-03</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
    </url>
 
-   <!-- Username Generator Page -->
+   <!-- Username Generator -->
    <url>
       <loc>https://klique.netlify.app/username</loc>
-      <lastmod>2026-08-02</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.8</priority>
+      <lastmod>2026-10-03</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
    </url>
 
-   <!-- Time Zone Converter Page -->
+   <!-- Time Zone Converter -->
    <url>
       <loc>https://klique.netlify.app/timezone</loc>
-      <lastmod>2026-08-02</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.8</priority>
+      <lastmod>2026-10-03</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+   </url>
+
+   <!-- PDF & Image Converter Tools Suite -->
+   <url>
+      <loc>https://klique.netlify.app/convert</loc>
+      <lastmod>2026-10-03</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
    </url>
 </urlset>

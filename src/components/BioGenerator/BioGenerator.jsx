@@ -249,17 +249,40 @@ Each bio should:
   ============================================================ */
 
    return (
-      <ColumnLines
-         columnWidth={80}
-         columnCount={34}
-         radialFadeStart={15}
-         radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full overflow-x-hidden overflow-y-auto bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10">
+      <div
+         className="relative min-h-[100dvh] w-full overflow-x-hidden overflow-y-auto bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10  overflow-hidden
+    before:absolute
+    before:inset-0
+    before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+    after:absolute
+    after:inset-0
+    after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+         <div
+            className="
+    pointer-events-none absolute inset-0
+    bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_62%)]
+  "
+         />
          <SEO
             title="AI Bio Generator | Creative Social Media Bios | Klique"
             description="Create professional, funny, or creative social media bios for Instagram, TikTok, Twitter, and LinkedIn using advanced AI. Grab attention and optimize your profile."
             keywords="ai bio generator, bio creator, social media bio writer, instagram bio generator, tiktok bio, linkedin bio, klique bio, professional bio generator"
             canonicalUrl="https://klique.netlify.app/bio"
+            jsonLd={{
+               '@context': 'https://schema.org',
+               '@type': 'WebApplication',
+               name: 'AI Bio Creator',
+               url: 'https://klique.netlify.app/bio',
+               applicationCategory: 'UtilitiesApplication',
+               operatingSystem: 'All',
+               description:
+                  'Create personalized and engaging social media bios with customizable tones powered by AI.',
+               offers: {
+                  '@type': 'Offer',
+                  price: '0',
+                  priceCurrency: 'USD',
+               },
+            }}
          />
 
          {/* ========================================================
@@ -603,6 +626,6 @@ Each bio should:
           min-width: 0;
         }
       `}</style>
-      </ColumnLines>
+      </div>
    );
 }

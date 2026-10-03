@@ -644,17 +644,40 @@ export default function CoolSymbol() {
    return (
       <>
          <style>{responsiveSafetyStyles}</style>
-         <ColumnLines
-            columnWidth={80}
-            columnCount={34}
-            radialFadeStart={15}
-            radialFadeEnd={90}
-            className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden px-3 sm:px-4 md:px-10">
+         <div
+            className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden px-3 sm:px-4 md:px-10  overflow-hidden
+    before:absolute
+    before:inset-0
+    before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+    after:absolute
+    after:inset-0
+    after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+            <div
+               className="
+    pointer-events-none absolute inset-0
+    bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_62%)]
+  "
+            />
             <SEO
                title="Cool Symbols Copy & Paste | Fancy Text Symbols | Klique"
                description="Browse and copy-paste cool symbols, aesthetic characters, hearts, stars, arrows, and mathematical symbols for your social media bios and gaming handles."
                keywords="symbols copy paste, cool symbols, text symbols, aesthetic symbols, star symbol, heart symbol, klique symbols, aesthetic letters"
                canonicalUrl="https://klique.netlify.app/symbol"
+               jsonLd={{
+                  '@context': 'https://schema.org',
+                  '@type': 'WebApplication',
+                  name: 'Cool Symbols Copy & Paste',
+                  url: 'https://klique.netlify.app/symbol',
+                  applicationCategory: 'UtilitiesApplication',
+                  operatingSystem: 'All',
+                  description:
+                     'Browse and copy cool text symbols, math characters, stars, and aesthetic symbols.',
+                  offers: {
+                     '@type': 'Offer',
+                     price: '0',
+                     priceCurrency: 'USD',
+                  },
+               }}
             />
 
             <div className="relative z-[100] w-full bg-[#16161b] transition-all duration-300 my-5">
@@ -688,7 +711,7 @@ export default function CoolSymbol() {
                )}
             </AnimatePresence>
 
-            <div className="w-full max-w-6xl min-w-0 mx-auto pl-0 lg:pl-20 px-3 sm:px-6 relative z-20 pt-24 pb-32 overflow-x-hidden">
+            <div className="w-full max-w-6xl min-w-0 mx-auto pl-0 lg:pl-20 px-3 sm:px-6 relative z-20 pt-16 pb-32 overflow-x-hidden">
                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -755,7 +778,7 @@ export default function CoolSymbol() {
                   </div>
                </div>
             </div>
-         </ColumnLines>
+         </div>
       </>
    );
 }

@@ -2,7 +2,7 @@
 
 Klique is an all-in-one free digital toolkit designed for content creators, marketers, developers, and social media enthusiasts.
 
-## Core Features
+## Core Features & Tools
 
 - [Klique Home](https://klique.netlify.app/) - Main dashboard giving access to all dynamic creator utilities.
 - [Fancy Font Generator](https://klique.netlify.app/fontgenerator) - Reformat standard text into aesthetic Unicode font representations for Instagram, Twitter, and TikTok.
@@ -14,3 +14,4 @@ Klique is an all-in-one free digital toolkit designed for content creators, mark
 - [AI Writer Studio](https://klique.netlify.app/aiwriter) - Text paraphraser, rephraser, email composer, grammar checker, and summarizer.
 - [Username Generator](https://klique.netlify.app/username) - Create available aesthetic handles, gamer tags, and platform-specific usernames using AI.
 - [Time Zone Converter](https://klique.netlify.app/timezone) - Convert times between international zones, manage favorite locations, and plan global meetings.
+- [PDF & Image Tools Suite](https://klique.netlify.app/convert) - Convert Word, Images, Text to PDF, merge, split, compress, watermark, rotate, and secure PDFs client-side.

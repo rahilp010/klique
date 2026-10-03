@@ -1,8 +1,9 @@
 {
    "name": "klique",
    "private": true,
-   "version": "1.2.2",
+   "version": "1.2.5",
    "type": "module",
+   "author": "Rahil Patel",
    "scripts": {
       "dev": "vite",
       "build": "vite build",

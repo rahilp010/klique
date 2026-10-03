@@ -209,17 +209,39 @@ const WordCounter = () => {
    ];
 
    return (
-      <ColumnLines
-         columnWidth={80}
-         columnCount={34}
-         radialFadeStart={15}
-         radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10">
+      <div className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10 overflow-hidden
+    before:absolute
+    before:inset-0
+    before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+    after:absolute
+    after:inset-0
+    after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+         <div
+            className="
+    pointer-events-none absolute inset-0
+    bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_62%)]
+  "
+         />
          <SEO
             title="Word Counter | Character & Sentence Text Analyzer | Klique"
             description="Analyze your text online in real-time. Count words, characters, sentences, paragraphs, and estimate average reading and speaking times instantly."
             keywords="word counter, character counter, word count tool, text analyzer, count words online, reading time estimator, klique word counter"
             canonicalUrl="https://klique.netlify.app/wordcounter"
+            jsonLd={{
+               '@context': 'https://schema.org',
+               '@type': 'WebApplication',
+               name: 'Word Counter & Text Analyzer',
+               url: 'https://klique.netlify.app/wordcounter',
+               applicationCategory: 'UtilitiesApplication',
+               operatingSystem: 'All',
+               description:
+                  'Analyze text in real time with word count, character count, sentence count, and reading time estimation.',
+               offers: {
+                  '@type': 'Offer',
+                  price: '0',
+                  priceCurrency: 'USD',
+               },
+            }}
          />
 
          {/* ========================================================
@@ -548,7 +570,7 @@ const WordCounter = () => {
           min-width: 0;
         }
       `}</style>
-      </ColumnLines>
+      </div>
    );
 };
 

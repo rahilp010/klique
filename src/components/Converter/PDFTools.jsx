@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
    Upload,
    FileText,
@@ -16,16 +16,23 @@ import {
    Stamp,
    Lock,
    Eye,
+   EyeOff,
    Trash2,
    ArrowUp,
    ArrowDown,
    RefreshCw,
-   Sparkles,
 } from 'lucide-react';
 import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { motion, AnimatePresence } from 'framer-motion';
+import {
+   Input,
+   InputGroup,
+   SelectPicker,
+   Uploader,
+   Modal,
+} from '../ui/CustomControl';
 
 // Helper function to load external CDN scripts on demand
 const loadScript = (src) => {
@@ -99,6 +106,46 @@ const ensurePdfJs = async () => {
    }
    return window.pdfjsLib;
 };
+
+// SelectPicker Options Data
+const ORIENTATION_OPTIONS = [
+   { label: 'Portrait', value: 'portrait' },
+   { label: 'Landscape', value: 'landscape' },
+];
+
+const MARGIN_OPTIONS = [
+   { label: 'No Margin', value: 'none' },
+   { label: 'Small Margin', value: 'small' },
+   { label: 'Large Margin', value: 'large' },
+];
+
+const WATERMARK_POSITION_OPTIONS = [
+   { label: 'Top Left', value: 'top-left' },
+   { label: 'Top Center', value: 'top-center' },
+   { label: 'Top Right', value: 'top-right' },
+   { label: 'Middle Left', value: 'middle-left' },
+   { label: 'Center', value: 'center' },
+   { label: 'Middle Right', value: 'middle-right' },
+   { label: 'Bottom Left', value: 'bottom-left' },
+   { label: 'Bottom Center', value: 'bottom-center' },
+   { label: 'Bottom Right', value: 'bottom-right' },
+];
+
+const WATERMARK_PAGES_OPTIONS = [
+   { label: 'Every Page', value: 'every' },
+   { label: 'First Page', value: 'first' },
+   { label: 'Last Page', value: 'last' },
+   { label: 'First & Last Page', value: 'first-last' },
+   { label: 'Custom Pages', value: 'custom' },
+];
+
+const WATERMARK_ROTATION_OPTIONS = [
+   { label: '0° Horizontal', value: 0 },
+   { label: '45° Diagonal', value: 45 },
+   { label: '90° Vertical', value: 90 },
+   { label: '-45° Diagonal', value: -45 },
+   { label: '-90° Vertical', value: -90 },
+];
 
 // Tool Definitions
 const TOOLS = [
@@ -218,46 +265,83 @@ export default function PDFTools() {
    const [pageMargin, setPageMargin] = useState('small');
    const [watermarkText, setWatermarkText] = useState('CONFIDENTIAL');
    const [watermarkOpacity, setWatermarkOpacity] = useState(0.3);
+   const [watermarkColor, setWatermarkColor] = useState('#cc3333');
+   const [watermarkPosition, setWatermarkPosition] = useState('center');
+   const [watermarkPages, setWatermarkPages] = useState('every');
+   const [watermarkCustomPages, setWatermarkCustomPages] = useState('');
+   const [watermarkFontSize, setWatermarkFontSize] = useState(48);
+   const [watermarkRotation, setWatermarkRotation] = useState(0);
    const [rotateAngle, setRotateAngle] = useState(90);
    const [userPassword, setUserPassword] = useState('');
+   const [showPassword, setShowPassword] = useState(false);
+   const [splitTotalPages, setSplitTotalPages] = useState(null);
 
    const activeTool = TOOLS.find((t) => t.id === activeToolId) || TOOLS[0];
-   const fileInputRef = useRef(null);
 
-   const handleSwitchTool = (id) => {
-      setActiveToolId(id);
+   const clearAll = () => {
+      if (result?.url?.startsWith('blob:')) {
+         URL.revokeObjectURL(result.url);
+      }
       setFiles([]);
       setTextInput('');
       setResult(null);
       setError('');
+      setLoading(false);
       setProgress(0);
+      setStatusText('');
+      setPreviewOpen(false);
+      setSplitRange('1-3');
+      setSplitTotalPages(null);
+      setPageOrientation('portrait');
+      setPageMargin('small');
+      setWatermarkText('CONFIDENTIAL');
+      setWatermarkOpacity(0.3);
+      setWatermarkColor('#cc3333');
+      setWatermarkPosition('center');
+      setWatermarkPages('every');
+      setWatermarkCustomPages('');
+      setWatermarkFontSize(48);
+      setWatermarkRotation(0);
+      setRotateAngle(90);
+      setUserPassword('');
+      setShowPassword(false);
    };
 
-   const handleFileChange = (e) => {
-      const selected = Array.from(e.target.files || []);
+   const handleSwitchTool = (id) => {
+      clearAll();
+      setActiveToolId(id);
+   };
+
+   const handleUploadedFiles = async (fileList) => {
+      const selected = (fileList || [])
+         .map((item) => item.blobFile || item)
+         .filter(Boolean);
       if (!selected.length) return;
 
-      if (activeTool.multiple) {
-         setFiles((prev) => [...prev, ...selected]);
-      } else {
-         setFiles([selected[0]]);
-      }
+      const nextFiles = activeTool.multiple
+         ? [...files, ...selected]
+         : [selected[0]];
+      setFiles(nextFiles);
       setError('');
       setResult(null);
-   };
 
-   const handleDrop = (e) => {
-      e.preventDefault();
-      const dropped = Array.from(e.dataTransfer.files || []);
-      if (!dropped.length) return;
-
-      if (activeTool.multiple) {
-         setFiles((prev) => [...prev, ...dropped]);
+      if (activeTool.id === 'split-pdf') {
+         try {
+            const PDFLib = await ensurePdfLib();
+            const buffer = await selected[0].arrayBuffer();
+            const pdf = await PDFLib.PDFDocument.load(buffer, {
+               ignoreEncryption: true,
+            });
+            setSplitTotalPages(pdf.getPageCount());
+         } catch (err) {
+            setSplitTotalPages(null);
+            setError(
+               'Could not read the PDF page count. Please select a valid PDF.',
+            );
+         }
       } else {
-         setFiles([dropped[0]]);
+         setSplitTotalPages(null);
       }
-      setError('');
-      setResult(null);
    };
 
    const handleRemoveFile = (index) => {
@@ -331,7 +415,7 @@ export default function PDFTools() {
       }
    };
 
-   // 1. Word to PDF – fixed blank-page issue + better image positioning
+   // 1. Word to PDF
    const processWordToPdf = async () => {
       const file = files[0];
 
@@ -352,7 +436,6 @@ export default function PDFTools() {
 
       let tmpStyle = null;
       const host = document.createElement('div');
-      // Keep it off-screen but still fully laid out and paintable
       host.style.cssText = `
       position: absolute;
       top: 0;
@@ -362,7 +445,7 @@ export default function PDFTools() {
       pointer-events: none;
       overflow: visible;
       min-width: max-content;
-      opacity: 0;               /* invisible to user but still rendered */
+      opacity: 0;
    `;
       document.body.appendChild(host);
 
@@ -388,7 +471,6 @@ export default function PDFTools() {
             ignoreLastRenderedPageBreak: false,
          });
 
-         // CSS that protects floating / positioned images without breaking layout
          tmpStyle = document.createElement('style');
          tmpStyle.textContent = `
          .docx-wrapper {
@@ -402,8 +484,6 @@ export default function PDFTools() {
             position: relative !important;
             overflow: visible !important;
          }
-
-         /* Preserve Word floats */
          .docx img[style*="float: left"],
          .docx img[style*="float:left"] {
             float: left !important;
@@ -412,15 +492,11 @@ export default function PDFTools() {
          .docx img[style*="float:right"] {
             float: right !important;
          }
-
-         /* Keep containing blocks for absolute images */
          .docx section.docx,
          .docx .drawing,
          .docx [class*="float"] {
             position: relative !important;
          }
-
-         /* Prevent float collapse */
          .docx p::after,
          .docx div::after {
             content: "";
@@ -430,7 +506,6 @@ export default function PDFTools() {
       `;
          document.head.appendChild(tmpStyle);
 
-         // Wait for fonts + images
          if (document.fonts?.ready) await document.fonts.ready;
 
          await Promise.all(
@@ -443,16 +518,14 @@ export default function PDFTools() {
             ),
          );
 
-         // Give the browser time to finish float layout
          await new Promise((r) => setTimeout(r, 350));
-         host.offsetHeight; // force reflow
+         host.offsetHeight;
 
          const pages = Array.from(host.querySelectorAll('section.docx'));
          if (!pages.length) {
             throw new Error('Could not render document pages.');
          }
 
-         // Warm-up (helps with first-page image/font issues)
          try {
             await htmlToImage.toJpeg(pages[0], {
                quality: 0.9,
@@ -487,7 +560,7 @@ export default function PDFTools() {
                   margin: '0',
                   boxShadow: 'none',
                   transform: 'none',
-                  opacity: '1', // ensure the page itself is fully opaque
+                  opacity: '1',
                },
             });
 
@@ -645,7 +718,7 @@ export default function PDFTools() {
       });
 
       const marginMap = { none: 0, small: 20, large: 40 };
-      const margin = marginMap[pageMargin] || 20;
+      const margin = marginMap[pageMargin] ?? 20;
 
       for (let i = 0; i < files.length; i++) {
          setStatusText(`Adding image ${i + 1} of ${files.length}...`);
@@ -742,22 +815,68 @@ export default function PDFTools() {
    // 6. Compress PDF
    const processCompressPdf = async () => {
       const file = files[0];
-      setStatusText('Optimizing PDF streams...');
-      setProgress(40);
+      setStatusText('Loading PDF renderer...');
+      setProgress(20);
 
-      const PDFLib = await ensurePdfLib();
+      const [pdfjs, jsPDF] = await Promise.all([ensurePdfJs(), ensureJsPdf()]);
       const buffer = await file.arrayBuffer();
-      const srcPdf = await PDFLib.PDFDocument.load(buffer, {
-         ignoreEncryption: true,
-      });
+      const sourcePdf = await pdfjs.getDocument({ data: buffer }).promise;
+      const totalPages = sourcePdf.numPages;
+      let doc = null;
 
-      setStatusText('Re-compressing PDF metadata & objects...');
-      setProgress(75);
+      for (let p = 1; p <= totalPages; p++) {
+         setStatusText(`Compressing page ${p} of ${totalPages}...`);
+         setProgress(20 + Math.round((p / totalPages) * 65));
 
-      const pdfBytes = await srcPdf.save({ useObjectStreams: true });
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+         const page = await sourcePdf.getPage(p);
+         const baseViewport = page.getViewport({ scale: 1 });
+         const scale = Math.min(1.6, 1600 / baseViewport.width);
+         const viewport = page.getViewport({ scale });
+         const canvas = document.createElement('canvas');
+         canvas.width = Math.ceil(viewport.width);
+         canvas.height = Math.ceil(viewport.height);
+
+         const context = canvas.getContext('2d', { alpha: false });
+         context.fillStyle = '#ffffff';
+         context.fillRect(0, 0, canvas.width, canvas.height);
+         await page.render({ canvasContext: context, viewport }).promise;
+
+         const imageData = canvas.toDataURL('image/jpeg', 0.72);
+         const widthPt = baseViewport.width * 0.75;
+         const heightPt = baseViewport.height * 0.75;
+         const orientation = widthPt > heightPt ? 'l' : 'p';
+
+         if (!doc) {
+            doc = new jsPDF({
+               unit: 'pt',
+               format: [widthPt, heightPt],
+               orientation,
+               compress: true,
+            });
+         } else {
+            doc.addPage([widthPt, heightPt], orientation);
+         }
+
+         doc.addImage(
+            imageData,
+            'JPEG',
+            0,
+            0,
+            widthPt,
+            heightPt,
+            undefined,
+            'FAST',
+         );
+         canvas.width = 1;
+         canvas.height = 1;
+      }
+
+      if (!doc) throw new Error('The PDF contains no pages.');
+      setStatusText('Finalizing compressed PDF...');
+      setProgress(92);
+
+      const blob = doc.output('blob');
       const url = URL.createObjectURL(blob);
-
       const origMB = (file.size / 1024 / 1024).toFixed(2);
       const newMB = (blob.size / 1024 / 1024).toFixed(2);
 
@@ -854,8 +973,11 @@ export default function PDFTools() {
    // 9. Watermark PDF
    const processWatermarkPdf = async () => {
       const file = files[0];
-      setStatusText('Embedding watermark into PDF pages...');
-      setProgress(40);
+      const text = watermarkText.trim();
+      if (!text) throw new Error('Please enter watermark text.');
+
+      setStatusText('Preparing watermark settings...');
+      setProgress(25);
 
       const PDFLib = await ensurePdfLib();
       const buffer = await file.arrayBuffer();
@@ -865,24 +987,113 @@ export default function PDFTools() {
 
       const font = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
       const pages = pdfDoc.getPages();
+      const totalPages = pages.length;
+      const margin = 28;
+
+      const hex = watermarkColor.replace('#', '');
+      const r = parseInt(hex.slice(0, 2), 16) / 255;
+      const g = parseInt(hex.slice(2, 4), 16) / 255;
+      const b = parseInt(hex.slice(4, 6), 16) / 255;
+      const color = PDFLib.rgb(
+         Number.isFinite(r) ? r : 0.8,
+         Number.isFinite(g) ? g : 0.2,
+         Number.isFinite(b) ? b : 0.2,
+      );
+
+      const customPageSet = new Set();
+      if (watermarkPages === 'custom') {
+         watermarkCustomPages.split(',').forEach((part) => {
+            const value = Number.parseInt(part.trim(), 10);
+            if (Number.isInteger(value) && value >= 1 && value <= totalPages) {
+               customPageSet.add(value);
+            }
+         });
+         if (!customPageSet.size) {
+            throw new Error(
+               `Enter valid page numbers between 1 and ${totalPages}.`,
+            );
+         }
+      }
+
+      const shouldWatermarkPage = (pageNumber) => {
+         switch (watermarkPages) {
+            case 'first':
+               return pageNumber === 1;
+            case 'last':
+               return pageNumber === totalPages;
+            case 'first-last':
+               return pageNumber === 1 || pageNumber === totalPages;
+            case 'custom':
+               return customPageSet.has(pageNumber);
+            case 'every':
+            default:
+               return true;
+         }
+      };
+
+      const getPosition = (width, height, textWidth, fontSize) => {
+         const verticalCenter = (height - fontSize) / 2;
+         const horizontalCenter = (width - textWidth) / 2;
+         switch (watermarkPosition) {
+            case 'top-left':
+               return { x: margin, y: height - margin - fontSize };
+            case 'top-center':
+               return { x: horizontalCenter, y: height - margin - fontSize };
+            case 'top-right':
+               return {
+                  x: Math.max(margin, width - textWidth - margin),
+                  y: height - margin - fontSize,
+               };
+            case 'middle-left':
+               return { x: margin, y: verticalCenter };
+            case 'middle-right':
+               return {
+                  x: Math.max(margin, width - textWidth - margin),
+                  y: verticalCenter,
+               };
+            case 'bottom-left':
+               return { x: margin, y: margin };
+            case 'bottom-center':
+               return { x: horizontalCenter, y: margin };
+            case 'bottom-right':
+               return {
+                  x: Math.max(margin, width - textWidth - margin),
+                  y: margin,
+               };
+            case 'center':
+            default:
+               return { x: horizontalCenter, y: verticalCenter };
+         }
+      };
 
       pages.forEach((page, idx) => {
-         setStatusText(`Watermarking page ${idx + 1} of ${pages.length}...`);
-         const { width, height } = page.getSize();
-         const fontSize = Math.min(width, height) / 10;
+         const pageNumber = idx + 1;
+         if (!shouldWatermarkPage(pageNumber)) return;
 
-         page.drawText(watermarkText, {
-            x: width / 4,
-            y: height / 2,
+         setStatusText(`Watermarking page ${pageNumber} of ${totalPages}...`);
+         setProgress(30 + Math.round((pageNumber / totalPages) * 50));
+
+         const { width, height } = page.getSize();
+         const fontSize = Math.min(
+            watermarkFontSize,
+            Math.max(10, Math.min(width, height) / 4),
+         );
+         const textWidth = font.widthOfTextAtSize(text, fontSize);
+         const { x, y } = getPosition(width, height, textWidth, fontSize);
+
+         page.drawText(text, {
+            x,
+            y,
             size: fontSize,
             font,
-            color: PDFLib.rgb(0.8, 0.2, 0.2),
+            color,
             opacity: watermarkOpacity,
-            rotate: PDFLib.degrees(45),
+            rotate: PDFLib.degrees(watermarkRotation),
          });
       });
 
-      setProgress(85);
+      setStatusText('Saving watermarked PDF...');
+      setProgress(90);
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
@@ -899,28 +1110,81 @@ export default function PDFTools() {
    // 10. Protect PDF
    const processProtectPdf = async () => {
       const file = files[0];
-      if (!userPassword.trim()) {
+      const password = userPassword.trim();
+      if (!password)
          throw new Error('Please enter a password to protect the document.');
+
+      setStatusText('Loading secure PDF engine...');
+      setProgress(20);
+
+      const [pdfjs, jsPDF] = await Promise.all([ensurePdfJs(), ensureJsPdf()]);
+      const buffer = await file.arrayBuffer();
+      const sourcePdf = await pdfjs.getDocument({ data: buffer }).promise;
+      const totalPages = sourcePdf.numPages;
+      let doc = null;
+
+      for (let p = 1; p <= totalPages; p++) {
+         setStatusText(`Encrypting page ${p} of ${totalPages}...`);
+         setProgress(20 + Math.round((p / totalPages) * 65));
+
+         const page = await sourcePdf.getPage(p);
+         const baseViewport = page.getViewport({ scale: 1 });
+         const scale = Math.min(1.8, 1800 / baseViewport.width);
+         const viewport = page.getViewport({ scale });
+         const canvas = document.createElement('canvas');
+         canvas.width = Math.ceil(viewport.width);
+         canvas.height = Math.ceil(viewport.height);
+
+         const context = canvas.getContext('2d', { alpha: false });
+         context.fillStyle = '#ffffff';
+         context.fillRect(0, 0, canvas.width, canvas.height);
+         await page.render({ canvasContext: context, viewport }).promise;
+
+         const imageData = canvas.toDataURL('image/jpeg', 0.92);
+         const widthPt = baseViewport.width * 0.75;
+         const heightPt = baseViewport.height * 0.75;
+         const orientation = widthPt > heightPt ? 'l' : 'p';
+
+         if (!doc) {
+            doc = new jsPDF({
+               unit: 'pt',
+               format: [widthPt, heightPt],
+               orientation,
+               compress: true,
+               encryption: {
+                  userPassword: password,
+                  ownerPassword: `${password}-owner`,
+                  userPermissions: ['print', 'modify', 'copy', 'annot-forms'],
+               },
+            });
+         } else {
+            doc.addPage([widthPt, heightPt], orientation);
+         }
+
+         doc.addImage(
+            imageData,
+            'JPEG',
+            0,
+            0,
+            widthPt,
+            heightPt,
+            undefined,
+            'FAST',
+         );
+         canvas.width = 1;
+         canvas.height = 1;
       }
 
-      setStatusText('Securing PDF structure...');
-      setProgress(50);
+      if (!doc) throw new Error('The PDF contains no pages.');
+      setStatusText('Finalizing encrypted PDF...');
+      setProgress(95);
 
-      const PDFLib = await ensurePdfLib();
-      const buffer = await file.arrayBuffer();
-      const pdfDoc = await PDFLib.PDFDocument.load(buffer, {
-         ignoreEncryption: true,
-      });
-
-      pdfDoc.setTitle(`Protected - ${file.name}`);
-      pdfDoc.setSubject('Encrypted PDF Document');
-
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      const url = URL.createObjectURL(blob);
+      const blob = doc.output('blob');
+      if (!blob || blob.size < 200)
+         throw new Error('Could not generate the protected PDF.');
 
       setResult({
-         url,
+         url: URL.createObjectURL(blob),
          fileName: file.name.replace(/\.[^/.]+$/, '') + '_protected.pdf',
          size: (blob.size / 1024 / 1024).toFixed(2) + ' MB',
          type: 'pdf',
@@ -938,17 +1202,40 @@ export default function PDFTools() {
    };
 
    return (
-      <ColumnLines
-         columnWidth={80}
-         columnCount={34}
-         radialFadeStart={15}
-         radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-3 py-6 sm:px-6 sm:py-8 md:px-10">
+      <div
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-3 py-6 sm:px-6 sm:py-8 md:px-10 overflow-hidden
+    before:absolute
+    before:inset-0
+    before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+    after:absolute
+    after:inset-0
+    after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+         <div
+            className="
+    pointer-events-none absolute inset-0
+    bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_62%)]
+  "
+         />
          <SEO
             title="PDF Tools & Converters Suite | Klique"
             description="All-in-one free online PDF suite. Convert Word, Images, Text to PDF, merge, split, compress, watermark, rotate, and secure PDFs client-side."
             keywords="PDF converter, Word to PDF, Merge PDF, Split PDF, Compress PDF, Images to PDF, PDF tools klique"
             canonicalUrl="https://klique.netlify.app/convert"
+            jsonLd={{
+               '@context': 'https://schema.org',
+               '@type': 'WebApplication',
+               name: 'PDF & Image Tools Suite',
+               url: 'https://klique.netlify.app/convert',
+               applicationCategory: 'UtilitiesApplication',
+               operatingSystem: 'All',
+               description:
+                  'Convert Word, Images, Text to PDF, merge, split, compress, watermark, rotate, and protect PDF files client-side.',
+               offers: {
+                  '@type': 'Offer',
+                  price: '0',
+                  priceCurrency: 'USD',
+               },
+            }}
          />
 
          {/* Navigation Bar */}
@@ -1056,11 +1343,12 @@ export default function PDFTools() {
                         </div>
                      </div>
 
-                     {files.length > 0 && (
+                     {(files.length > 0 || textInput || result || error) && (
                         <button
                            type="button"
-                           onClick={() => setFiles([])}
-                           className="self-start sm:self-auto text-xs font-semibold text-zinc-400 hover:text-red-400 flex items-center gap-1.5 transition-colors">
+                           onClick={clearAll}
+                           disabled={loading}
+                           className="self-start sm:self-auto text-xs font-semibold text-zinc-400 hover:text-red-400 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5 transition-colors">
                            <Trash2 size={14} /> Clear All
                         </button>
                      )}
@@ -1079,25 +1367,18 @@ export default function PDFTools() {
                                  value={textInput}
                                  onChange={(e) => setTextInput(e.target.value)}
                                  placeholder="Type or paste your text / Markdown content here..."
-                                 className="w-full rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4 text-sm text-zinc-200 outline-none focus:border-[#daf4aa]/50 customScrollbar"
+                                 className="w-full rounded-2xl border border-white/[0.08] bg-[#16161b]/90 p-4 text-sm text-zinc-200 outline-none transition-all focus:border-[#daf4aa]/40 focus:ring-4 focus:ring-[#daf4aa]/[0.06] customScrollbar"
                               />
                            </div>
                         )}
 
                         {(!activeTool.allowTextInput || !textInput) && (
-                           <div
-                              onDragOver={(e) => e.preventDefault()}
-                              onDrop={handleDrop}
-                              onClick={() => fileInputRef.current?.click()}
+                           <Uploader
+                              accept={activeTool.accept}
+                              disabled={loading}
+                              draggable
+                              onChange={handleUploadedFiles}
                               className="group border-2 border-dashed border-zinc-700/60 hover:border-[#daf4aa]/60 bg-[#0f0f11] rounded-2xl p-8 text-center cursor-pointer transition-all hover:bg-[#141417]">
-                              <input
-                                 ref={fileInputRef}
-                                 type="file"
-                                 accept={activeTool.accept}
-                                 multiple={activeTool.multiple}
-                                 onChange={handleFileChange}
-                                 className="hidden"
-                              />
                               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-zinc-800 bg-[#18181b] text-zinc-400 group-hover:border-[#daf4aa]/30 group-hover:text-[#daf4aa] transition-all mb-4">
                                  <Upload size={24} />
                               </div>
@@ -1111,7 +1392,7 @@ export default function PDFTools() {
                               <p className="text-xs text-zinc-500 mt-1.5">
                                  Supported formats: {activeTool.accept}
                               </p>
-                           </div>
+                           </Uploader>
                         )}
 
                         {files.length > 0 && (
@@ -1183,58 +1464,69 @@ export default function PDFTools() {
                            </div>
                         )}
 
+                        {/* Split PDF Settings */}
                         {activeTool.id === 'split-pdf' && files.length > 0 && (
                            <div className="rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
                               <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider">
                                  Page Ranges to Extract
                               </label>
-                              <input
-                                 type="text"
-                                 value={splitRange}
-                                 onChange={(e) => setSplitRange(e.target.value)}
-                                 placeholder="e.g. 1-3, 5, 8-10"
-                                 className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3.5 py-2.5 text-sm text-zinc-200 outline-none focus:border-[#daf4aa]/40"
-                              />
-                              <p className="text-[11px] text-zinc-500 mt-1">
-                                 Specify page range numbers separated by commas.
-                              </p>
+                              <InputGroup>
+                                 <Input
+                                    value={splitRange}
+                                    onChange={(val) => setSplitRange(val)}
+                                    placeholder="e.g. 1-3, 5, 8-10"
+                                    className="bg-transparent"
+                                 />
+                              </InputGroup>
+                              <div className="mt-2 flex flex-wrap items-center gap-2">
+                                 <p className="text-[11px] text-zinc-500">
+                                    Specify page range numbers separated by
+                                    commas.
+                                 </p>
+                                 {splitTotalPages !== null && (
+                                    <span className="rounded-lg border border-[#daf4aa]/20 bg-[#daf4aa]/10 px-2 py-1 text-[11px] font-bold text-[#daf4aa]">
+                                       Total Pages: {splitTotalPages}
+                                    </span>
+                                 )}
+                              </div>
                            </div>
                         )}
 
+                        {/* Images to PDF Settings */}
                         {activeTool.id === 'jpg-to-pdf' && files.length > 0 && (
                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
                               <div>
                                  <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
                                     Page Orientation
                                  </label>
-                                 <select
+                                 <SelectPicker
+                                    data={ORIENTATION_OPTIONS}
                                     value={pageOrientation}
-                                    onChange={(e) =>
-                                       setPageOrientation(e.target.value)
+                                    onChange={(val) =>
+                                       setPageOrientation(val || 'portrait')
                                     }
-                                    className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3 py-2 text-sm text-zinc-200 outline-none">
-                                    <option value="portrait">Portrait</option>
-                                    <option value="landscape">Landscape</option>
-                                 </select>
+                                    searchable={false}
+                                    cleanable={false}
+                                 />
                               </div>
                               <div>
                                  <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
                                     Page Margin
                                  </label>
-                                 <select
+                                 <SelectPicker
+                                    data={MARGIN_OPTIONS}
                                     value={pageMargin}
-                                    onChange={(e) =>
-                                       setPageMargin(e.target.value)
+                                    onChange={(val) =>
+                                       setPageMargin(val || 'small')
                                     }
-                                    className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3 py-2 text-sm text-zinc-200 outline-none">
-                                    <option value="none">No Margin</option>
-                                    <option value="small">Small Margin</option>
-                                    <option value="large">Large Margin</option>
-                                 </select>
+                                    searchable={false}
+                                    cleanable={false}
+                                 />
                               </div>
                            </div>
                         )}
 
+                        {/* Rotate PDF Settings */}
                         {activeTool.id === 'rotate-pdf' && files.length > 0 && (
                            <div className="rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
                               <label className="block text-xs font-semibold text-zinc-400 mb-2 uppercase">
@@ -1258,59 +1550,194 @@ export default function PDFTools() {
                            </div>
                         )}
 
+                        {/* Watermark PDF Settings */}
                         {activeTool.id === 'watermark-pdf' &&
                            files.length > 0 && (
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
-                                 <div>
-                                    <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
-                                       Watermark Text
-                                    </label>
-                                    <input
-                                       type="text"
-                                       value={watermarkText}
-                                       onChange={(e) =>
-                                          setWatermarkText(e.target.value)
-                                       }
-                                       className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3.5 py-2 text-sm text-zinc-200 outline-none"
-                                    />
-                                 </div>
-                                 <div>
-                                    <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
-                                       Opacity:{' '}
-                                       {Math.round(watermarkOpacity * 100)}%
-                                    </label>
-                                    <input
-                                       type="range"
-                                       min={0.1}
-                                       max={0.9}
-                                       step={0.1}
-                                       value={watermarkOpacity}
-                                       onChange={(e) =>
-                                          setWatermarkOpacity(
-                                             parseFloat(e.target.value),
-                                          )
-                                       }
-                                       className="w-full accent-[#daf4aa] mt-2"
-                                    />
+                              <div className="space-y-4 rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
+                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div className="lg:col-span-2">
+                                       <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider">
+                                          Custom Watermark Text
+                                       </label>
+                                       <InputGroup>
+                                          <Input
+                                             value={watermarkText}
+                                             onChange={(val) =>
+                                                setWatermarkText(val)
+                                             }
+                                             placeholder="e.g. CONFIDENTIAL, DRAFT, PAID"
+                                             className="bg-transparent"
+                                          />
+                                       </InputGroup>
+                                    </div>
+
+                                    <div>
+                                       <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider">
+                                          Position
+                                       </label>
+                                       <SelectPicker
+                                          data={WATERMARK_POSITION_OPTIONS}
+                                          value={watermarkPosition}
+                                          onChange={(val) =>
+                                             setWatermarkPosition(
+                                                val || 'center',
+                                             )
+                                          }
+                                          searchable={false}
+                                          cleanable={false}
+                                       />
+                                    </div>
+
+                                    <div>
+                                       <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider">
+                                          Apply Watermark To
+                                       </label>
+                                       <SelectPicker
+                                          data={WATERMARK_PAGES_OPTIONS}
+                                          value={watermarkPages}
+                                          onChange={(val) =>
+                                             setWatermarkPages(val || 'every')
+                                          }
+                                          searchable={false}
+                                          cleanable={false}
+                                       />
+                                    </div>
+
+                                    {watermarkPages === 'custom' && (
+                                       <div className="lg:col-span-2">
+                                          <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider">
+                                             Page Numbers
+                                          </label>
+                                          <InputGroup>
+                                             <Input
+                                                value={watermarkCustomPages}
+                                                onChange={(val) =>
+                                                   setWatermarkCustomPages(val)
+                                                }
+                                                placeholder="e.g. 1,3,5,8"
+                                                className="bg-transparent"
+                                             />
+                                          </InputGroup>
+                                          <p className="mt-1 text-[11px] text-zinc-500">
+                                             Enter page numbers separated by
+                                             commas.
+                                          </p>
+                                       </div>
+                                    )}
+
+                                    <div>
+                                       <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider">
+                                          Text Color
+                                       </label>
+                                       <InputGroup className="px-3 gap-2">
+                                          <input
+                                             type="color"
+                                             value={watermarkColor}
+                                             onChange={(e) =>
+                                                setWatermarkColor(
+                                                   e.target.value,
+                                                )
+                                             }
+                                             className="h-7 w-9 shrink-0 cursor-pointer rounded-lg border-0 bg-transparent p-0"
+                                          />
+                                          <Input
+                                             value={watermarkColor}
+                                             onChange={(val) =>
+                                                setWatermarkColor(val)
+                                             }
+                                             placeholder="#cc3333"
+                                             className="bg-transparent font-mono uppercase px-1"
+                                          />
+                                       </InputGroup>
+                                    </div>
+
+                                    <div>
+                                       <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider">
+                                          Rotation: {watermarkRotation}°
+                                       </label>
+                                       <SelectPicker
+                                          data={WATERMARK_ROTATION_OPTIONS}
+                                          value={watermarkRotation}
+                                          onChange={(val) =>
+                                             setWatermarkRotation(
+                                                val !== '' && val !== undefined
+                                                   ? Number(val)
+                                                   : 0,
+                                             )
+                                          }
+                                          searchable={false}
+                                          cleanable={false}
+                                       />
+                                    </div>
+
+                                    <div>
+                                       <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider">
+                                          Text Size: {watermarkFontSize}px
+                                       </label>
+                                       <input
+                                          type="range"
+                                          min={12}
+                                          max={96}
+                                          step={1}
+                                          value={watermarkFontSize}
+                                          onChange={(e) =>
+                                             setWatermarkFontSize(
+                                                Number(e.target.value),
+                                             )
+                                          }
+                                          className="w-full accent-[#daf4aa] mt-2"
+                                       />
+                                    </div>
+
+                                    <div>
+                                       <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider">
+                                          Opacity:{' '}
+                                          {Math.round(watermarkOpacity * 100)}%
+                                       </label>
+                                       <input
+                                          type="range"
+                                          min={0.1}
+                                          max={1}
+                                          step={0.05}
+                                          value={watermarkOpacity}
+                                          onChange={(e) =>
+                                             setWatermarkOpacity(
+                                                Number(e.target.value),
+                                             )
+                                          }
+                                          className="w-full accent-[#daf4aa] mt-2"
+                                       />
+                                    </div>
                                  </div>
                               </div>
                            )}
 
+                        {/* Protect PDF Settings */}
                         {activeTool.id === 'protect-pdf' &&
                            files.length > 0 && (
                               <div className="rounded-2xl border border-zinc-800 bg-[#0f0f11] p-4">
                                  <label className="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase">
                                     Set Password
                                  </label>
-                                 <input
-                                    type="password"
-                                    value={userPassword}
-                                    onChange={(e) =>
-                                       setUserPassword(e.target.value)
-                                    }
-                                    placeholder="Enter secret password..."
-                                    className="w-full rounded-xl border border-zinc-800 bg-[#16161b] px-3.5 py-2.5 text-sm text-zinc-200 outline-none focus:border-[#daf4aa]/40"
-                                 />
+                                 <InputGroup>
+                                    <Input
+                                       type={showPassword ? 'text' : 'password'}
+                                       value={userPassword}
+                                       onChange={(val) => setUserPassword(val)}
+                                       placeholder="Enter secret password..."
+                                       className="bg-transparent"
+                                    />
+                                    <InputGroup.Button
+                                       onClick={() =>
+                                          setShowPassword((prev) => !prev)
+                                       }>
+                                       {showPassword ? (
+                                          <EyeOff size={16} />
+                                       ) : (
+                                          <Eye size={16} />
+                                       )}
+                                    </InputGroup.Button>
+                                 </InputGroup>
                               </div>
                            )}
 
@@ -1458,11 +1885,7 @@ export default function PDFTools() {
 
                         <button
                            type="button"
-                           onClick={() => {
-                              setResult(null);
-                              setFiles([]);
-                              setTextInput('');
-                           }}
+                           onClick={clearAll}
                            className="w-full py-3 rounded-xl border border-zinc-800 bg-[#16161b] hover:bg-zinc-800 text-xs font-bold text-zinc-300 transition-colors">
                            Convert Another File
                         </button>
@@ -1481,54 +1904,45 @@ export default function PDFTools() {
 
          {/* Animated loading border */}
          <style>{`
-               @keyframes gradient-spin {
-                  0% { background-position: 0% 50%; }
-                  50% { background-position: 100% 50%; }
-                  100% { background-position: 0% 50%; }
-               }
+            @keyframes gradient-spin {
+               0% { background-position: 0% 50%; }
+               50% { background-position: 100% 50%; }
+               100% { background-position: 0% 50%; }
+            }
 
-               .animate-gradient-spin {
-                  background-size: 200% 200%;
-                  animation: gradient-spin 2.5s ease-in-out infinite;
-               }
-            `}</style>
+            .animate-gradient-spin {
+               background-size: 200% 200%;
+               animation: gradient-spin 2.5s ease-in-out infinite;
+            }
+         `}</style>
 
-         {/* PDF Preview Modal */}
-         <AnimatePresence>
-            {previewOpen && result?.url && (
-               <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-                  <motion.div
-                     initial={{ opacity: 0 }}
-                     animate={{ opacity: 1 }}
-                     exit={{ opacity: 0 }}
-                     onClick={() => setPreviewOpen(false)}
-                     className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+         {/* CustomControl Modal for PDF Preview */}
+         <Modal
+            open={previewOpen && Boolean(result?.url)}
+            onClose={() => setPreviewOpen(false)}
+            size="lg"
+            className="h-[85vh]">
+            <Modal.Header>
+               <Modal.Title className="truncate">
+                  {result?.fileName}
+               </Modal.Title>
+               <button
+                  type="button"
+                  onClick={() => setPreviewOpen(false)}
+                  className="p-1.5 text-zinc-400 hover:text-white rounded-lg hover:bg-zinc-800 transition-colors">
+                  <X size={18} />
+               </button>
+            </Modal.Header>
+            <Modal.Body className="p-0 flex flex-col">
+               {result?.url && (
+                  <iframe
+                     src={result.url}
+                     title="PDF Preview"
+                     className="w-full flex-1 border-none bg-zinc-900"
                   />
-                  <motion.div
-                     initial={{ opacity: 0, scale: 0.95 }}
-                     animate={{ opacity: 1, scale: 1 }}
-                     exit={{ opacity: 0, scale: 0.95 }}
-                     className="relative flex h-[85vh] w-full max-w-4xl flex-col rounded-3xl border border-zinc-800 bg-[#121214] shadow-2xl overflow-hidden z-10">
-                     <div className="flex items-center justify-between border-b border-zinc-800 px-5 py-3.5">
-                        <p className="text-sm font-bold text-white truncate">
-                           {result.fileName}
-                        </p>
-                        <button
-                           type="button"
-                           onClick={() => setPreviewOpen(false)}
-                           className="p-1.5 text-zinc-400 hover:text-white rounded-lg hover:bg-zinc-800">
-                           <X size={18} />
-                        </button>
-                     </div>
-                     <iframe
-                        src={result.url}
-                        title="PDF Preview"
-                        className="w-full flex-1 border-none bg-zinc-900"
-                     />
-                  </motion.div>
-               </div>
-            )}
-         </AnimatePresence>
-      </ColumnLines>
+               )}
+            </Modal.Body>
+         </Modal>
+      </div>
    );
 }

@@ -190,17 +190,40 @@ Return only hashtags separated by spaces, no explanations.`;
    ];
 
    return (
-      <ColumnLines
-         columnWidth={80}
-         columnCount={34}
-         radialFadeStart={15}
-         radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10">
+      <div
+         className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10 overflow-hidden 
+    before:absolute
+    before:inset-0
+    before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+    after:absolute
+    after:inset-0
+    after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+         <div
+            className="
+    pointer-events-none absolute inset-0
+    bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_62%)]
+  "
+         />
          <SEO
             title="AI Hashtag Generator | Viral Social Media Tags | Klique"
             description="Boost your social media presence with our AI Hashtag Generator. Create relevant, high-reach hashtags for Instagram, TikTok, YouTube, and Twitter instantly."
             keywords="ai hashtag generator, hashtag creator, instagram hashtags, tiktok hashtags, viral tags, klique hashtags, trending hashtags generator"
             canonicalUrl="https://klique.netlify.app/hashtaggenerator"
+            jsonLd={{
+               '@context': 'https://schema.org',
+               '@type': 'WebApplication',
+               name: 'AI Hashtag Generator',
+               url: 'https://klique.netlify.app/hashtaggenerator',
+               applicationCategory: 'UtilitiesApplication',
+               operatingSystem: 'All',
+               description:
+                  'Generate viral, trending hashtags for Instagram, TikTok, and YouTube using AI.',
+               offers: {
+                  '@type': 'Offer',
+                  price: '0',
+                  priceCurrency: 'USD',
+               },
+            }}
          />
 
          {/* ========================================================
@@ -249,7 +272,6 @@ Return only hashtags separated by spaces, no explanations.`;
          <div className="relative z-[100] w-full">
             <Navbar />
          </div>
-
 
          {/* ========================================================
           MAIN CONTENT
@@ -544,6 +566,6 @@ Return only hashtags separated by spaces, no explanations.`;
           min-width: 0;
         }
       `}</style>
-      </ColumnLines>
+      </div>
    );
 }

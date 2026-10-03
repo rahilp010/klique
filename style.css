@@ -179,7 +179,7 @@ select option:hover {
 }
 
 .gradient-text {
-   background: linear-gradient(135deg, #a78bfa, #f472b6, #fb7185);
+   background: linear-gradient(135deg, #daf4aa, #f472b6, #fb7185);
    background-clip: text;
    -webkit-background-clip: text;
    -webkit-text-fill-color: transparent;

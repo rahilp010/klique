@@ -155,17 +155,40 @@ Rules:
    };
 
    return (
-      <ColumnLines
-         columnWidth={80}
-         columnCount={34}
-         radialFadeStart={15}
-         radialFadeEnd={90}
-         className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10">
+      <div
+         className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#000000] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10 overflow-hidden
+    before:absolute
+    before:inset-0
+    before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+    after:absolute
+    after:inset-0
+    after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+         <div
+            className="
+    pointer-events-none absolute inset-0
+    bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_92%)]
+  "
+         />
          <SEO
             title="Aesthetic Username Generator | Custom Gamertags & Handles | Klique"
             description="Create cool, unique, and aesthetic usernames for Instagram, TikTok, YouTube, Reddit, Roblox, and gaming. Find the perfect handle instantly using AI."
             keywords="username generator, cool usernames, gamer tag generator, aesthetic handles, instagram username generator, klique, tiktok username generator"
             canonicalUrl="https://klique.netlify.app/username"
+            jsonLd={{
+               '@context': 'https://schema.org',
+               '@type': 'WebApplication',
+               name: 'Aesthetic Username Generator',
+               url: 'https://klique.netlify.app/username',
+               applicationCategory: 'UtilitiesApplication',
+               operatingSystem: 'All',
+               description:
+                  'Generate unique aesthetic usernames, gamertags, and social media handles using AI.',
+               offers: {
+                  '@type': 'Offer',
+                  price: '0',
+                  priceCurrency: 'USD',
+               },
+            }}
          />
 
          {/* Toast Notification */}
@@ -199,7 +222,7 @@ Rules:
             <Navbar />
          </div>
 
-         <div className="relative z-10 mx-auto flex min-h-[100dvh] w-full max-w-6xl flex-col px-0 pb-32 pt-24 sm:px-2 sm:pb-24 sm:pt-28 lg:pl-20">
+         <div className="relative z-10 mx-auto flex min-h-[100dvh] w-full max-w-6xl flex-col px-0 pb-32 pt-14 sm:px-2 sm:pb-24 sm:pt-16 lg:pl-20">
             {/* Header */}
             <motion.div
                initial={{ opacity: 0, y: 20 }}
@@ -247,8 +270,6 @@ Rules:
                         onChange={(e) => setKeyword(e.target.value)}
                         className="min-w-0 w-full rounded-xl border border-zinc-800 bg-[#18181b] py-3 pl-10 pr-3.5 text-sm font-medium text-zinc-200 placeholder-zinc-500 focus:border-zinc-600 focus:outline-none"
                      />
-
-                     
                   </div>
                </div>
 
@@ -399,6 +420,6 @@ Rules:
             min-width: 0;
          }
       `}</style>
-      </ColumnLines>
+      </div>
    );
 }
