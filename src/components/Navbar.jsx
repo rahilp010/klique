@@ -16,9 +16,11 @@ import {
    LayoutGrid,
    X,
 } from 'lucide-react';
+import { FaFileWord } from 'react-icons/fa';
 
 const NAV_ITEMS = [
    { title: 'Home', path: '/', icon: Home },
+   { title: 'PDF Tools', path: '/convert', icon: FaFileWord },
    { title: 'Font Generator', path: '/fontgenerator', icon: Type },
    { title: 'Emoji Generator', path: '/emojigenerator', icon: Smile },
    { title: 'Cool Symbol', path: '/symbol', icon: Sparkles },
