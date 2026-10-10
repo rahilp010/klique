@@ -1,19 +1,16 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { FaBars } from 'react-icons/fa6';
-import { GiPerspectiveDiceSixFacesRandom } from 'react-icons/gi';
+import { Dice6, Sparkle, Send, Check, Copy } from 'lucide-react';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
-import { IoCopyOutline } from 'react-icons/io5';
-import { Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { FiCheck, FiSend } from 'react-icons/fi';
-import { PiSparkleLight } from 'react-icons/pi';
+
 import { SelectPicker } from '../ui/CustomControl';
 import { callAiApi } from '../../services/aiService';
 
 const tones = [
    { label: 'Casual', value: 'casual' },
+
    { label: 'Creative', value: 'creative' },
    { label: 'Formal', value: 'formal' },
    { label: 'Professional', value: 'professional' },
@@ -215,9 +212,9 @@ Rules:
                            : 'border-green-500/50 text-green-400'
                      }`}>
                      {toast.type === 'error' ? (
-                        <FiCheck className="w-4 h-4 hidden" />
+                        <Check className="w-4 h-4 hidden" />
                      ) : (
-                        <FiCheck className="w-4 h-4" />
+                        <Check className="w-4 h-4" />
                      )}
                      <p className="min-w-0 break-words pr-2 text-xs font-medium sm:text-sm">
                         {toast.message}
@@ -307,7 +304,7 @@ Rules:
                      onClick={generateLocal}
                      disabled={loading}
                      className="flex w-full items-center justify-center gap-2 rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-4 py-3 text-sm font-medium text-cyan-300 transition-all hover:border-cyan-400/50 hover:bg-cyan-500/20 hover:text-cyan-200 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:px-5 sm:py-2.5">
-                     <GiPerspectiveDiceSixFacesRandom size={16} /> Random Idea
+                     <Dice6 size={16} /> Random Idea
                   </button>
                   <button
                      onClick={generateAI}
@@ -315,7 +312,7 @@ Rules:
                      className="group flex w-full items-center justify-center gap-2 rounded-xl border border-purple-500/30 bg-purple-500/15 px-4 py-3 text-sm font-medium text-purple-300 transition-all hover:border-purple-400/50 hover:bg-purple-500/25 hover:text-purple-200 disabled:cursor-not-allowed disabled:bg-zinc-900 disabled:text-zinc-600 sm:w-auto sm:px-5 sm:py-2.5">
                      {loading ? (
                         <>
-                           <PiSparkleLight
+                           <Sparkle
                               className="animate-spin text-purple-400"
                               size={16}
                            />{' '}
@@ -323,7 +320,7 @@ Rules:
                         </>
                      ) : (
                         <>
-                           <FiSend
+                           <Send
                               size={16}
                               className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
                            />{' '}
@@ -361,7 +358,7 @@ Rules:
                            }`}>
                            <div className="mb-5 flex min-w-0 items-center justify-between gap-3 border-b border-zinc-800/50 pb-4 sm:mb-6">
                               <h3 className="flex min-w-0 items-center gap-2 text-base font-medium text-zinc-100 sm:text-lg">
-                                 <PiSparkleLight
+                                 <Sparkle
                                     className="text-purple-400"
                                     size={20}
                                  />
@@ -386,9 +383,9 @@ Rules:
                                          </span>
                                          <div className="absolute right-2.5 shrink-0 text-zinc-500 transition-colors group-hover:text-zinc-300 sm:right-3">
                                             {copiedIndex === i ? (
-                                               <FiCheck className="text-green-400" />
+                                               <Check className="text-green-400" />
                                             ) : (
-                                               <IoCopyOutline />
+                                               <Copy />
                                             )}
                                          </div>
                                       </div>

@@ -1,27 +1,35 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { FaTrash, FaDownload } from 'react-icons/fa';
-import { IoCloudUploadOutline } from 'react-icons/io5';
+
 import {
-   FaEnvelope,
-   FaPenNib,
-   FaKey,
-   FaLightbulb,
-   FaParagraph,
-   FaBullseye,
-   FaTag,
-   FaGlobe,
-   FaRegNewspaper,
-} from 'react-icons/fa6';
-import { HiRocketLaunch } from 'react-icons/hi2';
-import { LuMail, LuGraduationCap, LuSearch, LuSparkles } from 'react-icons/lu';
-import { Settings } from 'lucide-react';
-import { PiSparkleLight } from 'react-icons/pi';
+   Settings,
+   Trash2,
+   Download,
+   Upload,
+   Mail,
+   PenTool,
+   Key,
+   Lightbulb,
+   AlignLeft,
+   Target,
+   Tag,
+   Globe,
+   Newspaper,
+   Rocket,
+   GraduationCap,
+   Search,
+   Sparkles,
+   Sparkle,
+   FileText,
+   BookOpen,
+   Send,
+   Copy,
+   Check,
+} from 'lucide-react';
+
 import { motion, AnimatePresence } from 'motion/react';
 import SEO from '../SEO';
 import { callGeminiApi, toolPrompts } from './AI';
-import { MdSummarize } from 'react-icons/md';
-import { TbTextGrammar } from 'react-icons/tb';
-import { FiSend, FiCopy, FiCheck, FiSettings, FiUpload } from 'react-icons/fi';
+
 import { Input, InputNumber } from '@/components/ui/CustomControl';
 import Navbar from '../Navbar';
 
@@ -51,57 +59,57 @@ export default function AIWriter() {
    const tools = [
       {
          name: 'GrammerChecker',
-         icon: <TbTextGrammar className="text-lg" />,
+         icon: <BookOpen className="text-lg" />,
          desc: 'Grammar checker',
       },
       {
          name: 'Paraphrase',
-         icon: <FaBullseye className="text-lg" />,
+         icon: <Target className="text-lg" />,
          desc: 'Paraphrase text',
       },
       {
          name: 'Email',
-         icon: <FaEnvelope className="text-lg" />,
+         icon: <Mail className="text-lg" />,
          desc: 'Professional emails',
       },
       {
          name: 'Translation',
-         icon: <FaGlobe className="text-lg" />,
+         icon: <Globe className="text-lg" />,
          desc: 'Language translation',
       },
       {
          name: 'Summarizer',
-         icon: <MdSummarize className="text-lg" />,
+         icon: <FileText className="text-lg" />,
          desc: 'Summarize content',
       },
       {
          name: 'Article',
-         icon: <FaRegNewspaper className="text-lg" />,
+         icon: <Newspaper className="text-lg" />,
          desc: 'Write full articles',
       },
       {
          name: 'Essay',
-         icon: <FaPenNib className="text-lg" />,
+         icon: <PenTool className="text-lg" />,
          desc: 'Academic essays',
       },
       {
          name: 'Keywords',
-         icon: <FaKey className="text-lg" />,
+         icon: <Key className="text-lg" />,
          desc: 'SEO keywords',
       },
       {
          name: 'Paragraph',
-         icon: <FaParagraph className="text-lg" />,
+         icon: <AlignLeft className="text-lg" />,
          desc: 'Content blocks',
       },
       {
          name: 'Title',
-         icon: <FaTag className="text-lg" />,
+         icon: <Tag className="text-lg" />,
          desc: 'Catchy titles',
       },
       {
          name: 'Name',
-         icon: <FaLightbulb className="text-lg" />,
+         icon: <Lightbulb className="text-lg" />,
          desc: 'Brand names',
       },
    ];
@@ -129,31 +137,31 @@ export default function AIWriter() {
       {
          id: 'article_intro',
          title: 'Article Intro',
-         icon: <HiRocketLaunch className="text-lg text-indigo-400" />,
+         icon: <Rocket className="text-lg text-indigo-400" />,
          text: `Write a compelling article introduction about {topic} that grabs the reader's attention.`,
       },
       {
          id: 'email_template',
          title: 'Email Template',
-         icon: <LuMail className="text-lg text-emerald-400" />,
+         icon: <Mail className="text-lg text-emerald-400" />,
          text: 'Write a professional email to {recipient} about {topic} in a clear and concise way.',
       },
       {
          id: 'essay_body',
          title: 'Essay Paragraph',
-         icon: <LuGraduationCap className="text-lg text-blue-400" />,
+         icon: <GraduationCap className="text-lg text-blue-400" />,
          text: 'Write a detailed essay paragraph about {topic} with examples and explanations.',
       },
       {
          id: 'keyword_list',
          title: 'SEO Keywords',
-         icon: <LuSearch className="text-lg text-yellow-400" />,
+         icon: <Search className="text-lg text-yellow-400" />,
          text: 'Generate 15 relevant SEO keywords related to {topic}.',
       },
       {
          id: 'name_ideas',
          title: 'Name Ideas',
-         icon: <LuSparkles className="text-lg text-pink-400" />,
+         icon: <Sparkles className="text-lg text-pink-400" />,
          text: 'Generate 10 creative names for a {product} brand or company.',
       },
    ];
@@ -423,9 +431,9 @@ export default function AIWriter() {
                            : 'border-green-500/50 text-green-400'
                      }`}>
                      {toast.type === 'error' ? (
-                        <FiCheck className="w-4 h-4 hidden" />
+                        <Check className="w-4 h-4 hidden" />
                      ) : (
-                        <FiCheck className="w-4 h-4" />
+                        <Check className="w-4 h-4" />
                      )}
                      <p className="text-sm font-medium pr-2">{toast.message}</p>
                   </div>
@@ -465,13 +473,13 @@ export default function AIWriter() {
                               onChange={handleUpload}
                               className="hidden"
                            />
-                           <FiUpload size={18} />
+                           <Upload size={18} />
                         </label>
                         <button
                            onClick={() => setShowSettings(!showSettings)}
                            className={`p-2 rounded-lg border transition-colors ${showSettings ? 'bg-zinc-800 border-zinc-700 text-zinc-200' : 'bg-[#18181b] border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800'}`}
                            title="Generation Settings">
-                           <FiSettings size={18} />
+                           <Settings size={18} />
                         </button>
                      </div>
                   </div>
@@ -642,7 +650,7 @@ export default function AIWriter() {
                               </div>
                               <div className="p-3">
                                  <div className="relative mb-3">
-                                    <LuSearch
+                                    <Search
                                        size={15}
                                        className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500"
                                     />
@@ -727,7 +735,7 @@ export default function AIWriter() {
                                     onClick={handleClear}
                                     disabled={isGenerating}
                                     className="text-zinc-500 hover:text-red-400 transition-colors ml-2">
-                                    <FaTrash size={12} />
+                                    <Trash2 size={12} />
                                  </button>
                               )}
                            </div>
@@ -739,7 +747,7 @@ export default function AIWriter() {
                               className="flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-[#27272a] px-4 text-xs font-medium text-zinc-200 transition-all group hover:bg-[#3f3f46] disabled:cursor-not-allowed disabled:bg-zinc-900 disabled:text-zinc-600 sm:w-auto sm:min-w-[120px] sm:text-sm">
                               {isGenerating ? (
                                  <div className="flex items-center gap-2">
-                                    <PiSparkleLight
+                                    <Sparkle
                                        className="animate-spin text-purple-400"
                                        size={16}
                                     />
@@ -747,7 +755,7 @@ export default function AIWriter() {
                                  </div>
                               ) : (
                                  <>
-                                    <FiSend
+                                    <Send
                                        size={16}
                                        className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
                                     />
@@ -769,7 +777,7 @@ export default function AIWriter() {
                            <div className="bg-[#121214] border border-zinc-800/80 rounded-2xl p-1 pb-4 shadow-xl flex flex-col">
                               <div className="flex min-w-0 items-center justify-between gap-2 border-b border-zinc-800/50 p-3.5 mb-1 sm:p-4">
                                  <h3 className="text-sm font-medium text-zinc-300 flex items-center gap-2">
-                                    <PiSparkleLight
+                                    <Sparkle
                                        className="text-purple-400"
                                        size={18}
                                     />
@@ -781,9 +789,9 @@ export default function AIWriter() {
                                        disabled={!result || isGenerating}
                                        className="flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-lg bg-zinc-800/50 px-2.5 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-700 disabled:opacity-50 disabled:hover:bg-zinc-800/50 sm:px-3 sm:py-1.5 sm:text-sm">
                                        {copied ? (
-                                          <FiCheck className="text-green-400" />
+                                          <Check className="text-green-400" />
                                        ) : (
-                                          <FiCopy />
+                                          <Copy />
                                        )}
                                        <span className="hidden sm:inline-block">
                                           {copied ? 'Copied' : 'Copy'}
@@ -793,7 +801,7 @@ export default function AIWriter() {
                                        onClick={handleDownload}
                                        disabled={!result || isGenerating}
                                        className="flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-lg bg-zinc-800/50 px-2.5 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-700 disabled:opacity-50 disabled:hover:bg-zinc-800/50 sm:px-3 sm:py-1.5 sm:text-sm">
-                                       <FaDownload size={13} />
+                                       <Download size={13} />
                                        <span className="hidden sm:inline-block">
                                           Save
                                        </span>
@@ -804,7 +812,7 @@ export default function AIWriter() {
                               <div className="px-4 pt-4">
                                  {isGenerating ? (
                                     <div className="w-full min-h-[200px] flex flex-col items-center justify-center gap-4 opacity-70">
-                                       <PiSparkleLight
+                                       <Sparkle
                                           className="text-purple-400 animate-pulse"
                                           size={32}
                                        />

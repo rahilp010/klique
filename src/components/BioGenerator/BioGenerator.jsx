@@ -1,5 +1,6 @@
+import { Sparkle } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { PiSparkleLight } from 'react-icons/pi';
+
 import {
    FiSend,
    FiCopy,
@@ -456,7 +457,7 @@ Each bio should:
                         className="flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-[#27272a] px-4 text-xs font-medium text-zinc-200 transition-all hover:bg-[#3f3f46] disabled:cursor-not-allowed disabled:bg-zinc-900 disabled:text-zinc-600 sm:w-auto sm:min-w-[120px] sm:text-sm">
                         {isLoading ? (
                            <div className="flex items-center justify-center gap-2">
-                              <PiSparkleLight
+                              <Sparkle
                                  className="animate-spin text-purple-400"
                                  size={16}
                               />
@@ -536,7 +537,7 @@ Each bio should:
 
                         <div className="mb-4 flex min-w-0 items-center justify-between sm:mb-6">
                            <h3 className="flex min-w-0 items-center gap-2 text-base font-medium text-zinc-100 sm:text-lg">
-                              <PiSparkleLight
+                              <Sparkle
                                  className="shrink-0 text-purple-400"
                                  size={20}
                               />

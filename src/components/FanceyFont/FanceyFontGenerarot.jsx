@@ -5,7 +5,7 @@ import Navbar from '../Navbar';
 import SEO from '../SEO';
 import fontMaps from './text';
 import { ArrowRight, Copy, Download, Heart, Search } from 'lucide-react';
-import { BsHeartFill } from 'react-icons/bs';
+
 import { Input } from '@/components/ui/CustomControl';
 import { motion } from 'motion/react';
 

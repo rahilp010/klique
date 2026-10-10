@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import ReactCountryFlag from 'react-country-flag';
-import { FaStar } from 'react-icons/fa';
-import { FiGlobe } from 'react-icons/fi';
-import { Calendar, MapPin, Globe, RefreshCw, Earth } from 'lucide-react';
+
+
+import { Calendar, MapPin, Globe, RefreshCw, Earth, Star } from 'lucide-react';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { motion, AnimatePresence } from 'motion/react';
@@ -356,7 +356,7 @@ const renderTZItem = (
                }}
             />
          ) : (
-            <FiGlobe className="text-cyan-300" size={17} />
+            <Globe className="text-cyan-300" size={17} />
          )}
       </div>
 
@@ -450,7 +450,7 @@ const SelectedZoneSummary = ({
                   title={
                      isFavorite ? 'Remove from Favorites' : 'Add to Favorites'
                   }>
-                  <FaStar
+                  <Star
                      size={15}
                      className={isFavorite ? 'text-yellow-300' : ''}
                   />
@@ -887,7 +887,7 @@ const TimeZone = () => {
                               ? 'Remove from Favorites'
                               : 'Add to Favorites'
                         }>
-                        <FaStar
+                        <Star
                            className={
                               favorites.includes(toZone?.tz)
                                  ? 'text-yellow-300'
@@ -1164,7 +1164,7 @@ const TimeZone = () => {
                   animate={{ opacity: 1 }}
                   className="mb-8 w-full min-w-0 overflow-hidden rounded-2xl border border-zinc-800/80 bg-[#121214] p-4 shadow-xl sm:mb-10 sm:p-6">
                   <h3 className="mb-6 text-sm font-semibold text-zinc-100 uppercase tracking-wider flex items-center gap-2">
-                     <FaStar className="text-yellow-400" /> Saved Time Zones
+                     <Star className="text-yellow-400" /> Saved Time Zones
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                      {favorites.map((tz) => (

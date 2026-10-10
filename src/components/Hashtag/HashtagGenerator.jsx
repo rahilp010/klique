@@ -1,5 +1,6 @@
+import { Sparkle } from 'lucide-react';
 import { useEffect, useState, useRef } from 'react';
-import { PiSparkleLight } from 'react-icons/pi';
+
 import {
    FiSend,
    FiPaperclip,
@@ -27,12 +28,9 @@ export default function HashtagGenerator() {
       visible: false,
    });
 
-   const [sidebarOpen, setSidebarOpen] = useState(false);
    const [isMobile, setIsMobile] = useState(false);
 
    const textareaRef = useRef(null);
-
-   const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
    /* ============================================================
      MOBILE DETECTION
@@ -181,7 +179,7 @@ Return only hashtags separated by spaces, no explanations.`;
             'Hit a new personal record at the gym today! Consistency is key 💪🏋️‍♂️',
       },
       {
-         icon: <PiSparkleLight />,
+         icon: <Sparkle />,
          label: 'Food & Dining',
          prompt:
             'Trying out the best aesthetic cafe in town. The matcha latte was amazing 🍵✨',
@@ -401,7 +399,7 @@ Return only hashtags separated by spaces, no explanations.`;
                         className="flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-[#27272a] px-4 text-xs font-medium text-zinc-200 transition-all hover:bg-[#3f3f46] disabled:cursor-not-allowed disabled:bg-zinc-900 disabled:text-zinc-600 sm:w-auto sm:min-w-[120px] sm:text-sm">
                         {isLoading ? (
                            <div className="flex items-center justify-center gap-2">
-                              <PiSparkleLight
+                              <Sparkle
                                  className="animate-spin text-purple-400"
                                  size={16}
                               />
@@ -484,7 +482,7 @@ Return only hashtags separated by spaces, no explanations.`;
 
                         <div className="mb-4 flex min-w-0 items-center justify-between gap-3 sm:mb-6">
                            <h3 className="flex min-w-0 items-center gap-2 text-base font-medium text-zinc-100 sm:text-lg">
-                              <PiSparkleLight
+                              <Sparkle
                                  className="shrink-0 text-purple-400"
                                  size={20}
                               />

@@ -27,6 +27,44 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api\/nara/, '')
       }
     }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Core React runtime — tiny, cached forever
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/scheduler/')) {
+            return 'react-core';
+          }
+          // React Router
+          if (id.includes('node_modules/react-router') || id.includes('node_modules/router')) {
+            return 'react-router';
+          }
+          // Motion / animation
+          if (id.includes('node_modules/framer-motion') || id.includes('node_modules/motion')) {
+            return 'motion';
+          }
+          // Lucide icons — shared across all chunks
+          if (id.includes('node_modules/lucide-react')) {
+            return 'lucide';
+          }
+          // Emoji datasource — large, only used in EmojiGenerator
+          if (id.includes('emoji-datasource') || id.includes('emoji-datasource')) {
+            return 'emoji-data';
+          }
+          // city-timezones — large, only used in TimeZone
+          if (id.includes('city-timezones')) {
+            return 'city-timezones';
+          }
+          // Country flag
+          if (id.includes('react-country-flag')) {
+            return 'country-flag';
+          }
+        }
+      }
+    }
   }
 })
+
+
 

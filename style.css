@@ -114,22 +114,6 @@ html {
    animation: slideIn 0.4s ease-out;
 }
 
-.perspective {
-   perspective: 1000px;
-}
-
-.transform-style-3d {
-   transform-style: preserve-3d;
-}
-
-.backface-hidden {
-   backface-visibility: hidden;
-}
-
-.rotate-y-180 {
-   transform: rotateY(180deg);
-}
-
 select option {
    background-color: rgba(10, 10, 15, 0.95);
    color: white;
@@ -139,43 +123,9 @@ select option:hover {
    background-color: rgba(255, 255, 255, 0.1);
 }
 
-.glass-effect {
-   background: rgba(255, 255, 255, 0.03);
-   border: 1px solid rgba(255, 255, 255, 0.08);
-   backdrop-filter: blur(12px);
-}
-
-.shimmer {
-   background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.02) 0%,
-      rgba(255, 255, 255, 0.08) 50%,
-      rgba(255, 255, 255, 0.02) 100%
-   );
-   background-size: 200% 100%;
-   animation: shimmer 1.6s linear infinite;
-}
-
-@keyframes shimmer {
-   0% {
-      background-position: -200% 0;
-   }
-   100% {
-      background-position: 200% 0;
-   }
-}
-
 .tool-active {
    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
-}
-
-.sidebar-collapsed {
-   width: 80px;
-}
-
-.sidebar-expanded {
-   width: 280px;
 }
 
 .gradient-text {
@@ -193,12 +143,6 @@ select option:hover {
    }
 }
 
-/* ===== Glassmorphism cards ===== */
-.glass {
-   background: rgba(20, 20, 22, 0.7);
-   backdrop-filter: blur(14px);
-   -webkit-backdrop-filter: blur(14px);
-}
 
 /* ===== Soft inner shadow ===== */
 .inner-shadow {
@@ -217,67 +161,4 @@ select option:hover {
 
 .animate-klique-shine {
    animation: klique-shine 2s linear infinite;
-}
-
-/* =========================================
-   Column Line Glow
-   ========================================= */
-
-.column-line-glow {
-   position: absolute;
-   top: -120px;
-   left: -2px;
-
-   width: 0px;
-   height: 120px;
-
-   pointer-events: none;
-
-   background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(255, 255, 255, 0.15) 15%,
-      rgba(255, 255, 255, 0.95) 50%,
-      rgba(255, 255, 255, 0.15) 85%,
-      transparent 100%
-   );
-
-   filter: blur(0.5px);
-
-   box-shadow:
-      0 0 6px rgba(255, 255, 255, 0.8),
-      0 0 14px rgba(255, 255, 255, 0.45),
-      0 0 25px rgba(255, 255, 255, 0.2);
-
-   animation-name: column-glow-down;
-   animation-timing-function: linear;
-   animation-iteration-count: infinite;
-}
-
-@keyframes column-glow-down {
-   0% {
-      transform: translateY(-120px);
-      opacity: 0;
-   }
-
-   8% {
-      opacity: 1;
-   }
-
-   45% {
-      opacity: 1;
-   }
-
-   65% {
-      opacity: 0.8;
-   }
-
-   85% {
-      opacity: 0.2;
-   }
-
-   100% {
-      transform: translateY(100vh);
-      opacity: 0;
-   }
 }

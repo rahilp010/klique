@@ -10,9 +10,7 @@ import React, {
 import emojis from 'emoji-datasource';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
-import { FaBars } from 'react-icons/fa';
-import { FiCheck } from 'react-icons/fi';
-import { Search } from 'lucide-react';
+import { Search, Menu, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import ReactCountryFlag from 'react-country-flag';
 import { Input } from '../ui/CustomControl';

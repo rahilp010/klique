@@ -16,7 +16,6 @@ import {
    AtSign,
    Clock,
    Command,
-   Facebook,
    FileText,
    Github,
    Hash,
@@ -26,6 +25,7 @@ import {
    Sparkles,
    Type,
    UserRound,
+   Braces,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from './SEO';
@@ -63,11 +63,33 @@ const tools = [
       ai: true,
    },
    {
+      icon: FileText,
+      title: 'PDF Converter',
+      desc: 'Convert Word documents to high-quality PDFs.',
+      link: '/convert',
+      category: 'Utilities',
+   },
+   {
+      icon: Braces,
+      title: 'JSON Formatter & Diff',
+      desc: 'Format, validate, repair, and compare JSON data instantly.',
+      link: '/jsonformatter',
+      category: 'Utilities',
+   },
+   {
+      icon: Clock,
+      title: 'Time Zone',
+      desc: 'Convert times between zones and plan global meetings.',
+      link: '/timezone',
+      category: 'Utilities',
+   },
+   {
       icon: AtSign,
       title: 'Username Generator',
       desc: 'Create unique, aesthetic usernames and handles instantly.',
       link: '/username',
       category: 'Writing',
+      ai: true,
    },
    {
       icon: Type,
@@ -91,24 +113,10 @@ const tools = [
       category: 'Text & Symbols',
    },
    {
-      icon: FileText,
-      title: 'PDF Converter',
-      desc: 'Convert Word documents to high-quality PDFs.',
-      link: '/convert',
-      category: 'Utilities',
-   },
-   {
       icon: AlignLeft,
       title: 'Word Counter',
       desc: 'Count words and characters, and estimate reading time.',
       link: '/wordcounter',
-      category: 'Utilities',
-   },
-   {
-      icon: Clock,
-      title: 'Time Zone',
-      desc: 'Convert times between zones and plan global meetings.',
-      link: '/timezone',
       category: 'Utilities',
    },
 ];
@@ -116,6 +124,7 @@ const tools = [
 const footerLinks = {
    Tools: [
       { label: 'PDF Tools', to: '/convert' },
+      { label: 'JSON Formatter', to: '/jsonformatter' },
       { label: 'Font Creator', to: '/fontgenerator' },
       { label: 'Emoji Generator', to: '/emojigenerator' },
       { label: 'Symbol Generator', to: '/symbol' },
@@ -135,7 +144,6 @@ const footerLinks = {
 };
 
 const socials = [
-   { name: 'Facebook', icon: Facebook },
    { name: 'GitHub', icon: Github },
    { name: 'Instagram', icon: Instagram },
    { name: 'LinkedIn', icon: Linkedin },
@@ -438,9 +446,7 @@ export default function HeroPage() {
                   {...heroItem(0.05)}
                   className="relative mb-5 max-w-4xl text-4xl font-bold leading-[1.06] tracking-tight sm:mb-7 sm:text-5xl md:text-6xl lg:text-7xl">
                   Create {/* Animated Tinted Gradient Text */}
-                  <span className="gradient-text">
-                     Amazing Content
-                  </span>
+                  <span className="gradient-text">Amazing Content</span>
                   <br />
                   Effortlessly
                </motion.h1>

@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { FaTrash, FaDownload, FaCopy } from 'react-icons/fa';
-import { IoCloudUploadOutline } from 'react-icons/io5';
-import { FileText, Clock, Info } from 'lucide-react';
+import {
+   FileText,
+   Clock,
+   Info,
+   Trash2,
+   Download,
+   Copy,
+   Upload,
+   Check,
+} from 'lucide-react';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiCheck } from 'react-icons/fi';
 
 const WordCounter = () => {
    const [text, setText] = useState('');
@@ -291,7 +297,7 @@ const WordCounter = () => {
                      }}
                      className="fixed left-1/2 top-4 z-[200] w-[calc(100%-24px)] max-w-sm">
                      <div className="flex w-full items-center gap-3 rounded-full border border-zinc-700 bg-[#18181b]/95 px-4 py-3 text-zinc-200 shadow-lg backdrop-blur-md">
-                        <FiCheck className="h-4 w-4 shrink-0 text-green-400" />
+                        <Check className="h-4 w-4 shrink-0 text-green-400" />
 
                         <p className="min-w-0 flex-1 break-words pr-1 text-xs font-medium sm:text-sm">
                            {toast.message}
@@ -371,7 +377,7 @@ const WordCounter = () => {
                               className="hidden"
                            />
 
-                           <IoCloudUploadOutline size={18} />
+                           <Upload size={18} />
                         </label>
 
                         {/* Copy */}
@@ -382,9 +388,9 @@ const WordCounter = () => {
                            className="flex h-10 w-full items-center justify-center rounded-lg border border-zinc-800 bg-[#18181b] text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-zinc-200 disabled:cursor-not-allowed disabled:opacity-40 sm:h-auto sm:w-auto sm:p-2"
                            title="Copy">
                            {copied ? (
-                              <FiCheck className="text-green-400" size={18} />
+                              <Check className="text-green-400" size={18} />
                            ) : (
-                              <FaCopy size={17} />
+                              <Copy size={17} />
                            )}
                         </button>
 
@@ -395,7 +401,7 @@ const WordCounter = () => {
                            disabled={!text}
                            className="flex h-10 w-full items-center justify-center rounded-lg border border-zinc-800 bg-[#18181b] text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-zinc-200 disabled:cursor-not-allowed disabled:opacity-40 sm:h-auto sm:w-auto sm:p-2"
                            title="Download">
-                           <FaDownload size={17} />
+                           <Download size={17} />
                         </button>
 
                         {/* Clear */}
@@ -405,7 +411,7 @@ const WordCounter = () => {
                            disabled={!text}
                            className="flex h-10 w-full items-center justify-center rounded-lg border border-red-500/20 bg-red-500/10 text-red-400 transition-colors hover:bg-red-500/20 disabled:cursor-not-allowed disabled:opacity-40 sm:h-auto sm:w-auto sm:p-2"
                            title="Clear">
-                           <FaTrash size={17} />
+                           <Trash2 size={17} />
                         </button>
                      </div>
                   </div>
