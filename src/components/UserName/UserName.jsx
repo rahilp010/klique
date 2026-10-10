@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Dice6, Sparkle, Send, Check, Copy } from 'lucide-react';
+import { Dice6, Sparkle, Send, Check, Copy, Search } from 'lucide-react';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { motion, AnimatePresence } from 'motion/react';

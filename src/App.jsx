@@ -1,6 +1,8 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HeroPage from './components/HeroPage'; // Loaded synchronously for instant LCP
+import ScrollToTop from './components/ScrollToTop';
+import Loader from './components/Loader';
 
 // Define route import factories for preloading
 export const routeImports = {
@@ -43,12 +45,7 @@ const JsonFormatter = lazy(routeImports['/jsonformatter']);
 // Simple loading indicator during chunk fetches (if network is very slow)
 const LoadingFallback = () => (
    <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="flex flex-col items-center gap-4">
-         <div className="w-10 h-10 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div>
-         <p className="text-gray-400 text-xs font-semibold tracking-wider uppercase animate-pulse">
-            Loading tool...
-         </p>
-      </div>
+      <Loader />
    </div>
 );
 
@@ -67,6 +64,7 @@ function App() {
 
    return (
       <>
+         <ScrollToTop />
          <Suspense fallback={<LoadingFallback />}>
             <Routes>
                <Route path="/" element={<HeroPage />} />

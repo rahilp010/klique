@@ -11,8 +11,6 @@ import {
    TimePicker,
    SelectPicker,
 } from '@/components/ui/CustomControl';
-import cityTimezones from 'city-timezones';
-import * as countryTimezonesModule from 'countries-and-timezones';
 
 // Time Zone Offset Calculation Utilities
 const getOffsetMinutes = (timeZone, date = new Date()) => {
@@ -171,8 +169,10 @@ const isBusinessOpen = (timeZone, date = new Date()) => {
    }
 };
 
-const countryTimezones =
-   countryTimezonesModule?.default || countryTimezonesModule;
+let cityTimezones = null;
+let countryTimezones = {};
+let CITY_OPTIONS = [];
+let OPTIONS = [];
 
 const getRealCityRecords = () => {
    const records = Array.isArray(cityTimezones?.cityMapping)
@@ -243,50 +243,54 @@ const formatCountryName = (countryName = '') => {
    return countryMap[normalized] || normalized;
 };
 
-const REAL_CITY_OPTIONS = getRealCityRecords();
+const buildTimezoneOptions = () => {
+   const realCityOptions = getRealCityRecords();
 
-const CITY_OPTIONS = REAL_CITY_OPTIONS.sort((a, b) => {
-   const populationDiff = (b.population || 0) - (a.population || 0);
-   if (populationDiff !== 0) return populationDiff;
+   const cityOptions = realCityOptions.sort((a, b) => {
+      const populationDiff = (b.population || 0) - (a.population || 0);
+      if (populationDiff !== 0) return populationDiff;
 
-   return `${a.countryName || ''}${a.city}`.localeCompare(
-      `${b.countryName || ''}${b.city}`,
-   );
-}).filter(
-   (item, index, array) =>
-      array.findIndex(
-         (other) =>
-            other.city === item.city &&
-            other.tz === item.tz &&
-            other.country === item.country,
-      ) === index,
-);
-
-const GLOBAL_TIMEZONE_OPTIONS = [
-   {
-      value: 'Timezone: UTC',
-      tz: 'UTC',
-      city: 'UTC',
-      country: null,
-      countryName: null,
-      label: 'UTC',
-   },
-   ...getRealTimezoneRecords(),
-].filter(
-   (item, index, array) =>
-      array.findIndex((other) => other.tz === item.tz) === index,
-);
-
-const OPTIONS = [...CITY_OPTIONS, ...GLOBAL_TIMEZONE_OPTIONS].filter(
-   (item, index, array) =>
-      array.findIndex(
-         (other) =>
-            other.value === item.value ||
-            (other.tz === item.tz &&
+      return `${a.countryName || ''}${a.city}`.localeCompare(
+         `${b.countryName || ''}${b.city}`,
+      );
+   }).filter(
+      (item, index, array) =>
+         array.findIndex(
+            (other) =>
                other.city === item.city &&
-               other.country === item.country),
-      ) === index,
-);
+               other.tz === item.tz &&
+               other.country === item.country,
+         ) === index,
+   );
+
+   const globalTimezoneOptions = [
+      {
+         value: 'Timezone: UTC',
+         tz: 'UTC',
+         city: 'UTC',
+         country: null,
+         countryName: null,
+         label: 'UTC',
+      },
+      ...getRealTimezoneRecords(),
+   ].filter(
+      (item, index, array) =>
+         array.findIndex((other) => other.tz === item.tz) === index,
+   );
+
+   const options = [...cityOptions, ...globalTimezoneOptions].filter(
+      (item, index, array) =>
+         array.findIndex(
+            (other) =>
+               other.value === item.value ||
+               (other.tz === item.tz &&
+                  other.city === item.city &&
+                  other.country === item.country),
+         ) === index,
+   );
+
+   return { cityOptions, options };
+};
 
 const getZoneCountry = (zone) => {
    if (zone?.country) return zone.country;
@@ -495,20 +499,15 @@ const SelectedZoneSummary = ({
 };
 
 const TimeZone = () => {
-   const [fromZone, setFromZone] = useState(
-      () => OPTIONS.find((o) => o.tz === 'Asia/Kolkata') || OPTIONS[0],
-   );
-   const [toZone, setToZone] = useState(
-      () => OPTIONS.find((o) => o.tz === 'America/New_York') || OPTIONS[1],
-   );
+   const [timezoneOptions, setTimezoneOptions] = useState([]);
+   const [fromZone, setFromZone] = useState(null);
+   const [toZone, setToZone] = useState(null);
    const [date, setDate] = useState(new Date());
    const [is12h, setIs12h] = useState(true);
    const [favorites, setFavorites] = useState([]);
 
    // Meeting Planner State
-   const [plannerSource, setPlannerSource] = useState(
-      () => OPTIONS.find((o) => o.tz === 'Asia/Kolkata') || OPTIONS[0],
-   );
+   const [plannerSource, setPlannerSource] = useState(null);
    const [plannerTarget, setPlannerTarget] = useState(null);
    const [plannerResult, setPlannerResult] = useState(null);
    const [plannerDate, setPlannerDate] = useState(() =>
@@ -518,6 +517,41 @@ const TimeZone = () => {
    const [plannerTime, setPlannerTime] = useState(() =>
       getLocalTimeInputValue(),
    );
+
+   // Load the large city/timezone databases only when this tool is opened.
+   useEffect(() => {
+      let cancelled = false;
+
+      Promise.all([
+         import('city-timezones'),
+         import('countries-and-timezones'),
+      ])
+         .then(([cityModule, countryModule]) => {
+            if (cancelled) return;
+
+            cityTimezones = cityModule.default || cityModule;
+            countryTimezones = countryModule.default || countryModule;
+
+            const built = buildTimezoneOptions();
+            CITY_OPTIONS = built.cityOptions;
+            OPTIONS = built.options;
+            setTimezoneOptions(built.options);
+
+            const india = built.options.find((o) => o.tz === 'Asia/Kolkata') || built.options[0] || null;
+            const newYork = built.options.find((o) => o.tz === 'America/New_York') || built.options[1] || built.options[0] || null;
+
+            setFromZone(india);
+            setToZone(newYork);
+            setPlannerSource(india);
+         })
+         .catch((error) => {
+            console.error('Failed to load timezone databases:', error);
+         });
+
+      return () => {
+         cancelled = true;
+      };
+   }, []);
 
    useEffect(() => {
       const timer = setInterval(() => setDate(new Date()), 1000);
@@ -728,7 +762,7 @@ const TimeZone = () => {
                   </div>
                   <div className="mt-3 min-w-0 sm:mt-4">
                      <SelectPicker
-                        data={OPTIONS}
+                        data={timezoneOptions}
                         value={fromZone?.value}
                         onChange={(val, item) => item && setFromZone(item)}
                         cleanable={false}
@@ -899,7 +933,7 @@ const TimeZone = () => {
                   </div>
                   <div className="mt-3 min-w-0 sm:mt-4">
                      <SelectPicker
-                        data={OPTIONS}
+                        data={timezoneOptions}
                         value={toZone?.value}
                         onChange={(val, item) => item && setToZone(item)}
                         cleanable={false}
@@ -950,7 +984,7 @@ const TimeZone = () => {
                               Source Location
                            </label>
                            <SelectPicker
-                              data={OPTIONS}
+                              data={timezoneOptions}
                               value={plannerSource?.value}
                               onChange={(val, item) =>
                                  item && setPlannerSource(item)
@@ -970,7 +1004,7 @@ const TimeZone = () => {
                               Target Location
                            </label>
                            <SelectPicker
-                              data={OPTIONS}
+                              data={timezoneOptions}
                               value={plannerTarget?.value}
                               onChange={(val, item) =>
                                  item && setPlannerTarget(item)

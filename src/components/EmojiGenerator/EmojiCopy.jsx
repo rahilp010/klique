@@ -7,7 +7,6 @@ import React, {
    useEffect,
    useRef,
 } from 'react';
-import emojis from 'emoji-datasource';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { Search, Menu, Check } from 'lucide-react';
@@ -95,6 +94,8 @@ export default function EmojiCopy() {
    const [searchTerm, setSearchTerm] = useState('');
    const [recentEmojis, setRecentEmojis] = useState([]);
    const [placeholderIndex, setPlaceholderIndex] = useState(0);
+   const [emojiData, setEmojiData] = useState([]);
+   const [emojiDataLoading, setEmojiDataLoading] = useState(true);
 
    // Infinite-scroll pagination: render 40 at a time.
    const PAGE_SIZE = 40;
@@ -118,13 +119,40 @@ export default function EmojiCopy() {
    }, []);
 
    useEffect(() => {
-      const stored = JSON.parse(localStorage.getItem('recentEmojis') || '[]');
-      setRecentEmojis(stored);
+      try {
+         const stored = JSON.parse(localStorage.getItem('recentEmojis') || '[]');
+         setRecentEmojis(Array.isArray(stored) ? stored : []);
+      } catch {
+         setRecentEmojis([]);
+      }
+   }, []);
+
+   // Load the large emoji database only when this tool is opened.
+   useEffect(() => {
+      let cancelled = false;
+
+      import('emoji-datasource')
+         .then((module) => {
+            if (cancelled) return;
+            const data = module.default || module;
+            setEmojiData(Array.isArray(data) ? data : []);
+         })
+         .catch((error) => {
+            console.error('Failed to load emoji database:', error);
+            if (!cancelled) setEmojiData([]);
+         })
+         .finally(() => {
+            if (!cancelled) setEmojiDataLoading(false);
+         });
+
+      return () => {
+         cancelled = true;
+      };
    }, []);
 
    const processedEmojis = useMemo(
       () =>
-         emojis.reduce((acc, e) => {
+         emojiData.reduce((acc, e) => {
             if (!e.unified || !e.short_name) return acc;
             acc.push({
                char: unifiedToEmoji(e.unified),
@@ -134,7 +162,7 @@ export default function EmojiCopy() {
             });
             return acc;
          }, []),
-      [],
+      [emojiData],
    );
 
    const groupedEmojis = useMemo(() => {
@@ -209,7 +237,7 @@ export default function EmojiCopy() {
       observer.observe(sentinel);
 
       return () => observer.disconnect();
-   }, [displayedEmojis.length, hasMoreEmojis]);
+   }, [displayedEmojis.length, visibleCount, hasMoreEmojis]);
 
    const currentSectionTitle = useMemo(() => {
       if (searchTerm.trim()) return `Search Results for "${searchTerm}"`;
@@ -340,9 +368,9 @@ export default function EmojiCopy() {
                                  : 'border-green-500/50 text-green-400'
                            }`}>
                            {toast.type === 'error' ? (
-                              <FiCheck className="w-4 h-4 hidden" />
+                              <Check className="w-4 h-4 hidden" />
                            ) : (
-                              <FiCheck className="w-4 h-4" />
+                              <Check className="w-4 h-4" />
                            )}
                            <p className="text-xs sm:text-sm font-medium pr-2 break-words">
                               {toast.message}

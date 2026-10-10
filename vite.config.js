@@ -48,11 +48,11 @@ export default defineConfig({
           if (id.includes('node_modules/lucide-react')) {
             return 'lucide';
           }
-          // Emoji datasource — large, only used in EmojiGenerator
-          if (id.includes('emoji-datasource') || id.includes('emoji-datasource')) {
+          // Large datasets are also dynamically imported by their tool pages.
+          // Keep them in dedicated chunks so they are not merged into shared UI code.
+          if (id.includes('emoji-datasource')) {
             return 'emoji-data';
           }
-          // city-timezones — large, only used in TimeZone
           if (id.includes('city-timezones')) {
             return 'city-timezones';
           }
