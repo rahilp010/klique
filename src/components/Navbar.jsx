@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
+import { preloadRoute } from '../App';
 import { motion, AnimatePresence } from 'motion/react';
 import {
    Home,
@@ -66,6 +67,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
    }, [location.pathname]);
 
    const handleMouseEnter = (item, e) => {
+      preloadRoute(item.path);
       const rect = e.currentTarget.getBoundingClientRect();
       setActiveTooltip({
          title: item.title,
@@ -86,6 +88,13 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
                className="pointer-events-auto flex items-center gap-2 group">
                <span className="inline-block whitespace-nowrap text-2xl font-bold tracking-tight bg-[linear-gradient(110deg,#ffffff_25%,#a1a1aa_40%,#ffffff_50%,#a1a1aa_60%,#ffffff_75%)] bg-[length:300%_100%] bg-clip-text text-transparent animate-klique-shine drop-shadow-md">
                   Klique
+               </span>
+               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.25)] backdrop-blur-md select-none">
+                  <span className="relative flex h-1.5 w-1.5">
+                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                     <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  </span>
+                  <span>Free</span>
                </span>
             </Link>
 

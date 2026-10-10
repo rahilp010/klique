@@ -1,20 +1,44 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HeroPage from './components/HeroPage'; // Loaded synchronously for instant LCP
 
-// Keep heavy tool dependencies out of the initial homepage bundle.
-const EmojiCopy = lazy(() => import('./components/EmojiGenerator/EmojiCopy'));
-const FancyFontGenerator = lazy(() => import('./components/FanceyFont/FanceyFontGenerarot'));
-const CoolSymbol = lazy(() => import('./components/CoolSymbol/CoolSymbol'));
-const HashtagGenerator = lazy(() => import('./components/Hashtag/HashtagGenerator'));
-const BioGenerator = lazy(() => import('./components/BioGenerator/BioGenerator'));
-const WordCounter = lazy(() => import('./components/WordCounter/WordCounter'));
-const Paraphrase = lazy(() => import('./components/Paraphrase/Paraphrase'));
-const UsernameGenerator = lazy(() => import('./components/UserName/UserName'));
-const TimeZone = lazy(() => import('./components/TimeZone/TimeZone'));
-const PDFTools = lazy(() => import('./components/Converter/PDFTools'));
+// Define route import factories for preloading
+export const routeImports = {
+   '/emojigenerator': () => import('./components/EmojiGenerator/EmojiCopy'),
+   '/fontgenerator': () =>
+      import('./components/FanceyFont/FanceyFontGenerarot'),
+   '/symbol': () => import('./components/CoolSymbol/CoolSymbol'),
+   '/hashtaggenerator': () => import('./components/Hashtag/HashtagGenerator'),
+   '/bio': () => import('./components/BioGenerator/BioGenerator'),
+   '/wordcounter': () => import('./components/WordCounter/WordCounter'),
+   '/aiwriter': () => import('./components/Paraphrase/Paraphrase'),
+   '/username': () => import('./components/UserName/UserName'),
+   '/timezone': () => import('./components/TimeZone/TimeZone'),
+   '/convert': () => import('./components/Converter/PDFTools'),
+};
 
-// Simple loading indicator during chunk fetches
+// Preload specific route or all routes in background
+export const preloadRoute = (path) => {
+   if (path && routeImports[path]) {
+      routeImports[path]();
+   } else {
+      Object.values(routeImports).forEach((importFn) => importFn());
+   }
+};
+
+// Lazy components
+const EmojiCopy = lazy(routeImports['/emojigenerator']);
+const FancyFontGenerator = lazy(routeImports['/fontgenerator']);
+const CoolSymbol = lazy(routeImports['/symbol']);
+const HashtagGenerator = lazy(routeImports['/hashtaggenerator']);
+const BioGenerator = lazy(routeImports['/bio']);
+const WordCounter = lazy(routeImports['/wordcounter']);
+const Paraphrase = lazy(routeImports['/aiwriter']);
+const UsernameGenerator = lazy(routeImports['/username']);
+const TimeZone = lazy(routeImports['/timezone']);
+const PDFTools = lazy(routeImports['/convert']);
+
+// Simple loading indicator during chunk fetches (if network is very slow)
 const LoadingFallback = () => (
    <div className="min-h-screen bg-black flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
@@ -27,6 +51,18 @@ const LoadingFallback = () => (
 );
 
 function App() {
+   useEffect(() => {
+      // Preload all route chunks in the background right after initial mount
+      const timer = setTimeout(() => {
+         if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => preloadRoute());
+         } else {
+            preloadRoute();
+         }
+      }, 100);
+      return () => clearTimeout(timer);
+   }, []);
+
    return (
       <>
          <Suspense fallback={<LoadingFallback />}>

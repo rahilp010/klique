@@ -4,7 +4,6 @@ import SEO from '../SEO';
 import { FaBars } from 'react-icons/fa';
 import { FiCheck } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'motion/react';
-import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 
 const symbolCategories = [
    {
@@ -678,6 +677,17 @@ export default function CoolSymbol() {
                      priceCurrency: 'USD',
                   },
                }}
+            />
+
+
+            {/* Static ambient backdrop */}
+            <div
+               aria-hidden
+               className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(113,113,122,0.14),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_50%)]"
+            />
+            <div
+               aria-hidden
+               className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[linear-gradient(to_right,rgba(113,113,122,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(113,113,122,0.10)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_at_50%_0%,#000_20%,transparent_70%)]"
             />
 
             <div className="relative z-[100] w-full bg-[#16161b] transition-all duration-300 my-5">

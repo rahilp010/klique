@@ -22,7 +22,6 @@ import {
    ArrowDown,
    RefreshCw,
 } from 'lucide-react';
-import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -1201,6 +1200,7 @@ export default function PDFTools() {
       document.body.removeChild(a);
    };
 
+
    return (
       <div
          className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-3 py-6 sm:px-6 sm:py-8 md:px-10 overflow-hidden
@@ -1236,6 +1236,16 @@ export default function PDFTools() {
                   priceCurrency: 'USD',
                },
             }}
+         />
+
+         {/* Static ambient backdrop */}
+         <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(113,113,122,0.14),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_50%)]"
+         />
+         <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[linear-gradient(to_right,rgba(113,113,122,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(113,113,122,0.10)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_at_50%_0%,#000_20%,transparent_70%)]"
          />
 
          {/* Navigation Bar */}

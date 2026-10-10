@@ -13,7 +13,6 @@ import {
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { motion, AnimatePresence } from 'motion/react';
-import { ColumnLines } from '@/components/ui/download-with-columnlines-utils/columnlines';
 import { callAiApi } from '../../services/aiService';
 
 export default function HashtagGenerator() {
@@ -191,7 +190,7 @@ Return only hashtags separated by spaces, no explanations.`;
 
    return (
       <div
-         className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10 overflow-hidden 
+         className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 sm:px-5 sm:py-8 md:px-10 overflow-hidden 
     before:absolute
     before:inset-0
     before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
@@ -224,6 +223,16 @@ Return only hashtags separated by spaces, no explanations.`;
                   priceCurrency: 'USD',
                },
             }}
+         />
+
+         {/* Static ambient backdrop */}
+         <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(113,113,122,0.14),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_50%)]"
+         />
+         <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[linear-gradient(to_right,rgba(113,113,122,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(113,113,122,0.10)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_at_50%_0%,#000_20%,transparent_70%)]"
          />
 
          {/* ========================================================
