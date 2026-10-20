@@ -689,9 +689,9 @@ const TimeZone = () => {
   "
          />
          <SEO
-            title="Time Zone Converter & Meeting Planner | Klique"
-            description="Convert times between global IANA time zones. Compare time differences, plan meetings, and keep track of favorite cities worldwide."
-            keywords="time zone converter, world clock, meeting planner, klique timezone, check local time"
+            title="Time Zone Converter & Meeting Planner - World Clock | Klique"
+            description="Convert times between global IANA time zones. Compare time differences, plan meetings, and keep track of favorite cities worldwide. Free online time zone tool."
+            keywords="time zone converter, world clock, meeting planner, international time, time difference calculator, klique timezone, check local time, schedule meetings, global time converter, timezone comparison"
             canonicalUrl="https://klique.netlify.app/timezone"
             jsonLd={{
                '@context': 'https://schema.org',
@@ -700,13 +700,26 @@ const TimeZone = () => {
                url: 'https://klique.netlify.app/timezone',
                applicationCategory: 'UtilitiesApplication',
                operatingSystem: 'All',
-               description:
-                  'Convert international time zones, compare time differences, and schedule global meetings.',
+               description: 'Convert international time zones, compare time differences, and schedule global meetings with IANA support.',
                offers: {
                   '@type': 'Offer',
                   price: '0',
                   priceCurrency: 'USD',
                },
+               author: {
+                  '@type': 'Organization',
+                  name: 'Klique',
+               },
+               featureList: [
+                  'IANA time zone database',
+                  'Global time conversion',
+                  'Meeting time planner',
+                  'Time difference calculator',
+                  'Favorite cities tracking',
+                  'World clock comparison',
+                  'Multiple time zone support',
+                  'Real-time conversion',
+               ],
             }}
          />
 

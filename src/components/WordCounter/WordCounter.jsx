@@ -229,9 +229,9 @@ const WordCounter = () => {
   "
          />
          <SEO
-            title="Word Counter | Character & Sentence Text Analyzer | Klique"
-            description="Analyze your text online in real-time. Count words, characters, sentences, paragraphs, and estimate average reading and speaking times instantly."
-            keywords="word counter, character counter, word count tool, text analyzer, count words online, reading time estimator, klique word counter"
+            title="Word Counter - Character & Sentence Text Analyzer | Klique"
+            description="Analyze your text online in real-time. Count words, characters, sentences, paragraphs, and estimate average reading and speaking times instantly. Free online text analyzer."
+            keywords="word counter, character counter, word count tool, text analyzer, count words online, reading time estimator, klique word counter, sentence counter, paragraph counter, character count tool, word density, text statistics"
             canonicalUrl="https://klique.netlify.app/wordcounter"
             jsonLd={{
                '@context': 'https://schema.org',
@@ -240,13 +240,26 @@ const WordCounter = () => {
                url: 'https://klique.netlify.app/wordcounter',
                applicationCategory: 'UtilitiesApplication',
                operatingSystem: 'All',
-               description:
-                  'Analyze text in real time with word count, character count, sentence count, and reading time estimation.',
+               description: 'Analyze text in real time with word count, character count, sentence count, paragraph count, and reading time estimation.',
                offers: {
                   '@type': 'Offer',
                   price: '0',
                   priceCurrency: 'USD',
                },
+               author: {
+                  '@type': 'Organization',
+                  name: 'Klique',
+               },
+               featureList: [
+                  'Real-time word counting',
+                  'Character counting',
+                  'Sentence counting',
+                  'Paragraph counting',
+                  'Reading time estimation',
+                  'Speaking time estimation',
+                  'Word density analysis',
+                  'Text statistics',
+               ],
             }}
          />
 

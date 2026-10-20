@@ -166,9 +166,9 @@ Rules:
   "
          />
          <SEO
-            title="Aesthetic Username Generator | Custom Gamertags & Handles | Klique"
-            description="Create cool, unique, and aesthetic usernames for Instagram, TikTok, YouTube, Reddit, Roblox, and gaming. Find the perfect handle instantly using AI."
-            keywords="username generator, cool usernames, gamer tag generator, aesthetic handles, instagram username generator, klique, tiktok username generator"
+            title="Aesthetic Username Generator - Custom Gamertags & Handles | Klique"
+            description="Create cool, unique, and aesthetic usernames for Instagram, TikTok, YouTube, Reddit, Roblox, and gaming. Find the perfect handle instantly using AI. Free online username generator."
+            keywords="username generator, cool usernames, gamer tag generator, aesthetic handles, instagram username generator, klique, tiktok username generator, youtube username, reddit username, roblox username, gaming username, social media handles"
             canonicalUrl="https://klique.netlify.app/username"
             jsonLd={{
                '@context': 'https://schema.org',
@@ -177,13 +177,27 @@ Rules:
                url: 'https://klique.netlify.app/username',
                applicationCategory: 'UtilitiesApplication',
                operatingSystem: 'All',
-               description:
-                  'Generate unique aesthetic usernames, gamertags, and social media handles using AI.',
+               description: 'Generate unique aesthetic usernames, gamertags, and social media handles using AI-powered suggestions.',
                offers: {
                   '@type': 'Offer',
                   price: '0',
                   priceCurrency: 'USD',
                },
+               author: {
+                  '@type': 'Organization',
+                  name: 'Klique',
+               },
+               featureList: [
+                  'AI-powered username generation',
+                  'Aesthetic username suggestions',
+                  'Gamer tag generator',
+                  'Instagram username ideas',
+                  'TikTok username ideas',
+                  'YouTube username ideas',
+                  'Reddit username ideas',
+                  'Roblox username generator',
+                  'Social media handle creator',
+               ],
             }}
          />
 

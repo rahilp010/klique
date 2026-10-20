@@ -389,16 +389,37 @@ export default function AIWriter() {
   "
          />
          <SEO
-            title="AI Writer & Paraphrasing Tool | Rephrase Text | Klique"
-            description="Rephrase sentences, improve articles, fix grammar, and write creative copy with our free AI writer and paraphrase tool powered by advanced AI."
-            keywords="ai writer, paraphrasing tool, article rewriter, rephrase sentences, content generator, ai copywriter, klique ai writer, grammar checker"
+            title="AI Writer & Paraphrasing Tool - Rephrase Text | Klique"
+            description="Rephrase sentences, improve articles, fix grammar, and write creative copy with our free AI writer and paraphrase tool powered by advanced AI. Content generation made easy."
+            keywords="ai writer, paraphrasing tool, article rewriter, rephrase sentences, content generator, ai copywriter, klique ai writer, grammar checker, text rewriter, article spinner, content creator, ai writing assistant"
             canonicalUrl="https://klique.netlify.app/aiwriter"
             jsonLd={{
                '@context': 'https://schema.org',
                '@type': 'SoftwareApplication',
                name: 'AI Writer Studio',
+               url: 'https://klique.netlify.app/aiwriter',
                operatingSystem: 'All',
                applicationCategory: 'UtilitiesApplication',
+               description: 'Rephrase sentences, improve articles, fix grammar, and write creative copy with AI-powered writing assistant.',
+               offers: {
+                  '@type': 'Offer',
+                  price: '0',
+                  priceCurrency: 'USD',
+               },
+               author: {
+                  '@type': 'Organization',
+                  name: 'Klique',
+               },
+               featureList: [
+                  'AI-powered paraphrasing',
+                  'Article rewriting',
+                  'Grammar checking',
+                  'Creative copy writing',
+                  'Sentence rephrasing',
+                  'Content generation',
+                  'Multiple writing tones',
+                  'Text improvement',
+               ],
             }}
          />
 

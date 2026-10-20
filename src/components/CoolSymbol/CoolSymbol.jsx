@@ -283,10 +283,38 @@ export default function CoolSymbol() {
   "
             />
             <SEO
-               title="Unicode Symbols Copy & Paste | Special Characters | Klique"
-               description="Browse and copy Unicode symbols, stars, arrows, currency signs, math operators, brackets, and decorative characters."
-               keywords="unicode symbols, special characters, symbol copy paste, currency symbols, math symbols, arrows, brackets"
+               title="Unicode Symbols Copy & Paste - Special Characters | Klique"
+               description="Browse and copy Unicode symbols, stars, arrows, currency signs, math operators, brackets, and decorative characters. Free online symbol library with instant copy-paste."
+               keywords="unicode symbols, special characters, symbol copy paste, currency symbols, math symbols, arrows, brackets, decorative symbols, emoji symbols, text symbols, unicode characters, copy paste symbols, klique symbols"
                canonicalUrl="https://klique.netlify.app/symbol"
+               jsonLd={{
+                  '@context': 'https://schema.org',
+                  '@type': 'WebApplication',
+                  name: 'Unicode Symbols Library',
+                  url: 'https://klique.netlify.app/symbol',
+                  applicationCategory: 'UtilitiesApplication',
+                  operatingSystem: 'All',
+                  description: 'Browse and copy Unicode symbols, stars, arrows, currency signs, math operators, brackets, and decorative characters.',
+                  offers: {
+                     '@type': 'Offer',
+                     price: '0',
+                     priceCurrency: 'USD',
+                  },
+                  author: {
+                     '@type': 'Organization',
+                     name: 'Klique',
+                  },
+                  featureList: [
+                     'Unicode symbol browser',
+                     'Special characters copy-paste',
+                     'Currency symbols',
+                     'Math operators',
+                     'Arrows and direction symbols',
+                     'Brackets and punctuation',
+                     'Decorative symbols',
+                     'Emoji symbols',
+                  ],
+               }}
             />
 
             {/* Static ambient backdrop */}

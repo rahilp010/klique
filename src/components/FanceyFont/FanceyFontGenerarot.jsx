@@ -198,13 +198,18 @@ const FancyFontGenerator = () => {
       <>
          <style>{responsiveSafetyStyles}</style>
          <div
-            className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#09090b] px-3 py-6 font-sans text-zinc-100 customScrollbar sm:px-5 sm:py-8 md:px-10 
-     overflow-hidden
+            className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-3 py-6 sm:px-6 sm:py-8 md:px-10 overflow-hidden
+
     before:absolute
+
     before:inset-0
+
     before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+
     after:absolute
+
     after:inset-0
+
     after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
             <div
                className="
@@ -213,21 +218,37 @@ const FancyFontGenerator = () => {
   "
             />
             <SEO
-               title="Fancy Font Generator | Aesthetic Text Fonts Changer | Klique"
-               description="Convert your normal text into cool, stylish, and aesthetic fancy text formats. Copy and paste stylish fonts directly to Instagram, Twitter, and TikTok."
-               keywords="font generator, fancy text generator, cool fonts, aesthetic text changer, instagram fonts, klique font generator, custom fonts copy and paste"
+               title="Fancy Font Generator - Aesthetic Text Fonts Changer | Klique"
+               description="Convert your normal text into cool, stylish, and aesthetic fancy text formats. Copy and paste stylish fonts directly to Instagram, Twitter, TikTok, and Discord. Free online font generator."
+               keywords="font generator, fancy text generator, cool fonts, aesthetic text changer, instagram fonts, twitter fonts, tiktok fonts, discord fonts, klique font generator, custom fonts copy and paste, text stylizer, unicode fonts"
                canonicalUrl="https://klique.netlify.app/fontgenerator"
                jsonLd={{
                   '@context': 'https://schema.org',
                   '@type': 'SoftwareApplication',
                   name: 'Fancy Font Generator',
+                  url: 'https://klique.netlify.app/fontgenerator',
                   operatingSystem: 'All',
                   applicationCategory: 'UtilitiesApplication',
+                  description: 'Convert normal text into cool, stylish, and aesthetic fancy text formats for social media.',
                   offers: {
                      '@type': 'Offer',
                      price: '0',
                      priceCurrency: 'USD',
                   },
+                  author: {
+                     '@type': 'Organization',
+                     name: 'Klique',
+                  },
+                  featureList: [
+                     'Multiple font styles',
+                     'Aesthetic text converter',
+                     'Instagram compatible fonts',
+                     'Twitter compatible fonts',
+                     'TikTok compatible fonts',
+                     'Discord compatible fonts',
+                     'Instant copy-paste',
+                     'Unicode text transformation',
+                  ],
                }}
             />
 
@@ -255,7 +276,7 @@ const FancyFontGenerator = () => {
                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="w-full max-w-4xl text-center mb-6 sm:mb-7 px-1">
+                  className="w-full max-w-6xl text-center mb-6 sm:mb-7 ml-18">
                   <h1 className="text-3xl sm:text-4xl font-medium text-zinc-100 tracking-tight mb-3 pt-18">
                      Fancy Font Generator
                   </h1>
@@ -269,7 +290,7 @@ const FancyFontGenerator = () => {
                </motion.div>
 
                {/* INPUT + OUTPUT */}
-               <div className="w-full max-w-4xl min-w-0 flex flex-col md:flex-row gap-3 sm:gap-4 items-stretch md:items-center justify-center mb-6 sm:mb-7">
+               <div className="relative z-10 mx-auto flex min-h-[80dvh] w-full max-w-6xl pb-28 pt-14 sm:pb-24 sm:pt-10 lg:pl-20 gap-6">
                   {/* INPUT */}
                   <div className="relative min-w-0 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-sm p-3 sm:p-4 w-full focus-within:ring-2 focus-within:ring-zinc-900 dark:focus-within:ring-zinc-100 transition-all">
                      <label className="flex items-center gap-2 text-[11px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-3">
@@ -297,7 +318,7 @@ const FancyFontGenerator = () => {
 
                   {/* ARROW */}
                   <div className="hidden md:flex items-center">
-                     <div className="w-20 h-10 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center shadow-sm text-zinc-900 dark:text-zinc-100">
+                     <div className="w-26 h-12 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center shadow-sm text-zinc-900 dark:text-zinc-100">
                         <ArrowRight size={17} />
                      </div>
                   </div>
@@ -317,7 +338,7 @@ const FancyFontGenerator = () => {
 
                      <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-zinc-50 dark:bg-zinc-950/50 border-t border-zinc-200 dark:border-zinc-800 flex flex-wrap justify-end gap-2 absolute bottom-0 w-full left-0 rounded-b-2xl">
                         <button
-                           className="flex-1 sm:flex-none justify-center items-center gap-2 px-3 py-2 sm:py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all text-[11px] font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider"
+                           className="flex gap-2 px-3 py-2 sm:py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all text-[11px] font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider"
                            onClick={() => {
                               if (!outputText) {
                                  showToast('Nothing to copy!', 'error');
@@ -333,7 +354,7 @@ const FancyFontGenerator = () => {
                         </button>
 
                         <button
-                           className="flex-1 sm:flex-none justify-center items-center gap-2 px-3 py-2 sm:py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all text-[11px] font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider"
+                           className="flex justify-center items-center gap-2 px-3 py-2 sm:py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all text-[11px] font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider"
                            onClick={downloadTxt}>
                            <Download size={14} />
                            Text
@@ -343,7 +364,7 @@ const FancyFontGenerator = () => {
                </div>
 
                {/* SEARCH + FILTER */}
-               <div className="w-full max-w-4xl min-w-0 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3 py-2 mt-1 sm:mt-2">
+               <div className="relative z-10 mx-auto flex flex-col sm:flex-row justify-between w-full max-w-6xl pb-12 pt-14 sm:pb-16 sm:pt-10 lg:pl-20 gap-6">
                   {/* SEARCH */}
                   <div className="relative w-full md:w-80 min-w-0 group">
                      <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
@@ -384,7 +405,7 @@ const FancyFontGenerator = () => {
                </div>
 
                {/* TRANSFORMATIONS */}
-               <div className="w-full max-w-4xl min-w-0 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mt-4 sm:mt-5">
+               <div className="w-full relative grid max-w-5xl grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 md:ml-20">
                   {filteredTransformations.map((item) => {
                      const isFavorite = favorites.includes(item.id);
 
@@ -461,11 +482,15 @@ const FancyFontGenerator = () => {
                               onClick={() => toggleFavorite(item.id)}
                               className="absolute top-4 right-4 z-20 p-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 active:scale-95 transition-all duration-200 group/btn border border-transparent hover:border-zinc-200 dark:hover:border-zinc-700">
                               {isFavorite ? (
-                                 <BsHeartFill className="text-red-500 text-lg" />
+                                 <Heart
+                                    size={20}
+                                    className="cursor-pointer transition-all duration-200 fill-red-500 text-red-500 scale-110 "
+                                 />
                               ) : (
                                  <Heart
-                                    className="text-zinc-400 group-hover/btn:text-red-500 transition-colors"
-                                    size={18}
+                                    size={20}
+                                    className={`cursor-pointer transition-all duration-200 fill-transparent text-gray-500 hover:text-red-500'
+                                    `}
                                  />
                               )}
                            </button>

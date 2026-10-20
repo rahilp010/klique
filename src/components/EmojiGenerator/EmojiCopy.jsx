@@ -317,9 +317,9 @@ export default function EmojiCopy() {
   "
             />
             <SEO
-               title="Emoji Mixer & Generator | Combine & Search Emojis | Klique"
-               description="Browse, mix, and copy-paste emojis easily. Create unique emoji combinations, search by category or country, and access trending emojis instantly."
-               keywords="emoji mixer, emoji generator, copy paste emojis, mix emojis, emoji merger, klique emojis, emojis browser"
+               title="Emoji Mixer & Generator - Combine & Search Emojis | Klique"
+               description="Browse, mix, and copy-paste emojis easily. Create unique emoji combinations, search by category or country, and access trending emojis instantly. Free online emoji tool."
+               keywords="emoji mixer, emoji generator, copy paste emojis, mix emojis, emoji merger, klique emojis, emojis browser, emoji search, emoji combinations, emoji picker, trending emojis, country flags emojis"
                canonicalUrl="https://klique.netlify.app/emojigenerator"
                jsonLd={{
                   '@context': 'https://schema.org',
@@ -328,13 +328,26 @@ export default function EmojiCopy() {
                   url: 'https://klique.netlify.app/emojigenerator',
                   applicationCategory: 'UtilitiesApplication',
                   operatingSystem: 'All',
-                  description:
-                     'Browse, search, mix, and copy emojis and custom emoji combinations.',
+                  description: 'Browse, search, mix, and copy emojis and custom emoji combinations with country flag support.',
                   offers: {
                      '@type': 'Offer',
                      price: '0',
                      priceCurrency: 'USD',
                   },
+                  author: {
+                     '@type': 'Organization',
+                     name: 'Klique',
+                  },
+                  featureList: [
+                     'Emoji mixing and combination',
+                     'Emoji search by category',
+                     'Country flag emojis',
+                     'Trending emojis',
+                     'Instant copy-paste',
+                     'Emoji categories',
+                     'Custom emoji combinations',
+                     'Unicode emoji support',
+                  ],
                }}
             />
 

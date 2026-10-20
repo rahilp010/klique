@@ -202,9 +202,9 @@ Return only hashtags separated by spaces, no explanations.`;
   "
          />
          <SEO
-            title="AI Hashtag Generator | Viral Social Media Tags | Klique"
-            description="Boost your social media presence with our AI Hashtag Generator. Create relevant, high-reach hashtags for Instagram, TikTok, YouTube, and Twitter instantly."
-            keywords="ai hashtag generator, hashtag creator, instagram hashtags, tiktok hashtags, viral tags, klique hashtags, trending hashtags generator"
+            title="AI Hashtag Generator - Viral Social Media Tags | Klique"
+            description="Boost your social media presence with our AI Hashtag Generator. Create relevant, high-reach hashtags for Instagram, TikTok, YouTube, Twitter, and LinkedIn instantly. Free online tool."
+            keywords="ai hashtag generator, hashtag creator, instagram hashtags, tiktok hashtags, viral tags, youtube hashtags, twitter hashtags, linkedin hashtags, klique hashtags, trending hashtags generator, social media tags, hashtag research"
             canonicalUrl="https://klique.netlify.app/hashtaggenerator"
             jsonLd={{
                '@context': 'https://schema.org',
@@ -213,13 +213,26 @@ Return only hashtags separated by spaces, no explanations.`;
                url: 'https://klique.netlify.app/hashtaggenerator',
                applicationCategory: 'UtilitiesApplication',
                operatingSystem: 'All',
-               description:
-                  'Generate viral, trending hashtags for Instagram, TikTok, and YouTube using AI.',
+               description: 'Generate viral, trending hashtags for Instagram, TikTok, YouTube, Twitter, and LinkedIn using AI.',
                offers: {
                   '@type': 'Offer',
                   price: '0',
                   priceCurrency: 'USD',
                },
+               author: {
+                  '@type': 'Organization',
+                  name: 'Klique',
+               },
+               featureList: [
+                  'AI-powered hashtag generation',
+                  'Instagram hashtag optimization',
+                  'TikTok hashtag suggestions',
+                  'YouTube hashtag research',
+                  'Twitter hashtag recommendations',
+                  'LinkedIn hashtag strategy',
+                  'Viral tag prediction',
+                  'Hashtag analytics',
+               ],
             }}
          />
 

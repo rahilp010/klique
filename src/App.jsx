@@ -18,6 +18,7 @@ export const routeImports = {
    '/timezone': () => import('./components/TimeZone/TimeZone'),
    '/convert': () => import('./components/Converter/PDFTools'),
    '/jsonformatter': () => import('./components/JsonFormatter/JsonFormatter'),
+   '/svgconverter': () => import('./components/SVGConverter/SVGConverter'),
 };
 
 // Preload specific route or all routes in background
@@ -41,6 +42,7 @@ const UsernameGenerator = lazy(routeImports['/username']);
 const TimeZone = lazy(routeImports['/timezone']);
 const PDFTools = lazy(routeImports['/convert']);
 const JsonFormatter = lazy(routeImports['/jsonformatter']);
+const SVGConverter = lazy(routeImports['/svgconverter']);
 
 // Simple loading indicator during chunk fetches (if network is very slow)
 const LoadingFallback = () => (
@@ -79,6 +81,7 @@ function App() {
                <Route path="/timezone" element={<TimeZone />} />
                <Route path="/convert" element={<PDFTools />} />
                <Route path="/jsonformatter" element={<JsonFormatter />} />
+               <Route path="/svgconverter" element={<SVGConverter />} />
             </Routes>
          </Suspense>
       </>

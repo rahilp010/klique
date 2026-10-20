@@ -500,8 +500,8 @@ export default function JsonFormatter() {
             indentSpaces === 'compact'
                ? 0
                : indentSpaces === 'tab'
-                 ? '\t'
-                 : Number(indentSpaces);
+                  ? '\t'
+                  : Number(indentSpaces);
 
          const formattedText =
             indentSpaces === 'compact'
@@ -708,10 +708,37 @@ export default function JsonFormatter() {
          />
 
          <SEO
-            title="JSON Formatter, Validator & Diff Checker | Klique"
-            description="Format, validate, repair, and compare JSON data instantly online. Free tools for developers and creators with tree visualizer and side-by-side diff comparison."
-            keywords="json formatter, json validator, json diff checker, format json online, compare json, json repair, json beautify, klique json tool"
+            title="JSON Formatter, Validator & Diff Checker - Free Online Tool | Klique"
+            description="Professional JSON formatter, validator, and diff checker. Format, beautify, repair, and compare JSON data instantly. Includes tree visualizer, error detection, and side-by-side comparison. Free online tool for developers."
+            keywords="json formatter, json validator, json beautifier, json diff checker, format json online, compare json, json repair, json tree viewer, json minifier, json to csv, json to xml, json parser, json linter, online json tool, developer tools, klique"
             canonicalUrl="https://klique.netlify.app/jsonformatter"
+            jsonLd={{
+               '@context': 'https://schema.org',
+               '@type': 'SoftwareApplication',
+               name: 'JSON Formatter & Diff Checker',
+               applicationCategory: 'DeveloperApplication',
+               operatingSystem: 'Web',
+               offers: {
+                  '@type': 'Offer',
+                  price: '0',
+                  priceCurrency: 'USD',
+               },
+               description: 'Professional JSON formatter, validator, and diff checker with tree visualizer and side-by-side comparison.',
+               author: {
+                  '@type': 'Organization',
+                  name: 'Klique',
+               },
+               featureList: [
+                  'JSON formatting and beautification',
+                  'JSON validation and error detection',
+                  'JSON repair and auto-fix',
+                  'Side-by-side JSON diff comparison',
+                  'Interactive JSON tree viewer',
+                  'JSON minification',
+                  'String escaping and unescaping',
+                  'Key sorting',
+               ],
+            }}
          />
 
          {/* Toast Notification */}
@@ -768,22 +795,20 @@ export default function JsonFormatter() {
                <div className="flex items-center gap-1 rounded-full backdrop-blur-xl py-1">
                   <button
                      onClick={() => setMode('format')}
-                     className={`flex items-center gap-1 rounded-full px-2 md:px-3.5 py-2.5 text-xs font-semibold transition-all ${
-                        mode === 'format'
+                     className={`flex items-center gap-1 rounded-full px-2 md:px-3.5 py-2.5 text-xs font-semibold transition-all ${mode === 'format'
                            ? 'bg-[#daf4aa] text-zinc-950 shadow-[0_0_15px_rgba(218,244,170,0.3)]'
                            : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
-                     }`}>
+                        }`}>
                      <Braces size={15} />
                      <span>Formatter</span>
                   </button>
 
                   <button
                      onClick={() => setMode('tree')}
-                     className={`flex items-center gap-1 rounded-full px-2 md:px-3.5 py-2.5 text-xs font-semibold transition-all ${
-                        mode === 'tree'
+                     className={`flex items-center gap-1 rounded-full px-2 md:px-3.5 py-2.5 text-xs font-semibold transition-all ${mode === 'tree'
                            ? 'bg-[#daf4aa] text-zinc-950 shadow-[0_0_15px_rgba(218,244,170,0.3)]'
                            : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
-                     }`}>
+                        }`}>
                      <FolderTree size={15} />
 
                      <span>Tree View</span>
@@ -791,11 +816,10 @@ export default function JsonFormatter() {
 
                   <button
                      onClick={() => setMode('diff')}
-                     className={`flex items-center gap-1 rounded-full px-2 md:px-3.5 py-2.5 text-xs font-semibold transition-all ${
-                        mode === 'diff'
+                     className={`flex items-center gap-1 rounded-full px-2 md:px-3.5 py-2.5 text-xs font-semibold transition-all ${mode === 'diff'
                            ? 'bg-[#daf4aa] text-zinc-950 shadow-[0_0_15px_rgba(218,244,170,0.3)]'
                            : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
-                     }`}>
+                        }`}>
                      <GitCompare size={15} />
 
                      <span>Diff Checker</span>
@@ -833,9 +857,8 @@ export default function JsonFormatter() {
                               : 'Quick Setup'}
                            <ChevronDown
                               size={14}
-                              className={`transition-transform duration-200 ${
-                                 showWorkspaceSettings ? 'rotate-180' : ''
-                              }`}
+                              className={`transition-transform duration-200 ${showWorkspaceSettings ? 'rotate-180' : ''
+                                 }`}
                            />
                         </button>
                      </div>
@@ -896,7 +919,7 @@ export default function JsonFormatter() {
                                        cleanable={false}
                                        placeholder="Select Sample JSON"
                                     />
-                                   
+
                                  </div>
 
                                  {/* Formatting preferences */}
@@ -1126,7 +1149,7 @@ export default function JsonFormatter() {
                         {mode === 'tree' ? (
                            <div className="p-3.5 sm:p-4 h-[300px] sm:h-[400px] lg:h-[480px] overflow-y-auto customScrollbar">
                               {formatAnalysis.isValid &&
-                              formatAnalysis.parsedObj ? (
+                                 formatAnalysis.parsedObj ? (
                                  <JsonTreeNode
                                     value={formatAnalysis.parsedObj}
                                  />
@@ -1151,15 +1174,14 @@ export default function JsonFormatter() {
                                     formatAnalysis.isValid
                                        ? formatAnalysis.formattedText
                                        : formatAnalysis.error
-                                         ? `// Parse Error:\n${formatAnalysis.error}`
-                                         : ''
+                                          ? `// Parse Error:\n${formatAnalysis.error}`
+                                          : ''
                                  }
                                  spellCheck={false}
-                                 className={`w-full h-full p-4 bg-transparent font-mono text-xs resize-none focus:outline-none customScrollbar leading-relaxed ${
-                                    formatAnalysis.isValid
+                                 className={`w-full h-full p-4 bg-transparent font-mono text-xs resize-none focus:outline-none customScrollbar leading-relaxed ${formatAnalysis.isValid
                                        ? 'text-emerald-400'
                                        : 'text-red-400'
-                                 }`}
+                                    }`}
                               />
                            </div>
                         )}
@@ -1208,21 +1230,19 @@ export default function JsonFormatter() {
                         <div className="flex items-center gap-1 bg-zinc-900 border border-zinc-800 p-1 rounded-xl">
                            <button
                               onClick={() => setDiffViewMode('split')}
-                              className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs font-medium transition-colors ${
-                                 diffViewMode === 'split'
+                              className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs font-medium transition-colors ${diffViewMode === 'split'
                                     ? 'bg-zinc-800 text-white'
                                     : 'text-zinc-400 hover:text-zinc-200'
-                              }`}>
+                                 }`}>
                               Side-by-Side
                            </button>
 
                            <button
                               onClick={() => setDiffViewMode('unified')}
-                              className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs font-medium transition-colors ${
-                                 diffViewMode === 'unified'
+                              className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs font-medium transition-colors ${diffViewMode === 'unified'
                                     ? 'bg-zinc-800 text-white'
                                     : 'text-zinc-400 hover:text-zinc-200'
-                              }`}>
+                                 }`}>
                               Unified
                            </button>
                         </div>
@@ -1277,13 +1297,12 @@ export default function JsonFormatter() {
                         {diffLines.map((line, idx) => (
                            <div
                               key={idx}
-                              className={`flex items-start gap-1.5 sm:gap-3 px-2 sm:px-3 py-1 rounded transition-colors min-w-max sm:min-w-0 ${
-                                 line.type === 'added'
+                              className={`flex items-start gap-1.5 sm:gap-3 px-2 sm:px-3 py-1 rounded transition-colors min-w-max sm:min-w-0 ${line.type === 'added'
                                     ? 'bg-emerald-500/10 text-emerald-300 border-l-2 border-emerald-500'
                                     : line.type === 'removed'
-                                      ? 'bg-red-500/10 text-red-300 border-l-2 border-red-500'
-                                      : 'text-zinc-400 hover:bg-zinc-900/40'
-                              }`}>
+                                       ? 'bg-red-500/10 text-red-300 border-l-2 border-red-500'
+                                       : 'text-zinc-400 hover:bg-zinc-900/40'
+                                 }`}>
                               <span className="w-6 sm:w-8 select-none text-[9px] sm:text-[10px] text-zinc-600 text-right shrink-0">
                                  {line.leftLine || ''}
                               </span>
@@ -1296,8 +1315,8 @@ export default function JsonFormatter() {
                                  {line.type === 'added'
                                     ? '+'
                                     : line.type === 'removed'
-                                      ? '-'
-                                      : ' '}
+                                       ? '-'
+                                       : ' '}
                               </span>
 
                               <span className="whitespace-pre-wrap break-all flex-1">

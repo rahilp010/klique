@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState } from 'react';
 import {
    AnimatePresence,
@@ -26,6 +27,8 @@ import {
    Type,
    UserRound,
    Braces,
+   GalleryHorizontalEnd,
+
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from './SEO';
@@ -74,6 +77,13 @@ const tools = [
       title: 'JSON Formatter & Diff',
       desc: 'Format, validate, repair, and compare JSON data instantly.',
       link: '/jsonformatter',
+      category: 'Utilities',
+   },
+      {
+      icon: GalleryHorizontalEnd,
+      title: 'SVG Converter',
+      desc: 'Convert SVG files to various formats and optimize them.',
+      link: '/svgconverter',
       category: 'Utilities',
    },
    {
@@ -125,6 +135,7 @@ const footerLinks = {
    Tools: [
       { label: 'PDF Tools', to: '/convert' },
       { label: 'JSON Formatter', to: '/jsonformatter' },
+      { label: 'SVG Converter', to: '/svgconverter' },
       { label: 'Font Creator', to: '/fontgenerator' },
       { label: 'Emoji Generator', to: '/emojigenerator' },
       { label: 'Symbol Generator', to: '/symbol' },
@@ -345,7 +356,7 @@ export default function HeroPage() {
    });
 
    return (
-      <div className="customScrollbar relative min-h-[100dvh] w-full overflow-x-hidden bg-zinc-50 text-zinc-900 dark:bg-[#09090b] dark:text-zinc-100">
+      <div className="customScrollbar relative min-h-[100dvh] w-full overflow-x-hidden bg-zinc-50 text-zinc-900 dark:bg-[#09090b] dark:text-zinc-100 select-none">
          <SEO
             title="Klique - All-in-One Content Creator & Social Media Toolbox"
             description="Enhance your digital presence with Klique. Access free tools for custom fonts, emoji mixing, cool symbols, AI bios, viral hashtags, AI writer, word counter, PDF converters, and timezone tools."

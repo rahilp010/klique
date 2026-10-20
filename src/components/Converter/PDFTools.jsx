@@ -1217,9 +1217,9 @@ export default function PDFTools() {
   "
          />
          <SEO
-            title="PDF Tools & Converters Suite | Klique"
-            description="All-in-one free online PDF suite. Convert Word, Images, Text to PDF, merge, split, compress, watermark, rotate, and secure PDFs client-side."
-            keywords="PDF converter, Word to PDF, Merge PDF, Split PDF, Compress PDF, Images to PDF, PDF tools klique"
+            title="PDF Tools & Converters Suite - Free Online PDF Editor | Klique"
+            description="All-in-one free online PDF suite. Convert Word, Images, Text to PDF, merge, split, compress, watermark, rotate, and secure PDFs client-side. Professional PDF tools."
+            keywords="PDF converter, Word to PDF, Merge PDF, Split PDF, Compress PDF, Images to PDF, PDF to images, Text to PDF, PDF tools klique, PDF editor, PDF compressor, PDF merger, PDF splitter, PDF watermark, PDF protector"
             canonicalUrl="https://klique.netlify.app/convert"
             jsonLd={{
                '@context': 'https://schema.org',
@@ -1228,13 +1228,28 @@ export default function PDFTools() {
                url: 'https://klique.netlify.app/convert',
                applicationCategory: 'UtilitiesApplication',
                operatingSystem: 'All',
-               description:
-                  'Convert Word, Images, Text to PDF, merge, split, compress, watermark, rotate, and protect PDF files client-side.',
+               description: 'Convert Word, Images, Text to PDF, merge, split, compress, watermark, rotate, and protect PDF files client-side.',
                offers: {
                   '@type': 'Offer',
                   price: '0',
                   priceCurrency: 'USD',
                },
+               author: {
+                  '@type': 'Organization',
+                  name: 'Klique',
+               },
+               featureList: [
+                  'Word to PDF conversion',
+                  'Images to PDF conversion',
+                  'Text to PDF conversion',
+                  'PDF merging',
+                  'PDF splitting',
+                  'PDF compression',
+                  'PDF watermarking',
+                  'PDF rotation',
+                  'PDF protection',
+                  'PDF to images',
+               ],
             }}
          />
 

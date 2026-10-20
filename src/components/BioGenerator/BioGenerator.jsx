@@ -264,9 +264,9 @@ Each bio should:
   "
          />
          <SEO
-            title="AI Bio Generator | Creative Social Media Bios | Klique"
-            description="Create professional, funny, or creative social media bios for Instagram, TikTok, Twitter, and LinkedIn using advanced AI. Grab attention and optimize your profile."
-            keywords="ai bio generator, bio creator, social media bio writer, instagram bio generator, tiktok bio, linkedin bio, klique bio, professional bio generator"
+            title="AI Bio Generator - Creative Social Media Bios | Klique"
+            description="Create professional, funny, or creative social media bios for Instagram, TikTok, Twitter, and LinkedIn using advanced AI. Grab attention and optimize your profile. Free online bio generator."
+            keywords="ai bio generator, bio creator, social media bio writer, instagram bio generator, tiktok bio, linkedin bio, klique bio, professional bio generator, twitter bio, social media profile bio, bio maker"
             canonicalUrl="https://klique.netlify.app/bio"
             jsonLd={{
                '@context': 'https://schema.org',
@@ -275,13 +275,27 @@ Each bio should:
                url: 'https://klique.netlify.app/bio',
                applicationCategory: 'UtilitiesApplication',
                operatingSystem: 'All',
-               description:
-                  'Create personalized and engaging social media bios with customizable tones powered by AI.',
+               description: 'Create personalized and engaging social media bios with customizable tones powered by AI.',
                offers: {
                   '@type': 'Offer',
                   price: '0',
                   priceCurrency: 'USD',
                },
+               author: {
+                  '@type': 'Organization',
+                  name: 'Klique',
+               },
+               featureList: [
+                  'AI-powered bio generation',
+                  'Instagram bio creator',
+                  'TikTok bio creator',
+                  'Twitter bio creator',
+                  'LinkedIn bio creator',
+                  'Multiple tone options',
+                  'Professional bios',
+                  'Creative bios',
+                  'Funny bios',
+               ],
             }}
          />
 
