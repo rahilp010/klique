@@ -28,7 +28,7 @@ import {
    UserRound,
    Braces,
    GalleryHorizontalEnd,
-
+   QrCode,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from './SEO';
@@ -79,11 +79,18 @@ const tools = [
       link: '/jsonformatter',
       category: 'Utilities',
    },
-      {
+   {
       icon: GalleryHorizontalEnd,
       title: 'SVG Converter',
       desc: 'Convert SVG files to various formats and optimize them.',
       link: '/svgconverter',
+      category: 'Utilities',
+   },
+   {
+      icon: QrCode,
+      title: 'QR Code & Link Tools',
+      desc: 'Create custom QR codes, build UTM links, parse and encode URLs, and scan QR codes.',
+      link: '/qrlinktools',
       category: 'Utilities',
    },
    {
@@ -133,6 +140,7 @@ const tools = [
 
 const footerLinks = {
    Tools: [
+      { label: 'QR & Link Tools', to: '/qrlinktools' },
       { label: 'PDF Tools', to: '/convert' },
       { label: 'JSON Formatter', to: '/jsonformatter' },
       { label: 'SVG Converter', to: '/svgconverter' },

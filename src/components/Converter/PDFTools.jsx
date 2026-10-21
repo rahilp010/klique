@@ -1200,7 +1200,6 @@ export default function PDFTools() {
       document.body.removeChild(a);
    };
 
-
    return (
       <div
          className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-3 py-6 sm:px-6 sm:py-8 md:px-10 overflow-hidden
@@ -1228,7 +1227,8 @@ export default function PDFTools() {
                url: 'https://klique.netlify.app/convert',
                applicationCategory: 'UtilitiesApplication',
                operatingSystem: 'All',
-               description: 'Convert Word, Images, Text to PDF, merge, split, compress, watermark, rotate, and protect PDF files client-side.',
+               description:
+                  'Convert Word, Images, Text to PDF, merge, split, compress, watermark, rotate, and protect PDF files client-side.',
                offers: {
                   '@type': 'Offer',
                   price: '0',
@@ -1272,7 +1272,7 @@ export default function PDFTools() {
             />
          </div>
 
-         <div className="relative z-10 mx-auto flex min-h-[100dvh] w-full max-w-6xl flex-col pb-28 pt-20 sm:pb-24 sm:pt-16 lg:pl-20">
+         <div className="relative z-10 mx-auto flex min-h-[100dvh] w-full max-w-6xl flex-col px-3 pb-28 pt-14 sm:px-6 sm:pb-24 sm:pt-10 md:px-8 lg:pl-20">
             {/* Header Title */}
             <motion.div
                initial={{ opacity: 0, y: 20 }}

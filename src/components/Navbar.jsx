@@ -18,14 +18,19 @@ import {
    X,
    Braces,
    GalleryHorizontalEnd,
+   QrCode,
 } from 'lucide-react';
-
 
 const NAV_ITEMS = [
    { title: 'Home', path: '/', icon: Home },
+   { title: 'QR & Link Tools', path: '/qrlinktools', icon: QrCode },
    { title: 'PDF Tools', path: '/convert', icon: FileText },
    { title: 'JSON Formatter', path: '/jsonformatter', icon: Braces },
-   { title: 'SVG Converter', path: '/svgconverter', icon: GalleryHorizontalEnd },
+   {
+      title: 'SVG Converter',
+      path: '/svgconverter',
+      icon: GalleryHorizontalEnd,
+   },
    { title: 'Font Generator', path: '/fontgenerator', icon: Type },
    { title: 'Emoji Generator', path: '/emojigenerator', icon: Smile },
    { title: 'Cool Symbol', path: '/symbol', icon: Sparkles },

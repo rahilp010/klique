@@ -19,6 +19,7 @@ export const routeImports = {
    '/convert': () => import('./components/Converter/PDFTools'),
    '/jsonformatter': () => import('./components/JsonFormatter/JsonFormatter'),
    '/svgconverter': () => import('./components/SVGConverter/SVGConverter'),
+   '/qrlinktools': () => import('./components/QRCodeLinkTools/QRCodeLinkTools'),
 };
 
 // Preload specific route or all routes in background
@@ -43,6 +44,7 @@ const TimeZone = lazy(routeImports['/timezone']);
 const PDFTools = lazy(routeImports['/convert']);
 const JsonFormatter = lazy(routeImports['/jsonformatter']);
 const SVGConverter = lazy(routeImports['/svgconverter']);
+const QRCodeLinkTools = lazy(routeImports['/qrlinktools']);
 
 // Simple loading indicator during chunk fetches (if network is very slow)
 const LoadingFallback = () => (
@@ -82,6 +84,7 @@ function App() {
                <Route path="/convert" element={<PDFTools />} />
                <Route path="/jsonformatter" element={<JsonFormatter />} />
                <Route path="/svgconverter" element={<SVGConverter />} />
+               <Route path="/qrlinktools" element={<QRCodeLinkTools />} />
             </Routes>
          </Suspense>
       </>
