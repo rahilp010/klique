@@ -37,6 +37,7 @@ import {
 import { Link } from 'react-router-dom';
 import SEO from './SEO';
 import { preloadRoute } from '../App';
+import kliquedark from '../../public/klique-dark.png';
 
 /* -------------------------------------------------------------------------- */
 /*  Data                                                                      */
@@ -446,6 +447,7 @@ export default function HeroPage() {
                   <span className="animate-klique-shine bg-[linear-gradient(110deg,#18181b_25%,#71717a_40%,#18181b_50%,#71717a_60%,#18181b_75%)] bg-[length:300%_100%] bg-clip-text text-xl font-bold text-transparent dark:bg-[linear-gradient(110deg,#ffffff_25%,#a1a1aa_40%,#ffffff_50%,#a1a1aa_60%,#ffffff_75%)] sm:text-2xl">
                      Klique
                   </span>
+                  {/* <img src={kliquedark} className='w-14 h-14' /> */}
                </Link>
 
                <motion.button
