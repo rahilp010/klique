@@ -26,6 +26,11 @@ export const routeImports = {
    '/imageoptimizer': () =>
       import('./components/ImageOptimizer/ImageOptimizer'),
    '/ogpreviewer': () => import('./components/OGPreviewer/OGPreviewer'),
+   '/aboutus': () => import('./components/Company/AboutUs'),
+   '/help': () => import('./components/Support/HelpCenter'),
+   '/faqs': () => import('./components/Support/FAQs'),
+   '/terms': () => import('./components/Support/Terms'),
+   '/privacy': () => import('./components/Support/Privacy'),
 };
 
 // Preload specific route or all routes in background
@@ -55,6 +60,11 @@ const CodeToImage = lazy(routeImports['/codeimage']);
 const FaviconGenerator = lazy(routeImports['/favicongenerator']);
 const ImageOptimizer = lazy(routeImports['/imageoptimizer']);
 const OGPreviewer = lazy(routeImports['/ogpreviewer']);
+const AboutUs = lazy(routeImports['/aboutus']);
+const HelpCenter = lazy(routeImports['/help']);
+const FAQs = lazy(routeImports['/faqs']);
+const Terms = lazy(routeImports['/terms']);
+const Privacy = lazy(routeImports['/privacy']);
 
 // Simple loading indicator during chunk fetches (if network is very slow)
 const LoadingFallback = () => (
@@ -105,6 +115,11 @@ function App() {
                   element={<ImageOptimizer />}
                />
                <Route path="/ogpreviewer" element={<OGPreviewer />} />
+               <Route path="/aboutus" element={<AboutUs />} />
+               <Route path="/help" element={<HelpCenter />} />
+               <Route path="/faqs" element={<FAQs />} />
+               <Route path="/terms" element={<Terms />} />
+               <Route path="/privacy" element={<Privacy />} />
             </Routes>
          </Suspense>
       </>

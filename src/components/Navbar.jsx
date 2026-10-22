@@ -23,20 +23,22 @@ import {
    Package,
    Image as ImageIcon,
    Share2,
+   FilePen,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
    { title: 'Home', path: '/', icon: Home },
-   { title: 'QR & Link Tools', path: '/qrlinktools', icon: QrCode },
-   { title: 'PDF Tools', path: '/convert', icon: FileText },
+   { title: 'PDF Tools', path: '/convert', icon: FilePen },
    { title: 'JSON Formatter', path: '/jsonformatter', icon: Braces },
    {
       title: 'SVG Converter',
       path: '/svgconverter',
       icon: GalleryHorizontalEnd,
    },
-   { title: 'Code to Image', path: '/codeimage', icon: Code2 },
+   { title: 'AI Writer', path: '/aiwriter', icon: PenTool },
+   { title: 'QR & Link Tools', path: '/qrlinktools', icon: QrCode },
    { title: 'Favicon Generator', path: '/favicongenerator', icon: Package },
+   { title: 'Code to Image', path: '/codeimage', icon: Code2 },
    { title: 'Image Optimizer', path: '/imageoptimizer', icon: ImageIcon },
    { title: 'Social OG Previewer', path: '/ogpreviewer', icon: Share2 },
    { title: 'Font Generator', path: '/fontgenerator', icon: Type },
@@ -45,7 +47,6 @@ const NAV_ITEMS = [
    { title: 'Hashtag', path: '/hashtaggenerator', icon: Hash },
    { title: 'Bio Generator', path: '/bio', icon: Sparkle },
    { title: 'Word Counter', path: '/wordcounter', icon: FileText },
-   { title: 'AI Writer', path: '/aiwriter', icon: PenTool },
    { title: 'Username Generator', path: '/username', icon: AtSign },
    { title: 'Time Zone Converter', path: '/timezone', icon: Clock },
 ];

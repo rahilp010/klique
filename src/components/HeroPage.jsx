@@ -185,13 +185,13 @@ const footerLinks = {
    ],
    Company: [
       { label: 'About Us', to: '/aboutus' },
-      { label: 'Pricing', href: '#' },
+      { label: 'Privacy Policy', to: '/privacy' },
    ],
    Support: [
-      { label: 'Help Center', href: '#' },
-      { label: 'FAQs', href: '#' },
-      { label: 'Terms & Conditions', href: '#' },
-      { label: 'Privacy Policy', href: '#' },
+      { label: 'Help Center', to: '/help' },
+      { label: 'FAQs', to: '/faqs' },
+      { label: 'Terms & Conditions', to: '/terms' },
+      { label: 'Privacy Policy', to: '/privacy' },
    ],
 };
 
@@ -765,14 +765,24 @@ export default function HeroPage() {
                      © {new Date().getFullYear()} Klique. All rights reserved.
                   </p>
                   <div className="flex flex-wrap justify-center gap-4 text-sm sm:gap-6">
-                     {['Terms', 'Privacy', 'Cookies'].map((t) => (
-                        <a
-                           key={t}
-                           href="#"
-                           className="footer-link hover:text-[#daf4aa] dark:hover:text-[#daf4aa] transition-colors">
-                           {t}
-                        </a>
-                     ))}
+                     <Link
+                        to="/terms"
+                        onMouseEnter={() => preloadRoute('/terms')}
+                        className="footer-link hover:text-[#daf4aa] dark:hover:text-[#daf4aa] transition-colors">
+                        Terms
+                     </Link>
+                     <Link
+                        to="/privacy"
+                        onMouseEnter={() => preloadRoute('/privacy')}
+                        className="footer-link hover:text-[#daf4aa] dark:hover:text-[#daf4aa] transition-colors">
+                        Privacy
+                     </Link>
+                     <Link
+                        to="/faqs"
+                        onMouseEnter={() => preloadRoute('/faqs')}
+                        className="footer-link hover:text-[#daf4aa] dark:hover:text-[#daf4aa] transition-colors">
+                        FAQs
+                     </Link>
                   </div>
                </div>
             </footer>
