@@ -19,6 +19,10 @@ import {
    Braces,
    GalleryHorizontalEnd,
    QrCode,
+   Code2,
+   Package,
+   Image as ImageIcon,
+   Share2,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -31,6 +35,10 @@ const NAV_ITEMS = [
       path: '/svgconverter',
       icon: GalleryHorizontalEnd,
    },
+   { title: 'Code to Image', path: '/codeimage', icon: Code2 },
+   { title: 'Favicon Generator', path: '/favicongenerator', icon: Package },
+   { title: 'Image Optimizer', path: '/imageoptimizer', icon: ImageIcon },
+   { title: 'Social OG Previewer', path: '/ogpreviewer', icon: Share2 },
    { title: 'Font Generator', path: '/fontgenerator', icon: Type },
    { title: 'Emoji Generator', path: '/emojigenerator', icon: Smile },
    { title: 'Cool Symbol', path: '/symbol', icon: Sparkles },

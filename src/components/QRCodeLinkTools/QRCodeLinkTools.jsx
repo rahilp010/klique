@@ -1050,9 +1050,38 @@ export default function QRCodeLinkTools() {
             className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[linear-gradient(to_right,rgba(113,113,122,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(113,113,122,0.10)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_at_50%_0%,#000_20%,transparent_70%)]"
          />
          <SEO
-            title="QR Code & Link Tools - Generator, UTM Builder, Parser & Scanner"
-            description="All-in-one suite to create custom high-res QR codes for URLs, Wi-Fi, vCards, build campaign UTM links, parse and edit query parameters, encode/decode URLs, and scan QR codes."
-            keywords="QR code generator, wifi qr code, vcard qr code, utm builder, url parser, url encoder, qr code scanner, link cleaner, query param editor"
+            title="QR Code & Link Tools - High-Res Generator, UTM Builder & Scanner | Klique"
+            description="Comprehensive QR code and link suite. Generate custom branded QR codes for URLs, Wi-Fi, vCards, WhatsApp, and emails. Build UTM campaign links, parse and edit query parameters, and decode QR codes. Free online tool."
+            keywords="qr code generator, wifi qr code, vcard qr code, utm campaign builder, url parser, query param editor, qr code scanner, link cleaner, high res qr code, custom qr code with logo, developer tools, klique"
+            canonicalUrl="https://klique.netlify.app/qrlinktools"
+            jsonLd={{
+               '@context': 'https://schema.org',
+               '@type': 'SoftwareApplication',
+               name: 'QR Code & Link Tools',
+               applicationCategory: 'DeveloperApplication',
+               operatingSystem: 'Web',
+               offers: {
+                  '@type': 'Offer',
+                  price: '0',
+                  priceCurrency: 'USD',
+               },
+               description:
+                  'All-in-one suite to generate branded QR codes, build campaign UTM tracking links, inspect and edit URL query parameters, and decode QR codes.',
+               author: {
+                  '@type': 'Organization',
+                  name: 'Klique',
+               },
+               featureList: [
+                  'Custom high-resolution QR code generator (PNG & SVG)',
+                  'Support for URL, Wi-Fi, vCard, WhatsApp, Email, SMS, and Plain Text',
+                  'Center logo embedding with error correction level controls',
+                  'Foreground and background color customizer',
+                  'UTM Campaign URL builder with marketing presets',
+                  'Interactive URL query parameter parser and editor',
+                  'In-browser QR code scanner and decoder from image or clipboard',
+                  'Privacy link tracking parameters cleaner',
+               ],
+            }}
          />
 
          <div className="relative z-[100] w-full mb-6">

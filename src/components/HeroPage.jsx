@@ -29,6 +29,10 @@ import {
    Braces,
    GalleryHorizontalEnd,
    QrCode,
+   Code2,
+   Package,
+   Image as ImageIcon,
+   Share2,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from './SEO';
@@ -78,13 +82,7 @@ const tools = [
       desc: 'Format, validate, repair, and compare JSON data instantly.',
       link: '/jsonformatter',
       category: 'Utilities',
-   },
-   {
-      icon: GalleryHorizontalEnd,
-      title: 'SVG Converter',
-      desc: 'Convert SVG files to various formats and optimize them.',
-      link: '/svgconverter',
-      category: 'Utilities',
+      dev: true,
    },
    {
       icon: QrCode,
@@ -92,6 +90,43 @@ const tools = [
       desc: 'Create custom QR codes, build UTM links, parse and encode URLs, and scan QR codes.',
       link: '/qrlinktools',
       category: 'Utilities',
+   },
+   {
+      icon: Code2,
+      title: 'Code to Image',
+      desc: 'Turn code snippets into gorgeous screenshots with themes, gradients, and retina exports.',
+      link: '/codeimage',
+      category: 'Utilities',
+   },
+   {
+      icon: Package,
+      title: 'Favicon & Manifest',
+      desc: 'Generate multi-resolution favicon packs, Apple touch icons, and site.webmanifest.',
+      link: '/favicongenerator',
+      category: 'Utilities',
+      dev: true,
+   },
+   {
+      icon: ImageIcon,
+      title: 'Image Optimizer',
+      desc: 'Batch compress, convert to WebP/AVIF, and resize images 100% client-side.',
+      link: '/imageoptimizer',
+      category: 'Utilities',
+   },
+   {
+      icon: Share2,
+      title: 'Social OG Previewer',
+      desc: 'Preview Twitter, LinkedIn, and Discord link cards, and generate full SEO meta tags.',
+      link: '/ogpreviewer',
+      category: 'Utilities',
+   },
+   {
+      icon: GalleryHorizontalEnd,
+      title: 'SVG Converter',
+      desc: 'Convert SVG files to various formats and optimize them.',
+      link: '/svgconverter',
+      category: 'Utilities',
+      dev: true,
    },
    {
       icon: Clock,
@@ -140,15 +175,13 @@ const tools = [
 
 const footerLinks = {
    Tools: [
-      { label: 'QR & Link Tools', to: '/qrlinktools' },
       { label: 'PDF Tools', to: '/convert' },
+      { label: 'QR & Link Tools', to: '/qrlinktools' },
       { label: 'JSON Formatter', to: '/jsonformatter' },
       { label: 'SVG Converter', to: '/svgconverter' },
-      { label: 'Font Creator', to: '/fontgenerator' },
-      { label: 'Emoji Generator', to: '/emojigenerator' },
-      { label: 'Symbol Generator', to: '/symbol' },
-      { label: 'AI Bio Creator', to: '/bio' },
       { label: 'AI Writer', to: '/aiwriter' },
+      { label: 'Code to Image', to: '/codeimage' },
+      { label: 'Favicon Generator', to: '/favicongenerator' },
    ],
    Company: [
       { label: 'About Us', to: '/aboutus' },
@@ -292,6 +325,13 @@ function ToolCard({ tool, index }) {
                   <>
                      <span className="rounded-full border border-[#daf4aa]/50 bg-[#daf4aa]/10 px-2 py-0.5 font-medium text-zinc-700 dark:border-[#daf4aa]/30 dark:text-[#daf4aa]">
                         AI
+                     </span>
+                  </>
+               )}
+               {tool.dev && (
+                  <>
+                     <span className="rounded-full border border-[#daf4aa]/50 bg-[#daf4aa]/10 px-2 py-0.5 font-medium text-zinc-700 dark:border-[#daf4aa]/30 dark:text-[#daf4aa]">
+                        DEV
                      </span>
                   </>
                )}

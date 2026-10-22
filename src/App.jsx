@@ -20,6 +20,12 @@ export const routeImports = {
    '/jsonformatter': () => import('./components/JsonFormatter/JsonFormatter'),
    '/svgconverter': () => import('./components/SVGConverter/SVGConverter'),
    '/qrlinktools': () => import('./components/QRCodeLinkTools/QRCodeLinkTools'),
+   '/codeimage': () => import('./components/CodeToImage/CodeToImage'),
+   '/favicongenerator': () =>
+      import('./components/FaviconGenerator/FaviconGenerator'),
+   '/imageoptimizer': () =>
+      import('./components/ImageOptimizer/ImageOptimizer'),
+   '/ogpreviewer': () => import('./components/OGPreviewer/OGPreviewer'),
 };
 
 // Preload specific route or all routes in background
@@ -45,6 +51,10 @@ const PDFTools = lazy(routeImports['/convert']);
 const JsonFormatter = lazy(routeImports['/jsonformatter']);
 const SVGConverter = lazy(routeImports['/svgconverter']);
 const QRCodeLinkTools = lazy(routeImports['/qrlinktools']);
+const CodeToImage = lazy(routeImports['/codeimage']);
+const FaviconGenerator = lazy(routeImports['/favicongenerator']);
+const ImageOptimizer = lazy(routeImports['/imageoptimizer']);
+const OGPreviewer = lazy(routeImports['/ogpreviewer']);
 
 // Simple loading indicator during chunk fetches (if network is very slow)
 const LoadingFallback = () => (
@@ -85,6 +95,16 @@ function App() {
                <Route path="/jsonformatter" element={<JsonFormatter />} />
                <Route path="/svgconverter" element={<SVGConverter />} />
                <Route path="/qrlinktools" element={<QRCodeLinkTools />} />
+               <Route path="/codeimage" element={<CodeToImage />} />
+               <Route
+                  path="/favicongenerator"
+                  element={<FaviconGenerator />}
+               />
+               <Route
+                  path="/imageoptimizer"
+                  element={<ImageOptimizer />}
+               />
+               <Route path="/ogpreviewer" element={<OGPreviewer />} />
             </Routes>
          </Suspense>
       </>
