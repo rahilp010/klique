@@ -25,6 +25,8 @@ export const routeImports = {
       import('./components/FaviconGenerator/FaviconGenerator'),
    '/imageoptimizer': () =>
       import('./components/ImageOptimizer/ImageOptimizer'),
+   '/imagetools': () =>
+      import('./components/ImageOptimizer/ImageOptimizer'),
    '/ogpreviewer': () => import('./components/OGPreviewer/OGPreviewer'),
    '/aboutus': () => import('./components/Company/AboutUs'),
    '/help': () => import('./components/Support/HelpCenter'),
@@ -112,6 +114,10 @@ function App() {
                />
                <Route
                   path="/imageoptimizer"
+                  element={<ImageOptimizer />}
+               />
+               <Route
+                  path="/imagetools"
                   element={<ImageOptimizer />}
                />
                <Route path="/ogpreviewer" element={<OGPreviewer />} />

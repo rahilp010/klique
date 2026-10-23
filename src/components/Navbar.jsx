@@ -39,7 +39,7 @@ const NAV_ITEMS = [
    { title: 'QR & Link Tools', path: '/qrlinktools', icon: QrCode },
    { title: 'Favicon Generator', path: '/favicongenerator', icon: Package },
    { title: 'Code to Image', path: '/codeimage', icon: Code2 },
-   { title: 'Image Optimizer', path: '/imageoptimizer', icon: ImageIcon },
+   { title: 'Image Tools', path: '/imageoptimizer', icon: ImageIcon },
    { title: 'Social OG Previewer', path: '/ogpreviewer', icon: Share2 },
    { title: 'Font Generator', path: '/fontgenerator', icon: Type },
    { title: 'Emoji Generator', path: '/emojigenerator', icon: Smile },

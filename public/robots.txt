@@ -13,6 +13,7 @@ Allow: /qrlinktools
 Allow: /codeimage
 Allow: /favicongenerator
 Allow: /imageoptimizer
+Allow: /imagetools
 Allow: /ogpreviewer
 Allow: /fontgenerator
 Allow: /emojigenerator

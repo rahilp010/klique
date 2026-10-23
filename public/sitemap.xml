@@ -65,9 +65,17 @@
       <priority>0.9</priority>
    </url>
 
-   <!-- Client-Side Image Optimizer & WebP Compressor -->
+   <!-- Client-Side Image Tools & Optimizer Suite -->
    <url>
       <loc>https://klique.netlify.app/imageoptimizer</loc>
+      <lastmod>2026-10-24</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+   </url>
+
+   <!-- Image Tools Studio Hub -->
+   <url>
+      <loc>https://klique.netlify.app/imagetools</loc>
       <lastmod>2026-10-24</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.9</priority>

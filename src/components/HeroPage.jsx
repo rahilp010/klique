@@ -109,8 +109,8 @@ const tools = [
    },
    {
       icon: ImageIcon,
-      title: 'Image Optimizer',
-      desc: 'Batch compress, convert to WebP/AVIF, and resize images 100% client-side.',
+      title: 'Image Tools',
+      desc: 'All-in-one suite to compress, resize, crop, convert, watermark, and enhance images.',
       link: '/imageoptimizer',
       category: 'Utilities',
    },
@@ -183,6 +183,7 @@ const footerLinks = {
       { label: 'AI Writer', to: '/aiwriter' },
       { label: 'Code to Image', to: '/codeimage' },
       { label: 'Favicon Generator', to: '/favicongenerator' },
+      { label: 'Image Tools', to: '/imageoptimizer' },
    ],
    Company: [
       { label: 'About Us', to: '/aboutus' },
@@ -729,7 +730,7 @@ export default function HeroPage() {
                               <SocialIcon size={18} aria-hidden="true" />
                            </motion.a>
                         ))}
-                     </div>
+                        </div>
                   </div>
 
                   {Object.entries(footerLinks).map(([heading, links]) => (
