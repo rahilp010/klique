@@ -6,16 +6,28 @@
 # Default rule for all search engine crawlers
 User-agent: *
 Allow: /
+Allow: /convert
+Allow: /jsonformatter
+Allow: /svgconverter
+Allow: /qrlinktools
+Allow: /codeimage
+Allow: /favicongenerator
+Allow: /imageoptimizer
+Allow: /ogpreviewer
 Allow: /fontgenerator
 Allow: /emojigenerator
 Allow: /symbol
-Allow: /bio
 Allow: /hashtaggenerator
+Allow: /bio
 Allow: /wordcounter
 Allow: /aiwriter
 Allow: /username
 Allow: /timezone
-Allow: /convert
+Allow: /aboutus
+Allow: /help
+Allow: /faqs
+Allow: /privacy
+Allow: /terms
 
 # Major Search Engine Bots
 User-agent: Googlebot
