@@ -27,6 +27,10 @@ export const routeImports = {
       import('./components/ImageOptimizer/ImageOptimizer'),
    '/imagetools': () =>
       import('./components/ImageOptimizer/ImageOptimizer'),
+   '/fileencryption': () =>
+      import('./components/FileEncryption/FileEncryption'),
+   '/secretscanner': () =>
+      import('./components/SecretScanner/SecretScanner'),
    '/ogpreviewer': () => import('./components/OGPreviewer/OGPreviewer'),
    '/aboutus': () => import('./components/Company/AboutUs'),
    '/help': () => import('./components/Support/HelpCenter'),
@@ -61,6 +65,8 @@ const QRCodeLinkTools = lazy(routeImports['/qrlinktools']);
 const CodeToImage = lazy(routeImports['/codeimage']);
 const FaviconGenerator = lazy(routeImports['/favicongenerator']);
 const ImageOptimizer = lazy(routeImports['/imageoptimizer']);
+const FileEncryption = lazy(routeImports['/fileencryption']);
+const SecretScanner = lazy(routeImports['/secretscanner']);
 const OGPreviewer = lazy(routeImports['/ogpreviewer']);
 const AboutUs = lazy(routeImports['/aboutus']);
 const HelpCenter = lazy(routeImports['/help']);
@@ -119,6 +125,14 @@ function App() {
                <Route
                   path="/imagetools"
                   element={<ImageOptimizer />}
+               />
+               <Route
+                  path="/fileencryption"
+                  element={<FileEncryption />}
+               />
+               <Route
+                  path="/secretscanner"
+                  element={<SecretScanner />}
                />
                <Route path="/ogpreviewer" element={<OGPreviewer />} />
                <Route path="/aboutus" element={<AboutUs />} />

@@ -33,6 +33,8 @@ import {
    Package,
    Image as ImageIcon,
    Share2,
+   FileKey2,
+   ShieldCheck,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from './SEO';
@@ -115,6 +117,20 @@ const tools = [
       category: 'Utilities',
    },
    {
+      icon: FileKey2,
+      title: 'File Encryption',
+      desc: 'Encrypt files locally or decrypt AES-encrypted files with the matching key and settings.',
+      link: '/fileencryption',
+      category: 'Utilities',
+   },
+   {
+      icon: ShieldCheck,
+      title: 'Text Secret Scanner',
+      desc: 'Scan text and source code locally for common credentials and create a redacted copy.',
+      link: '/secretscanner',
+      category: 'Utilities',
+   },
+   {
       icon: Share2,
       title: 'Social OG Previewer',
       desc: 'Preview Twitter, LinkedIn, and Discord link cards, and generate full SEO meta tags.',
@@ -181,9 +197,9 @@ const footerLinks = {
       { label: 'JSON Formatter', to: '/jsonformatter' },
       { label: 'SVG Converter', to: '/svgconverter' },
       { label: 'AI Writer', to: '/aiwriter' },
-      { label: 'Code to Image', to: '/codeimage' },
-      { label: 'Favicon Generator', to: '/favicongenerator' },
       { label: 'Image Tools', to: '/imageoptimizer' },
+      { label: 'File Encryption', to: '/fileencryption' },
+      { label: 'Text Secret Scanner', to: '/secretscanner' },
    ],
    Company: [
       { label: 'About Us', to: '/aboutus' },
@@ -409,8 +425,8 @@ export default function HeroPage() {
       <div className="customScrollbar relative min-h-[100dvh] w-full overflow-x-hidden bg-zinc-50 text-zinc-900 dark:bg-[#09090b] dark:text-zinc-100 select-none">
          <SEO
             title="Klique - All-in-One Content Creator & Social Media Toolbox"
-            description="Enhance your digital presence with Klique. Access free tools for custom fonts, emoji mixing, cool symbols, AI bios, viral hashtags, AI writer, word counter, PDF converters, and timezone tools."
-            keywords="klique, content creator tools, social media toolbox, fancy font generator, emoji mixer, cool symbols, copy paste symbols, AI bio generator, viral hashtag generator, AI writer, word counter, username generator, timezone converter, pdf converter"
+            description="Enhance your digital presence and workflow with Klique's free creator, developer, and security tools for content, file encryption, and local secret scanning."
+            keywords="klique, content creator tools, developer tools, security tools, file encryption, secret scanner, API key scanner, redact secrets, social media toolbox, fancy font generator, emoji mixer, cool symbols, AI bio generator, viral hashtag generator, AI writer, word counter, username generator, timezone converter, pdf converter"
             canonicalUrl="https://klique.netlify.app/"
             jsonLd={homeJsonLd}
          />
@@ -441,9 +457,8 @@ export default function HeroPage() {
                   y: showNavbar ? 0 : -96,
                }}
                transition={{ duration: 0.45, ease: EASE }}
-               className={`fixed left-2 right-2 top-3 z-[9999] mx-auto flex w-[calc(100%-16px)] max-w-6xl items-center justify-between rounded-2xl px-3 py-2.5 transition-[background-color,border-color,backdrop-filter] duration-500 sm:px-5 sm:py-3 ${
-                  scrolled ? '' : 'border-transparent bg-transparent'
-               }`}>
+               className={`fixed left-2 right-2 top-3 z-[9999] mx-auto flex w-[calc(100%-16px)] max-w-6xl items-center justify-between rounded-2xl px-3 py-2.5 transition-[background-color,border-color,backdrop-filter] duration-500 sm:px-5 sm:py-3 ${scrolled ? '' : 'border-transparent bg-transparent'
+                  }`}>
                <Link to="/" className="flex items-center gap-2.5">
                   <span className="animate-klique-shine bg-[linear-gradient(110deg,#18181b_25%,#71717a_40%,#18181b_50%,#71717a_60%,#18181b_75%)] bg-[length:300%_100%] bg-clip-text text-xl font-bold text-transparent dark:bg-[linear-gradient(110deg,#ffffff_25%,#a1a1aa_40%,#ffffff_50%,#a1a1aa_60%,#ffffff_75%)] sm:text-2xl">
                      Klique
@@ -652,11 +667,10 @@ export default function HeroPage() {
                               role="tab"
                               aria-selected={active}
                               onClick={() => setCategory(c)}
-                              className={`relative shrink-0 rounded-full px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 ${
-                                 active
-                                    ? 'text-zinc-950'
-                                    : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
-                              }`}>
+                              className={`relative shrink-0 rounded-full px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 ${active
+                                 ? 'text-zinc-950'
+                                 : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
+                                 }`}>
                               {active && (
                                  <motion.span
                                     layoutId="filter-pill"
@@ -671,11 +685,10 @@ export default function HeroPage() {
                               <span className="relative flex items-center gap-2">
                                  {c}
                                  <span
-                                    className={`text-xs tabular-nums ${
-                                       active
-                                          ? 'opacity-80 text-zinc-950 font-semibold'
-                                          : 'opacity-50'
-                                    }`}>
+                                    className={`text-xs tabular-nums ${active
+                                       ? 'opacity-80 text-zinc-950 font-semibold'
+                                       : 'opacity-50'
+                                       }`}>
                                     {countFor(c)}
                                  </span>
                               </span>
@@ -730,7 +743,7 @@ export default function HeroPage() {
                               <SocialIcon size={18} aria-hidden="true" />
                            </motion.a>
                         ))}
-                        </div>
+                     </div>
                   </div>
 
                   {Object.entries(footerLinks).map(([heading, links]) => (

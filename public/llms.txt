@@ -15,3 +15,5 @@ Klique is an all-in-one free digital toolkit designed for content creators, mark
 - [Username Generator](https://klique.netlify.app/username) - Create available aesthetic handles, gamer tags, and platform-specific usernames using AI.
 - [Time Zone Converter](https://klique.netlify.app/timezone) - Convert times between international zones, manage favorite locations, and plan global meetings.
 - [PDF & Image Tools Suite](https://klique.netlify.app/convert) - Convert Word, Images, Text to PDF, merge, split, compress, watermark, rotate, and secure PDFs client-side.
+- [File Encryption & Decryption](https://klique.netlify.app/fileencryption) - Encrypt files locally and decrypt compatible AES files using the required key and parameters.
+- [Text Secret Scanner](https://klique.netlify.app/secretscanner) - Scan text and source code locally for common credentials and create a redacted copy.

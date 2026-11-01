@@ -81,6 +81,22 @@
       <priority>0.9</priority>
    </url>
 
+   <!-- Local File Encryption & Decryption -->
+   <url>
+      <loc>https://klique.netlify.app/fileencryption</loc>
+      <lastmod>2026-11-01</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+   </url>
+
+   <!-- Local Text Secret Scanner -->
+   <url>
+      <loc>https://klique.netlify.app/secretscanner</loc>
+      <lastmod>2026-11-01</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+   </url>
+
    <!-- Social Open Graph & Twitter Card Previewer -->
    <url>
       <loc>https://klique.netlify.app/ogpreviewer</loc>

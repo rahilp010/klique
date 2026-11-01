@@ -24,6 +24,8 @@ import {
    Image as ImageIcon,
    Share2,
    FilePen,
+   LockKeyhole,
+   ShieldCheck,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -40,6 +42,8 @@ const NAV_ITEMS = [
    { title: 'Favicon Generator', path: '/favicongenerator', icon: Package },
    { title: 'Code to Image', path: '/codeimage', icon: Code2 },
    { title: 'Image Tools', path: '/imageoptimizer', icon: ImageIcon },
+   { title: 'File Encryption', path: '/fileencryption', icon: LockKeyhole },
+   { title: 'Secret Scanner', path: '/secretscanner', icon: ShieldCheck },
    { title: 'Social OG Previewer', path: '/ogpreviewer', icon: Share2 },
    { title: 'Font Generator', path: '/fontgenerator', icon: Type },
    { title: 'Emoji Generator', path: '/emojigenerator', icon: Smile },
@@ -132,11 +136,10 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
             <Link
                to="/"
                aria-label="Home"
-               className={`relative flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold transition-all duration-300 ${
-                  isHomeActive
-                     ? 'bg-[#daf4aa] text-zinc-950 shadow-[0_0_20px_rgba(218,244,170,0.35)]'
-                     : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
-               }`}>
+               className={`relative flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold transition-all duration-300 ${isHomeActive
+                  ? 'bg-[#daf4aa] text-zinc-950 shadow-[0_0_20px_rgba(218,244,170,0.35)]'
+                  : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
+                  }`}>
                <Home size={18} />
                <span>Home</span>
             </Link>
@@ -148,11 +151,10 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
             <button
                onClick={() => setToolsMenuOpen(true)}
                aria-label="Tools"
-               className={`relative flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold transition-all duration-300 ${
-                  toolsMenuOpen || (!isHomeActive && currentTool)
-                     ? 'bg-zinc-800 text-[#daf4aa] border border-zinc-700/60 shadow-md'
-                     : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
-               }`}>
+               className={`relative flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold transition-all duration-300 ${toolsMenuOpen || (!isHomeActive && currentTool)
+                  ? 'bg-zinc-800 text-[#daf4aa] border border-zinc-700/60 shadow-md'
+                  : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
+                  }`}>
                <LayoutGrid size={18} />
                <span>Tools</span>
 
@@ -218,17 +220,15 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
                                  key={item.path}
                                  to={item.path}
                                  onClick={() => setToolsMenuOpen(false)}
-                                 className={`group flex flex-col items-center text-center p-3.5 rounded-2xl border transition-all duration-200 ${
-                                    isActive
-                                       ? 'bg-[#daf4aa]/10 border-[#daf4aa]/40 text-[#daf4aa]'
-                                       : 'bg-zinc-900/60 border-zinc-800/70 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-800/60'
-                                 }`}>
-                                 <div
-                                    className={`w-10 h-10 rounded-xl flex items-center justify-center mb-2.5 transition-all ${
-                                       isActive
-                                          ? 'bg-[#daf4aa] text-zinc-950 shadow-[0_0_15px_rgba(218,244,170,0.3)]'
-                                          : 'bg-zinc-800/80 text-zinc-400 group-hover:text-white group-hover:bg-zinc-700'
+                                 className={`group flex flex-col items-center text-center p-3.5 rounded-2xl border transition-all duration-200 ${isActive
+                                    ? 'bg-[#daf4aa]/10 border-[#daf4aa]/40 text-[#daf4aa]'
+                                    : 'bg-zinc-900/60 border-zinc-800/70 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-800/60'
                                     }`}>
+                                 <div
+                                    className={`w-10 h-10 rounded-xl flex items-center justify-center mb-2.5 transition-all ${isActive
+                                       ? 'bg-[#daf4aa] text-zinc-950 shadow-[0_0_15px_rgba(218,244,170,0.3)]'
+                                       : 'bg-zinc-800/80 text-zinc-400 group-hover:text-white group-hover:bg-zinc-700'
+                                       }`}>
                                     <Icon size={20} />
                                  </div>
                                  <span className="text-xs font-semibold tracking-tight line-clamp-1">
@@ -283,11 +283,10 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
                                  className="group relative flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 outline-none">
                                  {/* Inactive background hover effect */}
                                  <div
-                                    className={`pointer-events-none absolute inset-0 rounded-full border border-transparent transition-all duration-300 ${
-                                       isActive
-                                          ? 'bg-[#daf4aa] shadow-[0_0_20px_rgba(218,244,170,0.3)]'
-                                          : 'bg-zinc-800/40 shadow-sm group-hover:bg-zinc-700/80'
-                                    }`}
+                                    className={`pointer-events-none absolute inset-0 rounded-full border border-transparent transition-all duration-300 ${isActive
+                                       ? 'bg-[#daf4aa] shadow-[0_0_20px_rgba(218,244,170,0.3)]'
+                                       : 'bg-zinc-800/40 shadow-sm group-hover:bg-zinc-700/80'
+                                       }`}
                                  />
 
                                  {/* Animated active background */}
@@ -305,11 +304,10 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
 
                                  {/* Icon Element */}
                                  <span
-                                    className={`pointer-events-none relative z-10 flex items-center justify-center transition-all duration-300 ${
-                                       isActive
-                                          ? 'text-[#16161b]'
-                                          : 'text-zinc-400 group-hover:text-zinc-100'
-                                    }`}>
+                                    className={`pointer-events-none relative z-10 flex items-center justify-center transition-all duration-300 ${isActive
+                                       ? 'text-[#16161b]'
+                                       : 'text-zinc-400 group-hover:text-zinc-100'
+                                       }`}>
                                     <Icon size={22} />
                                  </span>
                               </Link>
