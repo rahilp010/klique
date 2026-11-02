@@ -35,6 +35,20 @@ import {
    Share2,
    FileKey2,
    ShieldCheck,
+   Calculator,
+   DollarSign,
+   GraduationCap,
+   Award,
+   Receipt,
+   MessageSquare,
+   TrendingUp,
+   FileSpreadsheet,
+   IndianRupee,
+   Mail,
+   Binary,
+   FileCode2,
+   KeyRound,
+   Database,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from './SEO';
@@ -45,9 +59,136 @@ import kliquedark from '../../public/klique-dark.png';
 /*  Data                                                                      */
 /* -------------------------------------------------------------------------- */
 
-const CATEGORIES = ['All', 'Writing', 'Text & Symbols', 'Utilities'];
+const CATEGORIES = [
+   'All',
+   'Developer',
+   'Finance',
+   'Student',
+   'Writing',
+   'Text & Symbols',
+   'Utilities',
+];
 
 const tools = [
+   // {
+   //    icon: Binary,
+   //    title: 'Regex Tester',
+   //    desc: 'Evaluate regular expressions in real-time with capture groups, flags, and replace.',
+   //    link: '/tools/regex-tester',
+   //    category: 'Developer',
+   // },
+   // {
+   //    icon: FileCode2,
+   //    title: 'JSON to TypeScript',
+   //    desc: 'Convert arbitrary JSON payloads into clean, strongly-typed TypeScript interfaces.',
+   //    link: '/tools/json-to-typescript',
+   //    category: 'Developer',
+   // },
+   // {
+   //    icon: KeyRound,
+   //    title: 'JWT Decoder',
+   //    desc: 'Inspect and decode JSON Web Tokens client-side with expiration tracking.',
+   //    link: '/tools/jwt-decoder',
+   //    category: 'Developer',
+   // },
+   // {
+   //    icon: Database,
+   //    title: 'SQL Formatter',
+   //    desc: 'Format, indent, beautify, and minify complex SQL database queries.',
+   //    link: '/tools/sql-formatter',
+   //    category: 'Developer',
+   // },
+   // {
+   //    icon: Clock,
+   //    title: 'Cron Generator',
+   //    desc: 'Build and explain standard 5-field cron schedules with next execution runs.',
+   //    link: '/tools/cron-generator',
+   //    category: 'Developer',
+   // },
+   // {
+   //    icon: FileSpreadsheet,
+   //    title: 'Invoice Generator',
+   //    desc: 'Create professional PDF invoices with GST calculations, discounts, and print layouts.',
+   //    link: '/tools/invoice-generator',
+   //    category: 'Finance',
+   // },
+   // {
+   //    icon: IndianRupee,
+   //    title: 'Salary Calculator',
+   //    desc: 'Calculate exact monthly take-home pay from annual CTC with EPF and New Tax Regime.',
+   //    link: '/tools/salary-calculator',
+   //    category: 'Finance',
+   // },
+   // {
+   //    icon: Calculator,
+   //    title: 'GST Calculator',
+   //    desc: 'Calculate inclusive & exclusive GST, CGST/SGST/IGST, and reverse tax.',
+   //    link: '/tools/gst-calculator',
+   //    category: 'Finance',
+   // },
+   // {
+   //    icon: DollarSign,
+   //    title: 'EMI Calculator',
+   //    desc: 'Calculate monthly loan EMI, total interest, and amortization schedule.',
+   //    link: '/tools/emi-calculator',
+   //    category: 'Finance',
+   // },
+   // {
+   //    icon: QrCode,
+   //    title: 'UPI QR Generator',
+   //    desc: 'Create custom NPCI-compliant UPI payment QR codes with preset amounts.',
+   //    link: '/tools/upi-qr-generator',
+   //    category: 'Finance',
+   // },
+   // {
+   //    icon: FileText,
+   //    title: 'Quotation Generator',
+   //    desc: 'Generate commercial price estimates with milestone deliverables and PDF export.',
+   //    link: '/tools/quotation-generator',
+   //    category: 'Finance',
+   // },
+   // {
+   //    icon: Mail,
+   //    title: 'Email Signature',
+   //    desc: 'Design responsive HTML email signatures compatible with Gmail and Outlook.',
+   //    link: '/tools/email-signature-generator',
+   //    category: 'Utilities',
+   // },
+   // {
+   //    icon: TrendingUp,
+   //    title: 'Profit Margin',
+   //    desc: 'Calculate gross profit, margin %, markup %, and target pricing.',
+   //    link: '/tools/profit-margin-calculator',
+   //    category: 'Finance',
+   // },
+   // {
+   //    icon: GraduationCap,
+   //    title: 'Attendance Calculator',
+   //    desc: 'Calculate percentage, allowable bunk limits, and 75% target classes.',
+   //    link: '/tools/attendance-calculator',
+   //    category: 'Student',
+   // },
+   // {
+   //    icon: Award,
+   //    title: 'CGPA / GPA Calculator',
+   //    desc: 'Calculate semester SGPA, cumulative CGPA, and percentage conversion.',
+   //    link: '/tools/cgpa-calculator',
+   //    category: 'Student',
+   // },
+   // {
+   //    icon: Receipt,
+   //    title: 'Split Bill Calculator',
+   //    desc: 'Split dining checks, calculate tips and taxes, and share with friends.',
+   //    link: '/tools/split-bill-calculator',
+   //    category: 'Utilities',
+   // },
+   // {
+   //    icon: MessageSquare,
+   //    title: 'WhatsApp Link Generator',
+   //    desc: 'Create direct click-to-chat wa.me links and QR codes with custom messages.',
+   //    link: '/tools/whatsapp-link-generator',
+   //    category: 'Utilities',
+   // },
    {
       icon: Sparkles,
       title: 'AI Writer',
@@ -192,14 +333,20 @@ const tools = [
 
 const footerLinks = {
    Tools: [
+      // { label: 'GST Calculator', to: '/tools/gst-calculator' },
+      // { label: 'EMI Calculator', to: '/tools/emi-calculator' },
+      // { label: 'Attendance Calculator', to: '/tools/attendance-calculator' },
+      // { label: 'CGPA / GPA Calculator', to: '/tools/cgpa-calculator' },
+      // { label: 'Split Bill Calculator', to: '/tools/split-bill-calculator' },
+      // { label: 'WhatsApp Link', to: '/tools/whatsapp-link-generator' },
+      // { label: 'Profit Margin', to: '/tools/profit-margin-calculator' },
       { label: 'PDF Tools', to: '/convert' },
-      { label: 'QR & Link Tools', to: '/qrlinktools' },
       { label: 'JSON Formatter', to: '/jsonformatter' },
-      { label: 'SVG Converter', to: '/svgconverter' },
+      { label: 'QR & Link Tools', to: '/qrlinktools' },
       { label: 'AI Writer', to: '/aiwriter' },
       { label: 'Image Tools', to: '/imageoptimizer' },
       { label: 'File Encryption', to: '/fileencryption' },
-      { label: 'Text Secret Scanner', to: '/secretscanner' },
+      { label: 'Secret Scanner', to: '/secretscanner' },
    ],
    Company: [
       { label: 'About Us', to: '/aboutus' },
@@ -457,8 +604,9 @@ export default function HeroPage() {
                   y: showNavbar ? 0 : -96,
                }}
                transition={{ duration: 0.45, ease: EASE }}
-               className={`fixed left-2 right-2 top-3 z-[9999] mx-auto flex w-[calc(100%-16px)] max-w-6xl items-center justify-between rounded-2xl px-3 py-2.5 transition-[background-color,border-color,backdrop-filter] duration-500 sm:px-5 sm:py-3 ${scrolled ? '' : 'border-transparent bg-transparent'
-                  }`}>
+               className={`fixed left-2 right-2 top-3 z-[9999] mx-auto flex w-[calc(100%-16px)] max-w-6xl items-center justify-between rounded-2xl px-3 py-2.5 transition-[background-color,border-color,backdrop-filter] duration-500 sm:px-5 sm:py-3 ${
+                  scrolled ? '' : 'border-transparent bg-transparent'
+               }`}>
                <Link to="/" className="flex items-center gap-2.5">
                   <span className="animate-klique-shine bg-[linear-gradient(110deg,#18181b_25%,#71717a_40%,#18181b_50%,#71717a_60%,#18181b_75%)] bg-[length:300%_100%] bg-clip-text text-xl font-bold text-transparent dark:bg-[linear-gradient(110deg,#ffffff_25%,#a1a1aa_40%,#ffffff_50%,#a1a1aa_60%,#ffffff_75%)] sm:text-2xl">
                      Klique
@@ -667,10 +815,11 @@ export default function HeroPage() {
                               role="tab"
                               aria-selected={active}
                               onClick={() => setCategory(c)}
-                              className={`relative shrink-0 rounded-full px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 ${active
-                                 ? 'text-zinc-950'
-                                 : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
-                                 }`}>
+                              className={`relative shrink-0 rounded-full px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 ${
+                                 active
+                                    ? 'text-zinc-950'
+                                    : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
+                              }`}>
                               {active && (
                                  <motion.span
                                     layoutId="filter-pill"
@@ -685,10 +834,11 @@ export default function HeroPage() {
                               <span className="relative flex items-center gap-2">
                                  {c}
                                  <span
-                                    className={`text-xs tabular-nums ${active
-                                       ? 'opacity-80 text-zinc-950 font-semibold'
-                                       : 'opacity-50'
-                                       }`}>
+                                    className={`text-xs tabular-nums ${
+                                       active
+                                          ? 'opacity-80 text-zinc-950 font-semibold'
+                                          : 'opacity-50'
+                                    }`}>
                                     {countFor(c)}
                                  </span>
                               </span>

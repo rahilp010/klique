@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
@@ -26,10 +27,59 @@ import {
    FilePen,
    LockKeyhole,
    ShieldCheck,
+   Calculator,
+   DollarSign,
+   GraduationCap,
+   Award,
+   Receipt,
+   MessageSquare,
+   TrendingUp,
+   FileSpreadsheet,
+   Mail,
+   IndianRupee,
+   Binary,
+   FileCode2,
+   KeyRound,
+   Database,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
    { title: 'Home', path: '/', icon: Home },
+   { title: 'Categories', path: '/category', icon: LayoutGrid },
+   // // Developer Tools
+   // { title: 'Regex Tester', path: '/tools/regex-tester', icon: Binary },
+   // { title: 'JSON to TS', path: '/tools/json-to-typescript', icon: FileCode2 },
+   // { title: 'JWT Decoder', path: '/tools/jwt-decoder', icon: KeyRound },
+   // { title: 'SQL Formatter', path: '/tools/sql-formatter', icon: Database },
+   // { title: 'Cron Generator', path: '/tools/cron-generator', icon: Clock },
+   // // Business & Finance
+   // { title: 'Invoice Maker', path: '/tools/invoice-generator', icon: FileSpreadsheet },
+   // { title: 'Salary Take-Home', path: '/tools/salary-calculator', icon: IndianRupee },
+   // { title: 'GST Calculator', path: '/tools/gst-calculator', icon: Calculator },
+   // { title: 'EMI Calculator', path: '/tools/emi-calculator', icon: DollarSign },
+   // { title: 'Quotation Maker', path: '/tools/quotation-generator', icon: FileText },
+   // { title: 'UPI QR Pay', path: '/tools/upi-qr-generator', icon: QrCode },
+   // { title: 'Email Signature', path: '/tools/email-signature-generator', icon: Mail },
+   // {
+   //    title: 'Profit Margin',
+   //    path: '/tools/profit-margin-calculator',
+   //    icon: TrendingUp,
+   // },
+   // // Student Tools
+   // {
+   //    title: 'Attendance',
+   //    path: '/tools/attendance-calculator',
+   //    icon: GraduationCap,
+   // },
+   // { title: 'CGPA / GPA', path: '/tools/cgpa-calculator', icon: Award },
+   // // Productivity & Web
+   // { title: 'Split Bill', path: '/tools/split-bill-calculator', icon: Receipt },
+   // {
+   //    title: 'WhatsApp Link',
+   //    path: '/tools/whatsapp-link-generator',
+   //    icon: MessageSquare,
+   // },
+   // Existing Core Utilities
    { title: 'PDF Tools', path: '/convert', icon: FilePen },
    { title: 'JSON Formatter', path: '/jsonformatter', icon: Braces },
    {
@@ -136,10 +186,11 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
             <Link
                to="/"
                aria-label="Home"
-               className={`relative flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold transition-all duration-300 ${isHomeActive
-                  ? 'bg-[#daf4aa] text-zinc-950 shadow-[0_0_20px_rgba(218,244,170,0.35)]'
-                  : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
-                  }`}>
+               className={`relative flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold transition-all duration-300 ${
+                  isHomeActive
+                     ? 'bg-[#daf4aa] text-zinc-950 shadow-[0_0_20px_rgba(218,244,170,0.35)]'
+                     : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
+               }`}>
                <Home size={18} />
                <span>Home</span>
             </Link>
@@ -151,10 +202,11 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
             <button
                onClick={() => setToolsMenuOpen(true)}
                aria-label="Tools"
-               className={`relative flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold transition-all duration-300 ${toolsMenuOpen || (!isHomeActive && currentTool)
-                  ? 'bg-zinc-800 text-[#daf4aa] border border-zinc-700/60 shadow-md'
-                  : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
-                  }`}>
+               className={`relative flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold transition-all duration-300 ${
+                  toolsMenuOpen || (!isHomeActive && currentTool)
+                     ? 'bg-zinc-800 text-[#daf4aa] border border-zinc-700/60 shadow-md'
+                     : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
+               }`}>
                <LayoutGrid size={18} />
                <span>Tools</span>
 
@@ -220,15 +272,17 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
                                  key={item.path}
                                  to={item.path}
                                  onClick={() => setToolsMenuOpen(false)}
-                                 className={`group flex flex-col items-center text-center p-3.5 rounded-2xl border transition-all duration-200 ${isActive
-                                    ? 'bg-[#daf4aa]/10 border-[#daf4aa]/40 text-[#daf4aa]'
-                                    : 'bg-zinc-900/60 border-zinc-800/70 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-800/60'
-                                    }`}>
+                                 className={`group flex flex-col items-center text-center p-3.5 rounded-2xl border transition-all duration-200 ${
+                                    isActive
+                                       ? 'bg-[#daf4aa]/10 border-[#daf4aa]/40 text-[#daf4aa]'
+                                       : 'bg-zinc-900/60 border-zinc-800/70 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-800/60'
+                                 }`}>
                                  <div
-                                    className={`w-10 h-10 rounded-xl flex items-center justify-center mb-2.5 transition-all ${isActive
-                                       ? 'bg-[#daf4aa] text-zinc-950 shadow-[0_0_15px_rgba(218,244,170,0.3)]'
-                                       : 'bg-zinc-800/80 text-zinc-400 group-hover:text-white group-hover:bg-zinc-700'
-                                       }`}>
+                                    className={`w-10 h-10 rounded-xl flex items-center justify-center mb-2.5 transition-all ${
+                                       isActive
+                                          ? 'bg-[#daf4aa] text-zinc-950 shadow-[0_0_15px_rgba(218,244,170,0.3)]'
+                                          : 'bg-zinc-800/80 text-zinc-400 group-hover:text-white group-hover:bg-zinc-700'
+                                    }`}>
                                     <Icon size={20} />
                                  </div>
                                  <span className="text-xs font-semibold tracking-tight line-clamp-1">
@@ -283,10 +337,11 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
                                  className="group relative flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 outline-none">
                                  {/* Inactive background hover effect */}
                                  <div
-                                    className={`pointer-events-none absolute inset-0 rounded-full border border-transparent transition-all duration-300 ${isActive
-                                       ? 'bg-[#daf4aa] shadow-[0_0_20px_rgba(218,244,170,0.3)]'
-                                       : 'bg-zinc-800/40 shadow-sm group-hover:bg-zinc-700/80'
-                                       }`}
+                                    className={`pointer-events-none absolute inset-0 rounded-full border border-transparent transition-all duration-300 ${
+                                       isActive
+                                          ? 'bg-[#daf4aa] shadow-[0_0_20px_rgba(218,244,170,0.3)]'
+                                          : 'bg-zinc-800/40 shadow-sm group-hover:bg-zinc-700/80'
+                                    }`}
                                  />
 
                                  {/* Animated active background */}
@@ -304,10 +359,11 @@ const Navbar = ({ sidebarOpen, setSidebarOpen, isMobile }) => {
 
                                  {/* Icon Element */}
                                  <span
-                                    className={`pointer-events-none relative z-10 flex items-center justify-center transition-all duration-300 ${isActive
-                                       ? 'text-[#16161b]'
-                                       : 'text-zinc-400 group-hover:text-zinc-100'
-                                       }`}>
+                                    className={`pointer-events-none relative z-10 flex items-center justify-center transition-all duration-300 ${
+                                       isActive
+                                          ? 'text-[#16161b]'
+                                          : 'text-zinc-400 group-hover:text-zinc-100'
+                                    }`}>
                                     <Icon size={22} />
                                  </span>
                               </Link>
