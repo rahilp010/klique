@@ -45,7 +45,7 @@ import {
 
 const NAV_ITEMS = [
    { title: 'Home', path: '/', icon: Home },
-   { title: 'Categories', path: '/category', icon: LayoutGrid },
+   // { title: 'Categories', path: '/category', icon: LayoutGrid },
    // // Developer Tools
    // { title: 'Regex Tester', path: '/tools/regex-tester', icon: Binary },
    // { title: 'JSON to TS', path: '/tools/json-to-typescript', icon: FileCode2 },
