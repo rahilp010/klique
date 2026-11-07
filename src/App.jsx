@@ -40,47 +40,99 @@ export const routeImports = {
    '/privacy': () => import('./components/Support/Privacy'),
 
    // Category Directory
-   // '/category': () => import('./features/categories/CategoryPage'),
+   '/category': () => import('./features/categories/CategoryPage'),
 
    // Phase 1 New Tools
-   // '/tools/gst-calculator': () =>
-   //    import('./features/business/gst-calculator/GSTCalculator'),
-   // '/tools/emi-calculator': () =>
-   //    import('./features/business/emi-calculator/EMICalculator'),
-   // '/tools/attendance-calculator': () =>
-   //    import('./features/student/attendance-calculator/AttendanceCalculator'),
-   // '/tools/cgpa-calculator': () =>
-   //    import('./features/student/cgpa-calculator/CGPACalculator'),
-   // '/tools/split-bill-calculator': () =>
-   //    import('./features/productivity/split-bill/SplitBillCalculator'),
-   // '/tools/whatsapp-link-generator': () =>
-   //    import('./features/qr/whatsapp-link/WhatsAppLinkGenerator'),
-   // '/tools/profit-margin-calculator': () =>
-   //    import('./features/business/profit-margin/ProfitMarginCalculator'),
+   '/tools/gst-calculator': () =>
+      import('./features/business/gst-calculator/GSTCalculator'),
+   '/tools/emi-calculator': () =>
+      import('./features/business/emi-calculator/EMICalculator'),
+   '/tools/attendance-calculator': () =>
+      import('./features/student/attendance-calculator/AttendanceCalculator'),
+   '/tools/cgpa-calculator': () =>
+      import('./features/student/cgpa-calculator/CGPACalculator'),
+   '/tools/split-bill-calculator': () =>
+      import('./features/productivity/split-bill/SplitBillCalculator'),
+   '/tools/whatsapp-link-generator': () =>
+      import('./features/qr/whatsapp-link/WhatsAppLinkGenerator'),
+   '/tools/profit-margin-calculator': () =>
+      import('./features/business/profit-margin/ProfitMarginCalculator'),
 
    // Phase 3 Tools
-   // '/tools/invoice-generator': () =>
-   //    import('./features/business/invoice-generator/InvoiceGenerator'),
-   // '/tools/quotation-generator': () =>
-   //    import('./features/business/quotation-generator/QuotationGenerator'),
-   // '/tools/salary-calculator': () =>
-   //    import('./features/business/salary-calculator/SalaryCalculator'),
-   // '/tools/upi-qr-generator': () =>
-   //    import('./features/business/upi-qr/UPIQRGenerator'),
-   // '/tools/email-signature-generator': () =>
-   //    import('./features/business/email-signature/EmailSignatureGenerator'),
+   '/tools/invoice-generator': () =>
+      import('./features/business/invoice-generator/InvoiceGenerator'),
+   '/tools/quotation-generator': () =>
+      import('./features/business/quotation-generator/QuotationGenerator'),
+   '/tools/salary-calculator': () =>
+      import('./features/business/salary-calculator/SalaryCalculator'),
+   '/tools/upi-qr-generator': () =>
+      import('./features/business/upi-qr/UPIQRGenerator'),
+   '/tools/email-signature-generator': () =>
+      import('./features/business/email-signature/EmailSignatureGenerator'),
 
    // Phase 2 Developer Tools
-   // '/tools/regex-tester': () =>
-   //    import('./features/developer/regex-tester/RegexTester'),
-   // '/tools/json-to-typescript': () =>
-   //    import('./features/developer/json-to-ts/JsonToTypeScript'),
-   // '/tools/jwt-decoder': () =>
-   //    import('./features/developer/jwt-decoder/JWTDecoder'),
-   // '/tools/sql-formatter': () =>
-   //    import('./features/developer/sql-formatter/SQLFormatter'),
-   // '/tools/cron-generator': () =>
-   //    import('./features/developer/cron-generator/CronGenerator'),
+   '/tools/regex-tester': () =>
+      import('./features/developer/regex-tester/RegexTester'),
+   '/tools/json-to-typescript': () =>
+      import('./features/developer/json-to-ts/JsonToTypeScript'),
+   '/tools/jwt-decoder': () =>
+      import('./features/developer/jwt-decoder/JWTDecoder'),
+   '/tools/sql-formatter': () =>
+      import('./features/developer/sql-formatter/SQLFormatter'),
+   '/tools/cron-generator': () =>
+      import('./features/developer/cron-generator/CronGenerator'),
+
+   // Phase 4 Productivity & File Tools
+   '/tools/pomodoro-timer': () =>
+      import('./features/productivity/pomodoro-timer/PomodoroTimer'),
+   '/tools/event-countdown': () =>
+      import('./features/productivity/event-countdown/EventCountdown'),
+   '/tools/subscription-tracker': () =>
+      import('./features/productivity/subscription-tracker/SubscriptionTracker'),
+   '/tools/bulk-image-compressor': () =>
+      import('./features/files/bulk-image-compressor/BulkImageCompressor'),
+   '/tools/pdf-signer': () =>
+      import('./features/files/pdf-signer/PDFSigner'),
+   '/tools/image-to-text': () =>
+      import('./features/files/image-to-text/ImageToText'),
+
+   // Phase 5 Advanced Tools
+   '/tools/api-request-builder': () =>
+      import('./features/developer/api-request-builder/ApiRequestBuilder'),
+   '/tools/pdf-compare': () =>
+      import('./features/files/pdf-compare/PDFCompare'),
+   '/tools/temporary-notes': () =>
+      import('./features/productivity/temporary-notes/TemporaryNotes'),
+   '/tools/seo-analyzer': () =>
+      import('./features/developer/seo-analyzer/SEOAnalyzer'),
+
+   // Complete Catalog Additions
+   '/tools/meeting-cost-calculator': () =>
+      import('./features/productivity/meeting-cost/MeetingCostCalculator'),
+   '/tools/color-extractor': () =>
+      import('./features/media/color-extractor/ImageColorExtractor'),
+   '/tools/bulk-file-renamer': () =>
+      import('./features/files/bulk-renamer/BulkFileRenamer'),
+   '/tools/privacy-policy-generator': () =>
+      import('./features/business/privacy-policy/PrivacyPolicyGenerator'),
+   '/tools/expense-tracker': () =>
+      import('./features/business/expense-tracker/PersonalExpenseTracker'),
+   '/tools/habit-tracker': () =>
+      import('./features/productivity/habit-tracker/HabitTracker'),
+   '/tools/typing-speed-test': () =>
+      import('./features/student/typing-test/TypingSpeedTest'),
+   '/tools/study-timetable': () =>
+      import('./features/student/study-timetable/StudyTimetableGenerator'),
+   '/tools/flashcard-generator': () =>
+      import('./features/student/flashcards/FlashcardGenerator'),
+   '/tools/code-playground': () =>
+      import('./features/developer/code-playground/CodePlayground'),
+   '/tools/qr-menu-generator': () =>
+      import('./features/qr/qr-menu/QRMenuGenerator'),
+   '/tools/background-remover': () =>
+      import('./features/media/background-remover/BackgroundRemover'),
+   '/tools/uptime-checker': () =>
+      import('./features/developer/uptime-checker/WebsiteUptimeChecker'),
 };
 
 // Preload specific route or all routes in background
@@ -141,6 +193,35 @@ const JsonToTypeScript = lazy(routeImports['/tools/json-to-typescript']);
 const JWTDecoder = lazy(routeImports['/tools/jwt-decoder']);
 const SQLFormatter = lazy(routeImports['/tools/sql-formatter']);
 const CronGenerator = lazy(routeImports['/tools/cron-generator']);
+
+// Phase 4 Lazy Components
+const PomodoroTimer = lazy(routeImports['/tools/pomodoro-timer']);
+const EventCountdown = lazy(routeImports['/tools/event-countdown']);
+const SubscriptionTracker = lazy(routeImports['/tools/subscription-tracker']);
+const BulkImageCompressor = lazy(routeImports['/tools/bulk-image-compressor']);
+const PDFSigner = lazy(routeImports['/tools/pdf-signer']);
+const ImageToText = lazy(routeImports['/tools/image-to-text']);
+
+// Phase 5 Lazy Components
+const ApiRequestBuilder = lazy(routeImports['/tools/api-request-builder']);
+const PDFCompare = lazy(routeImports['/tools/pdf-compare']);
+const TemporaryNotes = lazy(routeImports['/tools/temporary-notes']);
+const SEOAnalyzer = lazy(routeImports['/tools/seo-analyzer']);
+
+// Complete Catalog Lazy Components
+const MeetingCostCalculator = lazy(routeImports['/tools/meeting-cost-calculator']);
+const ImageColorExtractor = lazy(routeImports['/tools/color-extractor']);
+const BulkFileRenamer = lazy(routeImports['/tools/bulk-file-renamer']);
+const PrivacyPolicyGenerator = lazy(routeImports['/tools/privacy-policy-generator']);
+const PersonalExpenseTracker = lazy(routeImports['/tools/expense-tracker']);
+const HabitTracker = lazy(routeImports['/tools/habit-tracker']);
+const TypingSpeedTest = lazy(routeImports['/tools/typing-speed-test']);
+const StudyTimetableGenerator = lazy(routeImports['/tools/study-timetable']);
+const FlashcardGenerator = lazy(routeImports['/tools/flashcard-generator']);
+const CodePlayground = lazy(routeImports['/tools/code-playground']);
+const QRMenuGenerator = lazy(routeImports['/tools/qr-menu-generator']);
+const BackgroundRemover = lazy(routeImports['/tools/background-remover']);
+const WebsiteUptimeChecker = lazy(routeImports['/tools/uptime-checker']);
 
 // Simple loading indicator during chunk fetches (if network is very slow)
 const LoadingFallback = () => (
@@ -277,6 +358,101 @@ function App() {
                <Route path="/tools/cron-generator" element={<CronGenerator />} />
                <Route path="/crongenerator" element={<CronGenerator />} />
                <Route path="/cron" element={<CronGenerator />} />
+
+               {/* Phase 4 Routes (Canonical and Short Aliases) */}
+               <Route path="/tools/pomodoro-timer" element={<PomodoroTimer />} />
+               <Route path="/pomodoro" element={<PomodoroTimer />} />
+               <Route path="/pomodorotimer" element={<PomodoroTimer />} />
+
+               <Route path="/tools/event-countdown" element={<EventCountdown />} />
+               <Route path="/countdown" element={<EventCountdown />} />
+               <Route path="/eventcountdown" element={<EventCountdown />} />
+
+               <Route path="/tools/subscription-tracker" element={<SubscriptionTracker />} />
+               <Route path="/subscriptiontracker" element={<SubscriptionTracker />} />
+               <Route path="/subscriptions" element={<SubscriptionTracker />} />
+
+               <Route path="/tools/bulk-image-compressor" element={<BulkImageCompressor />} />
+               <Route path="/bulkcompressor" element={<BulkImageCompressor />} />
+               <Route path="/imagecompressor" element={<BulkImageCompressor />} />
+
+               <Route path="/tools/pdf-signer" element={<PDFSigner />} />
+               <Route path="/pdfsigner" element={<PDFSigner />} />
+               <Route path="/signpdf" element={<PDFSigner />} />
+
+               <Route path="/tools/image-to-text" element={<ImageToText />} />
+               <Route path="/imagetotext" element={<ImageToText />} />
+               <Route path="/ocr" element={<ImageToText />} />
+
+               {/* Phase 5 Routes (Canonical and Short Aliases) */}
+               <Route path="/tools/api-request-builder" element={<ApiRequestBuilder />} />
+               <Route path="/apibuilder" element={<ApiRequestBuilder />} />
+               <Route path="/apiclient" element={<ApiRequestBuilder />} />
+
+               <Route path="/tools/pdf-compare" element={<PDFCompare />} />
+               <Route path="/pdfcompare" element={<PDFCompare />} />
+               <Route path="/diffpdf" element={<PDFCompare />} />
+
+               <Route path="/tools/temporary-notes" element={<TemporaryNotes />} />
+               <Route path="/tempnotes" element={<TemporaryNotes />} />
+               <Route path="/privatenotes" element={<TemporaryNotes />} />
+
+               <Route path="/tools/seo-analyzer" element={<SEOAnalyzer />} />
+               <Route path="/seoanalyzer" element={<SEOAnalyzer />} />
+               <Route path="/seochecker" element={<SEOAnalyzer />} />
+
+               {/* Complete Catalog Routes (Canonical and Short Aliases) */}
+               <Route path="/tools/meeting-cost-calculator" element={<MeetingCostCalculator />} />
+               <Route path="/meetingcost" element={<MeetingCostCalculator />} />
+               <Route path="/meetingtimer" element={<MeetingCostCalculator />} />
+
+               <Route path="/tools/color-extractor" element={<ImageColorExtractor />} />
+               <Route path="/colorextractor" element={<ImageColorExtractor />} />
+               <Route path="/imagecolor" element={<ImageColorExtractor />} />
+
+               <Route path="/tools/bulk-file-renamer" element={<BulkFileRenamer />} />
+               <Route path="/bulkrenamer" element={<BulkFileRenamer />} />
+               <Route path="/renamer" element={<BulkFileRenamer />} />
+
+               <Route path="/tools/privacy-policy-generator" element={<PrivacyPolicyGenerator />} />
+               <Route path="/privacypolicy" element={<PrivacyPolicyGenerator />} />
+               <Route path="/privacygenerator" element={<PrivacyPolicyGenerator />} />
+
+               <Route path="/tools/expense-tracker" element={<PersonalExpenseTracker />} />
+               <Route path="/expensetracker" element={<PersonalExpenseTracker />} />
+               <Route path="/expenses" element={<PersonalExpenseTracker />} />
+
+               <Route path="/tools/habit-tracker" element={<HabitTracker />} />
+               <Route path="/habittracker" element={<HabitTracker />} />
+               <Route path="/habits" element={<HabitTracker />} />
+
+               <Route path="/tools/typing-speed-test" element={<TypingSpeedTest />} />
+               <Route path="/typingtest" element={<TypingSpeedTest />} />
+               <Route path="/typingspeed" element={<TypingSpeedTest />} />
+
+               <Route path="/tools/study-timetable" element={<StudyTimetableGenerator />} />
+               <Route path="/studytimetable" element={<StudyTimetableGenerator />} />
+               <Route path="/examtimetable" element={<StudyTimetableGenerator />} />
+
+               <Route path="/tools/flashcard-generator" element={<FlashcardGenerator />} />
+               <Route path="/flashcards" element={<FlashcardGenerator />} />
+               <Route path="/flashcardgenerator" element={<FlashcardGenerator />} />
+
+               <Route path="/tools/code-playground" element={<CodePlayground />} />
+               <Route path="/codeplayground" element={<CodePlayground />} />
+               <Route path="/playground" element={<CodePlayground />} />
+
+               <Route path="/tools/qr-menu-generator" element={<QRMenuGenerator />} />
+               <Route path="/qrmenu" element={<QRMenuGenerator />} />
+               <Route path="/qrmenugenerator" element={<QRMenuGenerator />} />
+
+               <Route path="/tools/background-remover" element={<BackgroundRemover />} />
+               <Route path="/backgroundremover" element={<BackgroundRemover />} />
+               <Route path="/removebg" element={<BackgroundRemover />} />
+
+               <Route path="/tools/uptime-checker" element={<WebsiteUptimeChecker />} />
+               <Route path="/uptimechecker" element={<WebsiteUptimeChecker />} />
+               <Route path="/uptime" element={<WebsiteUptimeChecker />} />
             </Routes>
          </Suspense>
       </>

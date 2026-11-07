@@ -1,19 +1,81 @@
-# Klique - Content Creator & Social Media Toolbox
+# Klique - All-in-One Creator, Developer & Financial Toolbox
 
-Klique is an all-in-one free digital toolkit designed for content creators, marketers, developers, and social media enthusiasts.
+Klique is an all-in-one free digital toolkit designed for content creators, developers, students, finance professionals, and web enthusiasts. All processing runs 100% client-side inside the user's browser for maximum speed, privacy, and security without server data uploads.
 
-## Core Features & Tools
+## Core Suites & Tools
 
+### Directory & Hub
 - [Klique Home](https://klique.netlify.app/) - Main dashboard giving access to all dynamic creator utilities.
-- [Fancy Font Generator](https://klique.netlify.app/fontgenerator) - Reformat standard text into aesthetic Unicode font representations for Instagram, Twitter, and TikTok.
-- [Emoji Mixer & Generator](https://klique.netlify.app/emojigenerator) - Mix, generate, search, and copy custom emojis.
-- [Cool Symbols](https://klique.netlify.app/symbol) - Browse, copy, and paste text symbols, math entities, stars, and shapes.
-- [AI Bio Creator](https://klique.netlify.app/bio) - Write personalized, creative profile bios with adjustable tone settings powered by Gemini AI.
-- [AI Hashtag Generator](https://klique.netlify.app/hashtaggenerator) - Input post content to generate highly relevant and trending hashtags using AI.
-- [Word Counter](https://klique.netlify.app/wordcounter) - Detailed real-time text analysis, counting words, characters, sentences, paragraphs, reading time, and speaking time.
-- [AI Writer Studio](https://klique.netlify.app/aiwriter) - Text paraphraser, rephraser, email composer, grammar checker, and summarizer.
-- [Username Generator](https://klique.netlify.app/username) - Create available aesthetic handles, gamer tags, and platform-specific usernames using AI.
-- [Time Zone Converter](https://klique.netlify.app/timezone) - Convert times between international zones, manage favorite locations, and plan global meetings.
-- [PDF & Image Tools Suite](https://klique.netlify.app/convert) - Convert Word, Images, Text to PDF, merge, split, compress, watermark, rotate, and secure PDFs client-side.
-- [File Encryption & Decryption](https://klique.netlify.app/fileencryption) - Encrypt files locally and decrypt compatible AES files using the required key and parameters.
-- [Text Secret Scanner](https://klique.netlify.app/secretscanner) - Scan text and source code locally for common credentials and create a redacted copy.
+- [Category Directory](https://klique.netlify.app/category) - Grouped directory across all 9 tool categories with real-time fuzzy search.
+
+### Developer Tools
+- [API Request Builder](https://klique.netlify.app/tools/api-request-builder) - Execute and benchmark HTTP REST requests client-side with latency, headers, JSON body, and cURL generation.
+- [HTML/CSS/JS Playground](https://klique.netlify.app/tools/code-playground) - Write, test, and render HTML, CSS, and JS with sandboxed preview and HTML export.
+- [Website Uptime Checker](https://klique.netlify.app/tools/uptime-checker) - Check website reachability, HTTP response latency, and SSL certificate health in real time.
+- [Website SEO Analyzer](https://klique.netlify.app/tools/seo-analyzer) - Audit on-page SEO health: title tags, meta descriptions, OpenGraph cards, canonical links, and image accessibility.
+- [Regex Tester](https://klique.netlify.app/tools/regex-tester) - Test and debug regular expressions in real-time with capture groups and flags.
+- [JSON to TypeScript](https://klique.netlify.app/tools/json-to-typescript) - Convert nested JSON payloads into strongly-typed TypeScript interfaces.
+- [JWT Decoder](https://klique.netlify.app/tools/jwt-decoder) - Decode JWT header/payload and inspect expiration without exposing secrets.
+- [SQL Formatter](https://klique.netlify.app/tools/sql-formatter) - Beautify, indent, and minify SQL queries client-side.
+- [Cron Generator](https://klique.netlify.app/tools/cron-generator) - Build and translate 5-field cron schedules into human-readable English.
+- [JSON Formatter & Validator](https://klique.netlify.app/jsonformatter) - Format, repair, and compare JSON data.
+- [Code to Image](https://klique.netlify.app/codeimage) - Convert code snippets into aesthetic screenshot graphics.
+- [Favicon Generator](https://klique.netlify.app/favicongenerator) - Generate multi-size favicon bundles and site.webmanifest.
+
+### Business & Finance
+- [Personal Expense Tracker](https://klique.netlify.app/tools/expense-tracker) - Track daily income, categorize expenses, and monitor monthly savings rates privately.
+- [Privacy Policy Generator](https://klique.netlify.app/tools/privacy-policy-generator) - Generate customizable GDPR & CCPA compliant privacy policies for websites and SaaS.
+- [Invoice Generator](https://klique.netlify.app/tools/invoice-generator) - Create professional GST-ready PDF invoices with custom branding and line items.
+- [Quotation Generator](https://klique.netlify.app/tools/quotation-generator) - Generate formal commercial price quotes with terms and PDF export.
+- [Salary Calculator](https://klique.netlify.app/tools/salary-calculator) - Calculate monthly take-home salary from annual CTC under New/Old Tax Regimes.
+- [EMI Calculator](https://klique.netlify.app/tools/emi-calculator) - Calculate loan EMI, total interest, and yearly amortization schedules.
+- [GST Calculator](https://klique.netlify.app/tools/gst-calculator) - Compute inclusive and exclusive GST, CGST, SGST, and IGST.
+- [UPI QR Code Generator](https://klique.netlify.app/tools/upi-qr-generator) - Generate NPCI-compliant UPI payment QR codes.
+- [Profit Margin Calculator](https://klique.netlify.app/tools/profit-margin-calculator) - Compute gross margin, markup, and break-even pricing.
+
+### Productivity & Time
+- [Meeting Cost Calculator](https://klique.netlify.app/tools/meeting-cost-calculator) - Live real-time cost ticker based on attendee salaries and meeting burn rates.
+- [Daily Habit Tracker](https://klique.netlify.app/tools/habit-tracker) - Build compounding routines and track weekly completion streaks with interactive matrix.
+- [Pomodoro Focus Timer](https://klique.netlify.app/tools/pomodoro-timer) - Focus clock with customizable work/break intervals and Web Audio synthesized chimes.
+- [Event Countdown](https://klique.netlify.app/tools/event-countdown) - Live second-by-second countdown with shareable links and .ICS calendar export.
+- [Subscription Tracker](https://klique.netlify.app/tools/subscription-tracker) - Track recurring subscriptions, monthly burn rates, and renewal alerts.
+- [Temporary Notes](https://klique.netlify.app/tools/temporary-notes) - Self-destructing scratchpad with AES-256 client-side encryption.
+- [Split Bill Calculator](https://klique.netlify.app/tools/split-bill-calculator) - Split dining checks, calculate tips and taxes, and share settlement summaries.
+- [Time Zone Converter](https://klique.netlify.app/timezone) - Convert times between international time zones and plan global meetings.
+
+### File Utilities & Media
+- [Image Color Extractor](https://klique.netlify.app/tools/color-extractor) - Extract dominant color palettes, HEX, RGB, and HSL codes locally.
+- [Bulk File Renamer](https://klique.netlify.app/tools/bulk-file-renamer) - Batch rename files locally with numbering, prefixes, and instant ZIP export.
+- [Background Remover](https://klique.netlify.app/tools/background-remover) - Remove solid, white, and green-screen image backgrounds locally with transparent PNG export.
+- [Bulk Image Compressor](https://klique.netlify.app/tools/bulk-image-compressor) - Compress multiple images to WebP/JPEG in-browser with 1-click ZIP download.
+- [PDF Signer](https://klique.netlify.app/tools/pdf-signer) - Draw, type, or stamp signatures onto PDF documents with 100% privacy.
+- [Image to Text (OCR)](https://klique.netlify.app/tools/image-to-text) - Extract text, numbers, and receipt data from images using Tesseract Wasm.
+- [PDF & Text Compare](https://klique.netlify.app/tools/pdf-compare) - Compare two documents side-by-side with color-coded additions, deletions, and similarity scores.
+- [File Encryption & Decryption](https://klique.netlify.app/fileencryption) - Encrypt and decrypt files locally using AES-GCM.
+- [Secret Scanner](https://klique.netlify.app/secretscanner) - Scan text and code locally for leaked API keys, tokens, and credentials.
+- [SVG Converter](https://klique.netlify.app/svgconverter) - Convert SVG to PNG/JPEG and optimize SVG code.
+- [Image Optimizer](https://klique.netlify.app/imageoptimizer) - Resize, crop, convert, and compress images.
+
+### Student Tools
+- [Typing Speed Test](https://klique.netlify.app/tools/typing-speed-test) - Measure WPM, accuracy, and keystroke errors with timed 15s, 30s, and 60s tests.
+- [Study Timetable Generator](https://klique.netlify.app/tools/study-timetable) - Smart exam revision schedule maker balancing subject difficulty and study hours.
+- [Flashcard Generator](https://klique.netlify.app/tools/flashcard-generator) - Active recall study flashcards with 3D flip animation, shuffle, and deck export.
+- [Attendance Calculator](https://klique.netlify.app/tools/attendance-calculator) - Calculate attendance percentage and allowable bunk limits.
+- [CGPA / GPA Calculator](https://klique.netlify.app/tools/cgpa-calculator) - Calculate semester SGPA, cumulative CGPA, and percentage conversion.
+
+### QR & Web
+- [QR Menu Generator](https://klique.netlify.app/tools/qr-menu-generator) - Build contactless restaurant/cafe digital menus and download table stand QR codes.
+- [WhatsApp Link Generator](https://klique.netlify.app/tools/whatsapp-link-generator) - Generate direct wa.me chat links with custom messages.
+- [Email Signature Generator](https://klique.netlify.app/tools/email-signature-generator) - Create responsive HTML email signatures.
+
+### Text & Writing
+- [AI Writer Studio](https://klique.netlify.app/aiwriter) - Text paraphraser, rephraser, and summarizer.
+- [Word Counter](https://klique.netlify.app/wordcounter) - Detailed text statistics, word density, and reading time estimation.
+- [Fancy Font Generator](https://klique.netlify.app/fontgenerator) - Create stylish Unicode typography for social bios.
+- [Emoji Mixer & Generator](https://klique.netlify.app/emojigenerator) - Mix and copy custom emojis.
+- [Cool Symbols](https://klique.netlify.app/symbol) - Browse and copy unicode symbols, arrows, and glyphs.
+- [AI Bio Creator](https://klique.netlify.app/bio) - Generate personalized social media bios.
+- [AI Hashtag Generator](https://klique.netlify.app/hashtaggenerator) - Generate trending hashtags for social posts.
+- [Username Generator](https://klique.netlify.app/username) - Create unique handles and gamer tags.
+- [WhatsApp Link Generator](https://klique.netlify.app/tools/whatsapp-link-generator) - Generate direct wa.me chat links with custom messages.
+- [Email Signature Generator](https://klique.netlify.app/tools/email-signature-generator) - Create responsive HTML email signatures.

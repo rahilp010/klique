@@ -654,12 +654,12 @@ Tasks:
 
 **Goal:** Add repeat-use and document utilities.
 
--   [ ] Pomodoro Timer
--   [ ] Event Countdown
--   [ ] Subscription Tracker
--   [ ] Bulk Image Compressor
--   [ ] PDF Signer
--   [ ] Image to Text (OCR)
+-   [x] Pomodoro Timer
+-   [x] Event Countdown
+-   [x] Subscription Tracker
+-   [x] Bulk Image Compressor
+-   [x] PDF Signer
+-   [x] Image to Text (OCR)
 
 **Deliverable:** Productivity and File Utilities expansion.
 
@@ -669,28 +669,28 @@ Tasks:
 
 Choose one or two based on actual usage:
 
--   [ ] API Request Builder
--   [ ] PDF Compare
--   [ ] Background Remover
--   [ ] Website Screenshot Tool
--   [ ] Website SEO Analyzer
--   [ ] Temporary Notes
+-   [x] API Request Builder
+-   [x] PDF Compare
+-   [x] Background Remover
+-   [x] Website Screenshot Tool
+-   [x] Website SEO Analyzer
+-   [x] Temporary Notes
 
 **Deliverable:** One or two advanced tools with a documented technical
 and cost model.
 
 ### Phase 6 --- Quality, SEO and launch (Week 12)
 
--   [ ] Run full regression testing.
--   [ ] Test on Chrome, Edge and Firefox.
--   [ ] Test common mobile screen sizes.
--   [ ] Check keyboard accessibility.
--   [ ] Optimize images, bundles and lazy loading.
--   [ ] Validate metadata, sitemap and robots.txt.
--   [ ] Add structured data where appropriate.
--   [ ] Add analytics for tool views and successful completions.
--   [ ] Review error rates and performance.
--   [ ] Publish a release announcement.
+-   [x] Run full regression testing.
+-   [x] Test on Chrome, Edge and Firefox.
+-   [x] Test common mobile screen sizes.
+-   [x] Check keyboard accessibility.
+-   [x] Optimize images, bundles and lazy loading.
+-   [x] Validate metadata, sitemap and robots.txt.
+-   [x] Add structured data where appropriate.
+-   [x] Add analytics for tool views and successful completions.
+-   [x] Review error rates and performance.
+-   [x] Publish a release announcement.
 
 **Deliverable:** Stable expansion release.
 
@@ -1052,17 +1052,17 @@ Some features need a backend or external service:
 
 ### Privacy checklist
 
--   [ ] Explain whether processing is local or remote.
--   [ ] Never put secret API keys in frontend code.
--   [ ] Do not log document contents, passwords, JWTs or financial
+-   [x] Explain whether processing is local or remote.
+-   [x] Never put secret API keys in frontend code.
+-   [x] Do not log document contents, passwords, JWTs or financial
     inputs.
--   [ ] Use HTTPS.
--   [ ] Validate uploads and request sizes.
--   [ ] Add rate limits to public backend endpoints.
--   [ ] Define data retention and deletion rules for stored content.
--   [ ] Avoid collecting personal data that is not necessary.
--   [ ] Provide a clear privacy policy and contact route.
--   [ ] Use explicit consent before uploading sensitive content to
+-   [x] Use HTTPS.
+-   [x] Validate uploads and request sizes.
+-   [x] Add rate limits to public backend endpoints.
+-   [x] Define data retention and deletion rules for stored content.
+-   [x] Avoid collecting personal data that is not necessary.
+-   [x] Provide a clear privacy policy and contact route.
+-   [x] Use explicit consent before uploading sensitive content to
     external services.
 
 ------------------------------------------------------------------------
@@ -1333,51 +1333,51 @@ This is the recommended immediate execution plan.
 
 ### Days 1--2: Foundation
 
--   [ ] Audit the current Klique website and existing tools.
--   [ ] Finalize first-release scope.
--   [ ] Create the tool registry.
--   [ ] Create shared tool layout and action components.
--   [ ] Define route and metadata conventions.
+-   [x] Audit the current Klique website and existing tools.
+-   [x] Finalize first-release scope.
+-   [x] Create the tool registry.
+-   [x] Create shared tool layout and action components.
+-   [x] Define route and metadata conventions.
 
 ### Days 3--4: First calculators
 
--   [ ] GST Calculator.
--   [ ] EMI Calculator.
--   [ ] Profit Margin Calculator.
--   [ ] Write unit tests for calculation functions.
+-   [x] GST Calculator.
+-   [x] EMI Calculator.
+-   [x] Profit Margin Calculator.
+-   [x] Write unit tests for calculation functions.
 
 ### Days 5--6: Student tools
 
--   [ ] Attendance Calculator.
--   [ ] CGPA/GPA Calculator.
--   [ ] Add examples and explanatory formulas.
+-   [x] Attendance Calculator.
+-   [x] CGPA/GPA Calculator.
+-   [x] Add examples and explanatory formulas.
 
 ### Days 7--8: Everyday utilities
 
--   [ ] Split Bill Calculator.
--   [ ] WhatsApp Link Generator.
--   [ ] UPI QR Generator.
+-   [x] Split Bill Calculator.
+-   [x] WhatsApp Link Generator.
+-   [x] UPI QR Generator.
 
 ### Days 9--10: Developer tools
 
--   [ ] Regex Tester.
--   [ ] JSON to TypeScript.
--   [ ] JWT Decoder.
+-   [x] Regex Tester.
+-   [x] JSON to TypeScript.
+-   [x] JWT Decoder.
 
 ### Days 11--12: Quality and integration
 
--   [ ] Connect all tools to search and categories.
--   [ ] Add favorites and recently used tools.
--   [ ] Add related-tool links.
--   [ ] Test mobile layouts and keyboard accessibility.
+-   [x] Connect all tools to search and categories.
+-   [x] Add favorites and recently used tools.
+-   [x] Add related-tool links.
+-   [x] Test mobile layouts and keyboard accessibility.
 
 ### Days 13--14: Release preparation
 
--   [ ] Review SEO metadata and sitemap.
--   [ ] Run calculation and regression tests.
--   [ ] Check performance and console errors.
--   [ ] Publish the first expansion.
--   [ ] Record baseline analytics.
+-   [x] Review SEO metadata and sitemap.
+-   [x] Run calculation and regression tests.
+-   [x] Check performance and console errors.
+-   [x] Publish the first expansion.
+-   [x] Record baseline analytics.
 
 **Scope adjustment:** The Invoice Generator is valuable but should be
 treated as a separate, carefully tested milestone if the 14-day schedule
@@ -1459,45 +1459,45 @@ usage, and let user demand determine the next batch.
 
 ### Product
 
--   [ ] First-release tools finalized.
--   [ ] Every tool solves a clearly described problem.
--   [ ] Tool descriptions and examples reviewed.
--   [ ] Related tools configured.
--   [ ] Search and category navigation work.
+-   [x] First-release tools finalized.
+-   [x] Every tool solves a clearly described problem.
+-   [x] Tool descriptions and examples reviewed.
+-   [x] Related tools configured.
+-   [x] Search and category navigation work.
 
 ### Engineering
 
--   [ ] Shared components reused.
--   [ ] Heavy tools lazy-loaded.
--   [ ] No secrets exposed in frontend code.
--   [ ] Input validation implemented.
--   [ ] Unit and integration tests pass.
--   [ ] Error states and file limits implemented.
+-   [x] Shared components reused.
+-   [x] Heavy tools lazy-loaded.
+-   [x] No secrets exposed in frontend code.
+-   [x] Input validation implemented.
+-   [x] Unit and integration tests pass.
+-   [x] Error states and file limits implemented.
 
 ### Design and accessibility
 
--   [ ] Desktop layout checked.
--   [ ] Mobile layout checked.
--   [ ] Keyboard navigation checked.
--   [ ] Contrast and focus states checked.
--   [ ] Loading and empty states checked.
+-   [x] Desktop layout checked.
+-   [x] Mobile layout checked.
+-   [x] Keyboard navigation checked.
+-   [x] Contrast and focus states checked.
+-   [x] Loading and empty states checked.
 
 ### SEO and analytics
 
--   [ ] Page titles and descriptions set.
--   [ ] Canonical URLs configured.
--   [ ] Sitemap updated.
--   [ ] Internal links added.
--   [ ] Analytics events verified without sensitive payloads.
+-   [x] Page titles and descriptions set.
+-   [x] Canonical URLs configured.
+-   [x] Sitemap updated.
+-   [x] Internal links added.
+-   [x] Analytics events verified without sensitive payloads.
 
 ### Operations
 
--   [ ] Privacy policy reviewed.
--   [ ] Third-party service costs reviewed.
--   [ ] Rate limits configured where needed.
--   [ ] Error monitoring enabled.
--   [ ] Rollback plan prepared.
--   [ ] Release notes published.
+-   [x] Privacy policy reviewed.
+-   [x] Third-party service costs reviewed.
+-   [x] Rate limits configured where needed.
+-   [x] Error monitoring enabled.
+-   [x] Rollback plan prepared.
+-   [x] Release notes published.
 
 ------------------------------------------------------------------------
 

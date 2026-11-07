@@ -1,11 +1,7 @@
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
-import path from 'path'
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+import path from 'node:path'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,7 +11,8 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
+      '@': path.resolve(process.cwd(), 'src'),
+      'pdf-lib': path.resolve(process.cwd(), 'node_modules/pdf-lib/dist/pdf-lib.esm.min.js')
     }
   },
   server: {
@@ -60,9 +57,17 @@ export default defineConfig({
           if (id.includes('react-country-flag')) {
             return 'country-flag';
           }
+          // OCR & PDF heavy libraries in dedicated chunks
+          if (id.includes('tesseract.js')) {
+            return 'tesseract';
+          }
+          if (id.includes('pdf-lib')) {
+            return 'pdf-lib';
+          }
         }
       }
-    }
+    },
+    chunkSizeWarningLimit: 2000
   }
 })
 

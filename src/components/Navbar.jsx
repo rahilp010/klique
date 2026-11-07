@@ -41,44 +41,64 @@ import {
    FileCode2,
    KeyRound,
    Database,
+   Timer,
+   CreditCard,
+   ScanText,
+   Calendar,
+   Send,
+   FileDiff,
+   Lock,
+   Search,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
    { title: 'Home', path: '/', icon: Home },
-   // { title: 'Categories', path: '/category', icon: LayoutGrid },
-   // // Developer Tools
-   // { title: 'Regex Tester', path: '/tools/regex-tester', icon: Binary },
-   // { title: 'JSON to TS', path: '/tools/json-to-typescript', icon: FileCode2 },
-   // { title: 'JWT Decoder', path: '/tools/jwt-decoder', icon: KeyRound },
-   // { title: 'SQL Formatter', path: '/tools/sql-formatter', icon: Database },
-   // { title: 'Cron Generator', path: '/tools/cron-generator', icon: Clock },
-   // // Business & Finance
-   // { title: 'Invoice Maker', path: '/tools/invoice-generator', icon: FileSpreadsheet },
-   // { title: 'Salary Take-Home', path: '/tools/salary-calculator', icon: IndianRupee },
-   // { title: 'GST Calculator', path: '/tools/gst-calculator', icon: Calculator },
-   // { title: 'EMI Calculator', path: '/tools/emi-calculator', icon: DollarSign },
-   // { title: 'Quotation Maker', path: '/tools/quotation-generator', icon: FileText },
-   // { title: 'UPI QR Pay', path: '/tools/upi-qr-generator', icon: QrCode },
-   // { title: 'Email Signature', path: '/tools/email-signature-generator', icon: Mail },
-   // {
-   //    title: 'Profit Margin',
-   //    path: '/tools/profit-margin-calculator',
-   //    icon: TrendingUp,
-   // },
-   // // Student Tools
-   // {
-   //    title: 'Attendance',
-   //    path: '/tools/attendance-calculator',
-   //    icon: GraduationCap,
-   // },
-   // { title: 'CGPA / GPA', path: '/tools/cgpa-calculator', icon: Award },
-   // // Productivity & Web
-   // { title: 'Split Bill', path: '/tools/split-bill-calculator', icon: Receipt },
-   // {
-   //    title: 'WhatsApp Link',
-   //    path: '/tools/whatsapp-link-generator',
-   //    icon: MessageSquare,
-   // },
+   { title: 'Categories', path: '/category', icon: LayoutGrid },
+   // Advanced Tools (Phase 5)
+   { title: 'API Client', path: '/tools/api-request-builder', icon: Send },
+   { title: 'PDF Compare', path: '/tools/pdf-compare', icon: FileDiff },
+   { title: 'Temp Notes', path: '/tools/temporary-notes', icon: Lock },
+   { title: 'SEO Analyzer', path: '/tools/seo-analyzer', icon: Search },
+   // Productivity & Files (Phase 4)
+   { title: 'Pomodoro Timer', path: '/tools/pomodoro-timer', icon: Timer },
+   { title: 'Event Countdown', path: '/tools/event-countdown', icon: Calendar },
+   { title: 'Subscriptions', path: '/tools/subscription-tracker', icon: CreditCard },
+   { title: 'Bulk Compressor', path: '/tools/bulk-image-compressor', icon: ImageIcon },
+   { title: 'PDF Signer', path: '/tools/pdf-signer', icon: PenTool },
+   { title: 'Image to Text (OCR)', path: '/tools/image-to-text', icon: ScanText },
+   // Developer Tools
+   { title: 'Regex Tester', path: '/tools/regex-tester', icon: Binary },
+   { title: 'JSON to TS', path: '/tools/json-to-typescript', icon: FileCode2 },
+   { title: 'JWT Decoder', path: '/tools/jwt-decoder', icon: KeyRound },
+   { title: 'SQL Formatter', path: '/tools/sql-formatter', icon: Database },
+   { title: 'Cron Generator', path: '/tools/cron-generator', icon: Clock },
+   // Business & Finance
+   { title: 'Invoice Maker', path: '/tools/invoice-generator', icon: FileSpreadsheet },
+   { title: 'Salary Take-Home', path: '/tools/salary-calculator', icon: IndianRupee },
+   { title: 'GST Calculator', path: '/tools/gst-calculator', icon: Calculator },
+   { title: 'EMI Calculator', path: '/tools/emi-calculator', icon: DollarSign },
+   { title: 'Quotation Maker', path: '/tools/quotation-generator', icon: FileText },
+   { title: 'UPI QR Pay', path: '/tools/upi-qr-generator', icon: QrCode },
+   { title: 'Email Signature', path: '/tools/email-signature-generator', icon: Mail },
+   {
+      title: 'Profit Margin',
+      path: '/tools/profit-margin-calculator',
+      icon: TrendingUp,
+   },
+   // Student Tools
+   {
+      title: 'Attendance',
+      path: '/tools/attendance-calculator',
+      icon: GraduationCap,
+   },
+   { title: 'CGPA / GPA', path: '/tools/cgpa-calculator', icon: Award },
+   // Productivity & Web
+   { title: 'Split Bill', path: '/tools/split-bill-calculator', icon: Receipt },
+   {
+      title: 'WhatsApp Link',
+      path: '/tools/whatsapp-link-generator',
+      icon: MessageSquare,
+   },
    // Existing Core Utilities
    { title: 'PDF Tools', path: '/convert', icon: FilePen },
    { title: 'JSON Formatter', path: '/jsonformatter', icon: Braces },

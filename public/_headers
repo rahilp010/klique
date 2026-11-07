@@ -1,0 +1,20 @@
+# Cloudflare Pages / Static Assets Headers
+
+# Global Security Headers
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# Cache hashed assets forever (1 year immutable)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML documents must revalidate to pick up new deploys immediately
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+

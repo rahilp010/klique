@@ -6,6 +6,8 @@
 # Default rule for all search engine crawlers
 User-agent: *
 Allow: /
+Allow: /category
+Allow: /tools/
 Allow: /convert
 Allow: /jsonformatter
 Allow: /svgconverter
