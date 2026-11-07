@@ -25,6 +25,7 @@ import { trackToolCopy, trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, Textarea } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & FAQS                                                            */
@@ -398,7 +399,7 @@ export default function RegexTester() {
                         </label>
                         <div className="flex items-center rounded-xl bg-zinc-900 border border-zinc-800 overflow-hidden focus-within:border-[#daf4aa]">
                            <span className="px-3 text-zinc-500 font-mono text-base">/</span>
-                           <input
+                           <InputControl
                               type="text"
                               value={pattern}
                               onChange={(e) => setPattern(e.target.value)}
@@ -457,7 +458,7 @@ export default function RegexTester() {
                               Clear
                            </button>
                         </div>
-                        <textarea
+                        <Textarea
                            rows={6}
                            value={testString}
                            onChange={(e) => setTestString(e.target.value)}
@@ -472,7 +473,7 @@ export default function RegexTester() {
                            <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
                               Substitution String (Tokens: $& = full match, $1 = group 1)
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={replacement}
                               onChange={(e) => setReplacement(e.target.value)}

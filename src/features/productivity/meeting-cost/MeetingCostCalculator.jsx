@@ -25,6 +25,7 @@ import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/a
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, Dropdown } from '../../../components/ui/CustomControl';
 
 const CURRENCIES = [
    { code: 'INR', symbol: '₹', label: 'INR (₹)' },
@@ -315,7 +316,7 @@ Calculated privately with Klique (https://klique.netlify.app/tools/meeting-cost-
                   {/* Meeting Topic */}
                   <div className="space-y-1.5">
                      <label className="text-xs font-medium text-zinc-300">Meeting Topic / Title</label>
-                     <input
+                     <InputControl
                         type="text"
                         value={meetingTitle}
                         onChange={(e) => setMeetingTitle(e.target.value)}
@@ -331,7 +332,7 @@ Calculated privately with Klique (https://klique.netlify.app/tools/meeting-cost-
                            <Users size={13} className="text-[#daf4aa]" />
                            Attendees
                         </label>
-                        <input
+                        <InputControl
                            type="number"
                            min="1"
                            max="1000"
@@ -342,7 +343,7 @@ Calculated privately with Klique (https://klique.netlify.app/tools/meeting-cost-
                      </div>
                      <div className="space-y-1.5">
                         <label className="text-xs font-medium text-zinc-300">Currency</label>
-                        <select
+                        <Dropdown
                            value={currency}
                            onChange={(e) => setCurrency(e.target.value)}
                            className="w-full bg-zinc-950/80 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]/60 focus:ring-1 focus:ring-[#daf4aa]/40 cursor-pointer">
@@ -351,7 +352,7 @@ Calculated privately with Klique (https://klique.netlify.app/tools/meeting-cost-
                                  {c.label}
                               </option>
                            ))}
-                        </select>
+                        </Dropdown>
                      </div>
                   </div>
 

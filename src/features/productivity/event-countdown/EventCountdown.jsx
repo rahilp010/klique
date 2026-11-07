@@ -28,6 +28,7 @@ import {
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link, useSearchParams } from 'react-router-dom';
+import { InputControl, Dropdown, Textarea } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & SAMPLES                                                         */
@@ -586,7 +587,7 @@ export default function EventCountdown() {
                         <label className="block text-zinc-300 font-medium mb-1.5">
                            Event Name *
                         </label>
-                        <input
+                        <InputControl
                            type="text"
                            required
                            value={title}
@@ -600,7 +601,7 @@ export default function EventCountdown() {
                         <label className="block text-zinc-300 font-medium mb-1.5">
                            Target Date & Time *
                         </label>
-                        <input
+                        <InputControl
                            type="datetime-local"
                            required
                            value={targetDate}
@@ -613,7 +614,7 @@ export default function EventCountdown() {
                         <label className="block text-zinc-300 font-medium mb-1.5">
                            Category
                         </label>
-                        <select
+                        <Dropdown
                            value={category}
                            onChange={(e) => setCategory(e.target.value)}
                            className="w-full rounded-xl border border-zinc-800 bg-zinc-950/70 px-3.5 py-2.5 text-white focus:border-[#daf4aa]/60 focus:ring-1 focus:ring-[#daf4aa]/40 focus:outline-none transition-all">
@@ -624,14 +625,14 @@ export default function EventCountdown() {
                            </option>
                            <option value="Academics">Exams & School</option>
                            <option value="Travel">Vacation & Travel</option>
-                        </select>
+                        </Dropdown>
                      </div>
 
                      <div>
                         <label className="block text-zinc-300 font-medium mb-1.5">
                            Private Notes (Optional)
                         </label>
-                        <textarea
+                        <Textarea
                            rows={2}
                            value={notes}
                            onChange={(e) => setNotes(e.target.value)}

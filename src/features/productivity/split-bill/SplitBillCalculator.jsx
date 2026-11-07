@@ -26,6 +26,7 @@ import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/a
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & FAQS                                                            */
@@ -509,7 +510,7 @@ export default function SplitBillCalculator() {
                                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-xs font-semibold">
                                     ₹
                                  </span>
-                                 <input
+                                 <InputControl
                                     type="number"
                                     min="0"
                                     value={billAmount}
@@ -527,7 +528,7 @@ export default function SplitBillCalculator() {
                                  </label>
                                  <span className="text-xs text-zinc-500 font-mono">{numPeople} Person(s)</span>
                               </div>
-                              <input
+                              <InputControl
                                  type="number"
                                  min="1"
                                  max="100"
@@ -578,7 +579,7 @@ export default function SplitBillCalculator() {
                                     <span className="text-xs font-mono text-zinc-500 w-4 text-center">
                                        {idx + 1}
                                     </span>
-                                    <input
+                                    <InputControl
                                        type="text"
                                        value={friend.name}
                                        onChange={(e) => handleFriendChange(friend.id, 'name', e.target.value)}
@@ -589,7 +590,7 @@ export default function SplitBillCalculator() {
                                        <span className="absolute left-2 top-1/2 -translate-y-1/2 text-zinc-500 text-xs">
                                           ₹
                                        </span>
-                                       <input
+                                       <InputControl
                                           type="number"
                                           min="0"
                                           value={friend.amount}
@@ -656,7 +657,7 @@ export default function SplitBillCalculator() {
                         </div>
                         {isCustomTip && (
                            <div className="relative mt-2">
-                              <input
+                              <InputControl
                                  type="number"
                                  min="0"
                                  max="100"

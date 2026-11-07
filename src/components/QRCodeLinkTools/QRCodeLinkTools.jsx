@@ -51,6 +51,7 @@ import QRCode from 'qrcode';
 import jsQR from 'jsqr';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
+import { InputControl, Dropdown, CheckboxInput, Textarea } from '../ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  CONSTANTS & PRESETS                                                       */
@@ -1215,7 +1216,7 @@ export default function QRCodeLinkTools() {
                                  </label>
                                  <div className="relative">
                                     <Globe className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3.5" />
-                                    <input
+                                    <InputControl
                                        type="url"
                                        value={qrUrl}
                                        onChange={(e) =>
@@ -1238,7 +1239,7 @@ export default function QRCodeLinkTools() {
                                     <label className="text-xs font-medium text-zinc-300">
                                        Network Name (SSID)
                                     </label>
-                                    <input
+                                    <InputControl
                                        type="text"
                                        value={qrWifi.ssid}
                                        onChange={(e) =>
@@ -1256,7 +1257,7 @@ export default function QRCodeLinkTools() {
                                        <label className="text-xs font-medium text-zinc-300">
                                           Password
                                        </label>
-                                       <input
+                                       <InputControl
                                           type="text"
                                           value={qrWifi.password}
                                           onChange={(e) =>
@@ -1273,7 +1274,7 @@ export default function QRCodeLinkTools() {
                                        <label className="text-xs font-medium text-zinc-300">
                                           Encryption
                                        </label>
-                                       <select
+                                       <Dropdown
                                           value={qrWifi.encryption}
                                           onChange={(e) =>
                                              setQrWifi({
@@ -1291,11 +1292,11 @@ export default function QRCodeLinkTools() {
                                           <option value="nopass">
                                              None (Open Network)
                                           </option>
-                                       </select>
+                                       </Dropdown>
                                     </div>
                                  </div>
                                  <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer pt-1">
-                                    <input
+                                    <CheckboxInput
                                        type="checkbox"
                                        checked={qrWifi.hidden}
                                        onChange={(e) =>
@@ -1319,7 +1320,7 @@ export default function QRCodeLinkTools() {
                                        <label className="text-xs font-medium text-zinc-300">
                                           First Name
                                        </label>
-                                       <input
+                                       <InputControl
                                           type="text"
                                           value={qrVcard.firstName}
                                           onChange={(e) =>
@@ -1335,7 +1336,7 @@ export default function QRCodeLinkTools() {
                                        <label className="text-xs font-medium text-zinc-300">
                                           Last Name
                                        </label>
-                                       <input
+                                       <InputControl
                                           type="text"
                                           value={qrVcard.lastName}
                                           onChange={(e) =>
@@ -1353,7 +1354,7 @@ export default function QRCodeLinkTools() {
                                        <label className="text-xs font-medium text-zinc-300">
                                           Phone
                                        </label>
-                                       <input
+                                       <InputControl
                                           type="tel"
                                           value={qrVcard.phone}
                                           onChange={(e) =>
@@ -1369,7 +1370,7 @@ export default function QRCodeLinkTools() {
                                        <label className="text-xs font-medium text-zinc-300">
                                           Email
                                        </label>
-                                       <input
+                                       <InputControl
                                           type="email"
                                           value={qrVcard.email}
                                           onChange={(e) =>
@@ -1387,7 +1388,7 @@ export default function QRCodeLinkTools() {
                                        <label className="text-xs font-medium text-zinc-300">
                                           Company / Org
                                        </label>
-                                       <input
+                                       <InputControl
                                           type="text"
                                           value={qrVcard.org}
                                           onChange={(e) =>
@@ -1403,7 +1404,7 @@ export default function QRCodeLinkTools() {
                                        <label className="text-xs font-medium text-zinc-300">
                                           Job Title
                                        </label>
-                                       <input
+                                       <InputControl
                                           type="text"
                                           value={qrVcard.title}
                                           onChange={(e) =>
@@ -1420,7 +1421,7 @@ export default function QRCodeLinkTools() {
                                     <label className="text-xs font-medium text-zinc-300">
                                        Website
                                     </label>
-                                    <input
+                                    <InputControl
                                        type="url"
                                        value={qrVcard.website}
                                        onChange={(e) =>
@@ -1443,7 +1444,7 @@ export default function QRCodeLinkTools() {
                                        Phone Number (with Country Code, no + or
                                        spaces)
                                     </label>
-                                    <input
+                                    <InputControl
                                        type="text"
                                        value={qrWhatsApp.phone}
                                        onChange={(e) =>
@@ -1460,7 +1461,7 @@ export default function QRCodeLinkTools() {
                                     <label className="text-xs font-medium text-zinc-300">
                                        Prefilled Message
                                     </label>
-                                    <textarea
+                                    <Textarea
                                        rows={3}
                                        value={qrWhatsApp.message}
                                        onChange={(e) =>
@@ -1482,7 +1483,7 @@ export default function QRCodeLinkTools() {
                                     <label className="text-xs font-medium text-zinc-300">
                                        Recipient Email Address
                                     </label>
-                                    <input
+                                    <InputControl
                                        type="email"
                                        value={qrEmail.to}
                                        onChange={(e) =>
@@ -1499,7 +1500,7 @@ export default function QRCodeLinkTools() {
                                     <label className="text-xs font-medium text-zinc-300">
                                        Subject
                                     </label>
-                                    <input
+                                    <InputControl
                                        type="text"
                                        value={qrEmail.subject}
                                        onChange={(e) =>
@@ -1515,7 +1516,7 @@ export default function QRCodeLinkTools() {
                                     <label className="text-xs font-medium text-zinc-300">
                                        Message Body
                                     </label>
-                                    <textarea
+                                    <Textarea
                                        rows={2}
                                        value={qrEmail.body}
                                        onChange={(e) =>
@@ -1537,7 +1538,7 @@ export default function QRCodeLinkTools() {
                                     <label className="text-xs font-medium text-zinc-300">
                                        Phone Number
                                     </label>
-                                    <input
+                                    <InputControl
                                        type="tel"
                                        value={qrSms.phone}
                                        onChange={(e) =>
@@ -1554,7 +1555,7 @@ export default function QRCodeLinkTools() {
                                     <label className="text-xs font-medium text-zinc-300">
                                        Prefilled SMS Text
                                     </label>
-                                    <textarea
+                                    <Textarea
                                        rows={2}
                                        value={qrSms.message}
                                        onChange={(e) =>
@@ -1575,7 +1576,7 @@ export default function QRCodeLinkTools() {
                                  <label className="text-xs font-medium text-zinc-300">
                                     Phone Number
                                  </label>
-                                 <input
+                                 <InputControl
                                     type="tel"
                                     value={qrPhone}
                                     onChange={(e) => setQrPhone(e.target.value)}
@@ -1591,7 +1592,7 @@ export default function QRCodeLinkTools() {
                                  <label className="text-xs font-medium text-zinc-300">
                                     Plain Text Message / Payload
                                  </label>
-                                 <textarea
+                                 <Textarea
                                     rows={4}
                                     value={qrText}
                                     onChange={(e) => setQrText(e.target.value)}
@@ -2193,7 +2194,7 @@ export default function QRCodeLinkTools() {
                                  Website URL{' '}
                                  <span className="text-rose-400">*</span>
                               </label>
-                              <input
+                              <InputControl
                                  type="url"
                                  value={utmWebsite}
                                  onChange={(e) => setUtmWebsite(e.target.value)}
@@ -2211,7 +2212,7 @@ export default function QRCodeLinkTools() {
                                     </code>
                                     ) <span className="text-rose-400">*</span>
                                  </label>
-                                 <input
+                                 <InputControl
                                     type="text"
                                     value={utmSource}
                                     onChange={(e) =>
@@ -2233,7 +2234,7 @@ export default function QRCodeLinkTools() {
                                     </code>
                                     ) <span className="text-rose-400">*</span>
                                  </label>
-                                 <input
+                                 <InputControl
                                     type="text"
                                     value={utmMedium}
                                     onChange={(e) =>
@@ -2257,7 +2258,7 @@ export default function QRCodeLinkTools() {
                                     </code>
                                     )
                                  </label>
-                                 <input
+                                 <InputControl
                                     type="text"
                                     value={utmCampaign}
                                     onChange={(e) =>
@@ -2276,7 +2277,7 @@ export default function QRCodeLinkTools() {
                                     </code>
                                     )
                                  </label>
-                                 <input
+                                 <InputControl
                                     type="text"
                                     value={utmTerm}
                                     onChange={(e) => setUtmTerm(e.target.value)}
@@ -2294,7 +2295,7 @@ export default function QRCodeLinkTools() {
                                  </code>
                                  )
                               </label>
-                              <input
+                              <InputControl
                                  type="text"
                                  value={utmContent}
                                  onChange={(e) => setUtmContent(e.target.value)}
@@ -2370,7 +2371,7 @@ export default function QRCodeLinkTools() {
                            Paste Any URL to Dissect
                         </label>
                         <div className="relative">
-                           <input
+                           <InputControl
                               type="text"
                               value={parseInputUrl}
                               onChange={(e) => setParseInputUrl(e.target.value)}
@@ -2459,7 +2460,7 @@ export default function QRCodeLinkTools() {
                                        <div
                                           key={item.id}
                                           className="flex items-center gap-2">
-                                          <input
+                                          <InputControl
                                              type="text"
                                              value={item.key}
                                              onChange={(e) =>
@@ -2475,7 +2476,7 @@ export default function QRCodeLinkTools() {
                                           <span className="text-zinc-600 font-bold">
                                              =
                                           </span>
-                                          <input
+                                          <InputControl
                                              type="text"
                                              value={item.value}
                                              onChange={(e) =>
@@ -2593,7 +2594,7 @@ export default function QRCodeLinkTools() {
                            <label className="text-xs font-medium text-zinc-300 block mb-1">
                               Input String / URL
                            </label>
-                           <textarea
+                           <Textarea
                               rows={4}
                               value={encodeInput}
                               onChange={(e) => setEncodeInput(e.target.value)}
@@ -2631,7 +2632,7 @@ export default function QRCodeLinkTools() {
                                  <Copy className="w-3 h-3" /> Copy Result
                               </button>
                            </div>
-                           <textarea
+                           <Textarea
                               readOnly
                               rows={4}
                               value={encodedResult}
@@ -2693,7 +2694,7 @@ export default function QRCodeLinkTools() {
                                  <label className="text-xs font-medium text-zinc-300">
                                     WhatsApp Phone (with Country Code)
                                  </label>
-                                 <input
+                                 <InputControl
                                     type="text"
                                     value={hubWa.phone}
                                     onChange={(e) =>
@@ -2710,7 +2711,7 @@ export default function QRCodeLinkTools() {
                                  <label className="text-xs font-medium text-zinc-300">
                                     Prefilled Message
                                  </label>
-                                 <textarea
+                                 <Textarea
                                     rows={3}
                                     value={hubWa.text}
                                     onChange={(e) =>
@@ -2733,7 +2734,7 @@ export default function QRCodeLinkTools() {
                                     <label className="text-xs font-medium text-zinc-300">
                                        To Email
                                     </label>
-                                    <input
+                                    <InputControl
                                        type="email"
                                        value={hubMail.to}
                                        onChange={(e) =>
@@ -2749,7 +2750,7 @@ export default function QRCodeLinkTools() {
                                     <label className="text-xs font-medium text-zinc-300">
                                        CC
                                     </label>
-                                    <input
+                                    <InputControl
                                        type="email"
                                        value={hubMail.cc}
                                        onChange={(e) =>
@@ -2765,7 +2766,7 @@ export default function QRCodeLinkTools() {
                                     <label className="text-xs font-medium text-zinc-300">
                                        BCC
                                     </label>
-                                    <input
+                                    <InputControl
                                        type="email"
                                        value={hubMail.bcc}
                                        onChange={(e) =>
@@ -2782,7 +2783,7 @@ export default function QRCodeLinkTools() {
                                  <label className="text-xs font-medium text-zinc-300">
                                     Subject
                                  </label>
-                                 <input
+                                 <InputControl
                                     type="text"
                                     value={hubMail.subject}
                                     onChange={(e) =>
@@ -2798,7 +2799,7 @@ export default function QRCodeLinkTools() {
                                  <label className="text-xs font-medium text-zinc-300">
                                     Body
                                  </label>
-                                 <textarea
+                                 <Textarea
                                     rows={2}
                                     value={hubMail.body}
                                     onChange={(e) =>
@@ -2820,7 +2821,7 @@ export default function QRCodeLinkTools() {
                                  <label className="text-xs font-medium text-zinc-300">
                                     Recipient Phone Number
                                  </label>
-                                 <input
+                                 <InputControl
                                     type="tel"
                                     value={hubSms.phone}
                                     onChange={(e) =>
@@ -2837,7 +2838,7 @@ export default function QRCodeLinkTools() {
                                  <label className="text-xs font-medium text-zinc-300">
                                     Prefilled SMS Message
                                  </label>
-                                 <textarea
+                                 <Textarea
                                     rows={2}
                                     value={hubSms.text}
                                     onChange={(e) =>
@@ -2859,7 +2860,7 @@ export default function QRCodeLinkTools() {
                                  <label className="text-xs font-medium text-zinc-300">
                                     Phone Number to Call
                                  </label>
-                                 <input
+                                 <InputControl
                                     type="tel"
                                     value={hubCall.phone}
                                     onChange={(e) =>
@@ -2934,7 +2935,7 @@ export default function QRCodeLinkTools() {
                            <label className="text-xs font-medium text-zinc-300 block mb-1">
                               Paste Tracking-Heavy URL
                            </label>
-                           <textarea
+                           <Textarea
                               rows={3}
                               value={dirtyUrl}
                               onChange={(e) => setDirtyUrl(e.target.value)}

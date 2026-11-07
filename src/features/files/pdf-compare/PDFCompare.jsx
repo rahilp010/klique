@@ -21,6 +21,7 @@ import { computeTextDiff } from '../../../lib/calculations/pdfCompare';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { Textarea } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  SAMPLES & FAQS                                                            */
@@ -138,11 +139,14 @@ export default function PDFCompare() {
    const relatedTools = useMemo(() => getRelatedTools('pdf-compare', 4), []);
 
    return (
-      <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 relative overflow-hidden font-sans">
-         {/* Static ambient backdrop matching JsonFormatter */}
+      <div
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-3 py-6 sm:px-6 sm:py-8 md:px-10 overflow-hidden
+            before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+            after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_62%)]" />
          <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(16,185,129,0.12),transparent_55%)]"
+            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(113,113,122,0.14),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_50%)]"
          />
          <div
             aria-hidden
@@ -187,7 +191,7 @@ export default function PDFCompare() {
                   </div>
 
                   <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-2">
-                     PDF & Text <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#daf4aa] via-lime-300 to-emerald-400">Compare</span>
+                     PDF & Text <span className="text-[#daf4aa]">Compare</span>
                   </h1>
                   <p className="text-zinc-400 text-sm max-w-xl">
                      Identify changes between document revisions, contract drafts, and files. Line-by-line
@@ -268,7 +272,7 @@ export default function PDFCompare() {
                      </span>
                      <span className="text-[11px] text-zinc-500 font-mono">{diffResult.wordsDocA} words</span>
                   </div>
-                  <textarea
+                  <Textarea
                      value={docA}
                      onChange={(e) => setDocA(e.target.value)}
                      placeholder="Paste original document text or contract draft here..."
@@ -285,7 +289,7 @@ export default function PDFCompare() {
                      </span>
                      <span className="text-[11px] text-zinc-500 font-mono">{diffResult.wordsDocB} words</span>
                   </div>
-                  <textarea
+                  <Textarea
                      value={docB}
                      onChange={(e) => setDocB(e.target.value)}
                      placeholder="Paste modified document text or revised contract draft here..."
@@ -406,4 +410,3 @@ export default function PDFCompare() {
       </div>
    );
 }
-

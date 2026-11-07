@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { searchTools } from '../../data/tools';
 import { preloadRoute } from '../../App';
 import { trackToolSearch } from '../../lib/analytics';
+import { InputControl } from '../ui/CustomControl';
 
 export default function ToolSearch({
    isOpen,
@@ -69,7 +70,7 @@ export default function ToolSearch({
                {/* Search Input Bar */}
                <div className="flex items-center gap-3 px-4 py-3.5 border-b border-zinc-800/80 bg-[#16161b]">
                   <Search size={18} className="text-zinc-400 shrink-0" />
-                  <input
+                  <InputControl
                      ref={inputRef}
                      type="text"
                      value={query}

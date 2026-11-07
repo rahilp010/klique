@@ -20,6 +20,7 @@ import { trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl } from '../../../components/ui/CustomControl';
 
 const SAMPLE_TEXTS = [
    'Technology has transformed the way human beings communicate, create, and collaborate. From distributed systems and cloud networks to client-side web applications, modern software allows developers to build private, high-speed tools that solve real-world problems in seconds without compromising user privacy.',
@@ -331,7 +332,7 @@ export default function TypingSpeedTest() {
                </div>
 
                {/* Invisible typing input field */}
-               <input
+               <InputControl
                   ref={inputRef}
                   type="text"
                   value={inputText}

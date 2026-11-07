@@ -28,6 +28,7 @@ import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/a
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, Dropdown, Textarea } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & FAQS                                                            */
@@ -467,7 +468,7 @@ Valid Until: ${result.expiryDateFormatted}`;
                            <label className="text-[11px] font-semibold text-zinc-400 block mb-1">
                               Quotation Number
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={quoteNumber}
                               onChange={(e) => setQuoteNumber(e.target.value)}
@@ -478,7 +479,7 @@ Valid Until: ${result.expiryDateFormatted}`;
                            <label className="text-[11px] font-semibold text-zinc-400 block mb-1">
                               Quotation Date
                            </label>
-                           <input
+                           <InputControl
                               type="date"
                               value={quoteDate}
                               onChange={(e) => setQuoteDate(e.target.value)}
@@ -489,7 +490,7 @@ Valid Until: ${result.expiryDateFormatted}`;
                            <label className="text-[11px] font-semibold text-zinc-400 block mb-1">
                               Validity (Days)
                            </label>
-                           <select
+                           <Dropdown
                               value={validityDays}
                               onChange={(e) => setValidityDays(e.target.value)}
                               className="w-full px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]">
@@ -497,7 +498,7 @@ Valid Until: ${result.expiryDateFormatted}`;
                               <option value="30">30 Days</option>
                               <option value="45">45 Days</option>
                               <option value="60">60 Days</option>
-                           </select>
+                           </Dropdown>
                         </div>
                      </div>
 
@@ -508,21 +509,21 @@ Valid Until: ${result.expiryDateFormatted}`;
                               <Building size={13} />
                               <span>Prepared By (Your Agency)</span>
                            </span>
-                           <input
+                           <InputControl
                               type="text"
                               placeholder="Business / Freelancer Name"
                               value={businessName}
                               onChange={(e) => setBusinessName(e.target.value)}
                               className="w-full px-2 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]"
                            />
-                           <input
+                           <InputControl
                               type="text"
                               placeholder="Email & Phone"
                               value={businessEmail}
                               onChange={(e) => setBusinessEmail(e.target.value)}
                               className="w-full px-2 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]"
                            />
-                           <textarea
+                           <Textarea
                               rows={2}
                               placeholder="Office Address"
                               value={businessAddress}
@@ -536,21 +537,21 @@ Valid Until: ${result.expiryDateFormatted}`;
                               <User size={13} />
                               <span>Prepared For (Prospective Client)</span>
                            </span>
-                           <input
+                           <InputControl
                               type="text"
                               placeholder="Client / Company Name"
                               value={clientName}
                               onChange={(e) => setClientName(e.target.value)}
                               className="w-full px-2 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]"
                            />
-                           <input
+                           <InputControl
                               type="text"
                               placeholder="Client Email"
                               value={clientEmail}
                               onChange={(e) => setClientEmail(e.target.value)}
                               className="w-full px-2 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]"
                            />
-                           <textarea
+                           <Textarea
                               rows={2}
                               placeholder="Client Address"
                               value={clientAddress}
@@ -580,14 +581,14 @@ Valid Until: ${result.expiryDateFormatted}`;
                               <div
                                  key={it.id}
                                  className="grid grid-cols-12 gap-2 items-center p-2 rounded-xl bg-zinc-900/60 border border-zinc-800">
-                                 <input
+                                 <InputControl
                                     type="text"
                                     value={it.desc}
                                     onChange={(e) => handleItemChange(it.id, 'desc', e.target.value)}
                                     placeholder="Scope milestone description"
                                     className="col-span-6 bg-transparent text-xs text-zinc-200 outline-none px-2 py-1 rounded border border-transparent focus:border-zinc-700"
                                  />
-                                 <input
+                                 <InputControl
                                     type="number"
                                     min="1"
                                     value={it.qty}
@@ -595,7 +596,7 @@ Valid Until: ${result.expiryDateFormatted}`;
                                     placeholder="Qty"
                                     className="col-span-2 bg-zinc-900 text-xs text-center text-zinc-200 rounded border border-zinc-800 py-1"
                                  />
-                                 <input
+                                 <InputControl
                                     type="number"
                                     min="0"
                                     value={it.rate}
@@ -641,7 +642,7 @@ Valid Until: ${result.expiryDateFormatted}`;
                               Project Discount
                            </label>
                            <div className="flex items-center gap-2">
-                              <input
+                              <InputControl
                                  type="number"
                                  min="0"
                                  value={discountValue}
@@ -649,13 +650,13 @@ Valid Until: ${result.expiryDateFormatted}`;
                                  placeholder="0"
                                  className="w-full px-2.5 py-1 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-100"
                               />
-                              <select
+                              <Dropdown
                                  value={discountType}
                                  onChange={(e) => setDiscountType(e.target.value)}
                                  className="bg-zinc-900 border border-zinc-800 text-xs rounded-lg px-2 py-1 text-zinc-200">
                                  <option value="percent">% Off</option>
                                  <option value="fixed">₹ Flat</option>
-                              </select>
+                              </Dropdown>
                            </div>
                         </div>
 
@@ -663,7 +664,7 @@ Valid Until: ${result.expiryDateFormatted}`;
                            <label className="text-[11px] font-semibold text-zinc-400 block mb-1">
                               Terms & Conditions
                            </label>
-                           <textarea
+                           <Textarea
                               rows={3}
                               value={terms}
                               onChange={(e) => setTerms(e.target.value)}

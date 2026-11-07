@@ -21,6 +21,7 @@ import { trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl } from '../../../components/ui/CustomControl';
 
 const SAMPLE_ENDPOINTS = [
    { name: 'Cloudflare DNS', url: 'https://1.1.1.1' },
@@ -207,7 +208,7 @@ export default function WebsiteUptimeChecker() {
                <div className="flex flex-col sm:flex-row items-center gap-3">
                   <div className="relative flex-1 w-full">
                      <Globe size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500" />
-                     <input
+                     <InputControl
                         type="url"
                         value={targetUrl}
                         onChange={(e) => setTargetUrl(e.target.value)}

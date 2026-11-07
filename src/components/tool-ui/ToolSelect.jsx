@@ -1,5 +1,6 @@
 import React from 'react';
-import { ChevronDown, AlertCircle, HelpCircle } from 'lucide-react';
+import { AlertCircle, HelpCircle } from 'lucide-react';
+import { Dropdown } from '../ui/CustomControl';
 
 export default function ToolSelect({
    label,
@@ -33,34 +34,27 @@ export default function ToolSelect({
             </div>
          )}
 
-         <div
-            className={`relative flex items-center w-full rounded-xl border bg-[#0d0d10] transition-all focus-within:ring-1 focus-within:ring-[#daf4aa]/50 ${
+         <Dropdown
+            id={selectId}
+            value={value}
+            onChange={onChange}
+            disabled={disabled}
+            required={required}
+            className={`min-h-11 h-auto rounded-xl bg-[#0d0d10] px-3.5 py-2.5 text-sm text-zinc-100 ${
                error
-                  ? 'border-rose-500/80 focus-within:border-rose-500'
-                  : 'border-zinc-800 hover:border-zinc-700 focus-within:border-[#daf4aa]'
-            } ${disabled ? 'opacity-50 cursor-not-allowed bg-zinc-900/50' : ''}`}>
-            <select
-               id={selectId}
-               value={value}
-               onChange={onChange}
-               disabled={disabled}
-               className="w-full appearance-none bg-transparent py-2.5 pl-3.5 pr-10 text-sm text-zinc-100 outline-none cursor-pointer">
-               {options.map((opt) => {
-                  const val = typeof opt === 'object' ? opt.value : opt;
-                  const lbl = typeof opt === 'object' ? opt.label : opt;
-                  return (
-                     <option key={val} value={val} className="bg-[#141418] text-zinc-200">
-                        {lbl}
-                     </option>
-                  );
-               })}
-            </select>
-
-            <ChevronDown
-               size={16}
-               className="pointer-events-none absolute right-3.5 text-zinc-500"
-            />
-         </div>
+                  ? 'border-rose-500/80'
+                  : 'border-zinc-800 hover:border-zinc-700'
+            }`}>
+            {options.map((opt) => {
+               const val = typeof opt === 'object' ? opt.value : opt;
+               const lbl = typeof opt === 'object' ? opt.label : opt;
+               return (
+                  <option key={val} value={val} className="bg-[#141418] text-zinc-200">
+                     {lbl}
+                  </option>
+               );
+            })}
+         </Dropdown>
 
          {error && (
             <p className="flex items-center gap-1 text-[11px] font-medium text-rose-400 mt-0.5">
@@ -71,4 +65,3 @@ export default function ToolSelect({
       </div>
    );
 }
-

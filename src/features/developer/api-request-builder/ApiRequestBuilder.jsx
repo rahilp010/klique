@@ -31,6 +31,7 @@ import {
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { Dropdown, InputControl, CheckboxInput, Textarea } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  FAQS                                                                      */
@@ -165,11 +166,14 @@ export default function ApiRequestBuilder() {
    const relatedTools = useMemo(() => getRelatedTools('api-request-builder', 4), []);
 
    return (
-      <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 relative overflow-hidden font-sans">
-         {/* Static ambient backdrop matching JsonFormatter */}
+      <div
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-3 py-6 sm:px-6 sm:py-8 md:px-10 overflow-hidden
+            before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+            after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_62%)]" />
          <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(16,185,129,0.12),transparent_55%)]"
+            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(113,113,122,0.14),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_50%)]"
          />
          <div
             aria-hidden
@@ -214,7 +218,7 @@ export default function ApiRequestBuilder() {
                   </div>
 
                   <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-2">
-                     API Request <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#daf4aa] via-lime-300 to-emerald-400">Builder</span>
+                     API Request <span className="text-[#daf4aa]">Builder</span>
                   </h1>
                   <p className="text-zinc-400 text-sm max-w-xl">
                      Execute, debug, and benchmark HTTP REST requests directly in your browser. Inspect status,
@@ -248,7 +252,7 @@ export default function ApiRequestBuilder() {
             <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/40 p-4 backdrop-blur-xl shadow-xl mb-6">
                <div className="flex flex-col sm:flex-row items-center gap-3">
                   {/* Method Selector */}
-                  <select
+                  <Dropdown
                      value={method}
                      onChange={(e) => setMethod(e.target.value)}
                      className="w-full sm:w-32 rounded-xl border border-zinc-800 bg-zinc-950 font-mono font-bold text-xs py-3 px-3.5 text-[#daf4aa] focus:border-[#daf4aa]/60 focus:ring-1 focus:ring-[#daf4aa]/40 focus:outline-none transition-all cursor-pointer">
@@ -257,10 +261,10 @@ export default function ApiRequestBuilder() {
                            {m}
                         </option>
                      ))}
-                  </select>
+                  </Dropdown>
 
                   {/* URL Input */}
-                  <input
+                  <InputControl
                      type="text"
                      value={url}
                      onChange={(e) => setUrl(e.target.value)}
@@ -340,10 +344,10 @@ export default function ApiRequestBuilder() {
                   {/* Tab 1: Query Params */}
                   {activeTab === 'params' && (
                      <div className="space-y-3 flex-1 flex flex-col justify-between">
-                        <div className="space-y-2 max-h-72 overflow-y-auto">
+                        <div className="space-y-2 max-h-72 overflow-y-auto customScrollbar">
                            {queryParams.map((param, idx) => (
                               <div key={idx} className="flex items-center gap-2 text-xs">
-                                 <input
+                                 <CheckboxInput
                                     type="checkbox"
                                     checked={param.enabled}
                                     onChange={(e) => {
@@ -351,9 +355,9 @@ export default function ApiRequestBuilder() {
                                        updated[idx].enabled = e.target.checked;
                                        setQueryParams(updated);
                                     }}
-                                    className="accent-emerald-500 cursor-pointer"
+                                    className="accent-[#daf4aa] cursor-pointer"
                                  />
-                                 <input
+                                 <InputControl
                                     type="text"
                                     placeholder="Parameter Key"
                                     value={param.key}
@@ -364,7 +368,7 @@ export default function ApiRequestBuilder() {
                                     }}
                                     className="w-1/2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-1.5 text-white font-mono placeholder-zinc-600 focus:outline-none"
                                  />
-                                 <input
+                                 <InputControl
                                     type="text"
                                     placeholder="Value"
                                     value={param.value}
@@ -386,7 +390,7 @@ export default function ApiRequestBuilder() {
 
                         <button
                            onClick={addParamRow}
-                           className="flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 font-semibold pt-2">
+                           className="flex items-center gap-1.5 text-xs text-[#daf4aa] hover:text-lime-300 font-semibold pt-2">
                            <Plus size={14} />
                            <span>Add Parameter</span>
                         </button>
@@ -396,10 +400,10 @@ export default function ApiRequestBuilder() {
                   {/* Tab 2: Headers */}
                   {activeTab === 'headers' && (
                      <div className="space-y-3 flex-1 flex flex-col justify-between">
-                        <div className="space-y-2 max-h-72 overflow-y-auto">
+                        <div className="space-y-2 max-h-72 overflow-y-auto customScrollbar">
                            {headers.map((h, idx) => (
                               <div key={idx} className="flex items-center gap-2 text-xs">
-                                 <input
+                                 <CheckboxInput
                                     type="checkbox"
                                     checked={h.enabled}
                                     onChange={(e) => {
@@ -407,9 +411,9 @@ export default function ApiRequestBuilder() {
                                        updated[idx].enabled = e.target.checked;
                                        setHeaders(updated);
                                     }}
-                                    className="accent-emerald-500 cursor-pointer"
+                                    className="accent-[#daf4aa] cursor-pointer"
                                  />
-                                 <input
+                                 <InputControl
                                     type="text"
                                     placeholder="Header Name"
                                     value={h.key}
@@ -420,7 +424,7 @@ export default function ApiRequestBuilder() {
                                     }}
                                     className="w-1/2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-1.5 text-white font-mono placeholder-zinc-600 focus:outline-none"
                                  />
-                                 <input
+                                 <InputControl
                                     type="text"
                                     placeholder="Header Value"
                                     value={h.value}
@@ -442,7 +446,7 @@ export default function ApiRequestBuilder() {
 
                         <button
                            onClick={addHeaderRow}
-                           className="flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 font-semibold pt-2">
+                           className="flex items-center gap-1.5 text-xs text-[#daf4aa] hover:text-lime-300 font-semibold pt-2">
                            <Plus size={14} />
                            <span>Add Header</span>
                         </button>
@@ -452,11 +456,11 @@ export default function ApiRequestBuilder() {
                   {/* Tab 3: Request Body */}
                   {activeTab === 'body' && (
                      <div className="flex-1 flex flex-col">
-                        <textarea
+                        <Textarea
                            value={body}
                            onChange={(e) => setBody(e.target.value)}
                            placeholder='{\n  "key": "value"\n}'
-                           className="w-full flex-1 min-h-[220px] rounded-xl border border-zinc-800 bg-zinc-950 p-3.5 font-mono text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none resize-none leading-relaxed"
+                           className="w-full flex-1 min-h-[220px] rounded-xl border border-zinc-800 bg-zinc-950 p-3.5 font-mono text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#daf4aa]/60 focus:ring-1 focus:ring-[#daf4aa]/40 resize-none leading-relaxed customScrollbar"
                         />
                      </div>
                   )}
@@ -464,7 +468,7 @@ export default function ApiRequestBuilder() {
                   {/* Tab 4: cURL */}
                   {activeTab === 'curl' && (
                      <div className="flex-1 flex flex-col justify-between">
-                        <pre className="w-full flex-1 rounded-xl border border-zinc-800 bg-zinc-950 p-4 font-mono text-xs text-emerald-300 overflow-x-auto whitespace-pre-wrap leading-relaxed">
+                        <pre className="w-full flex-1 rounded-xl border border-zinc-800 bg-zinc-950 p-4 font-mono text-xs text-emerald-300 overflow-x-auto whitespace-pre-wrap leading-relaxed customScrollbar">
                            {curlSnippet}
                         </pre>
                         <button
@@ -490,7 +494,7 @@ export default function ApiRequestBuilder() {
                            <span
                               className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold font-mono border ${
                                  response.success
-                                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                                    ? 'bg-[#daf4aa]/10 text-[#daf4aa] border-[#daf4aa]/20'
                                     : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
                               }`}>
                               {response.status} {response.statusText}
@@ -516,7 +520,7 @@ export default function ApiRequestBuilder() {
                   {/* Body Content */}
                   {isLoading ? (
                      <div className="flex-1 flex flex-col items-center justify-center text-zinc-500">
-                        <RefreshCw size={28} className="animate-spin text-emerald-400 mb-3" />
+                        <RefreshCw size={28} className="animate-spin text-[#daf4aa] mb-3" />
                         <span className="text-xs">Waiting for response...</span>
                      </div>
                   ) : responseError ? (
@@ -528,7 +532,7 @@ export default function ApiRequestBuilder() {
                      </div>
                   ) : response ? (
                      <div className="flex-1 flex flex-col">
-                        <pre className="w-full flex-1 max-h-[340px] rounded-xl border border-zinc-800 bg-zinc-950 p-4 font-mono text-xs text-zinc-200 overflow-auto leading-relaxed">
+                        <pre className="w-full flex-1 max-h-[340px] rounded-xl border border-zinc-800 bg-zinc-950 p-4 font-mono text-xs text-zinc-200 overflow-auto leading-relaxed customScrollbar">
                            {response.data}
                         </pre>
                      </div>
@@ -546,7 +550,7 @@ export default function ApiRequestBuilder() {
             {/* FAQs Accordion */}
             <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/40 p-6 sm:p-8 backdrop-blur-xl mb-12">
                <div className="flex items-center gap-2 mb-6">
-                  <HelpCircle size={18} className="text-emerald-400" />
+                  <HelpCircle size={18} className="text-[#daf4aa]" />
                   <h2 className="text-lg font-bold text-white">Frequently Asked Questions</h2>
                </div>
                <div className="space-y-4">
@@ -563,7 +567,7 @@ export default function ApiRequestBuilder() {
                               <ChevronDown
                                  size={16}
                                  className={`transform transition-transform text-zinc-500 ${
-                                    isOpen ? 'rotate-180 text-emerald-400' : ''
+                                    isOpen ? 'rotate-180 text-[#daf4aa]' : ''
                                  }`}
                               />
                            </button>
@@ -582,7 +586,7 @@ export default function ApiRequestBuilder() {
             {relatedTools.length > 0 && (
                <div className="mt-8">
                   <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                     <Sparkles size={16} className="text-emerald-400" />
+                     <Sparkles size={16} className="text-[#daf4aa]" />
                      <span>Related Developer Tools</span>
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -592,7 +596,7 @@ export default function ApiRequestBuilder() {
                            to={tool.slug}
                            onMouseEnter={() => preloadRoute(tool.slug)}
                            className="group rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 transition-all hover:border-zinc-700 hover:bg-zinc-800/40 backdrop-blur-md">
-                           <div className="text-xs font-bold text-zinc-200 group-hover:text-emerald-400 transition-colors">
+                           <div className="text-xs font-bold text-zinc-200 group-hover:text-[#daf4aa] transition-colors">
                               {tool.name}
                            </div>
                            <p className="text-[11px] text-zinc-400 line-clamp-2 mt-1">
@@ -607,4 +611,3 @@ export default function ApiRequestBuilder() {
       </div>
    );
 }
-

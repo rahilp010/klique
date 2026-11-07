@@ -15,6 +15,7 @@ import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { motion, AnimatePresence } from 'motion/react';
 import { callAiApi } from '../../services/aiService';
+import { Textarea } from '../ui/CustomControl';
 
 export default function HashtagGenerator() {
    const [description, setDescription] = useState('');
@@ -357,7 +358,7 @@ Return only hashtags separated by spaces, no explanations.`;
                   }`}>
                   {/* Textarea */}
 
-                  <textarea
+                  <Textarea
                      ref={textareaRef}
                      value={description}
                      onChange={(e) => setDescription(e.target.value)}

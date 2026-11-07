@@ -29,6 +29,7 @@ import {
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link, useLocation } from 'react-router-dom';
+import { Dropdown, Textarea, InputControl } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  FAQS                                                                      */
@@ -176,11 +177,14 @@ export default function TemporaryNotes() {
    const relatedTools = useMemo(() => getRelatedTools('temporary-notes', 4), []);
 
    return (
-      <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 relative overflow-hidden font-sans">
-         {/* Static ambient backdrop matching JsonFormatter */}
+      <div
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-3 py-6 sm:px-6 sm:py-8 md:px-10 overflow-hidden
+            before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+            after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_62%)]" />
          <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(16,185,129,0.12),transparent_55%)]"
+            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(113,113,122,0.14),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_50%)]"
          />
          <div
             aria-hidden
@@ -279,7 +283,7 @@ export default function TemporaryNotes() {
                {/* Expiry Selector */}
                <div className="flex items-center gap-2 text-xs text-zinc-400">
                   <span>Reset Expiry:</span>
-                  <select
+                  <Dropdown
                      value={durationSeconds}
                      onChange={(e) => handleDurationChange(parseInt(e.target.value, 10))}
                      className="rounded-lg border border-zinc-800 bg-zinc-950 px-2.5 py-1 text-white font-mono focus:outline-none">
@@ -288,7 +292,7 @@ export default function TemporaryNotes() {
                            {opt.label}
                         </option>
                      ))}
-                  </select>
+                  </Dropdown>
                </div>
             </div>
 
@@ -315,7 +319,7 @@ export default function TemporaryNotes() {
                      </div>
                   </div>
 
-                  <textarea
+                  <Textarea
                      value={content}
                      onChange={handleContentChange}
                      placeholder="Write private notes, sensitive credentials, temporary copy, or secrets here..."
@@ -334,7 +338,7 @@ export default function TemporaryNotes() {
                   </p>
 
                   <div className="relative">
-                     <input
+                     <InputControl
                         type={showPassword ? 'text' : 'password'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}

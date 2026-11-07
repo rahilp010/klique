@@ -45,6 +45,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import JSZip from 'jszip';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
+import { Textarea, Dropdown, InputControl, CheckboxInput } from '../ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  TOOLS DEFINITIONS (MIRRORING PDFTOOLS SUITE)                               */
@@ -1478,7 +1479,7 @@ export default function ImageTools() {
                               </button>
                            )}
                         </div>
-                        <textarea
+                        <Textarea
                            rows={3}
                            value={base64InputText}
                            onChange={(e) => setBase64InputText(e.target.value)}
@@ -1794,7 +1795,7 @@ export default function ImageTools() {
                                        <label className="text-xs font-semibold uppercase text-zinc-400 mb-1.5 block">
                                           Output Format
                                        </label>
-                                       <select
+                                       <Dropdown
                                           value={compressFormat}
                                           onChange={(e) => setCompressFormat(e.target.value)}
                                           className="w-full rounded-xl border border-zinc-700 bg-[#121214] px-3 py-2 text-xs text-zinc-200 outline-none focus:border-[#daf4aa]">
@@ -1803,7 +1804,7 @@ export default function ImageTools() {
                                                 {f.label}
                                              </option>
                                           ))}
-                                       </select>
+                                       </Dropdown>
                                        {compressFormat === 'image/png' && (
                                           <p className="mt-1 text-[11px] text-amber-400">
                                              Note: PNG is lossless. Photos may increase in size; use WebP/JPEG for compression.
@@ -1841,7 +1842,7 @@ export default function ImageTools() {
                                              Desired File Size Target
                                           </label>
                                           <div className="flex items-center gap-2">
-                                             <input
+                                             <InputControl
                                                 type="number"
                                                 value={compressTargetKB}
                                                 onChange={(e) =>
@@ -1883,7 +1884,7 @@ export default function ImageTools() {
                                        <label className="text-xs font-semibold uppercase text-zinc-400 mb-1.5 block">
                                           Max Width (Optional Scale)
                                        </label>
-                                       <select
+                                       <Dropdown
                                           value={compressMaxWidth}
                                           onChange={(e) =>
                                              setCompressMaxWidth(parseInt(e.target.value, 10))
@@ -1894,12 +1895,12 @@ export default function ImageTools() {
                                           <option value={1280}>1280px (Web Optimized)</option>
                                           <option value={800}>800px (Mobile / Blog)</option>
                                           <option value={400}>400px (Thumbnail)</option>
-                                       </select>
+                                       </Dropdown>
                                     </div>
                                  </div>
 
                                  <label className="flex items-center gap-2 cursor-pointer pt-2">
-                                    <input
+                                    <CheckboxInput
                                        type="checkbox"
                                        checked={autoGuaranteeSmaller}
                                        onChange={(e) => setAutoGuaranteeSmaller(e.target.checked)}
@@ -1920,7 +1921,7 @@ export default function ImageTools() {
                                        <label className="text-xs font-semibold uppercase text-zinc-400 mb-1 block">
                                           Width (px)
                                        </label>
-                                       <input
+                                       <InputControl
                                           type="number"
                                           value={resizeWidth}
                                           onChange={(e) => handleWidthChange(e.target.value)}
@@ -1950,7 +1951,7 @@ export default function ImageTools() {
                                        <label className="text-xs font-semibold uppercase text-zinc-400 mb-1 block">
                                           Height (px)
                                        </label>
-                                       <input
+                                       <InputControl
                                           type="number"
                                           value={resizeHeight}
                                           onChange={(e) => handleHeightChange(e.target.value)}
@@ -1961,7 +1962,7 @@ export default function ImageTools() {
                                        <label className="text-xs font-semibold uppercase text-zinc-400 mb-1 block">
                                           Format
                                        </label>
-                                       <select
+                                       <Dropdown
                                           value={resizeFormat}
                                           onChange={(e) => setResizeFormat(e.target.value)}
                                           className="w-full rounded-xl border border-zinc-700 bg-[#121214] px-3 py-2 text-xs text-zinc-200 outline-none focus:border-[#daf4aa]">
@@ -1970,7 +1971,7 @@ export default function ImageTools() {
                                                 {f.label}
                                              </option>
                                           ))}
-                                       </select>
+                                       </Dropdown>
                                     </div>
                                  </div>
                                  <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -2086,7 +2087,7 @@ export default function ImageTools() {
                                     <label className="text-xs font-semibold uppercase text-zinc-400 mb-1.5 block">
                                        Target Format
                                     </label>
-                                    <select
+                                    <Dropdown
                                        value={convertFormat}
                                        onChange={(e) => setConvertFormat(e.target.value)}
                                        className="w-full rounded-xl border border-zinc-700 bg-[#121214] px-3 py-2 text-xs text-zinc-200 outline-none focus:border-[#daf4aa]">
@@ -2095,7 +2096,7 @@ export default function ImageTools() {
                                              {f.label}
                                           </option>
                                        ))}
-                                    </select>
+                                    </Dropdown>
                                  </div>
                                  <div>
                                     <label className="text-xs font-semibold uppercase text-zinc-400 mb-1.5 block">
@@ -2181,7 +2182,7 @@ export default function ImageTools() {
                                        <label className="text-xs font-semibold uppercase text-zinc-400 mb-1.5 block">
                                           Watermark Text
                                        </label>
-                                       <input
+                                       <InputControl
                                           type="text"
                                           value={watermarkText}
                                           onChange={(e) => setWatermarkText(e.target.value)}
@@ -2254,7 +2255,7 @@ export default function ImageTools() {
                                        <label className="text-xs font-semibold uppercase text-zinc-400 mb-1.5 block">
                                           Grid Placement
                                        </label>
-                                       <select
+                                       <Dropdown
                                           value={watermarkPosition}
                                           onChange={(e) =>
                                              setWatermarkPosition(e.target.value)
@@ -2265,11 +2266,11 @@ export default function ImageTools() {
                                                 {pos.label}
                                              </option>
                                           ))}
-                                       </select>
+                                       </Dropdown>
                                     </div>
                                  </div>
                                  <label className="flex items-center gap-2 cursor-pointer pt-1">
-                                    <input
+                                    <CheckboxInput
                                        type="checkbox"
                                        checked={watermarkTiled}
                                        onChange={(e) => setWatermarkTiled(e.target.checked)}
@@ -2448,7 +2449,7 @@ export default function ImageTools() {
                                        <label className="text-xs font-semibold uppercase text-zinc-400 mb-1.5 block">
                                           Top Caption Text
                                        </label>
-                                       <input
+                                       <InputControl
                                           type="text"
                                           value={memeTopText}
                                           onChange={(e) => setMemeTopText(e.target.value)}
@@ -2459,7 +2460,7 @@ export default function ImageTools() {
                                        <label className="text-xs font-semibold uppercase text-zinc-400 mb-1.5 block">
                                           Bottom Caption Text
                                        </label>
-                                       <input
+                                       <InputControl
                                           type="text"
                                           value={memeBottomText}
                                           onChange={(e) => setMemeBottomText(e.target.value)}
@@ -2484,7 +2485,7 @@ export default function ImageTools() {
                                        />
                                     </div>
                                     <label className="flex items-center gap-2 cursor-pointer pt-4">
-                                       <input
+                                       <CheckboxInput
                                           type="checkbox"
                                           checked={memeUppercase}
                                           onChange={(e) => setMemeUppercase(e.target.checked)}
@@ -2563,7 +2564,7 @@ export default function ImageTools() {
                         </div>
 
                         <div className="relative">
-                           <textarea
+                           <Textarea
                               rows={4}
                               readOnly
                               value={base64Output}

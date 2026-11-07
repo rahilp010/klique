@@ -20,6 +20,7 @@ import { trackToolDownload, trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { Dropdown, InputControl } from '../../../components/ui/CustomControl';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -264,7 +265,7 @@ export default function StudyTimetableGenerator() {
                   <div className="grid grid-cols-2 gap-3">
                      <div className="space-y-1.5">
                         <label className="text-xs font-medium text-zinc-300">Daily Study Hours</label>
-                        <select
+                        <Dropdown
                            value={dailyHours}
                            onChange={(e) => setDailyHours(Number(e.target.value))}
                            className="w-full bg-zinc-950/80 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]/60 cursor-pointer">
@@ -272,11 +273,11 @@ export default function StudyTimetableGenerator() {
                            <option value={4}>4 Hours / day</option>
                            <option value={6}>6 Hours / day</option>
                            <option value={8}>8 Hours / day</option>
-                        </select>
+                        </Dropdown>
                      </div>
                      <div className="space-y-1.5">
                         <label className="text-xs font-medium text-zinc-300">Preferred Slot</label>
-                        <select
+                        <Dropdown
                            value={preferredSlot}
                            onChange={(e) => setPreferredSlot(e.target.value)}
                            className="w-full bg-zinc-950/80 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]/60 cursor-pointer">
@@ -284,7 +285,7 @@ export default function StudyTimetableGenerator() {
                            <option value="Afternoon (1 PM - 5 PM)">Afternoon (1 PM - 5 PM)</option>
                            <option value="Evening (6 PM - 10 PM)">Evening (6 PM - 10 PM)</option>
                            <option value="Night (9 PM - 1 AM)">Night (9 PM - 1 AM)</option>
-                        </select>
+                        </Dropdown>
                      </div>
                   </div>
 
@@ -292,7 +293,7 @@ export default function StudyTimetableGenerator() {
                   <form onSubmit={handleAddSubject} className="space-y-3 pt-2 border-t border-zinc-800/80">
                      <span className="text-xs font-semibold text-zinc-300">Add New Subject</span>
                      <div className="space-y-1">
-                        <input
+                        <InputControl
                            type="text"
                            value={subName}
                            onChange={(e) => setSubName(e.target.value)}
@@ -301,15 +302,15 @@ export default function StudyTimetableGenerator() {
                         />
                      </div>
                      <div className="grid grid-cols-2 gap-2">
-                        <select
+                        <Dropdown
                            value={subDiff}
                            onChange={(e) => setSubDiff(e.target.value)}
                            className="bg-zinc-950/80 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]/60 cursor-pointer">
                            <option value="Hard">Difficulty: Hard</option>
                            <option value="Medium">Difficulty: Medium</option>
                            <option value="Easy">Difficulty: Easy</option>
-                        </select>
-                        <input
+                        </Dropdown>
+                        <InputControl
                            type="date"
                            value={subDate}
                            onChange={(e) => setSubDate(e.target.value)}

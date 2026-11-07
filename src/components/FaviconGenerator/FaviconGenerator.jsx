@@ -27,6 +27,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import JSZip from 'jszip';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
+import { InputControl } from '../ui/CustomControl';
 
 const SIZES = [
    { name: 'favicon-16x16.png', size: 16, label: 'Browser Tab (16×16)' },
@@ -456,7 +457,7 @@ export default function FaviconGenerator() {
                      {mode === 'emoji' && (
                         <div className="space-y-3">
                            <div className="flex items-center gap-3">
-                              <input
+                              <InputControl
                                  type="text"
                                  value={emoji}
                                  maxLength={3}
@@ -512,7 +513,7 @@ export default function FaviconGenerator() {
                                  onChange={(e) => setBgColor(e.target.value)}
                                  className="w-8 h-8 rounded-lg border border-zinc-700 cursor-pointer bg-transparent p-0"
                               />
-                              <input
+                              <InputControl
                                  type="text"
                                  value={bgColor}
                                  onChange={(e) => setBgColor(e.target.value)}
@@ -554,7 +555,7 @@ export default function FaviconGenerator() {
                            <label className="text-xs text-zinc-400 font-medium">
                               App Name
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={appName}
                               onChange={(e) => setAppName(e.target.value)}
@@ -566,7 +567,7 @@ export default function FaviconGenerator() {
                            <label className="text-xs text-zinc-400 font-medium">
                               Short Name
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={appShortName}
                               onChange={(e) => setAppShortName(e.target.value)}
@@ -587,7 +588,7 @@ export default function FaviconGenerator() {
                               onChange={(e) => setThemeColor(e.target.value)}
                               className="w-8 h-8 rounded-lg border border-zinc-700 cursor-pointer bg-transparent p-0"
                            />
-                           <input
+                           <InputControl
                               type="text"
                               value={themeColor}
                               onChange={(e) => setThemeColor(e.target.value)}

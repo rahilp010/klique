@@ -22,6 +22,7 @@ import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/a
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, Dropdown, CheckboxInput } from '../../../components/ui/CustomControl';
 
 const DEFAULT_ITEMS = [
    { id: 'm1', name: 'Artisan Woodfired Margherita', category: 'Mains', price: 420, isVeg: true, desc: 'San Marzano tomatoes, fresh buffalo mozzarella, fresh basil, extra virgin olive oil.' },
@@ -245,7 +246,7 @@ export default function QRMenuGenerator() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                      <div className="space-y-1 sm:col-span-2">
                         <label className="text-xs font-medium text-zinc-300">Restaurant / Cafe Name</label>
-                        <input
+                        <InputControl
                            type="text"
                            value={restaurantName}
                            onChange={(e) => setRestaurantName(e.target.value)}
@@ -254,7 +255,7 @@ export default function QRMenuGenerator() {
                      </div>
                      <div className="space-y-1">
                         <label className="text-xs font-medium text-zinc-300">Currency Symbol</label>
-                        <input
+                        <InputControl
                            type="text"
                            value={currency}
                            onChange={(e) => setCurrency(e.target.value)}
@@ -265,7 +266,7 @@ export default function QRMenuGenerator() {
 
                   <div className="space-y-1">
                      <label className="text-xs font-medium text-zinc-300">Tagline / Subtitle</label>
-                     <input
+                     <InputControl
                         type="text"
                         value={tagline}
                         onChange={(e) => setTagline(e.target.value)}
@@ -277,14 +278,14 @@ export default function QRMenuGenerator() {
                   <form onSubmit={handleAddItem} className="space-y-3 pt-3 border-t border-zinc-800/80">
                      <span className="text-xs font-semibold text-zinc-300">Add New Dish</span>
                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        <input
+                        <InputControl
                            type="text"
                            value={itemName}
                            onChange={(e) => setItemName(e.target.value)}
                            placeholder="Dish name..."
                            className="sm:col-span-2 bg-zinc-950/80 border border-zinc-800 rounded-xl px-3 py-1.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-[#daf4aa]/60 focus:ring-1 focus:ring-[#daf4aa]/40"
                         />
-                        <input
+                        <InputControl
                            type="number"
                            min="1"
                            value={itemPrice}
@@ -294,7 +295,7 @@ export default function QRMenuGenerator() {
                         />
                      </div>
                      <div className="grid grid-cols-2 gap-2">
-                        <select
+                        <Dropdown
                            value={itemCat}
                            onChange={(e) => setItemCat(e.target.value)}
                            className="bg-zinc-950/80 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]/60 cursor-pointer">
@@ -302,9 +303,9 @@ export default function QRMenuGenerator() {
                            <option value="Mains">Mains / Entrees</option>
                            <option value="Beverages">Beverages / Drinks</option>
                            <option value="Desserts">Desserts</option>
-                        </select>
+                        </Dropdown>
                         <label className="flex items-center gap-2 text-xs text-zinc-300 bg-zinc-950/80 border border-zinc-800 rounded-xl px-3 py-1.5 cursor-pointer">
-                           <input
+                           <CheckboxInput
                               type="checkbox"
                               checked={itemVeg}
                               onChange={(e) => setItemVeg(e.target.checked)}
@@ -313,7 +314,7 @@ export default function QRMenuGenerator() {
                            Vegetarian (Veg)
                         </label>
                      </div>
-                     <input
+                     <InputControl
                         type="text"
                         value={itemDesc}
                         onChange={(e) => setItemDesc(e.target.value)}

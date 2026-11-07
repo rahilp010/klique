@@ -26,6 +26,7 @@ import Navbar from '../Navbar';
 
 import SEO from '../SEO';
 import { SelectPicker } from '../ui/CustomControl';
+import { CheckboxInput, Textarea } from '../ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 
@@ -946,7 +947,7 @@ export default function JsonFormatter() {
                                           cleanable={false}
                                        />
                                        <label className="flex cursor-pointer items-center gap-3 px-3 transition hover:border-zinc-700">
-                                          <input
+                                          <CheckboxInput
                                              type="checkbox"
                                              checked={sortKeysOption}
                                              onChange={(e) =>
@@ -1092,7 +1093,7 @@ export default function JsonFormatter() {
                            </span>
                         </div>
 
-                        <textarea
+                        <Textarea
                            value={inputJson}
                            onChange={(e) => {
                               setInputJson(e.target.value);
@@ -1168,7 +1169,7 @@ export default function JsonFormatter() {
                            </div>
                         ) : (
                            <div className="relative h-[300px] sm:h-[400px] lg:h-[480px] overflow-hidden">
-                              <textarea
+                              <Textarea
                                  readOnly
                                  value={
                                     formatAnalysis.isValid
@@ -1259,7 +1260,7 @@ export default function JsonFormatter() {
                            </span>
                         </div>
 
-                        <textarea
+                        <Textarea
                            value={diffLeft}
                            onChange={(e) => setDiffLeft(e.target.value)}
                            className="w-full h-56 p-4 bg-transparent font-mono text-xs text-zinc-200 resize-none focus:outline-none customScrollbar"
@@ -1274,7 +1275,7 @@ export default function JsonFormatter() {
                            </span>
                         </div>
 
-                        <textarea
+                        <Textarea
                            value={diffRight}
                            onChange={(e) => setDiffRight(e.target.value)}
                            className="w-full h-56 p-4 bg-transparent font-mono text-xs text-zinc-200 resize-none focus:outline-none customScrollbar"

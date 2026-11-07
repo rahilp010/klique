@@ -39,6 +39,7 @@ import {
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  FAQS                                                                      */
@@ -516,7 +517,7 @@ export default function PomodoroTimer() {
 
                   {/* Active Task Input */}
                   <div className="w-full max-w-md mt-4 mb-6">
-                     <input
+                     <InputControl
                         type="text"
                         value={currentTask}
                         onChange={(e) => setCurrentTask(e.target.value)}

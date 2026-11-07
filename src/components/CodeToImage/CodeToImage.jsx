@@ -39,6 +39,7 @@ import 'prismjs/components/prism-markdown';
 
 import Navbar from '../Navbar';
 import SEO from '../SEO';
+import { Dropdown, InputControl, Textarea, CheckboxInput } from '../ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & CONFIGURATIONS                                                  */
@@ -492,7 +493,7 @@ export default function CodeToImage() {
                      {/* Action Bar (Language, File Title, Quick Copy) */}
                      <div className="p-3 rounded-2xl border border-zinc-800 bg-[#0f0f11] flex flex-wrap items-center justify-between gap-3 shadow-lg">
                         <div className="flex items-center gap-2">
-                           <select
+                           <Dropdown
                               value={language}
                               onChange={(e) =>
                                  handleLanguageChange(e.target.value)
@@ -503,9 +504,9 @@ export default function CodeToImage() {
                                     {lang.label}
                                  </option>
                               ))}
-                           </select>
+                           </Dropdown>
 
-                           <input
+                           <InputControl
                               type="text"
                               value={windowTitle}
                               onChange={(e) => setWindowTitle(e.target.value)}
@@ -649,7 +650,7 @@ export default function CodeToImage() {
                               chars
                            </span>
                         </div>
-                        <textarea
+                        <Textarea
                            value={code}
                            onChange={(e) => setCode(e.target.value)}
                            rows={8}
@@ -735,7 +736,7 @@ export default function CodeToImage() {
                            <label className="text-xs text-zinc-400 font-medium">
                               Monospace Font
                            </label>
-                           <select
+                           <Dropdown
                               value={fontId}
                               onChange={(e) => setFontId(e.target.value)}
                               className="w-full bg-[#18181b] border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-[#daf4aa]/60">
@@ -744,7 +745,7 @@ export default function CodeToImage() {
                                     {f.label}
                                  </option>
                               ))}
-                           </select>
+                           </Dropdown>
                         </div>
 
                         {/* Window Controls Type */}
@@ -836,7 +837,7 @@ export default function CodeToImage() {
                         <div className="pt-2 border-t border-zinc-800 space-y-2">
                            <label className="flex items-center justify-between text-xs text-zinc-300 cursor-pointer">
                               <span>Show Line Numbers</span>
-                              <input
+                              <CheckboxInput
                                  type="checkbox"
                                  checked={showLineNumbers}
                                  onChange={(e) =>

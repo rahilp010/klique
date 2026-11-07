@@ -24,6 +24,7 @@ import { trackToolCopy, trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & FAQS                                                            */
@@ -349,7 +350,7 @@ export default function CronGenerator() {
                         <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
                            Cron Expression String
                         </label>
-                        <input
+                        <InputControl
                            type="text"
                            value={cronExpression}
                            onChange={(e) => setCronExpression(e.target.value)}
@@ -362,7 +363,7 @@ export default function CronGenerator() {
                      <div className="grid grid-cols-5 gap-2 text-center pt-2 border-t border-zinc-800/80">
                         <div className="p-2 rounded-xl bg-zinc-900/60 border border-zinc-800">
                            <span className="text-[10px] text-zinc-500 block">Minute</span>
-                           <input
+                           <InputControl
                               type="text"
                               value={min}
                               onChange={(e) => updatePart(0, e.target.value)}
@@ -373,7 +374,7 @@ export default function CronGenerator() {
 
                         <div className="p-2 rounded-xl bg-zinc-900/60 border border-zinc-800">
                            <span className="text-[10px] text-zinc-500 block">Hour</span>
-                           <input
+                           <InputControl
                               type="text"
                               value={hour}
                               onChange={(e) => updatePart(1, e.target.value)}
@@ -384,7 +385,7 @@ export default function CronGenerator() {
 
                         <div className="p-2 rounded-xl bg-zinc-900/60 border border-zinc-800">
                            <span className="text-[10px] text-zinc-500 block">Day (Mon)</span>
-                           <input
+                           <InputControl
                               type="text"
                               value={dom}
                               onChange={(e) => updatePart(2, e.target.value)}
@@ -395,7 +396,7 @@ export default function CronGenerator() {
 
                         <div className="p-2 rounded-xl bg-zinc-900/60 border border-zinc-800">
                            <span className="text-[10px] text-zinc-500 block">Month</span>
-                           <input
+                           <InputControl
                               type="text"
                               value={mon}
                               onChange={(e) => updatePart(3, e.target.value)}
@@ -406,7 +407,7 @@ export default function CronGenerator() {
 
                         <div className="p-2 rounded-xl bg-zinc-900/60 border border-zinc-800">
                            <span className="text-[10px] text-zinc-500 block">Day (Wk)</span>
-                           <input
+                           <InputControl
                               type="text"
                               value={dow}
                               onChange={(e) => updatePart(4, e.target.value)}

@@ -24,6 +24,7 @@ import { trackToolDownload, trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, Dropdown } from '../../../components/ui/CustomControl';
 
 const CATEGORIES = [
    { id: 'salary', name: 'Salary & Wages', type: 'income', color: '#10b981' },
@@ -383,7 +384,7 @@ export default function PersonalExpenseTracker() {
                      {/* Title & Amount */}
                      <div className="space-y-1.5">
                         <label className="text-xs font-medium text-zinc-300">Description</label>
-                        <input
+                        <InputControl
                            type="text"
                            value={title}
                            onChange={(e) => setTitle(e.target.value)}
@@ -395,7 +396,7 @@ export default function PersonalExpenseTracker() {
                      <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1.5">
                            <label className="text-xs font-medium text-zinc-300">Amount (₹)</label>
-                           <input
+                           <InputControl
                               type="number"
                               min="1"
                               step="any"
@@ -407,7 +408,7 @@ export default function PersonalExpenseTracker() {
                         </div>
                         <div className="space-y-1.5">
                            <label className="text-xs font-medium text-zinc-300">Date</label>
-                           <input
+                           <InputControl
                               type="date"
                               value={date}
                               onChange={(e) => setDate(e.target.value)}
@@ -419,7 +420,7 @@ export default function PersonalExpenseTracker() {
                      {/* Category */}
                      <div className="space-y-1.5">
                         <label className="text-xs font-medium text-zinc-300">Category</label>
-                        <select
+                        <Dropdown
                            value={category}
                            onChange={(e) => setCategory(e.target.value)}
                            className="w-full bg-zinc-950/80 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]/60 focus:ring-1 focus:ring-[#daf4aa]/40 cursor-pointer">
@@ -428,7 +429,7 @@ export default function PersonalExpenseTracker() {
                                  {cat.name}
                               </option>
                            ))}
-                        </select>
+                        </Dropdown>
                      </div>
 
                      <button

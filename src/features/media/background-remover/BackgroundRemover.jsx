@@ -19,6 +19,7 @@ import { trackToolDownload, trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl } from '../../../components/ui/CustomControl';
 
 const FAQS = [
    {
@@ -299,7 +300,7 @@ export default function BackgroundRemover() {
                                  onChange={(e) => setBgColorToKey(e.target.value)}
                                  className="w-10 h-10 rounded-lg cursor-pointer bg-transparent border border-zinc-700"
                               />
-                              <input
+                              <InputControl
                                  type="text"
                                  value={bgColorToKey}
                                  onChange={(e) => setBgColorToKey(e.target.value)}

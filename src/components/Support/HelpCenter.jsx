@@ -22,6 +22,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
+import { InputControl } from '../ui/CustomControl';
 
 const HELP_CATEGORIES = [
    {
@@ -216,7 +217,7 @@ export default function HelpCenter() {
                {/* Search Bar */}
                <div className="mt-6 max-w-xl relative">
                   <Search className="w-4 h-4 text-zinc-500 absolute left-4 top-3.5" />
-                  <input
+                  <InputControl
                      type="text"
                      value={searchQuery}
                      onChange={(e) => setSearchQuery(e.target.value)}

@@ -23,6 +23,7 @@ import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/a
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS                                                                   */
@@ -420,7 +421,7 @@ Grand Total,-,${result.totalAmount}`;
 
                         <div className="relative flex items-center rounded-xl border border-zinc-800 bg-[#0d0d10] px-3.5 py-2.5 focus-within:border-[#daf4aa] transition-colors">
                            <span className="text-zinc-500 text-sm mr-2 select-none">₹</span>
-                           <input
+                           <InputControl
                               type="number"
                               value={amount}
                               onChange={(e) => setAmount(e.target.value)}
@@ -493,7 +494,7 @@ Grand Total,-,${result.totalAmount}`;
                         {isCustomRate && (
                            <div className="mt-3">
                               <div className="relative flex items-center rounded-xl border border-zinc-800 bg-[#0d0d10] px-3.5 py-2 focus-within:border-[#daf4aa] transition-colors">
-                                 <input
+                                 <InputControl
                                     type="number"
                                     value={customRate}
                                     onChange={(e) => setCustomRate(e.target.value)}

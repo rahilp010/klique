@@ -24,6 +24,7 @@ import { trackToolCopy, trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { CheckboxInput, Dropdown, Textarea } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & FAQS                                                            */
@@ -354,7 +355,7 @@ export default function SQLFormatter() {
                      {/* Options toolbar */}
                      <div className="flex items-center justify-between flex-wrap gap-2 text-xs">
                         <label className="flex items-center gap-1.5 text-zinc-300 cursor-pointer">
-                           <input
+                           <CheckboxInput
                               type="checkbox"
                               checked={uppercaseKeywords}
                               onChange={(e) => setUppercaseKeywords(e.target.checked)}
@@ -365,19 +366,19 @@ export default function SQLFormatter() {
 
                         <div className="flex items-center gap-2">
                            <span className="text-zinc-400 text-[11px]">Indent:</span>
-                           <select
+                           <Dropdown
                               value={indentSpaces}
                               onChange={(e) => setIndentSpaces(Number(e.target.value))}
                               className="px-2 py-0.5 bg-zinc-900 border border-zinc-800 rounded text-xs text-zinc-200">
                               <option value="2">2 spaces</option>
                               <option value="4">4 spaces</option>
-                           </select>
+                           </Dropdown>
                         </div>
                      </div>
 
                      {/* Textarea */}
                      <div>
-                        <textarea
+                        <Textarea
                            rows={14}
                            value={sqlInput}
                            onChange={(e) => setSqlInput(e.target.value)}

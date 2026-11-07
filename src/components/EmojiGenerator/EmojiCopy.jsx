@@ -13,6 +13,7 @@ import { Search, Menu, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import ReactCountryFlag from 'react-country-flag';
 import { Input } from '../ui/CustomControl';
+import { InputControl } from '../ui/CustomControl';
 
 // Utility: Convert unified code to emoji char
 const unifiedToEmoji = (unified) =>
@@ -409,7 +410,7 @@ export default function EmojiCopy() {
                <div className="w-full max-w-2xl mx-auto mb-6 sm:mb-8 relative z-20">
                   <div className="relative">
                      <Search className="absolute left-3.5 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-zinc-500 pointer-events-none" />
-                     <input
+                     <InputControl
                         type="text"
                         placeholder={placeholder[placeholderIndex]}
                         value={searchTerm}

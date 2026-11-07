@@ -11,6 +11,7 @@ import React, {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { twMerge } from 'tailwind-merge';
 import {
    Search,
    CalendarDays,
@@ -116,6 +117,34 @@ export const Input = ({
    />
 );
 
+export const InputControl = forwardRef(
+   ({ className = '', ...props }, ref) => (
+      <input
+         {...filterDomProps(props)}
+         ref={ref}
+         className={twMerge(
+            'rounded-xl border border-zinc-800 bg-zinc-900/80 px-3 py-2 text-sm text-zinc-100 outline-none transition-colors placeholder:text-zinc-500 focus:border-[#daf4aa]/50 focus:ring-1 focus:ring-[#daf4aa]/30 disabled:cursor-not-allowed disabled:opacity-50',
+            className,
+         )}
+      />
+   ),
+);
+InputControl.displayName = 'InputControl';
+
+export const Textarea = forwardRef(
+   ({ className = '', ...props }, ref) => (
+      <textarea
+         {...filterDomProps(props)}
+         ref={ref}
+         className={twMerge(
+            'w-full rounded-xl border border-zinc-800 bg-zinc-900/80 px-3 py-2 text-sm text-zinc-100 outline-none transition-colors placeholder:text-zinc-500 focus:border-[#daf4aa]/50 focus:ring-1 focus:ring-[#daf4aa]/30 disabled:cursor-not-allowed disabled:opacity-50',
+            className,
+         )}
+      />
+   ),
+);
+Textarea.displayName = 'Textarea';
+
 export const InputGroup = ({ children, className = '', ...props }) => (
    <div
       {...filterDomProps(props)}
@@ -149,6 +178,12 @@ export const SelectPicker = forwardRef(
          menuWidth,
          menuStyle,
          disabled = false,
+         triggerClassName = '',
+         id,
+         name,
+         required = false,
+         'aria-label': ariaLabel,
+         'aria-labelledby': ariaLabelledBy,
          renderMenuItem,
          renderExtraFooter,
          onCreateNew,
@@ -413,7 +448,14 @@ export const SelectPicker = forwardRef(
             className={`relative ${className}`}
             style={style}>
             <button
+               id={id}
                type="button"
+               role="combobox"
+               aria-haspopup="listbox"
+               aria-expanded={open}
+               aria-required={required || undefined}
+               aria-label={ariaLabel}
+               aria-labelledby={ariaLabelledBy}
                disabled={disabled}
                onKeyDown={handleKeyDown}
                onClick={() => {
@@ -423,11 +465,14 @@ export const SelectPicker = forwardRef(
                   }
                   setOpen((v) => !v);
                }}
-               className={`flex h-12 w-full items-center justify-between gap-2 rounded-2xl border px-4 text-left text-sm transition-all ${
-                  open
-                     ? 'border-[#daf4aa]/40 bg-[#16161b] ring-4 ring-[#daf4aa]/[0.06]'
-                     : 'border-white/[0.08] bg-[#16161b]/90 hover:border-white/[0.14]'
-               } ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}>
+               className={twMerge(
+                  `flex h-12 w-full items-center justify-between gap-2 rounded-2xl border px-4 text-left text-sm transition-all ${
+                     open
+                        ? 'border-[#daf4aa]/40 bg-[#16161b] ring-4 ring-[#daf4aa]/[0.06]'
+                        : 'border-white/[0.08] bg-[#16161b]/90 hover:border-white/[0.14]'
+                  } ${disabled ? 'cursor-not-allowed opacity-50' : ''}`,
+                  triggerClassName,
+               )}>
                <span
                   className={
                      selected
@@ -460,11 +505,84 @@ export const SelectPicker = forwardRef(
                   />
                </div>
             </button>
+            {name && (
+               <input type="hidden" name={name} value={value ?? ''} />
+            )}
             {createPortal(menuContent, document.body)}
          </div>
       );
    },
 );
+
+export const Dropdown = ({
+   children,
+   onChange,
+   placeholder,
+   value,
+   className = '',
+   id,
+   name,
+   required = false,
+   ...props
+}) => {
+   const isControlled = value !== undefined;
+   const [uncontrolledValue, setUncontrolledValue] = useState('');
+   const options = React.Children.toArray(children)
+      .filter((child) => React.isValidElement(child) && child.type === 'option')
+      .map((option) => ({
+         label: option.props.children,
+         value: String(option.props.value ?? option.props.children ?? ''),
+         disabled: option.props.disabled,
+      }))
+      .filter((option) => !option.disabled);
+
+   const initialPlaceholder =
+      placeholder ??
+      options.find((option) => option.value === '')?.label ??
+      'Select...';
+   const selectedValue = isControlled
+      ? (value ?? '')
+      : options.some((option) => option.value === uncontrolledValue)
+        ? uncontrolledValue
+        : (options[0]?.value ?? '');
+
+   return (
+      <SelectPicker
+         {...props}
+         id={id}
+         name={name}
+         required={required}
+         data={options}
+         value={selectedValue}
+         className="w-full"
+         triggerClassName={className}
+         placeholder={initialPlaceholder}
+         searchable={false}
+         cleanable={false}
+         onChange={(value) => {
+            const nextValue = String(value ?? '');
+            if (!isControlled) setUncontrolledValue(nextValue);
+            onChange?.({
+               target: { value: nextValue },
+               currentTarget: { value: nextValue },
+            });
+         }}
+      />
+   );
+};
+
+export const CheckboxInput = forwardRef(
+   ({ className = '', ...props }, ref) => (
+      <input
+         {...filterDomProps(props)}
+         ref={ref}
+         type="checkbox"
+         className={twMerge('h-4 w-4 accent-[#daf4aa]', className)}
+      />
+   ),
+);
+CheckboxInput.displayName = 'CheckboxInput';
+
 export const DateRangePicker = ({
    value = [],
    onChange,
@@ -1908,10 +2026,14 @@ export const Checkbox = ({
    children,
    disabled = false,
    className = '',
+   id,
+   name,
 }) => (
    <label
       className={`inline-flex items-center gap-2 cursor-pointer text-sm text-gray-300 ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}>
       <input
+         id={id}
+         name={name}
          type="checkbox"
          checked={!!checked}
          disabled={disabled}
@@ -2046,6 +2168,8 @@ export const Animation = {
 
 export default {
    Input,
+   InputControl,
+   Textarea,
    InputNumber,
    InputGroup,
    SelectPicker,
@@ -2058,6 +2182,8 @@ export default {
    Modal,
    Toggle,
    Checkbox,
+   CheckboxInput,
+   Dropdown,
    Uploader,
    Animation,
 };

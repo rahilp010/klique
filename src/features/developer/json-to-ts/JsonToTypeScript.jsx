@@ -24,6 +24,7 @@ import { trackToolCopy, trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, Dropdown, CheckboxInput, Textarea } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & FAQS                                                            */
@@ -418,7 +419,7 @@ export default function JsonToTypeScript() {
                            <label className="text-[11px] font-semibold text-zinc-400 block mb-1">
                               Root Interface / Type Name
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={rootName}
                               onChange={(e) => setRootName(e.target.value)}
@@ -431,20 +432,20 @@ export default function JsonToTypeScript() {
                            <label className="text-[11px] font-semibold text-zinc-400 block mb-1">
                               Indentation
                            </label>
-                           <select
+                           <Dropdown
                               value={indentSpaces}
                               onChange={(e) => setIndentSpaces(Number(e.target.value))}
                               className="w-full px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]">
                               <option value="2">2 Spaces</option>
                               <option value="4">4 Spaces</option>
-                           </select>
+                           </Dropdown>
                         </div>
                      </div>
 
                      {/* Checkbox Toggles */}
                      <div className="flex items-center gap-4 flex-wrap text-xs text-zinc-300">
                         <label className="flex items-center gap-1.5 cursor-pointer">
-                           <input
+                           <CheckboxInput
                               type="checkbox"
                               checked={exportKeywords}
                               onChange={(e) => setExportKeywords(e.target.checked)}
@@ -454,7 +455,7 @@ export default function JsonToTypeScript() {
                         </label>
 
                         <label className="flex items-center gap-1.5 cursor-pointer">
-                           <input
+                           <CheckboxInput
                               type="checkbox"
                               checked={useReadonly}
                               onChange={(e) => setUseReadonly(e.target.checked)}
@@ -464,7 +465,7 @@ export default function JsonToTypeScript() {
                         </label>
 
                         <label className="flex items-center gap-1.5 cursor-pointer">
-                           <input
+                           <CheckboxInput
                               type="checkbox"
                               checked={useOptional}
                               onChange={(e) => setUseOptional(e.target.checked)}
@@ -476,7 +477,7 @@ export default function JsonToTypeScript() {
 
                      {/* JSON Textarea */}
                      <div>
-                        <textarea
+                        <Textarea
                            rows={14}
                            value={jsonInput}
                            onChange={(e) => setJsonInput(e.target.value)}

@@ -18,10 +18,15 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../../../components/Navbar';
 import SEO from '../../../components/SEO';
-import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/analytics';
+import {
+   trackToolCopy,
+   trackToolDownload,
+   trackToolReset,
+} from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { CheckboxInput, Textarea } from '../../../components/ui/CustomControl';
 
 const TEMPLATES = [
    {
@@ -54,7 +59,7 @@ const TEMPLATES = [
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
 }
 h1 { font-size: 20px; margin-bottom: 24px; color: #a1a1aa; }
-.count-display { font-size: 64px; font-weight: 800; font-family: monospace; color: #f59e0b; margin-bottom: 24px; }
+.count-display { font-size: 64px; font-weight: 800; font-family: monospace; color: #daf4aa; margin-bottom: 24px; }
 .btn-group { display: flex; gap: 12px; justify-content: center; }
 button {
   background: #27272a;
@@ -67,8 +72,8 @@ button {
   transition: all 0.2s;
 }
 button:hover { background: #3f3f46; }
-button.primary { background: #f59e0b; color: #09090b; border: none; }
-button.primary:hover { background: #d97706; }`,
+button.primary { background: #daf4aa; color: #09090b; border: none; }
+button.primary:hover { background: #c8e692; }`,
       js: `let count = 0;
 const display = document.getElementById('counter');
 
@@ -100,16 +105,16 @@ function decrement() {
 }
 .glow-box {
   background: rgba(24, 24, 27, 0.7);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  border: 1px solid rgba(218, 244, 170, 0.3);
   backdrop-filter: blur(12px);
   padding: 40px;
   border-radius: 20px;
   max-width: 360px;
   text-align: center;
-  box-shadow: 0 0 40px rgba(245, 158, 11, 0.15);
+  box-shadow: 0 0 40px rgba(218, 244, 170, 0.15);
   color: white;
 }
-h2 { color: #f59e0b; margin-top: 0; }
+h2 { color: #daf4aa; margin-top: 0; }
 p { color: #a1a1aa; font-size: 14px; line-height: 1.6; }`,
       js: `console.log("Playground initialized safely in sandboxed iframe!");`,
    },
@@ -246,7 +251,10 @@ export default function CodePlayground() {
       showToast('Reset playground to default template.');
    };
 
-   const relatedTools = useMemo(() => getRelatedTools('code-playground', 3), []);
+   const relatedTools = useMemo(
+      () => getRelatedTools('code-playground', 3),
+      [],
+   );
 
    return (
       <div
@@ -305,9 +313,15 @@ export default function CodePlayground() {
          <main className="relative z-10 mx-auto flex min-h-[100dvh] w-full max-w-6xl flex-col pb-28 pt-14 sm:pb-24 sm:pt-10 lg:pl-20">
             {/* Breadcrumb */}
             <div className="mb-6 flex items-center gap-2 text-xs text-zinc-400">
-               <Link to="/" className="hover:text-zinc-200 transition-colors">Home</Link>
+               <Link to="/" className="hover:text-zinc-200 transition-colors">
+                  Home
+               </Link>
                <span>/</span>
-               <Link to="/category" className="hover:text-zinc-200 transition-colors">Developer & Code</Link>
+               <Link
+                  to="/category"
+                  className="hover:text-zinc-200 transition-colors">
+                  Developer & Code
+               </Link>
                <span>/</span>
                <span className="text-[#daf4aa]">Code Playground</span>
             </div>
@@ -320,10 +334,12 @@ export default function CodePlayground() {
                      <span>DEVELOPER & PROTOTYPING SUITE</span>
                   </div>
                   <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-white">
-                     Code <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#daf4aa] via-lime-300 to-emerald-400">Playground</span>
+                     Code <span className="text-[#daf4aa]">Playground</span>
                   </h1>
                   <p className="mt-1 text-xs sm:text-sm text-zinc-400">
-                     Write HTML, CSS, and JavaScript with instantaneous sandboxed preview. Export standalone bundles with 100% client-side security.
+                     Write HTML, CSS, and JavaScript with instantaneous
+                     sandboxed preview. Export standalone bundles with 100%
+                     client-side security.
                   </p>
                </div>
                <div className="flex items-center gap-2">
@@ -344,7 +360,9 @@ export default function CodePlayground() {
 
             {/* Templates Bar */}
             <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
-               <span className="text-xs text-zinc-500 font-medium">Starter Templates:</span>
+               <span className="text-xs text-zinc-500 font-medium">
+                  Starter Templates:
+               </span>
                {TEMPLATES.map((t) => (
                   <button
                      key={t.id}
@@ -378,7 +396,7 @@ export default function CodePlayground() {
 
                      <div className="flex items-center gap-2">
                         <label className="flex items-center gap-1.5 text-xs text-zinc-400 cursor-pointer">
-                           <input
+                           <CheckboxInput
                               type="checkbox"
                               checked={autoRun}
                               onChange={(e) => setAutoRun(e.target.checked)}
@@ -400,7 +418,7 @@ export default function CodePlayground() {
                   {/* Textarea Editor Area */}
                   <div className="flex-1 min-h-[380px] relative">
                      {activeTab === 'html' && (
-                        <textarea
+                        <Textarea
                            value={htmlCode}
                            onChange={(e) => setHtmlCode(e.target.value)}
                            placeholder="<!-- HTML markup goes here -->"
@@ -409,7 +427,7 @@ export default function CodePlayground() {
                         />
                      )}
                      {activeTab === 'css' && (
-                        <textarea
+                        <Textarea
                            value={cssCode}
                            onChange={(e) => setCssCode(e.target.value)}
                            placeholder="/* CSS styling goes here */"
@@ -418,7 +436,7 @@ export default function CodePlayground() {
                         />
                      )}
                      {activeTab === 'js' && (
-                        <textarea
+                        <Textarea
                            value={jsCode}
                            onChange={(e) => setJsCode(e.target.value)}
                            placeholder="// JavaScript code goes here"
@@ -431,13 +449,20 @@ export default function CodePlayground() {
                   {/* Actions Footer */}
                   <div className="flex items-center justify-between border-t border-zinc-800/80 pt-3 text-xs">
                      <span className="text-zinc-500 font-mono">
-                        Active Mode: <span className="text-zinc-300 uppercase">{activeTab}</span>
+                        Active Mode:{' '}
+                        <span className="text-zinc-300 uppercase">
+                           {activeTab}
+                        </span>
                      </span>
                      <div className="flex items-center gap-2">
                         <button
                            onClick={handleCopyCombined}
                            className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors cursor-pointer">
-                           {copied ? <Check size={13} className="text-[#daf4aa]" /> : <Copy size={13} />}
+                           {copied ? (
+                              <Check size={13} className="text-[#daf4aa]" />
+                           ) : (
+                              <Copy size={13} />
+                           )}
                            <span>{copied ? 'Copied' : 'Copy HTML'}</span>
                         </button>
                         <button
@@ -455,7 +480,9 @@ export default function CodePlayground() {
                   <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
                      <div className="flex items-center gap-2">
                         <Eye size={16} className="text-[#daf4aa]" />
-                        <h2 className="text-sm font-semibold text-white">Live Sandboxed Preview</h2>
+                        <h2 className="text-sm font-semibold text-white">
+                           Live Sandboxed Preview
+                        </h2>
                      </div>
                      <span className="text-[11px] font-mono text-[#daf4aa] border border-[#daf4aa]/30 bg-[#daf4aa]/10 px-2 py-0.5 rounded-md">
                         sandbox="allow-scripts"
@@ -487,9 +514,15 @@ export default function CodePlayground() {
                </h3>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {FAQS.map((faq, i) => (
-                     <div key={i} className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-800/50 space-y-1.5">
-                        <h4 className="text-sm font-semibold text-zinc-200">{faq.question}</h4>
-                        <p className="text-xs text-zinc-400 leading-relaxed">{faq.answer}</p>
+                     <div
+                        key={i}
+                        className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-800/50 space-y-1.5">
+                        <h4 className="text-sm font-semibold text-zinc-200">
+                           {faq.question}
+                        </h4>
+                        <p className="text-xs text-zinc-400 leading-relaxed">
+                           {faq.answer}
+                        </p>
                      </div>
                   ))}
                </div>
@@ -499,7 +532,9 @@ export default function CodePlayground() {
             {relatedTools.length > 0 && (
                <div className="border-t border-zinc-800/80 pt-8 space-y-4">
                   <div className="flex items-center justify-between">
-                     <h3 className="text-base font-semibold text-white">Related Tools</h3>
+                     <h3 className="text-base font-semibold text-white">
+                        Related Tools
+                     </h3>
                      <Link
                         to="/category"
                         className="text-xs text-[#daf4aa] hover:underline flex items-center gap-1 transition-colors">
@@ -528,4 +563,3 @@ export default function CodePlayground() {
       </div>
    );
 }
-

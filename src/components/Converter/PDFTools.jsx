@@ -32,6 +32,7 @@ import {
    Uploader,
    Modal,
 } from '../ui/CustomControl';
+import { Textarea, InputControl } from '../ui/CustomControl';
 
 // Helper function to load external CDN scripts on demand
 const loadScript = (src) => {
@@ -1387,7 +1388,7 @@ export default function PDFTools() {
                               <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">
                                  Type or Paste Text Content
                               </label>
-                              <textarea
+                              <Textarea
                                  rows={6}
                                  value={textInput}
                                  onChange={(e) => setTextInput(e.target.value)}
@@ -1496,7 +1497,7 @@ export default function PDFTools() {
                                  Page Ranges to Extract
                               </label>
                               <InputGroup>
-                                 <Input
+                                 <InputControl
                                     value={splitRange}
                                     onChange={(val) => setSplitRange(val)}
                                     placeholder="e.g. 1-3, 5, 8-10"
@@ -1585,7 +1586,7 @@ export default function PDFTools() {
                                           Custom Watermark Text
                                        </label>
                                        <InputGroup>
-                                          <Input
+                                          <InputControl
                                              value={watermarkText}
                                              onChange={(val) =>
                                                 setWatermarkText(val)
@@ -1634,7 +1635,7 @@ export default function PDFTools() {
                                              Page Numbers
                                           </label>
                                           <InputGroup>
-                                             <Input
+                                             <InputControl
                                                 value={watermarkCustomPages}
                                                 onChange={(val) =>
                                                    setWatermarkCustomPages(val)
@@ -1665,7 +1666,7 @@ export default function PDFTools() {
                                              }
                                              className="h-7 w-9 shrink-0 cursor-pointer rounded-lg border-0 bg-transparent p-0"
                                           />
-                                          <Input
+                                          <InputControl
                                              value={watermarkColor}
                                              onChange={(val) =>
                                                 setWatermarkColor(val)
@@ -1745,7 +1746,7 @@ export default function PDFTools() {
                                     Set Password
                                  </label>
                                  <InputGroup>
-                                    <Input
+                                    <InputControl
                                        type={showPassword ? 'text' : 'password'}
                                        value={userPassword}
                                        onChange={(val) => setUserPassword(val)}

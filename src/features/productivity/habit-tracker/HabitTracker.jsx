@@ -21,6 +21,7 @@ import { trackToolDownload, trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, Dropdown } from '../../../components/ui/CustomControl';
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -454,14 +455,14 @@ export default function HabitTracker() {
                <form
                   onSubmit={handleAddHabit}
                   className="pt-4 border-t border-zinc-800/80 flex flex-wrap items-center gap-3">
-                  <input
+                  <InputControl
                      type="text"
                      value={newHabitName}
                      onChange={(e) => setNewHabitName(e.target.value)}
                      placeholder="Add new habit (e.g. 10,000 Steps, Meditate)..."
                      className="flex-1 min-w-[220px] bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-[#daf4aa]/60 focus:ring-1 focus:ring-[#daf4aa]/40"
                   />
-                  <select
+                  <Dropdown
                      value={newHabitCategory}
                      onChange={(e) => setNewHabitCategory(e.target.value)}
                      className="bg-zinc-950/80 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]/60 cursor-pointer">
@@ -470,7 +471,7 @@ export default function HabitTracker() {
                      <option value="Fitness">Fitness</option>
                      <option value="Mindset">Mindset</option>
                      <option value="Learning">Learning</option>
-                  </select>
+                  </Dropdown>
                   <button
                      type="submit"
                      className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#daf4aa] hover:bg-[#c8e692] text-zinc-950 font-bold text-xs shadow-[0_0_15px_rgba(218,244,170,0.3)] transition-all cursor-pointer">

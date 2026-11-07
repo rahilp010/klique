@@ -23,6 +23,7 @@ import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/a
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, CheckboxInput } from '../../../components/ui/CustomControl';
 
 const FAQS = [
    {
@@ -384,7 +385,7 @@ If you have questions or comments regarding this Privacy Policy, please contact 
                   {/* Company Name */}
                   <div className="space-y-1">
                      <label className="text-xs font-medium text-zinc-300">Company or Entity Name</label>
-                     <input
+                     <InputControl
                         type="text"
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
@@ -396,7 +397,7 @@ If you have questions or comments regarding this Privacy Policy, please contact 
                   <div className="grid grid-cols-2 gap-3">
                      <div className="space-y-1">
                         <label className="text-xs font-medium text-zinc-300">Website / App Name</label>
-                        <input
+                        <InputControl
                            type="text"
                            value={websiteName}
                            onChange={(e) => setWebsiteName(e.target.value)}
@@ -405,7 +406,7 @@ If you have questions or comments regarding this Privacy Policy, please contact 
                      </div>
                      <div className="space-y-1">
                         <label className="text-xs font-medium text-zinc-300">Website URL</label>
-                        <input
+                        <InputControl
                            type="text"
                            value={websiteUrl}
                            onChange={(e) => setWebsiteUrl(e.target.value)}
@@ -417,7 +418,7 @@ If you have questions or comments regarding this Privacy Policy, please contact 
                   {/* Contact Email */}
                   <div className="space-y-1">
                      <label className="text-xs font-medium text-zinc-300">Privacy Contact Email</label>
-                     <input
+                     <InputControl
                         type="email"
                         value={contactEmail}
                         onChange={(e) => setContactEmail(e.target.value)}
@@ -430,7 +431,7 @@ If you have questions or comments regarding this Privacy Policy, please contact 
                      <span className="text-xs font-semibold text-zinc-300">Data Practices & Clauses</span>
 
                      <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
-                        <input
+                        <CheckboxInput
                            type="checkbox"
                            checked={collectNamesEmails}
                            onChange={(e) => setCollectNamesEmails(e.target.checked)}
@@ -440,7 +441,7 @@ If you have questions or comments regarding this Privacy Policy, please contact 
                      </label>
 
                      <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
-                        <input
+                        <CheckboxInput
                            type="checkbox"
                            checked={useCookiesAnalytics}
                            onChange={(e) => setUseCookiesAnalytics(e.target.checked)}
@@ -450,7 +451,7 @@ If you have questions or comments regarding this Privacy Policy, please contact 
                      </label>
 
                      <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
-                        <input
+                        <CheckboxInput
                            type="checkbox"
                            checked={processPayments}
                            onChange={(e) => setProcessPayments(e.target.checked)}
@@ -460,7 +461,7 @@ If you have questions or comments regarding this Privacy Policy, please contact 
                      </label>
 
                      <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
-                        <input
+                        <CheckboxInput
                            type="checkbox"
                            checked={includeGDPR}
                            onChange={(e) => setIncludeGDPR(e.target.checked)}
@@ -470,7 +471,7 @@ If you have questions or comments regarding this Privacy Policy, please contact 
                      </label>
 
                      <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
-                        <input
+                        <CheckboxInput
                            type="checkbox"
                            checked={includeCCPA}
                            onChange={(e) => setIncludeCCPA(e.target.checked)}

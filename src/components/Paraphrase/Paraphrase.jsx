@@ -32,6 +32,7 @@ import { callGeminiApi, toolPrompts } from './AI';
 
 import { Input, InputNumber } from '@/components/ui/CustomControl';
 import Navbar from '../Navbar';
+import { Dropdown, InputControl, Textarea } from '../ui/CustomControl';
 
 export default function AIWriter() {
    const [activeTool, setActiveTool] = useState('GrammerChecker');
@@ -344,7 +345,7 @@ export default function AIWriter() {
       className = '',
    }) => (
       <div className="relative w-full">
-         <select
+         <Dropdown
             value={value}
             onChange={onChange}
             className={`
@@ -357,7 +358,7 @@ export default function AIWriter() {
          `}>
             {placeholder && <option value="">{placeholder}</option>}
             {children}
-         </select>
+         </Dropdown>
          <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -548,7 +549,7 @@ export default function AIWriter() {
                                     activeTool !== 'Paraphrase' &&
                                     activeTool !== 'GrammerChecker' &&
                                     activeTool !== 'Summarizer' && (
-                                       <Select
+                                       <Dropdown
                                           value={tone}
                                           onChange={(e) =>
                                              setTone(e.target.value)
@@ -563,10 +564,10 @@ export default function AIWriter() {
                                           ].map((t) => (
                                              <option key={t}>{t}</option>
                                           ))}
-                                       </Select>
+                                       </Dropdown>
                                     )}
                                  {activeTool === 'Paraphrase' && (
-                                    <Select
+                                    <Dropdown
                                        value={tone}
                                        onChange={(e) => setTone(e.target.value)}
                                        placeholder="Select Tone">
@@ -575,13 +576,13 @@ export default function AIWriter() {
                                              {t.label}
                                           </option>
                                        ))}
-                                    </Select>
+                                    </Dropdown>
                                  )}
                                  {activeTool !== 'Prompt' &&
                                     activeTool !== 'Paraphrase' &&
                                     activeTool !== 'GrammerChecker' &&
                                     activeTool !== 'Summarizer' && (
-                                       <Select
+                                       <Dropdown
                                           value={language}
                                           onChange={(e) =>
                                              setLanguage(e.target.value)
@@ -598,7 +599,7 @@ export default function AIWriter() {
                                           ].map((l) => (
                                              <option key={l}>{l}</option>
                                           ))}
-                                       </Select>
+                                       </Dropdown>
                                     )}
                                  {(activeTool === 'Article' ||
                                     activeTool === 'Essay') && (
@@ -606,7 +607,7 @@ export default function AIWriter() {
                                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-sm pointer-events-none">
                                           Words:
                                        </span>
-                                       <input
+                                       <InputControl
                                           type="number"
                                           min={0}
                                           max={2000}
@@ -618,7 +619,7 @@ export default function AIWriter() {
                                        />
                                     </div>
                                  )}
-                                 <Select
+                                 <Dropdown
                                     value={selectedTemplate || ''}
                                     onChange={(e) => {
                                        const template = templates.find(
@@ -632,7 +633,7 @@ export default function AIWriter() {
                                           {t.title}
                                        </option>
                                     ))}
-                                 </Select>
+                                 </Dropdown>
                               </div>
                            </div>
                         </motion.div>
@@ -675,7 +676,7 @@ export default function AIWriter() {
                                        size={15}
                                        className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500"
                                     />
-                                    <input
+                                    <InputControl
                                        autoFocus
                                        value={searchQuery}
                                        onChange={(e) =>
@@ -732,7 +733,7 @@ export default function AIWriter() {
 
                      <div
                         className={`flex flex-col bg-[#0f0f11] rounded-2xl transition-all duration-300 ${isGenerating ? 'border-transparent shadow-[0_0_40px_rgba(168,85,247,0.1)]' : 'border border-zinc-800/80 shadow-2xl'}`}>
-                        <textarea
+                        <Textarea
                            value={prompt}
                            onChange={handlePromptChange}
                            placeholder={`What do you want to write or edit?\n\nExample: ${placeholder[activeTool]}`}
@@ -844,7 +845,7 @@ export default function AIWriter() {
                                        </div>
                                     </div>
                                  ) : (
-                                    <textarea
+                                    <Textarea
                                        value={result}
                                        onChange={(e) =>
                                           setResult(e.target.value)

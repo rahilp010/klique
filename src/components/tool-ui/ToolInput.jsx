@@ -1,5 +1,6 @@
 import React from 'react';
 import { X, AlertCircle, HelpCircle } from 'lucide-react';
+import { InputControl } from '../ui/CustomControl';
 
 export default function ToolInput({
    label,
@@ -53,7 +54,7 @@ export default function ToolInput({
                </span>
             )}
 
-            <input
+            <InputControl
                id={inputId}
                type={type}
                value={value ?? ''}
@@ -63,10 +64,11 @@ export default function ToolInput({
                max={max}
                step={step}
                disabled={disabled}
+               required={required}
                autoFocus={autoFocus}
                className={`w-full bg-transparent py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none ${
                   prefix ? 'pl-0' : 'pl-3.5'
-               } ${suffix || (onClear && value) ? 'pr-9' : 'pr-3.5'}`}
+               } ${suffix || (onClear && value) ? 'pr-9' : 'pr-3.5'} border-0 rounded-none px-0`}
             />
 
             {/* Clear button if value exists */}
@@ -96,4 +98,3 @@ export default function ToolInput({
       </div>
    );
 }
-

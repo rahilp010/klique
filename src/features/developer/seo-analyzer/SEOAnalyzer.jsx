@@ -25,6 +25,7 @@ import {
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { Textarea } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  FAQS                                                                      */
@@ -106,11 +107,14 @@ export default function SEOAnalyzer() {
    const relatedTools = useMemo(() => getRelatedTools('seo-analyzer', 4), []);
 
    return (
-      <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 relative overflow-hidden font-sans">
-         {/* Static ambient backdrop matching JsonFormatter */}
+      <div
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-3 py-6 sm:px-6 sm:py-8 md:px-10 overflow-hidden
+            before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+            after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_62%)]" />
          <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(16,185,129,0.12),transparent_55%)]"
+            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(113,113,122,0.14),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_50%)]"
          />
          <div
             aria-hidden
@@ -248,7 +252,7 @@ export default function SEOAnalyzer() {
                      <span className="text-[11px] text-zinc-500 font-mono">{htmlInput.length} chars</span>
                   </div>
 
-                  <textarea
+                  <Textarea
                      value={htmlInput}
                      onChange={(e) => setHtmlInput(e.target.value)}
                      placeholder="Paste full HTML source code or <head> tags here..."
@@ -387,4 +391,3 @@ export default function SEOAnalyzer() {
       </div>
    );
 }
-

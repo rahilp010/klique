@@ -12,6 +12,7 @@ import {
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
+import { Textarea } from '../ui/CustomControl';
 
 const SECRET_RULES = [
     {
@@ -287,7 +288,7 @@ const SecretScanner = () => {
                             </div>
                         </div>
 
-                        <textarea
+                        <Textarea
                             value={text}
                             onChange={(event) => {
                                 updateText(event.target.value);

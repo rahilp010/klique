@@ -27,6 +27,7 @@ import {
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { Dropdown } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  FAQS                                                                      */
@@ -175,11 +176,14 @@ export default function BulkImageCompressor() {
    const relatedTools = useMemo(() => getRelatedTools('bulk-image-compressor', 4), []);
 
    return (
-      <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 relative overflow-hidden font-sans">
-         {/* Static ambient backdrop matching JsonFormatter */}
+      <div
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-3 py-6 sm:px-6 sm:py-8 md:px-10 overflow-hidden
+            before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+            after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_62%)]" />
          <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(16,185,129,0.12),transparent_55%)]"
+            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(113,113,122,0.14),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_50%)]"
          />
          <div
             aria-hidden
@@ -412,20 +416,20 @@ export default function BulkImageCompressor() {
                   {/* Output Format */}
                   <div className="text-xs">
                      <label className="block text-zinc-300 font-medium mb-1.5">Output Format</label>
-                     <select
+                     <Dropdown
                         value={targetFormat}
                         onChange={(e) => setTargetFormat(e.target.value)}
                         className="w-full rounded-xl border border-zinc-800 bg-zinc-950/70 px-3.5 py-2.5 text-white focus:border-emerald-500/50 focus:outline-none transition-all">
                         <option value="image/webp">WebP (Recommended &bull; Best Compression)</option>
                         <option value="image/jpeg">JPEG (Universal Compatibility)</option>
                         <option value="image/png">PNG (Lossless & Transparency)</option>
-                     </select>
+                     </Dropdown>
                   </div>
 
                   {/* Max Dimension */}
                   <div className="text-xs">
                      <label className="block text-zinc-300 font-medium mb-1.5">Max Image Dimension</label>
-                     <select
+                     <Dropdown
                         value={maxDimension}
                         onChange={(e) => setMaxDimension(parseInt(e.target.value, 10))}
                         className="w-full rounded-xl border border-zinc-800 bg-zinc-950/70 px-3.5 py-2.5 text-white focus:border-emerald-500/50 focus:outline-none transition-all">
@@ -433,7 +437,7 @@ export default function BulkImageCompressor() {
                         <option value="1280">HD (1280px max)</option>
                         <option value="800">Compact Web (800px max)</option>
                         <option value="0">Original Resolution (No Resize)</option>
-                     </select>
+                     </Dropdown>
                   </div>
                </div>
             </div>
@@ -502,4 +506,3 @@ export default function BulkImageCompressor() {
       </div>
    );
 }
-

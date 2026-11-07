@@ -25,6 +25,7 @@ import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/a
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { Dropdown, InputControl, Textarea } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & CONSTANTS                                                       */
@@ -410,7 +411,7 @@ export default function WhatsAppLinkGenerator() {
                         </label>
                         <div className="grid grid-cols-1 sm:grid-cols-12 gap-2">
                            <div className="sm:col-span-5">
-                              <select
+                              <Dropdown
                                  value={countryCode}
                                  onChange={(e) => setCountryCode(e.target.value)}
                                  className="w-full bg-zinc-900 border border-zinc-800 py-2 px-3 rounded-xl text-xs sm:text-sm text-zinc-200 outline-none cursor-pointer focus:border-[#daf4aa]">
@@ -419,12 +420,12 @@ export default function WhatsAppLinkGenerator() {
                                        {c.label}
                                     </option>
                                  ))}
-                              </select>
+                              </Dropdown>
                            </div>
 
                            <div className="sm:col-span-7">
                               <div className="relative">
-                                 <input
+                                 <InputControl
                                     type="tel"
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
@@ -449,7 +450,7 @@ export default function WhatsAppLinkGenerator() {
                               {message.length} chars
                            </span>
                         </div>
-                        <textarea
+                        <Textarea
                            rows={4}
                            value={message}
                            onChange={(e) => setMessage(e.target.value)}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { X, AlertCircle } from 'lucide-react';
+import { Textarea } from '../ui/CustomControl';
 
 export default function ToolTextarea({
    label,
@@ -47,14 +48,15 @@ export default function ToolTextarea({
                   ? 'border-rose-500/80 focus-within:border-rose-500'
                   : 'border-zinc-800 hover:border-zinc-700 focus-within:border-[#daf4aa]'
             } ${disabled ? 'opacity-50 cursor-not-allowed bg-zinc-900/50' : ''}`}>
-            <textarea
+            <Textarea
                id={textareaId}
                value={value ?? ''}
                onChange={onChange}
                placeholder={placeholder}
                rows={rows}
                disabled={disabled}
-               className="w-full bg-transparent p-3.5 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none resize-y customScrollbar leading-relaxed"
+               required={required}
+               className="w-full bg-transparent p-3.5 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none resize-y customScrollbar leading-relaxed border-0 rounded-none"
             />
          </div>
 
@@ -77,4 +79,3 @@ export default function ToolTextarea({
       </div>
    );
 }
-

@@ -22,6 +22,7 @@ import { trackToolDownload, trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl } from '../../../components/ui/CustomControl';
 
 const SAMPLE_DECKS = [
    {
@@ -363,14 +364,14 @@ export default function FlashcardGenerator() {
                      Add Custom Card to Deck
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                     <input
+                     <InputControl
                         type="text"
                         value={newQuestion}
                         onChange={(e) => setNewQuestion(e.target.value)}
                         placeholder="Question prompt..."
                         className="w-full bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-[#daf4aa]/60 focus:ring-1 focus:ring-[#daf4aa]/40"
                      />
-                     <input
+                     <InputControl
                         type="text"
                         value={newAnswer}
                         onChange={(e) => setNewAnswer(e.target.value)}

@@ -26,6 +26,7 @@ import {
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { Dropdown, CheckboxInput, Textarea } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  FAQS                                                                      */
@@ -199,11 +200,14 @@ export default function ImageToText() {
    const relatedTools = useMemo(() => getRelatedTools('image-to-text', 4), []);
 
    return (
-      <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 relative overflow-hidden font-sans">
-         {/* Static ambient backdrop matching JsonFormatter */}
+      <div
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-3 py-6 sm:px-6 sm:py-8 md:px-10 overflow-hidden
+            before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+            after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_62%)]" />
          <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(16,185,129,0.12),transparent_55%)]"
+            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(113,113,122,0.14),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_50%)]"
          />
          <div
             aria-hidden
@@ -334,7 +338,7 @@ export default function ImageToText() {
                               <Languages size={13} className="text-emerald-400" />
                               <span>Language</span>
                            </label>
-                           <select
+                           <Dropdown
                               value={language}
                               onChange={(e) => setLanguage(e.target.value)}
                               className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-white focus:border-emerald-500/50 focus:outline-none transition-all">
@@ -343,12 +347,12 @@ export default function ImageToText() {
                                     {lang.name}
                                  </option>
                               ))}
-                           </select>
+                           </Dropdown>
                         </div>
 
                         <div className="flex flex-col justify-end">
                            <label className="flex items-center gap-2 cursor-pointer pb-2 text-zinc-300 font-medium">
-                              <input
+                              <CheckboxInput
                                  type="checkbox"
                                  checked={autoPreprocess}
                                  onChange={(e) => setAutoPreprocess(e.target.checked)}
@@ -432,7 +436,7 @@ export default function ImageToText() {
                      {/* Result text area or empty placeholder */}
                      {result ? (
                         <div className="flex-1 flex flex-col">
-                           <textarea
+                           <Textarea
                               readOnly
                               value={result.text}
                               className="w-full flex-1 min-h-[300px] rounded-xl border border-zinc-800 bg-zinc-950/80 p-4 font-mono text-xs text-zinc-200 focus:outline-none resize-none leading-relaxed"
@@ -524,4 +528,3 @@ export default function ImageToText() {
       </div>
    );
 }
-

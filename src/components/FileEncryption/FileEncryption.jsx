@@ -13,6 +13,7 @@ import {
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
+import { Dropdown, InputControl } from '../ui/CustomControl';
 
 const MAGIC = new TextEncoder().encode('KLQENC01');
 const ITERATIONS = 310000;
@@ -433,7 +434,7 @@ const FileEncryption = () => {
                             <label htmlFor="encryption-algorithm" className="mb-2 block text-sm font-bold text-zinc-300">
                                 Encryption algorithm
                             </label>
-                            <select
+                            <Dropdown
                                 id="encryption-algorithm"
                                 value={algorithm}
                                 onChange={(event) => setAlgorithm(event.target.value)}
@@ -441,7 +442,7 @@ const FileEncryption = () => {
                                 <option value="AES-GCM">AES-GCM (Recommended)</option>
                                 <option value="AES-CBC">AES-CBC (Compatibility)</option>
                                 <option value="AES-CTR">AES-CTR</option>
-                            </select>
+                            </Dropdown>
                         </div>
                     )}
 
@@ -451,7 +452,7 @@ const FileEncryption = () => {
                                 <label htmlFor="decryption-algorithm" className="mb-2 block text-sm font-bold text-zinc-300">
                                     External file AES mode
                                 </label>
-                                <select
+                                <Dropdown
                                     id="decryption-algorithm"
                                     value={algorithm}
                                     onChange={(event) => setAlgorithm(event.target.value)}
@@ -459,13 +460,13 @@ const FileEncryption = () => {
                                     <option value="AES-GCM">AES-GCM</option>
                                     <option value="AES-CBC">AES-CBC</option>
                                     <option value="AES-CTR">AES-CTR</option>
-                                </select>
+                                </Dropdown>
                             </div>
                             <div>
                                 <label htmlFor="external-aes-key" className="mb-2 block text-sm font-bold text-zinc-300">
                                     External AES key (hex)
                                 </label>
-                                <input
+                                <InputControl
                                     id="external-aes-key"
                                     type="text"
                                     value={externalKey}
@@ -481,7 +482,7 @@ const FileEncryption = () => {
                                 <label htmlFor="external-aes-iv" className="mb-2 block text-sm font-bold text-zinc-300">
                                     External IV / nonce (hex)
                                 </label>
-                                <input
+                                <InputControl
                                     id="external-aes-iv"
                                     type="text"
                                     value={externalIv}
@@ -498,7 +499,7 @@ const FileEncryption = () => {
                                     <label htmlFor="external-counter-length" className="mb-2 block text-sm font-bold text-zinc-300">
                                         AES-CTR counter length
                                     </label>
-                                    <select
+                                    <Dropdown
                                         id="external-counter-length"
                                         value={externalCounterLength}
                                         onChange={(event) => setExternalCounterLength(event.target.value)}
@@ -506,7 +507,7 @@ const FileEncryption = () => {
                                         {[32, 64, 96, 128].map((length) => (
                                             <option key={length} value={length}>{length} bits</option>
                                         ))}
-                                    </select>
+                                    </Dropdown>
                                 </div>
                             )}
                         </div>
@@ -516,7 +517,7 @@ const FileEncryption = () => {
                         {mode === 'encrypt' ? 'Password' : 'Klique password (for Klique files only)'}
                     </label>
                     <div className="mb-3 flex h-11 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 focus-within:border-[#daf4aa]/70 transition-colors">
-                        <input
+                        <InputControl
                             id="encryption-password"
                             type={showPassword ? 'text' : 'password'}
                             value={password}

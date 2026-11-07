@@ -28,6 +28,7 @@ import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/a
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, Dropdown } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  SAMPLE DATASETS                                                           */
@@ -522,7 +523,7 @@ Generated on ${new Date().toLocaleDateString()}`;
                                  key={course.id}
                                  className="grid grid-cols-12 gap-2 items-center p-2.5 rounded-xl bg-[#0d0d10] border border-zinc-800/80">
                                  <div className="col-span-6 sm:col-span-5">
-                                    <input
+                                    <InputControl
                                        type="text"
                                        value={course.name}
                                        onChange={(e) => handleCourseChange(course.id, 'name', e.target.value)}
@@ -532,7 +533,7 @@ Generated on ${new Date().toLocaleDateString()}`;
                                  </div>
 
                                  <div className="col-span-3 sm:col-span-3">
-                                    <input
+                                    <InputControl
                                        type="number"
                                        value={course.credits}
                                        onChange={(e) => handleCourseChange(course.id, 'credits', e.target.value)}
@@ -543,7 +544,7 @@ Generated on ${new Date().toLocaleDateString()}`;
                                  </div>
 
                                  <div className="col-span-3 sm:col-span-3">
-                                    <select
+                                    <Dropdown
                                        value={course.gradePoints}
                                        onChange={(e) => handleCourseChange(course.id, 'gradePoints', Number(e.target.value))}
                                        className="w-full bg-[#18181d] px-2 py-1.5 rounded-lg border border-zinc-700/60 text-xs text-zinc-200 outline-none cursor-pointer">
@@ -552,7 +553,7 @@ Generated on ${new Date().toLocaleDateString()}`;
                                              {g.label.split(' ')[0]} ({g.points})
                                           </option>
                                        ))}
-                                    </select>
+                                    </Dropdown>
                                  </div>
 
                                  <div className="col-span-1 hidden sm:flex justify-end">
@@ -577,7 +578,7 @@ Generated on ${new Date().toLocaleDateString()}`;
                                  key={sem.id}
                                  className="grid grid-cols-12 gap-2 items-center p-2.5 rounded-xl bg-[#0d0d10] border border-zinc-800/80">
                                  <div className="col-span-5">
-                                    <input
+                                    <InputControl
                                        type="text"
                                        value={sem.sem}
                                        onChange={(e) => handleSemesterChange(sem.id, 'sem', e.target.value)}
@@ -586,7 +587,7 @@ Generated on ${new Date().toLocaleDateString()}`;
                                  </div>
 
                                  <div className="col-span-3">
-                                    <input
+                                    <InputControl
                                        type="number"
                                        value={sem.credits}
                                        onChange={(e) => handleSemesterChange(sem.id, 'credits', e.target.value)}
@@ -596,7 +597,7 @@ Generated on ${new Date().toLocaleDateString()}`;
                                  </div>
 
                                  <div className="col-span-3">
-                                    <input
+                                    <InputControl
                                        type="number"
                                        value={sem.gpa}
                                        onChange={(e) => handleSemesterChange(sem.id, 'gpa', e.target.value)}
@@ -628,7 +629,7 @@ Generated on ${new Date().toLocaleDateString()}`;
                                  Enter Cumulative CGPA (0.00 to 10.00)
                               </label>
                               <div className="relative flex items-center rounded-xl border border-zinc-800 bg-[#0d0d10] px-3.5 py-2.5 focus-within:border-[#daf4aa] transition-colors">
-                                 <input
+                                 <InputControl
                                     type="number"
                                     value={converterCGPA}
                                     onChange={(e) => setConverterCGPA(e.target.value)}

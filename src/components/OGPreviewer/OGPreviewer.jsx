@@ -22,6 +22,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import Navbar from '../Navbar';
 import SEO from '../SEO';
+import { InputControl, Textarea } from '../ui/CustomControl';
 
 const SOCIAL_TABS = [
    { id: 'twitter', label: 'Twitter / X', icon: Share2 },
@@ -327,7 +328,7 @@ export default function OGPreviewer() {
                               {title.length} / 60 chars
                            </span>
                         </div>
-                        <input
+                        <InputControl
                            type="text"
                            value={title}
                            onChange={(e) => setTitle(e.target.value)}
@@ -350,7 +351,7 @@ export default function OGPreviewer() {
                               {description.length} / 160 chars
                            </span>
                         </div>
-                        <textarea
+                        <Textarea
                            rows={3}
                            value={description}
                            onChange={(e) => setDescription(e.target.value)}
@@ -363,7 +364,7 @@ export default function OGPreviewer() {
                         <label className="text-xs font-medium text-zinc-300">
                            Canonical URL (og:url)
                         </label>
-                        <input
+                        <InputControl
                            type="url"
                            value={url}
                            onChange={(e) => setUrl(e.target.value)}
@@ -381,7 +382,7 @@ export default function OGPreviewer() {
                            </span>
                         </label>
                         <div className="flex gap-2">
-                           <input
+                           <InputControl
                               type="text"
                               value={imageUrl}
                               onChange={(e) => setImageUrl(e.target.value)}
@@ -407,7 +408,7 @@ export default function OGPreviewer() {
                            <label className="text-xs font-medium text-zinc-400">
                               Site Name (og:site_name)
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={siteName}
                               onChange={(e) => setSiteName(e.target.value)}
@@ -419,7 +420,7 @@ export default function OGPreviewer() {
                            <label className="text-xs font-medium text-zinc-400">
                               Twitter Handle (twitter:site)
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={twitterHandle}
                               onChange={(e) => setTwitterHandle(e.target.value)}

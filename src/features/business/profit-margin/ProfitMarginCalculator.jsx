@@ -30,6 +30,7 @@ import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/a
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & FAQS                                                            */
@@ -456,7 +457,7 @@ Break-even Price: ₹${result.costPrice.toLocaleString('en-IN')}`;
                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-xs font-semibold">
                               ₹
                            </span>
-                           <input
+                           <InputControl
                               type="number"
                               min="0"
                               value={costPrice}
@@ -488,7 +489,7 @@ Break-even Price: ₹${result.costPrice.toLocaleString('en-IN')}`;
                               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-xs font-semibold">
                                  ₹
                               </span>
-                              <input
+                              <InputControl
                                  type="number"
                                  min="0"
                                  value={sellingPrice}
@@ -520,7 +521,7 @@ Break-even Price: ₹${result.costPrice.toLocaleString('en-IN')}`;
                               </label>
                               <span className="text-xs text-[#daf4aa] font-mono">{desiredMargin}%</span>
                            </div>
-                           <input
+                           <InputControl
                               type="number"
                               min="0"
                               max="99.9"
@@ -557,7 +558,7 @@ Break-even Price: ₹${result.costPrice.toLocaleString('en-IN')}`;
                               </label>
                               <span className="text-xs text-[#daf4aa] font-mono">{desiredMarkup}%</span>
                            </div>
-                           <input
+                           <InputControl
                               type="number"
                               min="0"
                               step="1"

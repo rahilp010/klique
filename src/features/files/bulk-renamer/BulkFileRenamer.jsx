@@ -23,6 +23,7 @@ import { trackToolDownload, trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, Dropdown, CheckboxInput } from '../../../components/ui/CustomControl';
 
 const FAQS = [
    {
@@ -290,7 +291,7 @@ export default function BulkFileRenamer() {
                   <div className="grid grid-cols-2 gap-3">
                      <div className="space-y-1.5">
                         <label className="text-xs font-medium text-zinc-300">Prefix</label>
-                        <input
+                        <InputControl
                            type="text"
                            value={prefix}
                            onChange={(e) => setPrefix(e.target.value)}
@@ -300,7 +301,7 @@ export default function BulkFileRenamer() {
                      </div>
                      <div className="space-y-1.5">
                         <label className="text-xs font-medium text-zinc-300">Suffix</label>
-                        <input
+                        <InputControl
                            type="text"
                            value={suffix}
                            onChange={(e) => setSuffix(e.target.value)}
@@ -314,7 +315,7 @@ export default function BulkFileRenamer() {
                   <div className="grid grid-cols-2 gap-3">
                      <div className="space-y-1.5">
                         <label className="text-xs font-medium text-zinc-300">Find Text</label>
-                        <input
+                        <InputControl
                            type="text"
                            value={findText}
                            onChange={(e) => setFindText(e.target.value)}
@@ -324,7 +325,7 @@ export default function BulkFileRenamer() {
                      </div>
                      <div className="space-y-1.5">
                         <label className="text-xs font-medium text-zinc-300">Replace With</label>
-                        <input
+                        <InputControl
                            type="text"
                            value={replaceText}
                            onChange={(e) => setReplaceText(e.target.value)}
@@ -337,7 +338,7 @@ export default function BulkFileRenamer() {
                   {/* Case Transform */}
                   <div className="space-y-1.5">
                      <label className="text-xs font-medium text-zinc-300">Case Transformation</label>
-                     <select
+                     <Dropdown
                         value={caseTransform}
                         onChange={(e) => setCaseTransform(e.target.value)}
                         className="w-full bg-zinc-950/80 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]/60 focus:ring-1 focus:ring-[#daf4aa]/40 cursor-pointer">
@@ -346,14 +347,14 @@ export default function BulkFileRenamer() {
                         <option value="upper">UPPERCASE (ALL CHARACTERS UPPERCASE)</option>
                         <option value="kebab">kebab-case (dash-separated-words)</option>
                         <option value="snake">snake_case (underscore_separated_words)</option>
-                     </select>
+                     </Dropdown>
                   </div>
 
                   {/* Sequential Numbering Toggle */}
                   <div className="border border-zinc-800/80 rounded-xl p-3.5 bg-zinc-950/40 space-y-3">
                      <div className="flex items-center justify-between">
                         <label className="text-xs font-semibold text-zinc-200 flex items-center gap-1.5 cursor-pointer">
-                           <input
+                           <CheckboxInput
                               type="checkbox"
                               checked={enableNumbering}
                               onChange={(e) => setEnableNumbering(e.target.checked)}
@@ -370,7 +371,7 @@ export default function BulkFileRenamer() {
                         <div className="grid grid-cols-3 gap-2 pt-1 text-xs">
                            <div>
                               <label className="text-[11px] text-zinc-400">Start At</label>
-                              <input
+                              <InputControl
                                  type="number"
                                  min="0"
                                  value={startNumber}
@@ -380,7 +381,7 @@ export default function BulkFileRenamer() {
                            </div>
                            <div>
                               <label className="text-[11px] text-zinc-400">Padding</label>
-                              <select
+                              <Dropdown
                                  value={numberPadding}
                                  onChange={(e) => setNumberPadding(Number(e.target.value))}
                                  className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-1.5 py-1 text-xs text-zinc-100">
@@ -388,17 +389,17 @@ export default function BulkFileRenamer() {
                                  <option value="2">01 (2 digits)</option>
                                  <option value="3">001 (3 digits)</option>
                                  <option value="4">0001 (4 digits)</option>
-                              </select>
+                              </Dropdown>
                            </div>
                            <div>
                               <label className="text-[11px] text-zinc-400">Position</label>
-                              <select
+                              <Dropdown
                                  value={numberPosition}
                                  onChange={(e) => setNumberPosition(e.target.value)}
                                  className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-1.5 py-1 text-xs text-zinc-100">
                                  <option value="suffix">Suffix</option>
                                  <option value="prefix">Prefix</option>
-                              </select>
+                              </Dropdown>
                            </div>
                         </div>
                      )}

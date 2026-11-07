@@ -29,6 +29,7 @@ import { trackToolCopy, trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & FAQS                                                            */
@@ -474,7 +475,7 @@ export default function EmailSignatureGenerator() {
                            <label className="text-xs font-semibold text-zinc-300 block mb-1">
                               Full Name
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={fullName}
                               onChange={(e) => setFullName(e.target.value)}
@@ -486,7 +487,7 @@ export default function EmailSignatureGenerator() {
                            <label className="text-xs font-semibold text-zinc-300 block mb-1">
                               Job Title / Role
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={jobTitle}
                               onChange={(e) => setJobTitle(e.target.value)}
@@ -502,7 +503,7 @@ export default function EmailSignatureGenerator() {
                            <label className="text-xs font-semibold text-zinc-300 block mb-1">
                               Company / Organization
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={company}
                               onChange={(e) => setCompany(e.target.value)}
@@ -514,7 +515,7 @@ export default function EmailSignatureGenerator() {
                            <label className="text-xs font-semibold text-zinc-300 block mb-1">
                               Website URL
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={website}
                               onChange={(e) => setWebsite(e.target.value)}
@@ -530,7 +531,7 @@ export default function EmailSignatureGenerator() {
                            <label className="text-xs font-semibold text-zinc-300 block mb-1">
                               Email Address
                            </label>
-                           <input
+                           <InputControl
                               type="email"
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
@@ -542,7 +543,7 @@ export default function EmailSignatureGenerator() {
                            <label className="text-xs font-semibold text-zinc-300 block mb-1">
                               Phone / Mobile
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={phone}
                               onChange={(e) => setPhone(e.target.value)}
@@ -558,7 +559,7 @@ export default function EmailSignatureGenerator() {
                            <label className="text-xs font-semibold text-zinc-300 block mb-1">
                               Profile Photo / Logo URL (Public HTTPS)
                            </label>
-                           <input
+                           <InputControl
                               type="url"
                               value={avatarUrl}
                               onChange={(e) => setAvatarUrl(e.target.value)}
@@ -592,21 +593,21 @@ export default function EmailSignatureGenerator() {
                            Social Profiles (Optional)
                         </span>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                           <input
+                           <InputControl
                               type="text"
                               value={linkedin}
                               onChange={(e) => setLinkedin(e.target.value)}
                               placeholder="LinkedIn URL"
                               className="w-full px-2.5 py-1 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-200"
                            />
-                           <input
+                           <InputControl
                               type="text"
                               value={twitter}
                               onChange={(e) => setTwitter(e.target.value)}
                               placeholder="Twitter / X URL"
                               className="w-full px-2.5 py-1 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-200"
                            />
-                           <input
+                           <InputControl
                               type="text"
                               value={github}
                               onChange={(e) => setGithub(e.target.value)}

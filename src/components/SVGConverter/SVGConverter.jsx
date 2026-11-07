@@ -27,6 +27,7 @@ import SEO from '../SEO';
 import { AnimatePresence, motion } from 'motion/react';
 import { Uploader, SelectPicker, Toggle, Checkbox, Input } from '../ui/CustomControl';
 import { optimize } from 'svgo';
+import { Textarea, InputControl } from '../ui/CustomControl';
 
 // Sample SVG for testing
 const SAMPLE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
@@ -884,7 +885,7 @@ export default function SvgIcon(props: SvgIconProps) {
                                     </button>
                                  </div>
                               </div>
-                              <textarea
+                              <Textarea
                                  value={svgContent}
                                  onChange={(e) => {
                                     setSvgContent(e.target.value);
@@ -941,7 +942,7 @@ export default function SvgIcon(props: SvgIconProps) {
                                              <label className="text-xs text-zinc-500 mb-1 block">
                                                 Quality
                                              </label>
-                                             <Input
+                                             <InputControl
                                                 type="number"
                                                 value={exportQuality}
                                                 onChange={setExportQuality}
@@ -956,7 +957,7 @@ export default function SvgIcon(props: SvgIconProps) {
                                              <label className="text-xs text-zinc-500 mb-1 block">
                                                 Width (px)
                                              </label>
-                                             <Input
+                                             <InputControl
                                                 type="number"
                                                 value={exportWidth}
                                                 onChange={(v) => {
@@ -973,7 +974,7 @@ export default function SvgIcon(props: SvgIconProps) {
                                              <label className="text-xs text-zinc-500 mb-1 block">
                                                 Height (px)
                                              </label>
-                                             <Input
+                                             <InputControl
                                                 type="number"
                                                 value={exportHeight}
                                                 onChange={(v) => {
@@ -1017,7 +1018,7 @@ export default function SvgIcon(props: SvgIconProps) {
                                     </div>
                                  ) : (
                                     <div className="space-y-4">
-                                       <textarea
+                                       <Textarea
                                           value={outputContent}
                                           readOnly
                                           className="w-full h-48 p-4 bg-[#09090b] text-sm font-mono text-zinc-300 outline-none resize-none rounded-xl"
@@ -1148,7 +1149,7 @@ export default function SvgIcon(props: SvgIconProps) {
                                                 }
                                                 className="w-12 h-10 rounded cursor-pointer"
                                              />
-                                             <Input
+                                             <InputControl
                                                 value={replacementColor}
                                                 onChange={setReplacementColor}
                                                 placeholder="#000000"

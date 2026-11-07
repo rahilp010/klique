@@ -26,6 +26,7 @@ import { trackToolCopy, trackToolReset } from '../../../lib/analytics';
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { Textarea } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & FAQS                                                            */
@@ -360,7 +361,7 @@ export default function JWTDecoder() {
                               Clear
                            </button>
                         </div>
-                        <textarea
+                        <Textarea
                            rows={8}
                            value={tokenInput}
                            onChange={(e) => setTokenInput(e.target.value)}

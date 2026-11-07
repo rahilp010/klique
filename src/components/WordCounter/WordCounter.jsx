@@ -12,6 +12,7 @@ import {
 import Navbar from '../Navbar';
 import SEO from '../SEO';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Textarea } from '../ui/CustomControl';
 
 const WordCounter = () => {
    const [text, setText] = useState('');
@@ -431,7 +432,7 @@ const WordCounter = () => {
 
                   {/* Text Editor */}
 
-                  <textarea
+                  <Textarea
                      value={text}
                      onChange={(e) => setText(e.target.value)}
                      placeholder="Start typing or paste your text here..."

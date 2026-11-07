@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'motion/react';
 
 import { SelectPicker } from '../ui/CustomControl';
 import { callAiApi } from '../../services/aiService';
+import { InputControl } from '../ui/CustomControl';
 
 const tones = [
    { label: 'Casual', value: 'casual' },
@@ -283,7 +284,7 @@ Rules:
 
                   <div className="relative">
                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-                     <input
+                     <InputControl
                         type="text"
                         placeholder="Enter Keywords"
                         value={keyword}

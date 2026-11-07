@@ -8,6 +8,7 @@ import { ArrowRight, Copy, Download, Heart, Search } from 'lucide-react';
 
 import { Input } from '@/components/ui/CustomControl';
 import { motion } from 'motion/react';
+import { Textarea, InputControl } from '../ui/CustomControl';
 
 const Toast = ({ toast }) => {
    if (!toast.visible) return null;
@@ -297,7 +298,7 @@ const FancyFontGenerator = () => {
                         Input Text
                      </label>
 
-                     <textarea
+                     <Textarea
                         value={inputText}
                         onChange={(e) => setInputText(e.target.value)}
                         placeholder="Type something amazing..."
@@ -329,7 +330,7 @@ const FancyFontGenerator = () => {
                         Live Preview
                      </label>
 
-                     <textarea
+                     <Textarea
                         value={outputText}
                         readOnly
                         placeholder="Your fancy text appears here..."
@@ -371,7 +372,7 @@ const FancyFontGenerator = () => {
                         <Search className="text-zinc-400" size={16} />
                      </span>
 
-                     <Input
+                     <InputControl
                         type="text"
                         value={search}
                         onChange={(val) => setSearch(val)}

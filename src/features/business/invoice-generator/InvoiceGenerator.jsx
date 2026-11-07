@@ -28,6 +28,7 @@ import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/a
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, Textarea, Dropdown, CheckboxInput } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & FAQS                                                            */
@@ -492,7 +493,7 @@ Grand Total: ₹${result.grandTotal.toLocaleString('en-IN')} (${totalInWords})`;
                            <label className="text-[11px] font-semibold text-zinc-400 block mb-1">
                               Invoice Number
                            </label>
-                           <input
+                           <InputControl
                               type="text"
                               value={invoiceNumber}
                               onChange={(e) => setInvoiceNumber(e.target.value)}
@@ -503,7 +504,7 @@ Grand Total: ₹${result.grandTotal.toLocaleString('en-IN')} (${totalInWords})`;
                            <label className="text-[11px] font-semibold text-zinc-400 block mb-1">
                               Invoice Date
                            </label>
-                           <input
+                           <InputControl
                               type="date"
                               value={invoiceDate}
                               onChange={(e) => setInvoiceDate(e.target.value)}
@@ -514,7 +515,7 @@ Grand Total: ₹${result.grandTotal.toLocaleString('en-IN')} (${totalInWords})`;
                            <label className="text-[11px] font-semibold text-zinc-400 block mb-1">
                               Due Date
                            </label>
-                           <input
+                           <InputControl
                               type="date"
                               value={dueDate}
                               onChange={(e) => setDueDate(e.target.value)}
@@ -531,28 +532,28 @@ Grand Total: ₹${result.grandTotal.toLocaleString('en-IN')} (${totalInWords})`;
                               <Building size={13} />
                               <span>Your Business (Billed By)</span>
                            </span>
-                           <input
+                           <InputControl
                               type="text"
                               placeholder="Business Name"
                               value={businessName}
                               onChange={(e) => setBusinessName(e.target.value)}
                               className="w-full px-2 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]"
                            />
-                           <input
+                           <InputControl
                               type="text"
                               placeholder="GSTIN (e.g. 27AAAAA0000A1Z5)"
                               value={businessGstin}
                               onChange={(e) => setBusinessGstin(e.target.value)}
                               className="w-full px-2 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]"
                            />
-                           <input
+                           <InputControl
                               type="text"
                               placeholder="Email & Phone"
                               value={businessEmail}
                               onChange={(e) => setBusinessEmail(e.target.value)}
                               className="w-full px-2 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]"
                            />
-                           <textarea
+                           <Textarea
                               rows={2}
                               placeholder="Office Address"
                               value={businessAddress}
@@ -567,28 +568,28 @@ Grand Total: ₹${result.grandTotal.toLocaleString('en-IN')} (${totalInWords})`;
                               <User size={13} />
                               <span>Client Details (Billed To)</span>
                            </span>
-                           <input
+                           <InputControl
                               type="text"
                               placeholder="Client / Company Name"
                               value={clientName}
                               onChange={(e) => setClientName(e.target.value)}
                               className="w-full px-2 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]"
                            />
-                           <input
+                           <InputControl
                               type="text"
                               placeholder="Client GSTIN (Optional)"
                               value={clientGstin}
                               onChange={(e) => setClientGstin(e.target.value)}
                               className="w-full px-2 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]"
                            />
-                           <input
+                           <InputControl
                               type="text"
                               placeholder="Client Email"
                               value={clientEmail}
                               onChange={(e) => setClientEmail(e.target.value)}
                               className="w-full px-2 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]"
                            />
-                           <textarea
+                           <Textarea
                               rows={2}
                               placeholder="Client Address"
                               value={clientAddress}
@@ -618,14 +619,14 @@ Grand Total: ₹${result.grandTotal.toLocaleString('en-IN')} (${totalInWords})`;
                               <div
                                  key={it.id}
                                  className="grid grid-cols-12 gap-2 items-center p-2 rounded-xl bg-zinc-900/60 border border-zinc-800">
-                                 <input
+                                 <InputControl
                                     type="text"
                                     value={it.desc}
                                     onChange={(e) => handleItemChange(it.id, 'desc', e.target.value)}
                                     placeholder="Item description"
                                     className="col-span-6 bg-transparent text-xs text-zinc-200 outline-none px-2 py-1 rounded border border-transparent focus:border-zinc-700"
                                  />
-                                 <input
+                                 <InputControl
                                     type="number"
                                     min="1"
                                     value={it.qty}
@@ -633,7 +634,7 @@ Grand Total: ₹${result.grandTotal.toLocaleString('en-IN')} (${totalInWords})`;
                                     placeholder="Qty"
                                     className="col-span-2 bg-zinc-900 text-xs text-center text-zinc-200 rounded border border-zinc-800 py-1"
                                  />
-                                 <input
+                                 <InputControl
                                     type="number"
                                     min="0"
                                     value={it.rate}
@@ -703,7 +704,7 @@ Grand Total: ₹${result.grandTotal.toLocaleString('en-IN')} (${totalInWords})`;
                               Discount & Round Off
                            </label>
                            <div className="flex items-center gap-2 mb-1.5">
-                              <input
+                              <InputControl
                                  type="number"
                                  min="0"
                                  value={discountValue}
@@ -711,16 +712,16 @@ Grand Total: ₹${result.grandTotal.toLocaleString('en-IN')} (${totalInWords})`;
                                  placeholder="Discount"
                                  className="w-full px-2.5 py-1 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-100"
                               />
-                              <select
+                              <Dropdown
                                  value={discountType}
                                  onChange={(e) => setDiscountType(e.target.value)}
                                  className="bg-zinc-900 border border-zinc-800 text-xs rounded-lg px-2 py-1 text-zinc-200">
                                  <option value="percent">% Off</option>
                                  <option value="fixed">₹ Flat</option>
-                              </select>
+                              </Dropdown>
                            </div>
                            <label className="flex items-center gap-1.5 text-xs text-zinc-400 cursor-pointer">
-                              <input
+                              <CheckboxInput
                                  type="checkbox"
                                  checked={enableRoundOff}
                                  onChange={(e) => setEnableRoundOff(e.target.checked)}

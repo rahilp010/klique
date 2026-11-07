@@ -15,6 +15,7 @@ import SEO from '../SEO';
 import { motion, AnimatePresence, useSpring, useScroll } from 'motion/react';
 import { SelectPicker } from '../ui/CustomControl';
 import { callAiApi } from '../../services/aiService';
+import { Textarea } from '../ui/CustomControl';
 
 export default function BioGenerator() {
    const [description, setDescription] = useState('');
@@ -419,7 +420,7 @@ Each bio should:
                   }`}>
                   {/* Textarea */}
 
-                  <textarea
+                  <Textarea
                      ref={textareaRef}
                      value={description}
                      onChange={(e) => setDescription(e.target.value)}

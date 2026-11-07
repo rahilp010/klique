@@ -36,6 +36,7 @@ import {
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, Dropdown } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  INITIAL SAMPLES & FAQS                                                    */
@@ -251,11 +252,14 @@ export default function SubscriptionTracker() {
    const relatedTools = useMemo(() => getRelatedTools('subscription-tracker', 4), []);
 
    return (
-      <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 relative overflow-hidden font-sans">
-         {/* Static ambient backdrop matching JsonFormatter */}
+      <div
+         className="relative min-h-[100dvh] w-full bg-[#09090b] text-zinc-100 selection:bg-emerald-500/30 selection:text-emerald-300 font-sans customScrollbar overflow-x-hidden overflow-y-auto px-3 py-6 sm:px-6 sm:py-8 md:px-10 overflow-hidden
+            before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_45%)]
+            after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,255,255,0.04),transparent_45%)]">
+         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.09),transparent_62%)]" />
          <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(16,185,129,0.12),transparent_55%)]"
+            className="pointer-events-none absolute inset-x-0 top-0 h-[900px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(113,113,122,0.14),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.10),transparent_50%)]"
          />
          <div
             aria-hidden
@@ -415,7 +419,7 @@ export default function SubscriptionTracker() {
                   <div className="flex flex-col sm:flex-row gap-3 items-center justify-between">
                      <div className="relative w-full sm:w-72">
                         <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500" />
-                        <input
+                        <InputControl
                            type="text"
                            value={searchQuery}
                            onChange={(e) => setSearchQuery(e.target.value)}
@@ -424,7 +428,7 @@ export default function SubscriptionTracker() {
                         />
                      </div>
 
-                     <select
+                     <Dropdown
                         value={selectedFilterCategory}
                         onChange={(e) => setSelectedFilterCategory(e.target.value)}
                         className="w-full sm:w-auto rounded-xl border border-zinc-800 bg-zinc-950/70 px-3 py-2 text-xs text-white focus:border-emerald-500/50 focus:outline-none transition-all">
@@ -434,7 +438,7 @@ export default function SubscriptionTracker() {
                               {cat}
                            </option>
                         ))}
-                     </select>
+                     </Dropdown>
                   </div>
 
                   {/* List Container */}
@@ -602,7 +606,7 @@ export default function SubscriptionTracker() {
                         <form onSubmit={handleSaveSubscription} className="space-y-4 text-xs">
                            <div>
                               <label className="block text-zinc-300 font-medium mb-1.5">Service Name *</label>
-                              <input
+                              <InputControl
                                  type="text"
                                  required
                                  value={name}
@@ -615,7 +619,7 @@ export default function SubscriptionTracker() {
                            <div className="grid grid-cols-2 gap-3">
                               <div>
                                  <label className="block text-zinc-300 font-medium mb-1.5">Price Amount *</label>
-                                 <input
+                                 <InputControl
                                     type="number"
                                     step="0.01"
                                     required
@@ -628,7 +632,7 @@ export default function SubscriptionTracker() {
 
                               <div>
                                  <label className="block text-zinc-300 font-medium mb-1.5">Billing Cycle</label>
-                                 <select
+                                 <Dropdown
                                     value={cycle}
                                     onChange={(e) => setCycle(e.target.value)}
                                     className="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 px-3.5 py-2.5 text-white focus:border-emerald-500/50 focus:outline-none transition-all">
@@ -636,26 +640,26 @@ export default function SubscriptionTracker() {
                                     <option value="yearly">Yearly</option>
                                     <option value="quarterly">Quarterly</option>
                                     <option value="weekly">Weekly</option>
-                                 </select>
+                                 </Dropdown>
                               </div>
                            </div>
 
                            <div className="grid grid-cols-2 gap-3">
                               <div>
                                  <label className="block text-zinc-300 font-medium mb-1.5">Category</label>
-                                 <select
+                                 <Dropdown
                                     value={category}
                                     onChange={(e) => setCategory(e.target.value)}
                                     className="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 px-3.5 py-2.5 text-white focus:border-emerald-500/50 focus:outline-none transition-all">
                                     {SUBSCRIPTION_CATEGORIES.map((c) => (
                                        <option key={c} value={c}>{c}</option>
                                     ))}
-                                 </select>
+                                 </Dropdown>
                               </div>
 
                               <div>
                                  <label className="block text-zinc-300 font-medium mb-1.5">Next Renewal Date</label>
-                                 <input
+                                 <InputControl
                                     type="date"
                                     value={renewalDate}
                                     onChange={(e) => setRenewalDate(e.target.value)}
@@ -747,4 +751,3 @@ export default function SubscriptionTracker() {
       </div>
    );
 }
-

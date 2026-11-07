@@ -26,6 +26,7 @@ import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/a
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl, Dropdown, CheckboxInput } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & FAQS                                                            */
@@ -438,7 +439,7 @@ Net In-Hand (Take-Home),${result.monthlyInHand},${result.annualInHand}`;
                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-xs font-semibold">
                               ₹
                            </span>
-                           <input
+                           <InputControl
                               type="number"
                               min="0"
                               value={ctc}
@@ -566,18 +567,18 @@ Net In-Hand (Take-Home),${result.monthlyInHand},${result.annualInHand}`;
                            <label className="text-[11px] font-semibold text-zinc-400 block mb-1">
                               Professional Tax (PT ₹/mo)
                            </label>
-                           <select
+                           <Dropdown
                               value={professionalTax}
                               onChange={(e) => setProfessionalTax(e.target.value)}
                               className="w-full px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-100 focus:outline-none focus:border-[#daf4aa]">
                               <option value="200">₹200 / month (Standard)</option>
                               <option value="0">₹0 (States with no PT)</option>
-                           </select>
+                           </Dropdown>
                         </div>
 
                         <div className="flex flex-col justify-end">
                            <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer pb-2">
-                              <input
+                              <CheckboxInput
                                  type="checkbox"
                                  checked={includeGratuity}
                                  onChange={(e) => setIncludeGratuity(e.target.checked)}

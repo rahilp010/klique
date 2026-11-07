@@ -26,6 +26,7 @@ import { trackToolCopy, trackToolDownload, trackToolReset } from '../../../lib/a
 import { getRelatedTools } from '../../../data/tools';
 import { preloadRoute } from '../../../App';
 import { Link } from 'react-router-dom';
+import { InputControl } from '../../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  PRESETS & FAQS                                                            */
@@ -414,7 +415,7 @@ export default function UPIQRGenerator() {
                               </span>
                            )}
                         </div>
-                        <input
+                        <InputControl
                            type="text"
                            value={vpa}
                            onChange={(e) => setVpa(e.target.value)}
@@ -443,7 +444,7 @@ export default function UPIQRGenerator() {
                         <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
                            Payee / Merchant Name
                         </label>
-                        <input
+                        <InputControl
                            type="text"
                            value={payeeName}
                            onChange={(e) => setPayeeName(e.target.value)}
@@ -469,7 +470,7 @@ export default function UPIQRGenerator() {
                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-xs font-semibold">
                               ₹
                            </span>
-                           <input
+                           <InputControl
                               type="number"
                               min="0"
                               value={amount}
@@ -496,7 +497,7 @@ export default function UPIQRGenerator() {
                         <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
                            Transaction Note / Reference (Optional)
                         </label>
-                        <input
+                        <InputControl
                            type="text"
                            value={note}
                            onChange={(e) => setNote(e.target.value)}

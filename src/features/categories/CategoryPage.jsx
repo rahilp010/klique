@@ -44,6 +44,7 @@ import SEO from '../../components/SEO';
 import { CATEGORIES, getCategoryBySlug } from '../../data/categories';
 import { getAllTools, getToolsByCategory } from '../../data/tools';
 import { preloadRoute } from '../../App';
+import { InputControl } from '../../components/ui/CustomControl';
 
 /* -------------------------------------------------------------------------- */
 /*  ICON RESOLVER MAP                                                         */
@@ -246,7 +247,7 @@ export default function CategoryPage() {
                         size={15}
                         className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none"
                      />
-                     <input
+                     <InputControl
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
