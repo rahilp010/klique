@@ -17,6 +17,7 @@ import {
    AtSign,
    Clock,
    Command,
+   Gamepad2,
    FileText,
    Github,
    Hash,
@@ -435,6 +436,7 @@ const tools = [
 
 const footerLinks = {
    Tools: [
+      { label: 'Klique Arcade', to: '/games' },
       { label: 'Browse All Categories', to: '/category' },
       { label: 'API Request Builder', to: '/tools/api-request-builder' },
       { label: 'Invoice Maker', to: '/tools/invoice-generator' },
@@ -709,47 +711,56 @@ export default function HeroPage() {
                   {/* <img src={kliquedark} className='w-14 h-14' /> */}
                </Link>
 
-               <motion.button
-                  type="button"
-                  onClick={handleScroll}
-                  whileHover={reduce ? undefined : { y: -1, scale: 1.02 }}
-                  whileTap={reduce ? undefined : { scale: 0.97 }}
-                  className="
-    group relative inline-flex shrink-0 items-center gap-2
-    overflow-hidden rounded-full
-    border border-zinc-200/80
-    bg-white/75 px-4 py-2.5
-    text-sm font-semibold text-zinc-800
-    shadow-sm shadow-zinc-900/[0.03]
-    backdrop-blur-xl
-    transition-all duration-300
-    hover:border-[#daf4aa] hover:bg-white
-    hover:shadow-md hover:shadow-zinc-900/[0.06]
-    focus-visible:outline-none
-    focus-visible:ring-2 focus-visible:ring-zinc-400
-    dark:border-zinc-700/80
-    dark:bg-zinc-900/75 dark:text-zinc-100
-    dark:hover:border-[#daf4aa]/60 dark:hover:bg-zinc-800
-  ">
-                  <span
+               <div className="flex items-center gap-2">
+                  <Link
+                     to="/games"
+                     className="group relative inline-flex shrink-0 items-center gap-1.5 overflow-hidden rounded-full border border-zinc-200/80 bg-white/75 px-3.5 py-2 text-xs font-semibold text-zinc-800 shadow-sm backdrop-blur-xl transition-all duration-300 hover:border-[#daf4aa] hover:bg-white dark:border-zinc-700/80 dark:bg-zinc-900/75 dark:text-zinc-100 dark:hover:border-[#daf4aa]/60 dark:hover:bg-zinc-800">
+                     <Gamepad2 size={13} className="text-[#daf4aa]" />
+                     <span>Arcade</span>
+                  </Link>
+
+                  <motion.button
+                     type="button"
+                     onClick={handleScroll}
+                     whileHover={reduce ? undefined : { y: -1, scale: 1.02 }}
+                     whileTap={reduce ? undefined : { scale: 0.97 }}
                      className="
-    flex h-6 w-6 items-center justify-center
-    rounded-full bg-zinc-100 text-zinc-700
-    transition-colors duration-300
-    group-hover:bg-[#daf4aa] group-hover:text-zinc-950
-    dark:bg-zinc-800 dark:text-zinc-200
-    dark:group-hover:bg-[#daf4aa] dark:group-hover:text-zinc-950
-  ">
-                     <Command size={13} />
-                  </span>
+     group relative inline-flex shrink-0 items-center gap-2
+     overflow-hidden rounded-full
+     border border-zinc-200/80
+     bg-white/75 px-4 py-2.5
+     text-sm font-semibold text-zinc-800
+     shadow-sm shadow-zinc-900/[0.03]
+     backdrop-blur-xl
+     transition-all duration-300
+     hover:border-[#daf4aa] hover:bg-white
+     hover:shadow-md hover:shadow-zinc-900/[0.06]
+     focus-visible:outline-none
+     focus-visible:ring-2 focus-visible:ring-zinc-400
+     dark:border-zinc-700/80
+     dark:bg-zinc-900/75 dark:text-zinc-100
+     dark:hover:border-[#daf4aa]/60 dark:hover:bg-zinc-800
+   ">
+                     <span
+                        className="
+     flex h-6 w-6 items-center justify-center
+     rounded-full bg-zinc-100 text-zinc-700
+     transition-colors duration-300
+     group-hover:bg-[#daf4aa] group-hover:text-zinc-950
+     dark:bg-zinc-800 dark:text-zinc-200
+     dark:group-hover:bg-[#daf4aa] dark:group-hover:text-zinc-950
+   ">
+                        <Command size={13} />
+                     </span>
 
-                  <span>Browse tools</span>
+                     <span>Browse tools</span>
 
-                  <ArrowRight
-                     size={15}
-                     className="transition-transform duration-300 group-hover:translate-x-1"
-                  />
-               </motion.button>
+                     <ArrowRight
+                        size={15}
+                        className="transition-transform duration-300 group-hover:translate-x-1"
+                     />
+                  </motion.button>
+               </div>
             </motion.header>
 
             {/* Hero */}

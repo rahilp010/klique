@@ -49,11 +49,13 @@ import {
    FileDiff,
    Lock,
    Search,
+   Gamepad2,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
    { title: 'Home', path: '/', icon: Home },
    { title: 'Categories', path: '/category', icon: LayoutGrid },
+   { title: 'Arcade', path: '/games', icon: Gamepad2 },
    // Advanced Tools (Phase 5)
    { title: 'API Client', path: '/tools/api-request-builder', icon: Send },
    { title: 'PDF Compare', path: '/tools/pdf-compare', icon: FileDiff },

@@ -133,6 +133,38 @@ export const routeImports = {
       import('./features/media/background-remover/BackgroundRemover'),
    '/tools/uptime-checker': () =>
       import('./features/developer/uptime-checker/WebsiteUptimeChecker'),
+
+   // Klique Arcade Routes
+   '/games': () => import('./pages/GamesPage'),
+   '/games/snake': () => import('./pages/games/SnakePage'),
+   '/games/2048': () => import('./pages/games/Game2048Page'),
+   '/games/tic-tac-toe': () => import('./pages/games/TicTacToePage'),
+   '/games/memory-match': () => import('./pages/games/MemoryMatchPage'),
+   '/games/reaction-time': () => import('./pages/games/ReactionTimePage'),
+   '/games/minesweeper': () => import('./pages/games/MinesweeperPage'),
+   '/games/word-guess': () => import('./pages/games/WordGuessPage'),
+   '/games/brick-breaker': () => import('./pages/games/BrickBreakerPage'),
+   '/games/simon-says': () => import('./pages/games/SimonSaysPage'),
+   '/games/block-drop': () => import('./pages/games/BlockDropPage'),
+   '/games/neon-dash': () => import('./pages/games/NeonDashPage'),
+   '/games/pong': () => import('./pages/games/RetroPongPage'),
+   '/games/sudoku': () => import('./pages/games/SudokuPage'),
+   '/games/color-flood': () => import('./pages/games/ColorFloodPage'),
+   '/games/space-invaders': () => import('./pages/games/SpaceInvadersPage'),
+
+   // 12 Expansion Arcade Games
+   '/games/tower-stacker': () => import('./pages/games/TowerStackerPage'),
+   '/games/connect-four': () => import('./pages/games/ConnectFourPage'),
+   '/games/matrix-flip': () => import('./pages/games/MatrixFlipPage'),
+   '/games/cyber-runner': () => import('./pages/games/CyberRunnerPage'),
+   '/games/type-storm': () => import('./pages/games/TypeStormPage'),
+   '/games/neon-hopper': () => import('./pages/games/NeonHopperPage'),
+   '/games/asteroids': () => import('./pages/games/VectorAsteroidsPage'),
+   '/games/moon-lander': () => import('./pages/games/MoonLanderPage'),
+   '/games/checkers': () => import('./pages/games/NeonCheckersPage'),
+   '/games/cyber-pac': () => import('./pages/games/CyberPacPage'),
+   '/games/solitaire': () => import('./pages/games/SpeedSolitairePage'),
+   '/games/pinball': () => import('./pages/games/NeonPinballPage'),
 };
 
 // Preload specific route or all routes in background
@@ -222,6 +254,38 @@ const CodePlayground = lazy(routeImports['/tools/code-playground']);
 const QRMenuGenerator = lazy(routeImports['/tools/qr-menu-generator']);
 const BackgroundRemover = lazy(routeImports['/tools/background-remover']);
 const WebsiteUptimeChecker = lazy(routeImports['/tools/uptime-checker']);
+
+// Klique Arcade Lazy Components
+const GamesPage = lazy(routeImports['/games']);
+const SnakePage = lazy(routeImports['/games/snake']);
+const Game2048Page = lazy(routeImports['/games/2048']);
+const TicTacToePage = lazy(routeImports['/games/tic-tac-toe']);
+const MemoryMatchPage = lazy(routeImports['/games/memory-match']);
+const ReactionTimePage = lazy(routeImports['/games/reaction-time']);
+const MinesweeperPage = lazy(routeImports['/games/minesweeper']);
+const WordGuessPage = lazy(routeImports['/games/word-guess']);
+const BrickBreakerPage = lazy(routeImports['/games/brick-breaker']);
+const SimonSaysPage = lazy(routeImports['/games/simon-says']);
+const BlockDropPage = lazy(routeImports['/games/block-drop']);
+const NeonDashPage = lazy(routeImports['/games/neon-dash']);
+const RetroPongPage = lazy(routeImports['/games/pong']);
+const SudokuPage = lazy(routeImports['/games/sudoku']);
+const ColorFloodPage = lazy(routeImports['/games/color-flood']);
+const SpaceInvadersPage = lazy(routeImports['/games/space-invaders']);
+
+// 12 Expansion Arcade Pages
+const TowerStackerPage = lazy(routeImports['/games/tower-stacker']);
+const ConnectFourPage = lazy(routeImports['/games/connect-four']);
+const MatrixFlipPage = lazy(routeImports['/games/matrix-flip']);
+const CyberRunnerPage = lazy(routeImports['/games/cyber-runner']);
+const TypeStormPage = lazy(routeImports['/games/type-storm']);
+const NeonHopperPage = lazy(routeImports['/games/neon-hopper']);
+const VectorAsteroidsPage = lazy(routeImports['/games/asteroids']);
+const MoonLanderPage = lazy(routeImports['/games/moon-lander']);
+const NeonCheckersPage = lazy(routeImports['/games/checkers']);
+const CyberPacPage = lazy(routeImports['/games/cyber-pac']);
+const SpeedSolitairePage = lazy(routeImports['/games/solitaire']);
+const NeonPinballPage = lazy(routeImports['/games/pinball']);
 
 // Simple loading indicator during chunk fetches (if network is very slow)
 const LoadingFallback = () => (
@@ -453,6 +517,93 @@ function App() {
                <Route path="/tools/uptime-checker" element={<WebsiteUptimeChecker />} />
                <Route path="/uptimechecker" element={<WebsiteUptimeChecker />} />
                <Route path="/uptime" element={<WebsiteUptimeChecker />} />
+
+               {/* Klique Arcade Routes (Canonical & Aliases) */}
+               <Route path="/games" element={<GamesPage />} />
+               <Route path="/arcade" element={<GamesPage />} />
+               <Route path="/games/snake" element={<SnakePage />} />
+               <Route path="/snake" element={<SnakePage />} />
+               <Route path="/games/2048" element={<Game2048Page />} />
+               <Route path="/2048" element={<Game2048Page />} />
+               <Route path="/games/tic-tac-toe" element={<TicTacToePage />} />
+               <Route path="/tictactoe" element={<TicTacToePage />} />
+               <Route path="/games/memory-match" element={<MemoryMatchPage />} />
+               <Route path="/memorymatch" element={<MemoryMatchPage />} />
+               <Route path="/games/reaction-time" element={<ReactionTimePage />} />
+               <Route path="/reactiontime" element={<ReactionTimePage />} />
+
+               {/* New 10 Arcade Additions */}
+               <Route path="/games/minesweeper" element={<MinesweeperPage />} />
+               <Route path="/minesweeper" element={<MinesweeperPage />} />
+               <Route path="/games/word-guess" element={<WordGuessPage />} />
+               <Route path="/wordguess" element={<WordGuessPage />} />
+               <Route path="/wordle" element={<WordGuessPage />} />
+               <Route path="/games/brick-breaker" element={<BrickBreakerPage />} />
+               <Route path="/brickbreaker" element={<BrickBreakerPage />} />
+               <Route path="/breakout" element={<BrickBreakerPage />} />
+               <Route path="/games/simon-says" element={<SimonSaysPage />} />
+               <Route path="/simonsays" element={<SimonSaysPage />} />
+               <Route path="/games/block-drop" element={<BlockDropPage />} />
+               <Route path="/blockdrop" element={<BlockDropPage />} />
+               <Route path="/tetris" element={<BlockDropPage />} />
+               <Route path="/games/neon-dash" element={<NeonDashPage />} />
+               <Route path="/neondash" element={<NeonDashPage />} />
+               <Route path="/flappy" element={<NeonDashPage />} />
+               <Route path="/games/pong" element={<RetroPongPage />} />
+               <Route path="/pong" element={<RetroPongPage />} />
+               <Route path="/games/sudoku" element={<SudokuPage />} />
+               <Route path="/sudoku" element={<SudokuPage />} />
+               <Route path="/games/color-flood" element={<ColorFloodPage />} />
+               <Route path="/colorflood" element={<ColorFloodPage />} />
+               <Route path="/flood" element={<ColorFloodPage />} />
+               <Route path="/games/space-invaders" element={<SpaceInvadersPage />} />
+               <Route path="/spaceinvaders" element={<SpaceInvadersPage />} />
+               <Route path="/space" element={<SpaceInvadersPage />} />
+
+               {/* 12 Expansion Arcade Routes */}
+               <Route path="/games/tower-stacker" element={<TowerStackerPage />} />
+               <Route path="/stacker" element={<TowerStackerPage />} />
+               <Route path="/towerstacker" element={<TowerStackerPage />} />
+
+               <Route path="/games/connect-four" element={<ConnectFourPage />} />
+               <Route path="/connectfour" element={<ConnectFourPage />} />
+               <Route path="/connect4" element={<ConnectFourPage />} />
+
+               <Route path="/games/matrix-flip" element={<MatrixFlipPage />} />
+               <Route path="/matrixflip" element={<MatrixFlipPage />} />
+               <Route path="/lightsout" element={<MatrixFlipPage />} />
+
+               <Route path="/games/cyber-runner" element={<CyberRunnerPage />} />
+               <Route path="/cyberrunner" element={<CyberRunnerPage />} />
+               <Route path="/runner" element={<CyberRunnerPage />} />
+
+               <Route path="/games/type-storm" element={<TypeStormPage />} />
+               <Route path="/typestorm" element={<TypeStormPage />} />
+
+               <Route path="/games/neon-hopper" element={<NeonHopperPage />} />
+               <Route path="/neonhopper" element={<NeonHopperPage />} />
+               <Route path="/crossy" element={<NeonHopperPage />} />
+               <Route path="/frogger" element={<NeonHopperPage />} />
+
+               <Route path="/games/asteroids" element={<VectorAsteroidsPage />} />
+               <Route path="/asteroids" element={<VectorAsteroidsPage />} />
+
+               <Route path="/games/moon-lander" element={<MoonLanderPage />} />
+               <Route path="/moonlander" element={<MoonLanderPage />} />
+               <Route path="/lander" element={<MoonLanderPage />} />
+
+               <Route path="/games/checkers" element={<NeonCheckersPage />} />
+               <Route path="/checkers" element={<NeonCheckersPage />} />
+
+               <Route path="/games/cyber-pac" element={<CyberPacPage />} />
+               <Route path="/cyberpac" element={<CyberPacPage />} />
+               <Route path="/pacman" element={<CyberPacPage />} />
+
+               <Route path="/games/solitaire" element={<SpeedSolitairePage />} />
+               <Route path="/solitaire" element={<SpeedSolitairePage />} />
+
+               <Route path="/games/pinball" element={<NeonPinballPage />} />
+               <Route path="/pinball" element={<NeonPinballPage />} />
             </Routes>
          </Suspense>
       </>
