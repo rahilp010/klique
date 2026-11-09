@@ -10,6 +10,7 @@ import {
    Sparkles,
    Sliders,
    Layers,
+   Volume2,
 } from 'lucide-react';
 import {
    initializeBoard,
